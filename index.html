@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Dicas de Jogos - Sugestões com Análise de Dados</title>
-    <meta name="description" content="Receba sugestões e dicas de jogos geradas aleatoriamente a partir de um banco de dados cuidadosamente analisado e filtrado. Aumente sua inspiração com 1, 5 ou 10 jogos.">
+    <meta name="description" content="Receba dicas de jogos gerados aleatoriamente e cuidadosamente analisados e filtrados. Acredite na sua sorte, com dicas de 1, 5 ou 10 jogos.">
     <meta name="keywords" content="gerador de jogos, sugestões, dicas de jogos, números, análise de dados, sorte, aleatório">
-    <meta name="author" content="Seu Nome ou Nome do Projeto">
+    <meta name="author" content="Ronaldo Leite">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23daa520' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.41 14.59L12 13.17l-3.41 3.42-1.41-1.42L10.59 12 7.17 8.59l1.41-1.42L12 10.76l3.41-3.59 1.41 1.42L13.41 12l3.42 3.41-1.42 1.42z'/%3E%3C/svg%3E" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@
             text-transform: uppercase; letter-spacing: 2px; margin: 1rem 0;
         }
         .imagem-ouro {
-            width: 100%; max-width: 450px; height: auto; border-radius: 10px;
+            width: 100%; max-width: 130px; height: auto; border-radius: 10px;
             margin: 1.5rem 0; border: 3px solid var(--cor-dourado); box-shadow: var(--sombra-dourada);
         }
         .secao-botoes h2 { font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: 500; }
@@ -81,16 +81,16 @@
     <div class="container">
         <div class="header-icon">&#128640;</div>
         <header>
-            <h1>Gerador de Dicas</h1>
+            <h1>Mega-Sena Dicas</h1>
         </header>
         <main>
-            <img src="ouro.jpg" alt="Barras e moedas de ouro simbolizando riqueza e sorte." class="imagem-ouro">
+            <img src="trevo.jpg" alt="Trevo de quatro folhas simbolizando riqueza e sorte." class="imagem-ouro">
             <section class="secao-botoes">
-                <h2>Escolha a quantidade de dicas de jogos</h2>
+                <h2>Selecione a quantidade de dicas:</h2>
                 <div class="grupo-botoes">
-                    <button class="botao-gerar" onclick="gerarJogos(1)">1 Jogo</button>
-                    <button class="botao-gerar" onclick="gerarJogos(5)">5 Jogos</button>
-                    <button class="botao-gerar" onclick="gerarJogos(10)">10 Jogos</button>
+                    <button class="botao-gerar" onclick="gerarJogos(1)">1 Dica</button>
+                    <button class="botao-gerar" onclick="gerarJogos(5)">5 Dicas</button>
+                    <button class="botao-gerar" onclick="gerarJogos(10)">10 Dicas</button>
                 </div>
             </section>
             <section id="area-resultados"></section>
