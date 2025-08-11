@@ -3,97 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Dicas de Jogos - Sugestões com Análise de Dados</title>
-    <meta name="description" content="Receba dicas de jogos gerados aleatoriamente e cuidadosamente analisados e filtrados. Acredite na sua sorte, com dicas de 1, 5 ou 10 jogos.">
-    <meta name="keywords" content="gerador de jogos, sugestões, dicas de jogos, números, análise de dados, sorte, aleatório">
+
+    <!-- SEO -->
+    <title>Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances de ganhar</title>
+    <meta name="description" content="Gere palpites inteligentes para a Mega-Sena com combinações exclusivas. Escolha entre 1, 5 ou 10 jogos e aumente suas chances!">
+    <meta name="keywords" content="mega-sena, dicas, palpites, loteria, números da sorte, jogos, sorteio, como ganhar, probabilidades, apostas">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="author" content="Ronaldo Leite">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23daa520' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.41 14.59L12 13.17l-3.41 3.42-1.41-1.42L10.59 12 7.17 8.59l1.41-1.42L12 10.76l3.41-3.59 1.41 1.42L13.41 12l3.42 3.41-1.42 1.42z'/%3E%3C/svg%3E" type="image/svg+xml">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://seudominio.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:title" content="Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances">
+    <meta property="og:description" content="Escolha 1, 5 ou 10 combinações únicas para a Mega-Sena. Gere jogos exclusivos e aposte com mais confiança.">
+    <meta property="og:image" content="https://seudominio.com/imagem-og.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://seudominio.com/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances">
+    <meta name="twitter:description" content="Gere jogos exclusivos para a Mega-Sena e aumente suas chances. Escolha 1, 5 ou 10 dicas agora!">
+    <meta name="twitter:image" content="https://seudominio.com/imagem-twitter.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Dados Estruturados Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mega-Sena Dicas",
+      "url": "https://seudominio.com",
+      "description": "Gere dicas da Mega-Sena e aumente suas chances com combinações únicas e aleatórias.",
+      "applicationCategory": "Game",
+      "operatingSystem": "All",
+      "inLanguage": "pt-BR",
+      "creator": {
+        "@type": "Person",
+        "name": "Ronaldo Leite"
+      }
+    }
+    </script>
+
     <style>
         :root {
-            --cor-fundo: #121212; --cor-caixa: #1E1E1E; --cor-texto: #E0E0E0;
-            --cor-dourado: #FFD700; --cor-dourado-hover: #FFAA00;
-            --sombra-dourada: 0 0 15px rgba(255, 215, 0, 0.4);
-            --sombra-caixa: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --cor-fundo: linear-gradient(180deg, #0d47a1, #1976d2, #42a5f5);
+            --cor-caixa: rgba(255,255,255,0.08);
+            --cor-texto: #E0E0E0;
+            --cor-dourado: #FFD700;
+            --cor-dourado-hover: #FFAA00;
+            --sombra-dourada: 0 0 12px rgba(255, 215, 0, 0.4);
+            --sombra-caixa: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Poppins', sans-serif; background-color: var(--cor-fundo); color: var(--cor-texto);
-            display: flex; justify-content: center; padding: 2rem 1rem; min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: var(--cor-fundo);
+            color: var(--cor-texto);
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
         }
         .container {
-            max-width: 800px; width: 100%; background: var(--cor-caixa); padding: 2.5rem;
-            border-radius: 20px; box-shadow: var(--sombra-caixa); border: 1px solid rgba(255, 215, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            background: var(--cor-caixa);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--sombra-caixa);
             text-align: center;
         }
-        .header-icon { font-size: 3rem; color: var(--cor-dourado); text-shadow: var(--sombra-dourada); }
         h1 {
-            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; color: var(--cor-dourado);
-            text-transform: uppercase; letter-spacing: 2px; margin: 1rem 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--cor-dourado);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+        .subtitulo {
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: #bbdefb;
         }
         .imagem-ouro {
-            width: 100%; max-width: 150px; height: auto; border-radius: 10px;
-            margin: 1.5rem 0; border: 3px solid var(--cor-dourado); box-shadow: var(--sombra-dourada);
+            width: 120px;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 3px solid var(--cor-dourado);
+            box-shadow: var(--sombra-dourada);
         }
-        .secao-botoes h2 { font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: 500; }
-        .grupo-botoes { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .secao-botoes h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        .grupo-botoes {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
         .botao-gerar {
             background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover));
-            color: #000; border: none; padding: 1rem 2rem; font-size: 1.1rem;
-            font-weight: bold; border-radius: 50px; cursor: pointer;
-            transition: all 0.3s ease-in-out; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            color: #000;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
         }
-        .botao-gerar:hover, .botao-gerar:focus {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3); outline: none;
+        .botao-gerar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
         }
-        #area-resultados {
-            margin-top: 3rem; min-height: 150px; width: 100%; opacity: 0;
-            transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease;
+        .titulo-sugestoes {
+            font-size: 1.3rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--cor-dourado);
+            margin-bottom: 1rem;
         }
-        #area-resultados.visivel { opacity: 1; transform: translateY(0); }
-        .titulo-sugestoes { font-size: 2rem; font-family: 'Orbitron', sans-serif; color: var(--cor-dourado); margin-bottom: 1.5rem; }
         .jogo {
-            background-color: rgba(0, 0, 0, 0.2); padding: 1rem; margin: 1rem auto;
-            border-radius: 15px; display: flex; justify-content: center;
-            align-items: center; gap: 1rem; flex-wrap: wrap;
-            border-left: 4px solid var(--cor-dourado); animation: fadeIn 0.5s ease-in-out;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.7rem;
+            margin: 0.7rem auto;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            border-left: 3px solid var(--cor-dourado);
         }
         .numero {
-            background: var(--cor-fundo); color: var(--cor-texto); font-size: 1.4rem; font-weight: bold;
-            width: 55px; height: 55px; display: flex; justify-content: center;
-            align-items: center; border-radius: 50%; box-shadow: inset 0 2px 5px rgba(0,0,0,0.7);
-            transition: all 0.2s ease;
+            background: rgba(0,0,0,0.4);
+            color: var(--cor-texto);
+            font-size: 1rem;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
         }
-        .jogo:hover .numero { color: var(--cor-dourado); }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        .mensagem-erro { color: #ff6b6b; background-color: rgba(255, 107, 107, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid #ff6b6b; }
         @media (max-width: 600px) {
-            body { padding: 1rem 0.5rem; } .container { padding: 1.5rem; }
-            h1 { font-size: 2rem; } .grupo-botoes { flex-direction: column; align-items: stretch; }
-            .botao-gerar { width: 100%; } .numero { width: 45px; height: 45px; font-size: 1.1rem; }
+            h1 { font-size: 2rem; }
+            .imagem-ouro { width: 90px; }
+            .numero { width: 35px; height: 35px; font-size: 0.9rem; }
+            .botao-gerar { width: 100%; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header-icon">&#128640;</div>
         <header>
             <h1>Mega-Sena Dicas</h1>
+            <p class="subtitulo">Gere palpites exclusivos e aumente suas chances!</p>
+            <img src="logotipo.jpg" alt="Logotipo Mega-Sena Dicas com trevo da sorte" class="imagem-ouro" loading="lazy">
         </header>
+
         <main>
-            <img src="logotipo.jpg" alt="Trevo de quatro folhas simbolizando riqueza e sorte." class="imagem-ouro">
             <section class="secao-botoes">
                 <h2>Selecione a quantidade de dicas:</h2>
                 <div class="grupo-botoes">
-                    <button class="botao-gerar" onclick="gerarJogos(1)">1 Dica</button>
-                    <button class="botao-gerar" onclick="gerarJogos(5)">5 Dicas</button>
-                    <button class="botao-gerar" onclick="gerarJogos(10)">10 Dicas</button>
+                    <button class="botao-gerar" onclick="gerarJogos(1)" aria-label="Gerar 1 dica">1 Dica</button>
+                    <button class="botao-gerar" onclick="gerarJogos(5)" aria-label="Gerar 5 dicas">5 Dicas</button>
+                    <button class="botao-gerar" onclick="gerarJogos(10)" aria-label="Gerar 10 dicas">10 Dicas</button>
                 </div>
             </section>
-            <section id="area-resultados"></section>
+
+            <section id="area-resultados" aria-label="Resultados das dicas"></section>
         </main>
     </div>
 
@@ -101,33 +197,18 @@
         async function gerarJogos(quantidade) {
             const areaResultados = document.getElementById('area-resultados');
             areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Gerando...</h2>';
-            areaResultados.classList.add('visivel');
 
             try {
                 const response = await fetch(`/get-games/${quantidade}`);
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || `Erro do servidor: ${response.statusText}`);
+                    throw new Error(`Erro do servidor: ${response.statusText}`);
                 }
                 const jogos = await response.json();
-
-                areaResultados.innerHTML = '';
-                
-                const titulo = document.createElement('h2');
-                titulo.className = 'titulo-sugestoes';
-                titulo.textContent = 'Dicas:';
-                areaResultados.appendChild(titulo);
-
-                if (jogos.length === 0) {
-                    areaResultados.innerHTML += '<p>Nenhum jogo retornado.</p>';
-                    return;
-                }
-
+                areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Dicas:</h2>';
                 jogos.forEach(linha => {
-                    const numeros = linha.trim().split(/\s+/);
                     const divJogo = document.createElement('div');
                     divJogo.className = 'jogo';
-                    numeros.forEach(num => {
+                    linha.trim().split(/\s+/).forEach(num => {
                         const divNumero = document.createElement('div');
                         divNumero.className = 'numero';
                         divNumero.textContent = num;
@@ -136,8 +217,7 @@
                     areaResultados.appendChild(divJogo);
                 });
             } catch (error) {
-                console.error("Erro ao buscar jogos:", error);
-                areaResultados.innerHTML = `<div class="mensagem-erro">Não foi possível buscar as dicas. Detalhe: ${error.message}</div>`;
+                areaResultados.innerHTML = `<p style="color:red;">Erro: ${error.message}</p>`;
             }
         }
     </script>
