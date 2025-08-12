@@ -107,8 +107,8 @@
             transition: transform 0.3s ease;
         }
         .imagem-ouro:hover {
-        transform: scale(1.05);
-       }
+            transform: scale(1.05);
+        }
         .secao-botoes h2 {
             font-size: 1.2rem;
             margin-bottom: 0.8rem;
@@ -140,6 +140,7 @@
             font-size: 1.0rem;
             font-family: 'Orbitron', sans-serif;
             color: var(--cor-dourado);
+            margin-top: 1.5rem; /* Adicionado espaço acima */
             margin-bottom: 1rem;
         }
         .jogo {
@@ -154,15 +155,12 @@
             flex-wrap: wrap;
             border-left: 3px solid var(--cor-dourado);
         }
-
-         /* Container dos números */
-         .numeros-container {
+        .numeros-container {
             display: flex;
-            flex-wrap: nowrap; /* não quebra a linha */
+            flex-wrap: nowrap;
             justify-content: center;
-            gap: 8px; /* valor inicial, será recalculado no JS */
-        }        
-
+            gap: 8px;
+        }
         .numero {
             background: rgba(0,0,0,0.4);
             color: var(--cor-texto);
@@ -175,24 +173,55 @@
             align-items: center;
             border-radius: 50%;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
-            flex-shrink: 0; /* evita deformar */
+            flex-shrink: 0;
             transition: all 0.3s ease;
         }
+
+        /* --- ESTILOS ADICIONADOS --- */
+        .page-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .footer-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--cor-dourado);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+        .footer-section p, .footer-section a {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .footer-section a {
+            color: var(--cor-dourado-hover);
+            font-weight: 500;
+            text-decoration: none;
+            display: block; /* Para que os links fiquem um abaixo do outro */
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+        /* --- FIM DOS ESTILOS ADICIONADOS --- */
+
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
             .imagem-ouro { width: 110px; }
             .numero { width: 30px; height: 30px; font-size: 0.85rem; }
+            .footer-section p { text-align: left; }
         }
-
     </style>
-    
 </head>
 <body>
     <div class="container">
         <header>
             <img src="logotipo.jpg" alt="Logotipo Mega-Sena Dicas com trevo da sorte" class="imagem-ouro" loading="lazy">
             <h1>Mega-Sena Dicas</h1>
-            <p class="subtitulo">Acredite na sua sorte!</p>   
+            <p class="subtitulo">Acredite na sua sorte!</p>
         </header>
 
         <main>
@@ -205,32 +234,56 @@
                 </div>
             </section>
 
-            <section id="area-resultados" aria-label="Resultados das dicas"></section>
+            <section id="area-resultados" aria-live="polite" aria-atomic="true"></section>
         </main>
+
+        <!-- --- CONTEÚDO ADICIONADO --- -->
+        <footer class="page-footer">
+            <section class="footer-section" aria-labelledby="sobre-titulo">
+                <h2 id="sobre-titulo">Sobre</h2>
+                <p>
+                    Fazer uma fezinha nas loterias é uma das paixões do brasileiro e a favorita certamente é a Mega-Sena. E na hora de escolher os números, vale tudo: combinar datas importantes, placas de carros. números favoritos, surpresinha...
+                </p>
+                <p>
+                    Agora, você pode realizar seus jogos aqui no Mega Dicas: e escolher entre 1, 5 ou 10 dicas de jogos que recebem filtros que selecionam os números que mais aparecem nos sorteios da Mega-Sena, para você poder realizar apostas particular ou em bolões junto com os amigos da empresa, da faculdade, da academia...
+                </p>
+                <p>
+                    Lembre-se, jogar nas loterias é só para maiores de 18 anos e sempre jogue com responsabilidade!
+                </p>
+                <p><strong>Boa sorte!!</strong></p>
+            </section>
+
+            <section class="footer-section" aria-labelledby="links-titulo">
+                <h2 id="links-titulo">Links Oficiais</h2>
+                <a href="https://loterias.caixa.gov.br/Paginas/mega-sena.aspx" target="_blank" rel="noopener noreferrer">Site Oficial da Mega-Sena</a>
+                <a href="https://www.loteriasonline.caixa.gov.br/silce-web/#/termos-de-uso" target="_blank" rel="noopener noreferrer">Loterias Online Caixa</a>
+            </section>
+
+            <section class="footer-section" aria-labelledby="contato-titulo">
+                <h2 id="contato-titulo">Contato</h2>
+                <a href="mailto:seu-email-aqui@exemplo.com">seu-email-aqui@exemplo.com</a>
+            </section>
+        </footer>
+        <!-- --- FIM DO CONTEÚDO ADICIONADO --- -->
+
     </div>
 
     <script>
-
         function ajustarEspacamento() {
-           document.querySelectorAll('.numeros-container').forEach(container => {
-            const bolas = container.querySelectorAll('.numero');
-            if (bolas.length > 0) {
-                // largura disponível
-                const larguraDisponivel = container.offsetWidth;
-                // largura ocupada pelas bolas
-                const larguraBolas = bolas.length * bolas[0].offsetWidth;
-                // calcula gap ideal
-                let gap = Math.floor((larguraDisponivel - larguraBolas) / (bolas.length - 1));
-                // define limite mínimo e máximo
-                gap = Math.max(4, Math.min(gap, 12));
-                container.style.gap = gap + 'px';
-            }
-        });
-    }
+            document.querySelectorAll('.numeros-container').forEach(container => {
+                const bolas = container.querySelectorAll('.numero');
+                if (bolas.length > 0) {
+                    const larguraDisponivel = container.offsetWidth;
+                    const larguraBolas = bolas.length * bolas[0].offsetWidth;
+                    let gap = Math.floor((larguraDisponivel - larguraBolas) / (bolas.length - 1));
+                    gap = Math.max(4, Math.min(gap, 12));
+                    container.style.gap = gap + 'px';
+                }
+            });
+        }
 
-          // Ajusta no carregamento e no resize
-             window.addEventListener('load', ajustarEspacamento);
-             window.addEventListener('resize', ajustarEspacamento);
+        window.addEventListener('load', ajustarEspacamento);
+        window.addEventListener('resize', ajustarEspacamento);
 
         async function gerarJogos(quantidade) {
             const areaResultados = document.getElementById('area-resultados');
@@ -244,16 +297,27 @@
                 const jogos = await response.json();
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Suas dicas, boa sorte!:</h2>';
                 jogos.forEach(linha => {
-                    const divJogo = document.createElement('div');
-                    divJogo.className = 'jogo';
+                    const jogoContainer = document.createElement('div');
+                    jogoContainer.className = 'jogo';
+
+                    // Crie um container flexível para os números
+                    const numerosContainer = document.createElement('div');
+                    numerosContainer.className = 'numeros-container';
+
                     linha.trim().split(/\s+/).forEach(num => {
                         const divNumero = document.createElement('div');
                         divNumero.className = 'numero';
                         divNumero.textContent = num;
-                        divJogo.appendChild(divNumero);
+                        numerosContainer.appendChild(divNumero);
                     });
-                    areaResultados.appendChild(divJogo);
+
+                    jogoContainer.appendChild(numerosContainer);
+                    areaResultados.appendChild(jogoContainer);
                 });
+                
+                // Chame o ajuste após gerar os jogos
+                ajustarEspacamento();
+
             } catch (error) {
                 areaResultados.innerHTML = `<p style="color:red;">Erro: ${error.message}</p>`;
             }
