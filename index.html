@@ -75,7 +75,7 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 800px;
+            max-width: 600px;
             width: 100%;
             background: var(--cor-caixa);
             padding: 2rem;
@@ -137,7 +137,7 @@
             box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
         }
         .titulo-sugestoes {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-family: 'Orbitron', sans-serif;
             color: var(--cor-dourado);
             margin-bottom: 1rem;
@@ -190,14 +190,14 @@
 <body>
     <div class="container">
         <header>
-            <h1>Mega-Sena Dicas</h1>
-            <p class="subtitulo">Gere palpites exclusivos e aumente suas chances!</p>
             <img src="logotipo.jpg" alt="Logotipo Mega-Sena Dicas com trevo da sorte" class="imagem-ouro" loading="lazy">
+            <h1>Dicas Mega-Sena</h1>
+            <p class="subtitulo">Acredite na sua sorte!</p>   
         </header>
 
         <main>
             <section class="secao-botoes">
-                <h2>Selecione a quantidade de dicas:</h2>
+                <h2>Escolha a quantidade de dicas:</h2>
                 <div class="grupo-botoes">
                     <button class="botao-gerar" onclick="gerarJogos(1)" aria-label="Gerar 1 dica">1 Dica</button>
                     <button class="botao-gerar" onclick="gerarJogos(5)" aria-label="Gerar 5 dicas">5 Dicas</button>
@@ -242,7 +242,7 @@
                     throw new Error(`Erro do servidor: ${response.statusText}`);
                 }
                 const jogos = await response.json();
-                areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Dicas:</h2>';
+                areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Suas dicas, boa sorte!:</h2>';
                 jogos.forEach(linha => {
                     const divJogo = document.createElement('div');
                     divJogo.className = 'jogo';
