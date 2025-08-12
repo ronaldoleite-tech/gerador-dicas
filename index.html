@@ -98,13 +98,17 @@
             color: #bbdefb;
         }
         .imagem-ouro {
-            width: 120px;
+            width: 150px;
             height: auto;
             border-radius: 10px;
             margin: 1rem 0;
             border: 3px solid var(--cor-dourado);
             box-shadow: var(--sombra-dourada);
+            transition: transform 0.3s ease;
         }
+        .imagem-ouro:hover {
+        transform: scale(1.05);
+       }
         .secao-botoes h2 {
             font-size: 1.2rem;
             margin-bottom: 1rem;
@@ -150,26 +154,52 @@
             flex-wrap: wrap;
             border-left: 3px solid var(--cor-dourado);
         }
+
+         /* Container dos números */
+         .numeros-container {
+            display: flex;
+            flex-wrap: nowrap; /* não quebra a linha */
+            justify-content: center;
+            gap: 8px; /* valor inicial, será recalculado no JS */
+        }        
+
         .numero {
             background: rgba(0,0,0,0.4);
             color: var(--cor-texto);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 50%;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
+            flex-shrink: 0; /* evita deformar */
+            transition: all 0.3s ease;
         }
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
-            .imagem-ouro { width: 90px; }
-            .numero { width: 35px; height: 35px; font-size: 0.9rem; }
-            .botao-gerar { width: 100%; }
+            .imagem-ouro { width: 110px; }
+            .numero { width: 30px; height: 30px; font-size: 0.85rem; }
         }
+
     </style>
+    
+    <!-- Exemplo de uso -->
+    <div style="text-align:center">
+        <img src="sua-imagem.jpg" alt="Imagem Ouro" class="imagem-ouro">
+        <div class="numeros-container">
+           <div class="numero">01</div>
+           <div class="numero">05</div>
+           <div class="numero">13</div>
+           <div class="numero">22</div>
+           <div class="numero">37</div>
+           <div class="numero">48</div>
+       </div>
+   </div>
+
+
 </head>
 <body>
     <div class="container">
@@ -194,6 +224,28 @@
     </div>
 
     <script>
+
+        function ajustarEspacamento() {
+           document.querySelectorAll('.numeros-container').forEach(container => {
+            const bolas = container.querySelectorAll('.numero');
+            if (bolas.length > 0) {
+                // largura disponível
+                const larguraDisponivel = container.offsetWidth;
+                // largura ocupada pelas bolas
+                const larguraBolas = bolas.length * bolas[0].offsetWidth;
+                // calcula gap ideal
+                let gap = Math.floor((larguraDisponivel - larguraBolas) / (bolas.length - 1));
+                // define limite mínimo e máximo
+                gap = Math.max(4, Math.min(gap, 12));
+                container.style.gap = gap + 'px';
+            }
+        });
+    }
+
+          // Ajusta no carregamento e no resize
+             window.addEventListener('load', ajustarEspacamento);
+             window.addEventListener('resize', ajustarEspacamento);
+
         async function gerarJogos(quantidade) {
             const areaResultados = document.getElementById('area-resultados');
             areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Gerando...</h2>';
