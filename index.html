@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- SEO -->
-    <title>Mega-Sena Dicas - Gere palpites e aumente suas chances</title>
-    <meta name="description" content="Gere dicas e palpites para Mega-Sena de forma rápida e inteligente. Escolha entre 1, 5 ou 10 combinações únicas e acredite na sua sorte!">
-    <meta name="keywords" content="mega-sena, dicas, palpites, loteria, sorteio, números, jogo, sorte, ganhar na mega-sena">
-    <meta name="robots" content="index, follow">
+    <title>Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances de ganhar</title>
+    <meta name="description" content="Gere palpites inteligentes para a Mega-Sena com combinações exclusivas. Escolha entre 1, 5 ou 10 jogos e aumente suas chances!">
+    <meta name="keywords" content="mega-sena, dicas, palpites, loteria, números da sorte, jogos, sorteio, como ganhar, probabilidades, apostas">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="author" content="Ronaldo Leite">
-    
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://seudominio.com/">
+
     <!-- Open Graph -->
-    <meta property="og:title" content="Mega-Sena Dicas - Gere palpites e aumente suas chances">
-    <meta property="og:description" content="Escolha 1, 5 ou 10 dicas da Mega-Sena com combinações exclusivas. Acredite na sua sorte!">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:title" content="Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances">
+    <meta property="og:description" content="Escolha 1, 5 ou 10 combinações únicas para a Mega-Sena. Gere jogos exclusivos e aposte com mais confiança.">
     <meta property="og:image" content="https://seudominio.com/imagem-og.jpg">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://seudominio.com">
-    
+    <meta property="og:url" content="https://seudominio.com/">
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mega-Sena Dicas - Gere palpites e aumente suas chances">
-    <meta name="twitter:description" content="Escolha 1, 5 ou 10 dicas da Mega-Sena com combinações exclusivas. Acredite na sua sorte!">
+    <meta name="twitter:title" content="Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances">
+    <meta name="twitter:description" content="Gere jogos exclusivos para a Mega-Sena e aumente suas chances. Escolha 1, 5 ou 10 dicas agora!">
     <meta name="twitter:image" content="https://seudominio.com/imagem-twitter.jpg">
 
     <!-- Favicon -->
@@ -42,6 +46,7 @@
       "description": "Gere dicas da Mega-Sena e aumente suas chances com combinações únicas e aleatórias.",
       "applicationCategory": "Game",
       "operatingSystem": "All",
+      "inLanguage": "pt-BR",
       "creator": {
         "@type": "Person",
         "name": "Ronaldo Leite"
@@ -170,17 +175,17 @@
     <div class="container">
         <header>
             <h1>Mega-Sena Dicas</h1>
-            <p class="subtitulo">Acredite na sua sorte!</p>
-            <img src="logotipo.jpg" alt="Logotipo Mega-Sena Dicas com trevo da sorte" class="imagem-ouro">
+            <p class="subtitulo">Gere palpites exclusivos e aumente suas chances!</p>
+            <img src="logotipo.jpg" alt="Logotipo Mega-Sena Dicas com trevo da sorte" class="imagem-ouro" loading="lazy">
         </header>
 
         <main>
             <section class="secao-botoes">
                 <h2>Selecione a quantidade de dicas:</h2>
                 <div class="grupo-botoes">
-                    <button class="botao-gerar" onclick="gerarJogos(1)">1 Dica</button>
-                    <button class="botao-gerar" onclick="gerarJogos(5)">5 Dicas</button>
-                    <button class="botao-gerar" onclick="gerarJogos(10)">10 Dicas</button>
+                    <button class="botao-gerar" onclick="gerarJogos(1)" aria-label="Gerar 1 dica">1 Dica</button>
+                    <button class="botao-gerar" onclick="gerarJogos(5)" aria-label="Gerar 5 dicas">5 Dicas</button>
+                    <button class="botao-gerar" onclick="gerarJogos(10)" aria-label="Gerar 10 dicas">10 Dicas</button>
                 </div>
             </section>
 
@@ -194,9 +199,9 @@
             areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Gerando...</h2>';
 
             try {
-                const response = await fetch(/get-games/${quantidade});
+                const response = await fetch(`/get-games/${quantidade}`);
                 if (!response.ok) {
-                    throw new Error(Erro do servidor: ${response.statusText});
+                    throw new Error(`Erro do servidor: ${response.statusText}`);
                 }
                 const jogos = await response.json();
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Dicas:</h2>';
@@ -212,7 +217,7 @@
                     areaResultados.appendChild(divJogo);
                 });
             } catch (error) {
-                areaResultados.innerHTML = <p style="color:red;">Erro: ${error.message}</p>;
+                areaResultados.innerHTML = `<p style="color:red;">Erro: ${error.message}</p>`;
             }
         }
     </script>
