@@ -112,7 +112,7 @@
             transition: transform 0.3s ease;
         }
         .imagem-ouro:hover { transform: scale(1.05); }
-        .secao-botoes h2 { font-size: 1.2rem; margin-bottom: 0.8rem; font-weight: 500; }
+        .secao-botoes h2 { font-size: 1.2rem; margin-bottom: 1rem; font-weight: 500; }
         .grupo-botoes { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
         .botao-gerar {
             background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover));
@@ -138,7 +138,7 @@
             margin-bottom: 1rem;
         }
         #area-resultados { min-height: 100px; }
-        /* --- ESTILO DOS NÚMEROS --- */
+        
         .jogo {
             background-color: rgba(0, 0, 0, 0.2);
             padding: 1rem;
@@ -168,7 +168,7 @@
             color: var(--cor-dourado);
             font-weight: 700;
         }
-        /* --- SPINNER DE CARREGAMENTO --- */
+        
         .spinner {
             border: 5px solid rgba(255, 255, 255, 0.2);
             border-top: 5px solid var(--cor-dourado);
@@ -180,7 +180,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* --- NAVEGAÇÃO INTERNA --- */
         .nav-interna {
             padding: 1.5rem 0;
             margin-top: 1rem;
@@ -200,7 +199,6 @@
         }
         .nav-interna a:hover { color: var(--cor-dourado-hover); }
 
-        /* --- RODAPÉ E SEÇÕES --- */
         .page-footer { margin-top: 2rem; }
         .footer-section {
             padding: 2rem 0;
@@ -236,7 +234,6 @@
             display: block;
         }
 
-        /* --- FILTRO TOGGLE --- */
         .secao-filtro { margin: 1.5rem 0 1rem 0; display: flex; justify-content: center; align-items: center; gap: 12px; }
         .secao-filtro label { font-size: 1rem; font-weight: 500; color: var(--cor-texto); }
         .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
@@ -246,12 +243,40 @@
         input:checked + .slider { background-color: var(--cor-dourado); }
         input:checked + .slider:before { transform: translateX(22px); }
 
+        /* --- AJUSTES PARA TELAS PEQUENAS (CELULARES) --- */
         @media (max-width: 600px) {
-            .container { padding: 1.5rem; }
+            .container { padding: 1.5rem 1rem; }
             h1 { font-size: 1.8rem; }
             .imagem-ouro { width: 120px; }
-            .numero { font-size: 1.4rem; }
-            .separador-numero { font-size: 1.2rem; }
+            
+            /* Organiza os botões um abaixo do outro */
+            .grupo-botoes {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            .botao-gerar {
+                width: 90%;
+                max-width: 300px;
+                padding: 0.7rem 1rem;
+                font-size: 0.95rem;
+            }
+
+            /* Ajusta os números para caber na tela */
+            .jogo {
+                padding: 0.8rem 0.6rem;
+            }
+            .numeros-container {
+                gap: 6px; /* Reduz o espaço entre os números */
+            }
+            .numero {
+                font-size: 1.2rem; /* Reduz o tamanho da fonte dos números */
+                padding: 0 2px;
+            }
+            .separador-numero {
+                font-size: 1.1rem; /* Reduz o tamanho do separador */
+            }
+
             .footer-section p { text-align: left; }
         }
     </style>
@@ -305,8 +330,8 @@
             <section id="links" class="footer-section" aria-labelledby="links-titulo">
                 <h2 id="links-titulo">Links Oficiais</h2>
                 <a href="https://loterias.caixa.gov.br/Paginas/mega-sena.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Site Oficial da Mega-Sena</a>
-                <a href="https://www.loteriasonline.caixa.gov.br/silce-web/#/termos-de-uso" target="_blank" rel="noopener noreferrer" class="link-centralizado">Loterias Online Caixa</a>
-                <a href="https://www.caixa.gov.br/jogo-responsavel/Paginas/default.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Jogo Responsável</a>
+                <a href="https:// www.loteriasonline.caixa.gov.br/silce-web/#/termos-de-uso" target="_blank" rel="noopener noreferrer" class="link-centralizado">Loterias Online Caixa</a>
+                <a href="https:// www.caixa.gov.br/jogo-responsavel/Paginas/default.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Jogo Responsável</a>
             </section>
 
              <section id="doacao" class="footer-section" aria-labelledby="doacao-titulo">
@@ -327,7 +352,7 @@
             <section id="termos" class="footer-section" aria-labelledby="termos-titulo">
                 <h2 id="termos-titulo">Termo de Uso</h2>
                 <p><strong>TERMO DE RESPONSABILIDADE E ISENÇÃO DE GARANTIAS</strong></p>
-                <p>O site <strong>Mega Dicas</strong> ("Site") é um serviço gratuito e meramente informativo, que utiliza algoritmos para <strong>gerar sugestões aleatórias de números</strong> para jogos da Mega-Sena e similares. O Site <strong>não garante, promete ou sugere</strong> que o uso dessas sugestões aumente as chances de ganhar prêmios, uma vez que os resultados de loterias são <strong>inteiramente aleatórios e sujeitos a probabilidades extremamente baixas</strong>.</p>
+                <p>O site <strong>Mega-Dicas</strong> ("megadicas.com.br") é um serviço gratuito e meramente informativo, que utiliza algoritmos para <strong>gerar sugestões aleatórias de números</strong> para jogos da Mega-Sena e similares. O Site <strong>não garante, promete ou sugere</strong> que o uso dessas sugestões aumente as chances de ganhar prêmios, uma vez que os resultados de loterias são <strong>inteiramente aleatórios e sujeitos a probabilidades extremamente baixas</strong>.</p>
                 <p>Ao utilizar este Site, o usuário <strong>declara e concorda</strong> que:</p>
                 <ol style="text-align: left; padding-left: 20px; line-height: 1.7;">
                     <li><strong>Não há garantia de ganhos:</strong> As sugestões fornecidas são baseadas em sorteios aleatórios e não constituem aconselhamento profissional, estratégia vencedora ou interferência nos sorteios oficiais.</li>
@@ -346,30 +371,16 @@
     <script>
         async function gerarJogos(quantidade) {
             const areaResultados = document.getElementById('area-resultados');
-            // Mostra o spinner de carregamento
             areaResultados.innerHTML = '<div class="spinner"></div>';
 
             const filtroAtivado = document.getElementById('filtro-toggle').checked;
 
             try {
-                // Simulação de chamada de API (substitua pelo seu fetch real)
-                // const response = await fetch(`/get-games/${quantidade}?filtro=${filtroAtivado}`);
-                // if (!response.ok) throw new Error(`Erro do servidor: ${response.statusText}`);
-                // const jogos = await response.json();
-                
-                // --- INÍCIO: BLOCO DE SIMULAÇÃO (REMOVER EM PRODUÇÃO) ---
-                // Este bloco simula uma resposta do servidor para fins de teste.
-                // Remova-o e descomente as linhas do 'fetch' acima quando o backend estiver funcionando.
-                await new Promise(resolve => setTimeout(resolve, 800)); // Simula atraso de rede
-                const jogos = [];
-                for (let i = 0; i < quantidade; i++) {
-                    const jogo = new Set();
-                    while(jogo.size < 6) {
-                        jogo.add(String(Math.floor(Math.random() * 60) + 1).padStart(2, '0'));
-                    }
-                    jogos.push(Array.from(jogo).sort((a,b) => a-b).join(' '));
+                const response = await fetch(`/get-games/${quantidade}?filtro=${filtroAtivado}`);
+                if (!response.ok) {
+                    throw new Error(`Erro do servidor: ${response.statusText}`);
                 }
-                // --- FIM: BLOCO DE SIMULAÇÃO ---
+                const jogos = await response.json();
                 
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
                 
@@ -387,7 +398,6 @@
                         divNumero.textContent = num;
                         numerosContainer.appendChild(divNumero);
 
-                        // Adiciona o traço separador, exceto após o último número
                         if (index < numeros.length - 1) {
                             const separador = document.createElement('span');
                             separador.className = 'separador-numero';
@@ -401,9 +411,62 @@
                 });
 
             } catch (error) {
-                areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos: ${error.message}</p>`;
+                areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos. Verifique sua conexão ou tente novamente mais tarde.</p>`;
             }
         }
+
+        // Bloco de simulação para teste local (REMOVER EM PRODUÇÃO)
+        // Sobrescreve a função fetch para funcionar sem um backend real.
+        // Para usar, comente a função 'gerarJogos' acima e descomente esta abaixo.
+        /*
+        async function gerarJogos(quantidade) {
+            const areaResultados = document.getElementById('area-resultados');
+            areaResultados.innerHTML = '<div class="spinner"></div>';
+            
+            await new Promise(resolve => setTimeout(resolve, 800)); // Simula atraso de rede
+
+            try {
+                const jogos = [];
+                for (let i = 0; i < quantidade; i++) {
+                    const jogo = new Set();
+                    while(jogo.size < 6) {
+                        jogo.add(String(Math.floor(Math.random() * 60) + 1).padStart(2, '0'));
+                    }
+                    jogos.push(Array.from(jogo).sort((a,b) => a-b).join(' '));
+                }
+
+                areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
+                
+                jogos.forEach(linha => {
+                    const jogoContainer = document.createElement('div');
+                    jogoContainer.className = 'jogo';
+
+                    const numerosContainer = document.createElement('div');
+                    numerosContainer.className = 'numeros-container';
+                    
+                    const numeros = linha.trim().split(/\s+/);
+                    numeros.forEach((num, index) => {
+                        const divNumero = document.createElement('span');
+                        divNumero.className = 'numero';
+                        divNumero.textContent = num;
+                        numerosContainer.appendChild(divNumero);
+
+                        if (index < numeros.length - 1) {
+                            const separador = document.createElement('span');
+                            separador.className = 'separador-numero';
+                            separador.textContent = '-';
+                            numerosContainer.appendChild(separador);
+                        }
+                    });
+
+                    jogoContainer.appendChild(numerosContainer);
+                    areaResultados.appendChild(jogoContainer);
+                });
+            } catch (error) {
+                 areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro: ${error.message}</p>`;
+            }
+        }
+        */
     </script>
 </body>
 </html>
