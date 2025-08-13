@@ -277,7 +277,7 @@
 
         <main>
             <section class="secao-filtro">
-                <label for="filtro-toggle">filtros: desligado | ligado</label>
+                <label for="filtro-toggle">Filtros: desligado | ligado</label>
                 <label class="toggle-switch">
                     <input type="checkbox" id="filtro-toggle" checked>
                     <span class="slider"></span>
@@ -285,7 +285,7 @@
             </section>
             
             <section class="secao-botoes">
-                <h2>Escolha a quantidade:</h2>
+                <h2>Quantidade de dicas:</h2>
                 <div class="grupo-botoes">
                     <button class="botao-gerar" onclick="gerarJogos(1)" aria-label="Gerar 1 dica">01</button>
                     <button class="botao-gerar" onclick="gerarJogos(5)" aria-label="Gerar 5 dicas">05</button>
@@ -346,7 +346,7 @@
                 }
                 const jogos = await response.json();
                 
-                areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Suas dicas, boa sorte!:</h2>';
+                areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
                 jogos.forEach(linha => {
                     const jogoContainer = document.createElement('div');
                     jogoContainer.className = 'jogo';
