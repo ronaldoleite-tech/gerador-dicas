@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO -->
-    <title>Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances de ganhar</title>
+    <title>Mega Dicas - Gerador de Palpites para a Mega-Sena</title>
     <meta name="description" content="Gere palpites inteligentes para a Mega-Sena com combinações exclusivas. Escolha entre 1, 5 ou 10 jogos e aumente suas chances!">
     <meta name="keywords" content="mega-sena, dicas, palpites, loteria, números da sorte, jogos, sorteio, como ganhar, probabilidades, apostas">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -16,7 +16,7 @@
 
     <!-- Open Graph -->
     <meta property="og:locale" content="pt_BR">
-    <meta property="og:title" content="Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances">
+    <meta property="og:title" content="Mega Dicas - Gerador de Palpites para a Mega-Sena">
     <meta property="og:description" content="Escolha 1, 5 ou 10 combinações únicas para a Mega-Sena. Gere jogos exclusivos e aposte com mais confiança.">
     <meta property="og:image" content="https://gerador-dicas.onrender.com/logotipo.jpg">
     <meta property="og:type" content="website">
@@ -24,24 +24,28 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mega-Sena Dicas - Gere palpites exclusivos e aumente suas chances">
+    <meta name="twitter:title" content="Mega Dicas - Gerador de Palpites para a Mega-Sena">
     <meta name="twitter:description" content="Gere jogos exclusivos para a Mega-Sena e aumente suas chances. Escolha 1, 5 ou 10 dicas agora!">
     <meta name="twitter:image" content="https://gerador-dicas.onrender.com/logotipo.jpg">
 
     <!-- Favicon -->
     <link rel="icon" href="logotipo.jpg" type="image/jpeg">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"
+     crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Dados Estruturados Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Mega-Sena Dicas",
+      "name": "Mega Dicas",
       "url": "https://gerador-dicas.onrender.com",
       "description": "Gere dicas da Mega-Sena e aumente suas chances com combinações únicas e aleatórias.",
       "applicationCategory": "Game",
@@ -57,14 +61,15 @@
     <style>
         :root {
             --cor-fundo: linear-gradient(180deg, #0d47a1, #1976d2, #42a5f5);
-            --cor-caixa: rgba(255,255,255,0.08);
+            --cor-caixa: rgba(255, 255, 255, 0.08);
             --cor-texto: #E0E0E0;
             --cor-dourado: #FFD700;
             --cor-dourado-hover: #FFAA00;
             --sombra-dourada: 0 0 12px rgba(255, 215, 0, 0.4);
             --sombra-caixa: 0 8px 25px rgba(0, 0, 0, 0.5);
+            --cor-divisoria-ouro: rgba(255, 215, 0, 0.3);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--cor-fundo);
@@ -75,7 +80,7 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             background: var(--cor-caixa);
             padding: 2rem;
@@ -85,7 +90,7 @@
         }
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.0rem;
+            font-size: 2.2rem;
             color: var(--cor-dourado);
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -106,163 +111,147 @@
             box-shadow: var(--sombra-dourada);
             transition: transform 0.3s ease;
         }
-        .imagem-ouro:hover {
-            transform: scale(1.05);
-        }
-        .secao-botoes h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
-            font-weight: 500;
-        }
-        .grupo-botoes {
-            display: flex;
-            justify-content: center;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-        }
+        .imagem-ouro:hover { transform: scale(1.05); }
+        .secao-botoes h2 { font-size: 1.2rem; margin-bottom: 0.8rem; font-weight: 500; }
+        .grupo-botoes { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
         .botao-gerar {
             background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover));
             color: #000;
             border: none;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
             font-weight: bold;
             border-radius: 40px;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         .botao-gerar:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
         }
         .titulo-sugestoes {
-            font-size: 1.0rem;
+            font-size: 1.2rem;
             font-family: 'Orbitron', sans-serif;
             color: var(--cor-dourado);
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             margin-bottom: 1rem;
         }
+        #area-resultados { min-height: 100px; }
+        /* --- ESTILO DOS NÚMEROS --- */
         .jogo {
             background-color: rgba(0, 0, 0, 0.2);
-            padding: 0.7rem;
+            padding: 1rem;
             margin: 0.7rem auto;
             border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            border-left: 3px solid var(--cor-dourado);
+            border-left: 4px solid var(--cor-dourado);
+            transition: transform 0.3s ease;
         }
+        .jogo:hover { transform: scale(1.02); }
         .numeros-container {
             display: flex;
-            flex-wrap: nowrap;
+            align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
         }
         .numero {
-            background: rgba(0,0,0,0.4);
+            font-size: 1.7rem;
+            font-weight: 700;
             color: var(--cor-texto);
-            font-size: 0.95rem;
-            font-weight: bold;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 0 5px;
+        }
+        .separador-numero {
+            font-size: 1.5rem;
+            color: var(--cor-dourado);
+            font-weight: 700;
+        }
+        /* --- SPINNER DE CARREGAMENTO --- */
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top: 5px solid var(--cor-dourado);
             border-radius: 50%;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
-            flex-shrink: 0;
-            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
         }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* --- NAVEGAÇÃO INTERNA --- */
+        .nav-interna {
+            padding: 1.5rem 0;
+            margin-top: 1rem;
+            border-top: 1px solid var(--cor-divisoria-ouro);
+            border-bottom: 1px solid var(--cor-divisoria-ouro);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .nav-interna a {
+            color: var(--cor-dourado);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-interna a:hover { color: var(--cor-dourado-hover); }
 
-        .page-footer {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        /* --- RODAPÉ E SEÇÕES --- */
+        .page-footer { margin-top: 2rem; }
+        .footer-section {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--cor-divisoria-ouro);
         }
+        .footer-section:last-child { border-bottom: none; }
         .footer-section h2 {
             font-family: 'Orbitron', sans-serif;
             color: var(--cor-dourado);
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
         .footer-section p, .footer-section a {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
             text-align: justify;
         }
         .footer-section a {
             color: var(--cor-dourado-hover);
             font-weight: 500;
             text-decoration: none;
-            display: block;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-        .footer-section a:hover {
-            text-decoration: underline;
-        }
-        
-        /* ESTILOS PARA O BOTÃO TOGGLE */
-        .secao-filtro {
-            margin: 1.5rem 0 1rem 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-        }
-        .secao-filtro label {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--cor-texto);
-        }
-        .toggle-switch {
-            position: relative;
             display: inline-block;
-            width: 50px;
-            height: 28px;
         }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #555;
-            transition: .4s;
-            border-radius: 28px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 4px;
-            bottom: 4px;
+        .footer-section a:hover { text-decoration: underline; }
+        .link-centralizado { display: block; text-align: center; margin-top: 1rem; }
+        .qrcode-pix {
+            width: 180px;
+            height: 180px;
             background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: var(--cor-dourado);
-        }
-        input:checked + .slider:before {
-            transform: translateX(22px);
+            border: 4px solid var(--cor-dourado);
+            border-radius: 10px;
+            margin: 1rem auto;
+            display: block;
         }
 
+        /* --- FILTRO TOGGLE --- */
+        .secao-filtro { margin: 1.5rem 0 1rem 0; display: flex; justify-content: center; align-items: center; gap: 12px; }
+        .secao-filtro label { font-size: 1rem; font-weight: 500; color: var(--cor-texto); }
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #555; transition: .4s; border-radius: 28px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--cor-dourado); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
         @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .imagem-ouro { width: 110px; }
-            .numero { width: 30px; height: 30px; font-size: 0.85rem; }
+            .container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .imagem-ouro { width: 120px; }
+            .numero { font-size: 1.4rem; }
+            .separador-numero { font-size: 1.2rem; }
             .footer-section p { text-align: left; }
         }
     </style>
@@ -270,14 +259,14 @@
 <body>
     <div class="container">
         <header>
-            <img src="logotipo.jpg" alt="Logotipo Mega-Sena Dicas com trevo da sorte" class="imagem-ouro" loading="lazy">
-            <h1>Mega-Sena Dicas</h1>
+            <img src="logotipo.jpg" alt="Logotipo Mega Dicas com trevo da sorte" class="imagem-ouro" loading="lazy">
+            <h1>Mega Dicas</h1>
             <p class="subtitulo">Acredite na sua sorte!</p>   
         </header>
 
         <main>
             <section class="secao-filtro">
-                <label for="filtro-toggle">Filtros: desligado | ligado</label>
+                <label for="filtro-toggle">Filtros: OFF | ON</label>
                 <label class="toggle-switch">
                     <input type="checkbox" id="filtro-toggle" checked>
                     <span class="slider"></span>
@@ -285,87 +274,134 @@
             </section>
             
             <section class="secao-botoes">
-                <h2>Quantidade de dicas:</h2>
+                <h2>Escolha a quantidade de dicas:</h2>
                 <div class="grupo-botoes">
-                    <button class="botao-gerar" onclick="gerarJogos(1)" aria-label="Gerar 1 dica">01</button>
-                    <button class="botao-gerar" onclick="gerarJogos(5)" aria-label="Gerar 5 dicas">05</button>
-                    <button class="botao-gerar" onclick="gerarJogos(10)" aria-label="Gerar 10 dicas">10</button>
+                    <button class="botao-gerar" onclick="gerarJogos(1)" aria-label="Gerar 1 dica">01 Dica</button>
+                    <button class="botao-gerar" onclick="gerarJogos(5)" aria-label="Gerar 5 dicas">05 Dicas</button>
+                    <button class="botao-gerar" onclick="gerarJogos(10)" aria-label="Gerar 10 dicas">10 Dicas</button>
                 </div>
             </section>
 
             <section id="area-resultados" aria-live="polite" aria-atomic="true"></section>
         </main>
 
+        <nav class="nav-interna">
+            <a href="#sobre">Sobre</a>
+            <a href="#links">Links Oficiais</a>
+            <a href="#doacao">Apoie o Projeto</a>
+            <a href="#contato">Contato</a>
+            <a href="#termos">Termos de Uso</a>
+        </nav>
+
         <footer class="page-footer">
-            <section class="footer-section" aria-labelledby="sobre-titulo">
+            <section id="sobre" class="footer-section" aria-labelledby="sobre-titulo">
                 <h2 id="sobre-titulo">Sobre</h2>
-                <p>Fazer uma fezinha nas loterias é uma das paixões do brasileiro e a favorita certamente é a Mega-Sena. E na hora de escolher os números, vale tudo: combinar datas importantes, placas de carros. números favoritos, surpresinha...</p>
-                <p>Agora, você pode realizar seus jogos aqui no Mega Dicas: e escolher entre 1, 5 ou 10 dicas de jogos que recebem filtros que selecionam os números que mais aparecem nos sorteios da Mega-Sena, para você poder realizar apostas particular ou em bolões junto com os amigos da empresa, da faculdade, da academia...</p>
-                <p>Lembre-se, jogar nas loterias é só para maiores de 18 anos e sempre jogue com responsabilidade!</p>
-                <p><strong>Boa sorte!!</strong></p>
+                <p>Fazer uma fezinha nas loterias é uma das paixões dos brasileiros e a favorita certamente é a Mega-Sena. E para escolher os números da sorte, vale tudo: combinar datas importantes, placas de carros, números favoritos, surpresinha...</p>
+                <p>Agora, você pode selecionar os números para os seus jogos aqui no Mega Dicas: escolha entre 1, 5 ou 10 dicas de jogos. Você pode usar nossos filtros inteligentes, que analisam os números mais sorteados, ou desligá-los para gerar números totalmente aleatórios. Perfeito para apostas individuais ou para bolões com amigos e colegas!</p>
+                <p>Lembre-se, jogar nas loterias é só para maiores de 18 anos. Jogue sempre com responsabilidade!</p>
+                <p style="text-align: center;"><strong>Boa sorte!</strong></p>
             </section>
-            <section class="footer-section" aria-labelledby="links-titulo">
+            
+            <section id="links" class="footer-section" aria-labelledby="links-titulo">
                 <h2 id="links-titulo">Links Oficiais</h2>
-                <a href="https://loterias.caixa.gov.br/Paginas/mega-sena.aspx" target="_blank" rel="noopener noreferrer">Site Oficial da Mega-Sena</a>
-                <a href="https://www.loteriasonline.caixa.gov.br/silce-web/#/termos-de-uso" target="_blank" rel="noopener noreferrer">Loterias Online Caixa</a>
+                <a href="https://loterias.caixa.gov.br/Paginas/mega-sena.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Site Oficial da Mega-Sena</a>
+                <a href="https://www.loteriasonline.caixa.gov.br/silce-web/#/termos-de-uso" target="_blank" rel="noopener noreferrer" class="link-centralizado">Loterias Online Caixa</a>
+                <a href="https://www.caixa.gov.br/jogo-responsavel/Paginas/default.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Jogo Responsável</a>
             </section>
-            <section class="footer-section" aria-labelledby="contato-titulo">
+
+             <section id="doacao" class="footer-section" aria-labelledby="doacao-titulo">
+                <h2 id="doacao-titulo">Ganhou com nossas dicas?</h2>
+                <p>Se você ganhou na loteria com nossos números, queremos te parabenizar! Nossa comunidade é feita de pessoas que buscam a sorte e, se você quiser fazer parte da nossa rede de apoio, considere doar para o site. Agradecemos a sua colaboração, que nos ajuda a manter o site funcionando e a oferecer essa ferramenta para mais pessoas. Juntos, podemos alcançar mais sonhos!</p>
+                <p><strong>Apoie com um PIX:</strong></p>
+                <!-- SUBSTITUIR 'placeholder-qrcode.png' PELA IMAGEM REAL DO SEU QR CODE -->
+                <img src="placeholder-qrcode.png" alt="QR Code para doação via PIX" class="qrcode-pix">
+                <p style="font-size: 0.8rem; text-align: center; margin-top: 1rem;"><em>*Doações são voluntárias e não vinculadas a ganhos futuros. Apreciamos o apoio, mas lembre-se: jogar é um risco financeiro.</em></p>
+            </section>
+
+            <section id="contato" class="footer-section" aria-labelledby="contato-titulo">
                 <h2 id="contato-titulo">Contato</h2>
-                <a href="mailto:seu-email-aqui@exemplo.com">contato@megadicas.com.br</a>
+                <p style="text-align: center;">Para dúvidas, sugestões ou parcerias, entre em contato pelo e-mail:</p>
+                <a href="mailto:contato@megadicas.com.br" class="link-centralizado">contato@megadicas.com.br</a>
             </section>
+
+            <section id="termos" class="footer-section" aria-labelledby="termos-titulo">
+                <h2 id="termos-titulo">Termo de Uso</h2>
+                <p><strong>TERMO DE RESPONSABILIDADE E ISENÇÃO DE GARANTIAS</strong></p>
+                <p>O site <strong>Mega Dicas</strong> ("Site") é um serviço gratuito e meramente informativo, que utiliza algoritmos para <strong>gerar sugestões aleatórias de números</strong> para jogos da Mega-Sena e similares. O Site <strong>não garante, promete ou sugere</strong> que o uso dessas sugestões aumente as chances de ganhar prêmios, uma vez que os resultados de loterias são <strong>inteiramente aleatórios e sujeitos a probabilidades extremamente baixas</strong>.</p>
+                <p>Ao utilizar este Site, o usuário <strong>declara e concorda</strong> que:</p>
+                <ol style="text-align: left; padding-left: 20px; line-height: 1.7;">
+                    <li><strong>Não há garantia de ganhos:</strong> As sugestões fornecidas são baseadas em sorteios aleatórios e não constituem aconselhamento profissional, estratégia vencedora ou interferência nos sorteios oficiais.</li>
+                    <li><strong>Jogos de azar são para maiores de 18 anos:</strong> O acesso e uso do Site são destinados exclusivamente a pessoas maiores de 18 anos, conforme a legislação brasileira.</li>
+                    <li><strong>Uso por conta e risco:</strong> O usuário é <strong>inteiramente responsável</strong> por qualquer decisão de apostar valores em loterias, assumindo todos os riscos financeiros e consequências legais.</li>
+                    <li><strong>Isenção de responsabilidade:</strong> O Site, seus desenvolvedores e parceiros <strong>não se responsabilizam</strong> por perdas financeiras, vícios em jogos de azar ou quaisquer danos diretos ou indiretos decorrentes do uso das sugestões aqui geradas.</li>
+                    <li><strong>Finalidade lúdica:</strong> O Site tem caráter exclusivamente recreativo e não possui vínculo com a Caixa Econômica Federal ou quaisquer órgãos oficiais de loterias.</li>
+                </ol>
+                <p>O usuário <strong>reconhece</strong> que os jogos de azar podem ser viciantes e compromete-se a jogar com moderação, buscando ajuda profissional se necessário. Ao gerar sugestões neste Site, você <strong>aceita integralmente estes termos</strong>.</p>
+                <p style="font-size: 0.8rem; text-align: right; margin-top: 1rem;"><em>Última atualização: 07 de Agosto de 2024.</em></p>
+            </section>
+
         </footer>
     </div>
 
     <script>
-        function ajustarEspacamento() {
-           document.querySelectorAll('.numeros-container').forEach(container => {
-            const bolas = container.querySelectorAll('.numero');
-            if (bolas.length > 0) {
-                const larguraDisponivel = container.offsetWidth;
-                const larguraBolas = bolas.length * bolas[0].offsetWidth;
-                let gap = Math.floor((larguraDisponivel - larguraBolas) / (bolas.length - 1));
-                gap = Math.max(4, Math.min(gap, 12));
-                container.style.gap = gap + 'px';
-            }
-        });
-    }
-
-        window.addEventListener('load', ajustarEspacamento);
-        window.addEventListener('resize', ajustarEspacamento);
-
         async function gerarJogos(quantidade) {
             const areaResultados = document.getElementById('area-resultados');
-            areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Gerando...</h2>';
+            // Mostra o spinner de carregamento
+            areaResultados.innerHTML = '<div class="spinner"></div>';
 
             const filtroAtivado = document.getElementById('filtro-toggle').checked;
 
             try {
-                const response = await fetch(`/get-games/${quantidade}?filtro=${filtroAtivado}`);
-                if (!response.ok) {
-                    throw new Error(`Erro do servidor: ${response.statusText}`);
+                // Simulação de chamada de API (substitua pelo seu fetch real)
+                // const response = await fetch(`/get-games/${quantidade}?filtro=${filtroAtivado}`);
+                // if (!response.ok) throw new Error(`Erro do servidor: ${response.statusText}`);
+                // const jogos = await response.json();
+                
+                // --- INÍCIO: BLOCO DE SIMULAÇÃO (REMOVER EM PRODUÇÃO) ---
+                // Este bloco simula uma resposta do servidor para fins de teste.
+                // Remova-o e descomente as linhas do 'fetch' acima quando o backend estiver funcionando.
+                await new Promise(resolve => setTimeout(resolve, 800)); // Simula atraso de rede
+                const jogos = [];
+                for (let i = 0; i < quantidade; i++) {
+                    const jogo = new Set();
+                    while(jogo.size < 6) {
+                        jogo.add(String(Math.floor(Math.random() * 60) + 1).padStart(2, '0'));
+                    }
+                    jogos.push(Array.from(jogo).sort((a,b) => a-b).join(' '));
                 }
-                const jogos = await response.json();
+                // --- FIM: BLOCO DE SIMULAÇÃO ---
                 
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
+                
                 jogos.forEach(linha => {
                     const jogoContainer = document.createElement('div');
                     jogoContainer.className = 'jogo';
+
                     const numerosContainer = document.createElement('div');
                     numerosContainer.className = 'numeros-container';
-                    linha.trim().split(/\s+/).forEach(num => {
-                        const divNumero = document.createElement('div');
+                    
+                    const numeros = linha.trim().split(/\s+/);
+                    numeros.forEach((num, index) => {
+                        const divNumero = document.createElement('span');
                         divNumero.className = 'numero';
                         divNumero.textContent = num;
                         numerosContainer.appendChild(divNumero);
+
+                        // Adiciona o traço separador, exceto após o último número
+                        if (index < numeros.length - 1) {
+                            const separador = document.createElement('span');
+                            separador.className = 'separador-numero';
+                            separador.textContent = '-';
+                            numerosContainer.appendChild(separador);
+                        }
                     });
+
                     jogoContainer.appendChild(numerosContainer);
                     areaResultados.appendChild(jogoContainer);
                 });
-                
-                ajustarEspacamento();
 
             } catch (error) {
-                areaResultados.innerHTML = `<p style="color:red;">Erro: ${error.message}</p>`;
+                areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos: ${error.message}</p>`;
             }
         }
     </script>
