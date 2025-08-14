@@ -112,3 +112,42 @@ def status_do_banco():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
+
+@app.route('/get-stats')
+def get_stats():
+    """ Rota para buscar estatísticas do banco de dados. """
+    conn = None
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()
+
+        # 1. Obter o número do último concurso
+        cur.execute("SELECT MAX(concurso) FROM resultados_sorteados;")
+        ultimo_concurso_result = cur.fetchone()
+        ultimo_concurso = ultimo_concurso_result[0] if ultimo_concurso_result else 0
+
+        # 2. Obter a frequência de todos os números
+        cur.execute("""
+            SELECT numero::integer, COUNT(*) as frequencia
+            FROM (
+                SELECT unnest(string_to_array(dezenas, ' ')) as numero
+                FROM resultados_sorteados
+            ) as numeros_individuais
+            GROUP BY numero
+            ORDER BY frequencia DESC;
+        """)
+        frequencia_numeros = cur.fetchall()
+        
+        # Formata os dados para o frontend
+        stats_data = [{"numero": n, "frequencia": f} for n, f in frequencia_numeros]
+
+        return jsonify({
+            "ultimo_concurso": ultimo_concurso,
+            "frequencia": stats_data
+        })
+    except Exception as e:
+        print(f"ERRO: Erro ao buscar estatísticas: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if conn:
+            conn.close()

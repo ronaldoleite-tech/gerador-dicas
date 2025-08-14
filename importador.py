@@ -3,14 +3,7 @@ import os
 from dotenv import load_dotenv
 
 def realizar_importacao():
-    """
-    Script para popular o banco de dados com os resultados dos sorteios.
-    Este script deve ser executado manualmente, não como parte do servidor web.
-    """
-    # Carrega as variáveis de ambiente de um arquivo .env (ótimo para desenvolvimento local)
     load_dotenv()
-    
-    # Pega as configurações do ambiente
     DATABASE_URL = os.environ.get('DATABASE_URL')
     FILE_PATH_PARA_IMPORTAR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sorteados.txt')
     BATCH_SIZE = 500
@@ -26,32 +19,37 @@ def realizar_importacao():
         cur = conn.cursor()
         print("INFO: Conectado ao DB para importação.")
 
-        # Garante que a tabela exista
+        # Recriar a tabela garante que a estrutura esteja correta
         cur.execute("""
             CREATE TABLE IF NOT EXISTS resultados_sorteados (
                 id SERIAL PRIMARY KEY,
-                dezenas TEXT NOT NULL UNIQUE
+                concurso INT UNIQUE NOT NULL,
+                dezenas TEXT NOT NULL
             );
         """)
-        print("INFO: Tabela 'resultados_sorteados' verificada/criada.")
+        print("INFO: Tabela 'resultados_sorteados' (com coluna 'concurso') verificada/criada.")
         
         batch = []
         total_inserted = 0
         
-        # Abre o arquivo de sorteios e processa em lotes
         with open(FILE_PATH_PARA_IMPORTAR, 'r', encoding='utf-8') as f:
             next(f) # Pula a primeira linha (cabeçalho)
 
             for line in f:
-                numeros = line.strip().split() 
-                if len(numeros) == 6:
-                    # Ordena os números para garantir um formato único
-                    linha_formatada = " ".join(sorted(numeros, key=int))
-                    batch.append((linha_formatada,))
+                parts = line.strip().split()
+                if len(parts) >= 7: # Garante que a linha tem o concurso + 6 dezenas
+                    try:
+                        num_concurso = int(parts[0])
+                        dezenas = parts[1:]
+                        # Ordena as dezenas para garantir um formato único
+                        linha_formatada = " ".join(sorted(dezenas, key=int))
+                        batch.append((num_concurso, linha_formatada))
+                    except ValueError:
+                        print(f"AVISO: Linha ignorada por formato inválido: {line.strip()}")
+                        continue
                 
-                # Quando o lote atingir o tamanho máximo, insere no banco
                 if len(batch) >= BATCH_SIZE:
-                    insert_query = "INSERT INTO resultados_sorteados (dezenas) VALUES (%s) ON CONFLICT (dezenas) DO NOTHING"
+                    insert_query = "INSERT INTO resultados_sorteados (concurso, dezenas) VALUES (%s, %s) ON CONFLICT (concurso) DO NOTHING"
                     cur.executemany(insert_query, batch)
                     novos_registros = cur.rowcount if cur.rowcount is not None else 0
                     total_inserted += novos_registros
@@ -59,9 +57,8 @@ def realizar_importacao():
                     print(f"INFO: Lote inserido. {novos_registros} novos registros adicionados.")
                     batch = []
 
-        # Insere qualquer registro restante no lote final
         if batch:
-            insert_query = "INSERT INTO resultados_sorteados (dezenas) VALUES (%s) ON CONFLICT (dezenas) DO NOTHING"
+            insert_query = "INSERT INTO resultados_sorteados (concurso, dezenas) VALUES (%s, %s) ON CONFLICT (concurso) DO NOTHING"
             cur.executemany(insert_query, batch)
             novos_registros = cur.rowcount if cur.rowcount is not None else 0
             total_inserted += novos_registros
@@ -82,6 +79,5 @@ def realizar_importacao():
             conn.close()
             print("INFO: Conexão com o banco de dados fechada.")
 
-# Este bloco permite que o script seja executado diretamente pelo terminal
 if __name__ == "__main__":
-    realizar_importacao()  
+    realizar_importacao()

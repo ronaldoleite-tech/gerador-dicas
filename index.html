@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -313,6 +314,7 @@
         <nav class="nav-interna">
             <a href="#sobre">Sobre</a>
             <a href="#links">Links Oficiais</a>
+            <a href="#estatisticas">Estatísticas</a>
             <a href="#doacao">Apoie o Projeto</a>
             <a href="#contato">Contato</a>
             <a href="#termos">Termos de Uso</a>
@@ -333,7 +335,29 @@
                 <a href="https://www.loteriasonline.caixa.gov.br/silce-web/#/termos-de-uso" target="_blank" rel="noopener noreferrer" class="link-centralizado">Loterias Online Caixa</a>
                 <a href="https://www.caixa.gov.br/jogo-responsavel/Paginas/default.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Jogo Responsável</a>
             </section>
+             
+            <!-- NOVA SEÇÃO DE ESTATÍSTICAS AQUI -->
+               <section id="estatisticas" class="footer-section" aria-labelledby="stats-titulo">
+               <h2 id="stats-titulo">Estatísticas dos Sorteios</h2>
+               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
+               <p style="text-align: center; margin: 1rem 0;">Análise baseada até o concurso <strong id="ultimo-concurso-info">...</strong>.</p>
+        
+            <div class="grupo-botoes" style="margin-bottom: 2rem;">
+                <button class="botao-gerar" onclick="exibirEstatisticas()">Carregar Gráficos de Frequência</button>
+            </div>
 
+            <!-- Área onde os gráficos aparecerão -->
+              <div id="area-estatisticas" style="display: none;">
+               <div>
+                 <h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3>
+                 <canvas id="grafico-mais-sorteados"></canvas>
+               </div>
+              <div style="margin-top: 2rem;">
+                <h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3>
+                <canvas id="grafico-menos-sorteados"></canvas>
+             </div>
+        </div>
+    </section>
              <section id="doacao" class="footer-section" aria-labelledby="doacao-titulo">
                 <h2 id="doacao-titulo">Ganhou com nossas dicas?</h2>
                 <p>Se você ganhou na loteria com nossos números, queremos te parabenizar! Nossa comunidade é feita de pessoas que buscam a sorte e, se você quiser fazer parte da nossa rede de apoio, considere doar para o site. Agradecemos a sua colaboração, que nos ajuda a manter o site funcionando e a oferecer essa ferramenta para mais pessoas. Juntos, podemos alcançar mais sonhos!</p>
@@ -412,6 +436,74 @@
 
             } catch (error) {
                 areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos. Verifique sua conexão ou tente novamente mais tarde.</p>`;
+            }
+        }
+
+        // NOVO CÓDIGO PARA AS ESTATÍSTICAS
+        let graficoMaisSorteados = null;
+        let graficoMenosSorteados = null;
+
+        async function exibirEstatisticas() {
+            const areaStats = document.getElementById('area-estatisticas');
+            const botao = document.querySelector('#estatisticas .botao-gerar');
+            
+            botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
+            botao.disabled = true;
+
+            try {
+                const response = await fetch('/get-stats');
+                if (!response.ok) throw new Error('Falha ao buscar dados do servidor.');
+                
+                const data = await response.json();
+
+                document.getElementById('ultimo-concurso-info').textContent = data.ultimo_concurso;
+                areaStats.style.display = 'block';
+
+                const sortedData = data.frequencia.sort((a, b) => a.frequencia - b.frequencia);
+                
+                const menosSorteados = sortedData.slice(0, 10);
+                const maisSorteados = sortedData.slice(-10).reverse();
+
+                if (graficoMaisSorteados) graficoMaisSorteados.destroy();
+                if (graficoMenosSorteados) graficoMenosSorteados.destroy();
+                
+                const ctxMais = document.getElementById('grafico-mais-sorteados').getContext('2d');
+                graficoMaisSorteados = new Chart(ctxMais, {
+                    type: 'bar',
+                    data: {
+                        labels: maisSorteados.map(item => `Nº ${item.numero}`),
+                        datasets: [{
+                            label: 'Vezes Sorteado',
+                            data: maisSorteados.map(item => item.frequencia),
+                            backgroundColor: 'rgba(255, 215, 0, 0.7)',
+                            borderColor: 'rgba(255, 215, 0, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { labels: { color: 'white' } } } }
+                });
+
+                const ctxMenos = document.getElementById('grafico-menos-sorteados').getContext('2d');
+                graficoMenosSorteados = new Chart(ctxMenos, {
+                    type: 'bar',
+                    data: {
+                        labels: menosSorteados.map(item => `Nº ${item.numero}`),
+                        datasets: [{
+                            label: 'Vezes Sorteado',
+                            data: menosSorteados.map(item => item.frequencia),
+                            backgroundColor: 'rgba(187, 222, 251, 0.7)',
+                            borderColor: 'rgba(187, 222, 251, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { labels: { color: 'white' } } } }
+                });
+
+            } catch (error) {
+                areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
+                areaStats.style.display = 'block';
+            } finally {
+                botao.style.display = 'none';
             }
         }
 
