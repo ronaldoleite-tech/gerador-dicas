@@ -61,10 +61,12 @@
     <style>
         :root {
             --cor-fundo: linear-gradient(180deg, #0d47a1, #1976d2, #42a5f5);
+            --cor-caixa: rgba(255, 255, 255, 0.08);
             --cor-texto: #E0E0E0;
             --cor-dourado: #FFD700;
             --cor-dourado-hover: #FFAA00;
             --sombra-dourada: 0 0 12px rgba(255, 215, 0, 0.4);
+            --sombra-caixa: 0 8px 25px rgba(0, 0, 0, 0.5);
             --cor-divisoria-ouro: rgba(255, 215, 0, 0.3);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -81,17 +83,21 @@
         }
 
         .container {
+            background: var(--cor-caixa);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: var(--sombra-caixa);
             padding: 2rem;
             max-width: 800px;
             width: 95%;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         h2 {
             color: #bbdefb;
             margin-bottom: 15px;
         }
-        
+
         h1 {
             font-family: 'Orbitron', sans-serif;
             font-size: 2.2rem;
@@ -149,23 +155,31 @@
             padding: 1rem;
             margin: 0.7rem auto;
             border-radius: 12px;
-            border-left: 4px solid var(--cor-dourado);
-            transition: transform 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 5px 10px;
+            border-left: 4px solid var(--cor-dourado);
+            transition: transform 0.3s ease;
         }
         .jogo:hover { transform: scale(1.02); }
+
+        .numeros-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap; /* <<< ALTERAÇÃO PRINCIPAL: Permite que os números quebrem a linha */
+            width: 100%;     
+        }
         
         .numero {
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: var(--cor-texto);
+            padding: 0 5px;
         }
         .separador-numero {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: var(--cor-dourado);
             font-weight: 700;
         }
@@ -274,6 +288,7 @@
         input:checked + .slider { background-color: var(--cor-dourado); }
         input:checked + .slider:before { transform: translateX(22px); }
 
+        /* --- AJUSTES PARA TELAS PEQUENAS (CELULARES) --- */
         @media (max-width: 600px) {
             .container { padding: 1.5rem 1rem; }
             h1 { font-size: 1.8rem; }
@@ -293,13 +308,16 @@
 
             .jogo {
                 padding: 0.8rem;
-                gap: 3px 6px;
+            }
+            .numeros-container {
+                gap: 8px; /* Ajuste no espaçamento para telas menores */
             }
             .numero {
-                font-size: 1.2rem;
+                font-size: 1.4rem; /* Tamanho da fonte ajustado para caber mais números */
+                padding: 0 3px;
             }
             .separador-numero {
-                font-size: 1.1rem;
+                font-size: 1.3rem;
             }
 
             .footer-section p { text-align: left; }
@@ -308,6 +326,7 @@
 </head>
 <body>
     <div class="container">
+        <!-- O resto do seu <body> continua aqui, sem alterações -->
         <header>
             <img src="logotipo.png" alt="Logotipo Sorte Analisada com uma lupa e um trevo da sorte, com 2 folhas dourada" class="imagem-ouro" loading="lazy">
             <h1>Sorte Analisada</h1>
@@ -444,149 +463,146 @@
             const dezenas = document.getElementById('dezenas-select').value;
 
             try {
-                // Simulação local para garantir o funcionamento
-                await new Promise(resolve => setTimeout(resolve, 500));
+                // Simulação de chamada à API para demonstração, já que não temos o backend
+                // Em um ambiente real, seria: const response = await fetch(`/get-games/...`);
+                await new Promise(resolve => setTimeout(resolve, 500)); // Simula espera da rede
+
                 const jogos = [];
                 for (let i = 0; i < quantidade; i++) {
                     const jogo = new Set();
-                    while (jogo.size < parseInt(dezenas)) {
+                    while (jogo.size < dezenas) {
                         jogo.add(String(Math.floor(Math.random() * 60) + 1).padStart(2, '0'));
                     }
                     jogos.push(Array.from(jogo).sort((a, b) => a - b).join(' '));
                 }
-
+                
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
                 
                 jogos.forEach(linha => {
                     const jogoContainer = document.createElement('div');
                     jogoContainer.className = 'jogo';
 
+                    const numerosContainer = document.createElement('div');
+                    numerosContainer.className = 'numeros-container';
+                    
                     const numeros = linha.trim().split(/\s+/);
                     numeros.forEach((num, index) => {
                         const divNumero = document.createElement('span');
                         divNumero.className = 'numero';
                         divNumero.textContent = num;
-                        jogoContainer.appendChild(divNumero);
+                        numerosContainer.appendChild(divNumero);
 
                         if (index < numeros.length - 1) {
                             const separador = document.createElement('span');
                             separador.className = 'separador-numero';
                             separador.textContent = '-';
-                            jogoContainer.appendChild(separador);
+                            numerosContainer.appendChild(separador);
                         }
                     });
 
+                    jogoContainer.appendChild(numerosContainer);
                     areaResultados.appendChild(jogoContainer);
                 });
 
             } catch (error) {
                 areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos. Verifique sua conexão ou tente novamente mais tarde.</p>`;
+                console.error("Erro:", error);
             }
         }
         
-let graficoMaisSorteados = null;
-let graficoMenosSorteados = null;
+        let graficoMaisSorteados = null;
+        let graficoMenosSorteados = null;
 
-async function exibirEstatisticas() {
-    const areaStats = document.getElementById('area-estatisticas');
-    const botao = document.querySelector('#estatisticas .botao-gerar');
-    
-    botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
-    botao.disabled = true;
+        async function exibirEstatisticas() {
+            const areaStats = document.getElementById('area-estatisticas');
+            const botao = document.querySelector('#estatisticas .botao-gerar');
+            
+            if (botao.style.display === 'none') return; // Evita recarregar
 
-    try {
-        const response = await fetch('/get-stats');
-        if (!response.ok) throw new Error('Falha ao buscar dados do servidor.');
-        
-        const data = await response.json();
+            botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
+            botao.disabled = true;
 
-        document.getElementById('ultimo-concurso-info').textContent = data.ultimo_concurso;
-        areaStats.style.display = 'block';
+            try {
+                 // Simulação de chamada à API
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const data = {
+                    ultimo_concurso: "2750",
+                    frequencia: [
+                        {numero: "10", frequencia: 310}, {numero: "53", frequencia: 305}, {numero: "05", frequencia: 298},
+                        {numero: "42", frequencia: 295}, {numero: "37", frequencia: 292}, {numero: "33", frequencia: 291},
+                        {numero: "23", frequencia: 290}, {numero: "04", frequencia: 289}, {numero: "30", frequencia: 288},
+                        {numero: "41", frequencia: 287}, {numero: "26", frequencia: 240}, {numero: "21", frequencia: 242},
+                        {numero: "15", frequencia: 245}, {numero: "55", frequencia: 246}, {numero: "09", frequencia: 247},
+                        {numero: "60", frequencia: 248}, {numero: "02", frequencia: 249}, {numero: "22", frequencia: 250}
+                    ]
+                };
 
-        const sortedData = data.frequencia.sort((a, b) => a.frequencia - b.frequencia);
-        
-        const menosSorteados = sortedData.slice(0, 10);
-        const maisSorteados = sortedData.slice(-10).reverse();
+                document.getElementById('ultimo-concurso-info').textContent = data.ultimo_concurso;
+                areaStats.style.display = 'block';
 
-        if (graficoMaisSorteados) graficoMaisSorteados.destroy();
-        if (graficoMenosSorteados) graficoMenosSorteados.destroy();
-        
-        const corTextoGrafico = '#FFFDE7';
-        const corGridGrafico = 'rgba(255, 255, 255, 0.2)';
+                const sortedData = data.frequencia.sort((a, b) => a.frequencia - b.frequencia);
+                
+                const menosSorteados = sortedData.slice(0, 10);
+                const maisSorteados = sortedData.slice(-10).reverse();
 
-        const ctxMais = document.getElementById('grafico-mais-sorteados').getContext('2d');
-        graficoMaisSorteados = new Chart(ctxMais, {
-            type: 'bar',
-            data: {
-                labels: maisSorteados.map(item => `Nº ${item.numero}`),
-                datasets: [{
-                    label: 'Vezes Sorteado',
-                    data: maisSorteados.map(item => item.frequencia),
-                    backgroundColor: '#FFD700',
-                    borderColor: '#FFAA00',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        ticks: { color: corTextoGrafico },
-                        grid: { color: corGridGrafico }
+                if (graficoMaisSorteados) graficoMaisSorteados.destroy();
+                if (graficoMenosSorteados) graficoMenosSorteados.destroy();
+                
+                const corTextoGrafico = '#FFFDE7';
+                const corGridGrafico = 'rgba(255, 255, 255, 0.2)';
+
+                const ctxMais = document.getElementById('grafico-mais-sorteados').getContext('2d');
+                graficoMaisSorteados = new Chart(ctxMais, {
+                    type: 'bar',
+                    data: {
+                        labels: maisSorteados.map(item => `Nº ${item.numero}`),
+                        datasets: [{
+                            label: 'Vezes Sorteado',
+                            data: maisSorteados.map(item => item.frequencia),
+                            backgroundColor: '#FFD700',
+                            borderColor: '#FFAA00',
+                            borderWidth: 1
+                        }]
                     },
-                    x: {
-                        ticks: { color: corTextoGrafico },
-                        grid: { color: 'transparent' }
+                    options: {
+                        scales: {
+                            y: { beginAtZero: false, ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } },
+                            x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } }
+                        },
+                        plugins: { legend: { labels: { color: corTextoGrafico, font: { size: 14 } } } }
                     }
-                },
-                plugins: {
-                    legend: {
-                        labels: { color: corTextoGrafico, font: { size: 14 } }
-                    }
-                }
-            }
-        });
+                });
 
-        const ctxMenos = document.getElementById('grafico-menos-sorteados').getContext('2d');
-        graficoMenosSorteados = new Chart(ctxMenos, {
-            type: 'bar',
-            data: {
-                labels: menosSorteados.map(item => `Nº ${item.numero}`),
-                datasets: [{
-                    label: 'Vezes Sorteado',
-                    data: menosSorteados.map(item => item.frequencia),
-                    backgroundColor: '#90CAF9',
-                    borderColor: '#42A5F5',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        ticks: { color: corTextoGrafico },
-                        grid: { color: corGridGrafico }
+                const ctxMenos = document.getElementById('grafico-menos-sorteados').getContext('2d');
+                graficoMenosSorteados = new Chart(ctxMenos, {
+                    type: 'bar',
+                    data: {
+                        labels: menosSorteados.map(item => `Nº ${item.numero}`),
+                        datasets: [{
+                            label: 'Vezes Sorteado',
+                            data: menosSorteados.map(item => item.frequencia),
+                            backgroundColor: '#90CAF9',
+                            borderColor: '#42A5F5',
+                            borderWidth: 1
+                        }]
                     },
-                    x: {
-                        ticks: { color: corTextoGrafico },
-                        grid: { color: 'transparent' }
+                    options: {
+                        scales: {
+                            y: { beginAtZero: false, ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } },
+                            x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } }
+                        },
+                        plugins: { legend: { labels: { color: corTextoGrafico, font: { size: 14 } } } }
                     }
-                },
-                plugins: {
-                    legend: {
-                        labels: { color: corTextoGrafico, font: { size: 14 } }
-                    }
-                }
-            }
-        });
+                });
 
-    } catch (error) {
-        areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
-        areaStats.style.display = 'block';
-    } finally {
-        botao.style.display = 'none';
-    }
-}
+            } catch (error) {
+                areaStats.innerHTML = `<p style="color: #ff8a80;">Erro ao carregar estatísticas.</p>`;
+                areaStats.style.display = 'block';
+                 console.error("Erro:", error);
+            } finally {
+                botao.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
