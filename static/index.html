@@ -61,10 +61,12 @@
     <style>
         :root {
             --cor-fundo: linear-gradient(180deg, #0d47a1, #1976d2, #42a5f5);
+            --cor-caixa: rgba(255, 255, 255, 0.08);
             --cor-texto: #E0E0E0;
             --cor-dourado: #FFD700;
             --cor-dourado-hover: #FFAA00;
             --sombra-dourada: 0 0 12px rgba(255, 215, 0, 0.4);
+            --sombra-caixa: 0 8px 25px rgba(0, 0, 0, 0.5);
             --cor-divisoria-ouro: rgba(255, 215, 0, 0.3);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -72,26 +74,20 @@
             font-family: 'Poppins', sans-serif;
             background: var(--cor-fundo);
             color: var(--cor-texto);
-            margin: 0;
-            padding: 20px 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            padding: 2rem 1rem;
             min-height: 100vh;
         }
-
         .container {
+            max-width: 650px;
+            width: 100%;
+            background: var(--cor-caixa);
             padding: 2rem;
-            max-width: 800px;
-            width: 95%;
+            border-radius: 20px;
+            box-shadow: var(--sombra-caixa);
             text-align: center;
         }
-
-        h2 {
-            color: #bbdefb;
-            margin-bottom: 15px;
-        }
-        
         h1 {
             font-family: 'Orbitron', sans-serif;
             font-size: 2.2rem;
@@ -107,15 +103,15 @@
             color: #bbdefb;
         }
         .imagem-ouro {
-            background-color: #FFF8E1;
-            padding: 8px;
+            background-color: #FFF8E1; /* Bege clarinho */
+    	    padding: 8px; /* Espaço interno para não colar na borda */
             border-radius: 10px;
             width: 150px;
             height: auto;
             border: 3px solid var(--cor-dourado);
             box-shadow: var(--sombra-dourada);
             transition: transform 0.3s ease;
-        }
+}
         .imagem-ouro:hover { transform: scale(1.05); }
         .secao-botoes h2 { font-size: 1.2rem; margin-bottom: 1rem; font-weight: 500; }
         .grupo-botoes { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
@@ -143,29 +139,33 @@
             margin-bottom: 1rem;
         }
         #area-resultados { min-height: 100px; }
-
+        
         .jogo {
             background-color: rgba(0, 0, 0, 0.2);
             padding: 1rem;
             margin: 0.7rem auto;
             border-radius: 12px;
-            border-left: 4px solid var(--cor-dourado);
-            transition: transform 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 5px 10px;
+            border-left: 4px solid var(--cor-dourado);
+            transition: transform 0.3s ease;
         }
         .jogo:hover { transform: scale(1.02); }
-        
+        .numeros-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
         .numero {
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: var(--cor-texto);
+            padding: 0 5px;
         }
         .separador-numero {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: var(--cor-dourado);
             font-weight: 700;
         }
@@ -235,38 +235,8 @@
             display: block;
         }
 
-        .secao-controles {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin: 1.5rem 0 1rem 0;
-        }
-        .controle-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .controle-item label {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--cor-texto);
-        }
-        .seletor-custom {
-            background-color: rgba(0, 0, 0, 0.3);
-            color: var(--cor-dourado);
-            padding: 8px 12px;
-            border: 1px solid var(--cor-dourado);
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        .seletor-custom:focus {
-            outline: none;
-            box-shadow: var(--sombra-dourada);
-        }
+        .secao-filtro { margin: 1.5rem 0 1rem 0; display: flex; justify-content: center; align-items: center; gap: 12px; }
+        .secao-filtro label { font-size: 1rem; font-weight: 500; color: var(--cor-texto); }
         .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #555; transition: .4s; border-radius: 28px; }
@@ -274,11 +244,13 @@
         input:checked + .slider { background-color: var(--cor-dourado); }
         input:checked + .slider:before { transform: translateX(22px); }
 
+        /* --- AJUSTES PARA TELAS PEQUENAS (CELULARES) --- */
         @media (max-width: 600px) {
             .container { padding: 1.5rem 1rem; }
             h1 { font-size: 1.8rem; }
             .imagem-ouro { width: 120px; }
             
+            /* Organiza os botões um abaixo do outro */
             .grupo-botoes {
                 flex-direction: column;
                 align-items: center;
@@ -291,19 +263,58 @@
                 font-size: 0.95rem;
             }
 
+            /* Ajusta os números para caber na tela */
             .jogo {
-                padding: 0.8rem;
-                gap: 3px 6px;
+                padding: 0.8rem 0.6rem;
+            }
+            .numeros-container {
+                gap: 6px; /* Reduz o espaço entre os números */
             }
             .numero {
-                font-size: 1.2rem;
+                font-size: 1.2rem; /* Reduz o tamanho da fonte dos números */
+                padding: 0 2px;
             }
             .separador-numero {
-                font-size: 1.1rem;
+                font-size: 1.1rem; /* Reduz o tamanho do separador */
             }
 
             .footer-section p { text-align: left; }
         }
+
+        /* --- INÍCIO DO CSS ADICIONAL --- */
+            .secao-controles {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem; /* Aumenta o espaço entre os controles */
+                flex-wrap: wrap;
+                margin: 1.5rem 0 1rem 0;
+            }
+            .controle-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .controle-item label {
+                font-size: 1rem;
+                font-weight: 500;
+                color: var(--cor-texto);
+            }
+            .seletor-custom {
+                background-color: rgba(0, 0, 0, 0.3);
+                color: var(--cor-dourado);
+                padding: 8px 12px;
+                border: 1px solid var(--cor-dourado);
+                border-radius: 8px;
+                font-family: 'Poppins', sans-serif;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+            .seletor-custom:focus {
+                outline: none;
+                box-shadow: var(--sombra-dourada);
+            }
+       /* --- FIM DO CSS ADICIONAL --- */
     </style>
 </head>
 <body>
@@ -315,10 +326,11 @@
         </header>
 
         <main>
+            <!-- INÍCIO DO HTML CORRIGIDO -->
             <section class="secao-controles">
                 <div class="controle-item">
                     <label for="dezenas-select">Dezenas por jogo:</label>
-                    <select id="dezenas-select" class="seletor-custom">
+                  <select id="dezenas-select" class="seletor-custom">
                         <option value="6">6 Dezenas</option>
                         <option value="7">7 Dezenas</option>
                         <option value="8">8 Dezenas</option>
@@ -344,6 +356,7 @@
                     </label>
                 </div>
             </section>
+            <!-- FIM DO HTML CORRIGIDO -->
             
             <section class="secao-botoes">
                 <h2>Escolha a quantidade de dicas:</h2>
@@ -382,7 +395,8 @@
                 <a href="https://www.caixa.gov.br/jogo-responsavel/Paginas/default.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Jogo Responsável</a>
             </section>
              
-            <section id="estatisticas" class="footer-section" aria-labelledby="stats-titulo">
+            <!-- NOVA SEÇÃO DE ESTATÍSTICAS AQUI -->
+               <section id="estatisticas" class="footer-section" aria-labelledby="stats-titulo">
                <h2 id="stats-titulo">Estatísticas dos Sorteios</h2>
                <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
                <p style="text-align: center; margin: 1rem 0;">Análise baseada até o concurso <strong id="ultimo-concurso-info">...</strong>.</p>
@@ -391,6 +405,7 @@
                 <button class="botao-gerar" onclick="exibirEstatisticas()">Carregar Gráficos de Frequência</button>
             </div>
 
+            <!-- Área onde os gráficos aparecerão -->
               <div id="area-estatisticas" style="display: none;">
                <div>
                  <h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3>
@@ -406,6 +421,7 @@
                 <h2 id="doacao-titulo">Ganhou com nossas dicas?</h2>
                 <p>Se você ganhou na loteria com nossos números, queremos te parabenizar! Nossa comunidade é feita de pessoas que buscam a sorte e, se você quiser fazer parte da nossa rede de apoio, considere doar para o site. Agradecemos a sua colaboração, que nos ajuda a manter o site funcionando e a oferecer essa ferramenta para mais pessoas. Juntos, podemos alcançar mais sonhos!</p>
                 <p><strong>Apoie com um PIX:</strong></p>
+                <!-- SUBSTITUIR 'placeholder-qrcode.png' PELA IMAGEM REAL DO SEU QR CODE -->
                 <img src="placeholder-qrcode.png" alt="QR Code para doação via PIX" class="qrcode-pix">
                 <p style="font-size: 0.8rem; text-align: center; margin-top: 1rem;"><em>*Doações são voluntárias e não vinculadas a ganhos futuros. Apreciamos o apoio, mas lembre-se: jogar é um risco financeiro.</em></p>
             </section>
@@ -436,46 +452,49 @@
     </div>
 
     <script>
+        // --- INÍCIO DA FUNÇÃO gerarJogos CORRIGIDA ---
         async function gerarJogos(quantidade) {
             const areaResultados = document.getElementById('area-resultados');
             areaResultados.innerHTML = '<div class="spinner"></div>';
 
+            // Pega os valores dos dois controles
             const filtroAtivado = document.getElementById('filtro-toggle').checked;
             const dezenas = document.getElementById('dezenas-select').value;
 
             try {
-                // Simulação local para garantir o funcionamento
-                await new Promise(resolve => setTimeout(resolve, 500));
-                const jogos = [];
-                for (let i = 0; i < quantidade; i++) {
-                    const jogo = new Set();
-                    while (jogo.size < parseInt(dezenas)) {
-                        jogo.add(String(Math.floor(Math.random() * 60) + 1).padStart(2, '0'));
-                    }
-                    jogos.push(Array.from(jogo).sort((a, b) => a - b).join(' '));
+                // Envia os dois parâmetros para o backend
+                const response = await fetch(`/get-games/${quantidade}?filtro=${filtroAtivado}&dezenas=${dezenas}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro do servidor: ${response.statusText}`);
                 }
-
+                const jogos = await response.json();
+                
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
                 
                 jogos.forEach(linha => {
                     const jogoContainer = document.createElement('div');
                     jogoContainer.className = 'jogo';
 
+                    const numerosContainer = document.createElement('div');
+                    numerosContainer.className = 'numeros-container';
+                    
                     const numeros = linha.trim().split(/\s+/);
                     numeros.forEach((num, index) => {
                         const divNumero = document.createElement('span');
                         divNumero.className = 'numero';
                         divNumero.textContent = num;
-                        jogoContainer.appendChild(divNumero);
+                        numerosContainer.appendChild(divNumero);
 
                         if (index < numeros.length - 1) {
                             const separador = document.createElement('span');
                             separador.className = 'separador-numero';
                             separador.textContent = '-';
-                            jogoContainer.appendChild(separador);
+                            numerosContainer.appendChild(separador);
                         }
                     });
 
+                    jogoContainer.appendChild(numerosContainer);
                     areaResultados.appendChild(jogoContainer);
                 });
 
@@ -483,7 +502,10 @@
                 areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos. Verifique sua conexão ou tente novamente mais tarde.</p>`;
             }
         }
-        
+        // --- FIM DA FUNÇÃO gerarJogos CORRIGIDA ---
+
+
+        // NOVO CÓDIGO PARA AS ESTATÍSTICAS
 let graficoMaisSorteados = null;
 let graficoMenosSorteados = null;
 
@@ -511,8 +533,9 @@ async function exibirEstatisticas() {
         if (graficoMaisSorteados) graficoMaisSorteados.destroy();
         if (graficoMenosSorteados) graficoMenosSorteados.destroy();
         
-        const corTextoGrafico = '#FFFDE7';
-        const corGridGrafico = 'rgba(255, 255, 255, 0.2)';
+        // --- CONFIGURAÇÕES DE CORES PARA OS GRÁFICOS ---
+        const corTextoGrafico = '#FFFDE7'; // Um branco amarelado para melhor leitura
+        const corGridGrafico = 'rgba(255, 255, 255, 0.2)'; // Linhas de grid sutis
 
         const ctxMais = document.getElementById('grafico-mais-sorteados').getContext('2d');
         graficoMaisSorteados = new Chart(ctxMais, {
@@ -522,15 +545,15 @@ async function exibirEstatisticas() {
                 datasets: [{
                     label: 'Vezes Sorteado',
                     data: maisSorteados.map(item => item.frequencia),
-                    backgroundColor: '#FFD700',
-                    borderColor: '#FFAA00',
+                    backgroundColor: '#FFD700', // Dourado Sólido
+                    borderColor: '#FFAA00',     // Borda dourada mais escura
                     borderWidth: 1
                 }]
             },
             options: {
                 scales: {
                     y: {
-                        beginAtZero: false,
+                        beginAtZero: false, // Começa um pouco abaixo do mínimo para melhor visualização
                         ticks: { color: corTextoGrafico },
                         grid: { color: corGridGrafico }
                     },
@@ -555,8 +578,8 @@ async function exibirEstatisticas() {
                 datasets: [{
                     label: 'Vezes Sorteado',
                     data: menosSorteados.map(item => item.frequencia),
-                    backgroundColor: '#90CAF9',
-                    borderColor: '#42A5F5',
+                    backgroundColor: '#90CAF9', // Azul claro mais vibrante
+                    borderColor: '#42A5F5',     // Borda azul mais escura
                     borderWidth: 1
                 }]
             },
@@ -587,6 +610,59 @@ async function exibirEstatisticas() {
         botao.style.display = 'none';
     }
 }
+
+// Bloco de simulação para teste local (REMOVER EM PRODUÇÃO)
+// ... (o resto do código de simulação pode permanecer como está) ...
+/*
+async function gerarJogos(quantidade) {
+    const areaResultados = document.getElementById('area-resultados');
+    areaResultados.innerHTML = '<div class="spinner"></div>';
+    
+    await new Promise(resolve => setTimeout(resolve, 800)); // Simula atraso de rede
+
+    try {
+        const jogos = [];
+        for (let i = 0; i < quantidade; i++) {
+            const jogo = new Set();
+            while(jogo.size < 6) {
+                jogo.add(String(Math.floor(Math.random() * 60) + 1).padStart(2, '0'));
+            }
+            jogos.push(Array.from(jogo).sort((a,b) => a-b).join(' '));
+        }
+
+        areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
+        
+        jogos.forEach(linha => {
+            const jogoContainer = document.createElement('div');
+            jogoContainer.className = 'jogo';
+
+            const numerosContainer = document.createElement('div');
+            numerosContainer.className = 'numeros-container';
+            
+            const numeros = linha.trim().split(/\s+/);
+            numeros.forEach((num, index) => {
+                const divNumero = document.createElement('span');
+                divNumero.className = 'numero';
+                divNumero.textContent = num;
+                numerosContainer.appendChild(divNumero);
+
+                if (index < numeros.length - 1) {
+                    const separador = document.createElement('span');
+                    separador.className = 'separador-numero';
+                    separador.textContent = '-';
+                    numerosContainer.appendChild(separador);
+                }
+            });
+
+            jogoContainer.appendChild(numerosContainer);
+            areaResultados.appendChild(jogoContainer);
+        });
+    } catch (error) {
+         areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro: ${error.message}</p>`;
+    }
+}
+*/
+// --- FIM DO CÓDIGO SCRIPT CORRIGIDO ---```
     </script>
 </body>
 </html>
