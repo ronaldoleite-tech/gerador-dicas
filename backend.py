@@ -1,25 +1,24 @@
-# --- INÍCIO DO backend.py CORRIGIDO ---
+# --- INÍCIO DO CÓDIGO FINAL E DEFINITIVO ---
 
 import psycopg2
 import os
 from flask import Flask, jsonify, request
 import random
 from collections import Counter
-from dotenv import load_dotenv
-
-# Carrega as variáveis do arquivo .env (se ele existir)
-load_dotenv()
-
-# Pega a URL de conexão do ambiente UMA VEZ
-DATABASE_URL = os.environ.get('DATABASE_URL')
 
 # --- Aplicação Flask ---
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-# --- FUNÇÃO CENTRAL DE CONEXÃO ---
+# --- FUNÇÃO CENTRAL DE CONEXÃO (MÉTODO DIRETO À PROVA DE BUGS) ---
 def get_db_connection():
-    """Cria e retorna uma nova conexão com o banco de dados usando a variável de ambiente."""
-    conn = psycopg2.connect(DATABASE_URL)
+    """Cria e retorna uma nova conexão com o banco de dados usando o método direto."""
+    conn = psycopg2.connect(
+        host="localhost",
+        port="5432",
+        dbname="sorte_analisada_local",
+        user="postgres",
+        password="Dev12345"  # Sua senha simples e segura
+    )
     return conn
 
 # --- LÓGICA DE GERAÇÃO DE JOGOS (MÉTODO 1: COM FILTRO) ---
@@ -31,7 +30,7 @@ def gerar_jogos_com_base_na_frequencia(count):
         cur.execute("SELECT dezenas FROM resultados_sorteados;")
         resultados = cur.fetchall()
         if not resultados:
-            raise ValueError("O banco de dados está vazio. Execute o script 'importador.py' primeiro.")
+            raise ValueError("O banco de dados está vazio.")
         
         todos_os_numeros = []
         for linha in resultados:
@@ -148,4 +147,4 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
 
-# --- FIM DO backend.py CORRIGIDO ---
+# --- FIM DO CÓDIGO FINAL E DEFINITIVO ---
