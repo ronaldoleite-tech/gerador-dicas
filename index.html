@@ -30,7 +30,7 @@
     <meta name="twitter:image" content="https://sorteanalisada.com.br/logotipo.png">
 
     <!-- Favicon -->
-    <link rel="icon" href="logotipo.png" type="image/png">
+    <link rel="icon" href="images/logotipo.png" type="image/png"> <!-- ATUALIZEI O FAVICON TAMBÉM -->
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"
      crossorigin="anonymous"></script>
@@ -155,23 +155,16 @@
             padding: 1rem;
             margin: 0.7rem auto;
             border-radius: 12px;
+            border-left: 4px solid var(--cor-dourado);
+            transition: transform 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-left: 4px solid var(--cor-dourado);
-            transition: transform 0.3s ease;
+            flex-wrap: wrap;
+            gap: 5px 10px;
         }
         .jogo:hover { transform: scale(1.02); }
 
-        .numeros-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap; /* <<< ALTERAÇÃO PRINCIPAL: Permite que os números quebrem a linha */
-            width: 100%;     
-        }
-        
         .numero {
             font-size: 1.7rem;
             font-weight: 700;
@@ -307,17 +300,17 @@
             }
 
             .jogo {
-                padding: 0.8rem;
+                padding: 0.8rem 0.6rem;
             }
             .numeros-container {
-                gap: 8px; /* Ajuste no espaçamento para telas menores */
+                gap: 6px;
             }
             .numero {
-                font-size: 1.4rem; /* Tamanho da fonte ajustado para caber mais números */
-                padding: 0 3px;
+                font-size: 1.2rem;
+                padding: 0 2px;
             }
             .separador-numero {
-                font-size: 1.3rem;
+                font-size: 1.1rem;
             }
 
             .footer-section p { text-align: left; }
@@ -328,7 +321,7 @@
     <div class="container">
         <!-- O resto do seu <body> continua aqui, sem alterações -->
         <header>
-            <img src="logotipo.png" alt="Logotipo Sorte Analisada com uma lupa e um trevo da sorte, com 2 folhas dourada" class="imagem-ouro" loading="lazy">
+            <img src="images/logotipo.png" alt="Logotipo Sorte Analisada com uma lupa e um trevo da sorte, com 2 folhas dourada" class="imagem-ouro" loading="lazy">
             <h1>Sorte Analisada</h1>
             <p class="subtitulo">Acredite na sua sorte!</p>   
         </header>
@@ -425,7 +418,7 @@
                 <h2 id="doacao-titulo">Ganhou com nossas dicas?</h2>
                 <p>Se você ganhou na loteria com nossos números, queremos te parabenizar! Nossa comunidade é feita de pessoas que buscam a sorte e, se você quiser fazer parte da nossa rede de apoio, considere doar para o site. Agradecemos a sua colaboração, que nos ajuda a manter o site funcionando e a oferecer essa ferramenta para mais pessoas. Juntos, podemos alcançar mais sonhos!</p>
                 <p><strong>Apoie com um PIX:</strong></p>
-                <img src="placeholder-qrcode.png" alt="QR Code para doação via PIX" class="qrcode-pix">
+                <img src="images/placeholder-qrcode.png" alt="QR Code para doação via PIX" class="qrcode-pix"> <!-- ATUALIZEI ESTE CAMINHO TAMBÉM -->
                 <p style="font-size: 0.8rem; text-align: center; margin-top: 1rem;"><em>*Doações são voluntárias e não vinculadas a ganhos futuros. Apreciamos o apoio, mas lembre-se: jogar é um risco financeiro.</em></p>
             </section>
 
@@ -463,18 +456,12 @@
             const dezenas = document.getElementById('dezenas-select').value;
 
             try {
-                // Simulação de chamada à API para demonstração, já que não temos o backend
-                // Em um ambiente real, seria: const response = await fetch(`/get-games/...`);
-                await new Promise(resolve => setTimeout(resolve, 500)); // Simula espera da rede
-
-                const jogos = [];
-                for (let i = 0; i < quantidade; i++) {
-                    const jogo = new Set();
-                    while (jogo.size < dezenas) {
-                        jogo.add(String(Math.floor(Math.random() * 60) + 1).padStart(2, '0'));
-                    }
-                    jogos.push(Array.from(jogo).sort((a, b) => a - b).join(' '));
+                const response = await fetch(`/get-games/${quantidade}?filtro=${filtroAtivado}&dezenas=${dezenas}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro do servidor: ${response.statusText}`);
                 }
+                const jogos = await response.json();
                 
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
                 
@@ -506,103 +493,112 @@
 
             } catch (error) {
                 areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos. Verifique sua conexão ou tente novamente mais tarde.</p>`;
-                console.error("Erro:", error);
             }
         }
         
-        let graficoMaisSorteados = null;
-        let graficoMenosSorteados = null;
+let graficoMaisSorteados = null;
+let graficoMenosSorteados = null;
 
-        async function exibirEstatisticas() {
-            const areaStats = document.getElementById('area-estatisticas');
-            const botao = document.querySelector('#estatisticas .botao-gerar');
-            
-            if (botao.style.display === 'none') return; // Evita recarregar
+async function exibirEstatisticas() {
+    const areaStats = document.getElementById('area-estatisticas');
+    const botao = document.querySelector('#estatisticas .botao-gerar');
+    
+    botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
+    botao.disabled = true;
 
-            botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
-            botao.disabled = true;
+    try {
+        const response = await fetch('/get-stats');
+        if (!response.ok) throw new Error('Falha ao buscar dados do servidor.');
+        
+        const data = await response.json();
 
-            try {
-                 // Simulação de chamada à API
-                await new Promise(resolve => setTimeout(resolve, 500));
-                const data = {
-                    ultimo_concurso: "2750",
-                    frequencia: [
-                        {numero: "10", frequencia: 310}, {numero: "53", frequencia: 305}, {numero: "05", frequencia: 298},
-                        {numero: "42", frequencia: 295}, {numero: "37", frequencia: 292}, {numero: "33", frequencia: 291},
-                        {numero: "23", frequencia: 290}, {numero: "04", frequencia: 289}, {numero: "30", frequencia: 288},
-                        {numero: "41", frequencia: 287}, {numero: "26", frequencia: 240}, {numero: "21", frequencia: 242},
-                        {numero: "15", frequencia: 245}, {numero: "55", frequencia: 246}, {numero: "09", frequencia: 247},
-                        {numero: "60", frequencia: 248}, {numero: "02", frequencia: 249}, {numero: "22", frequencia: 250}
-                    ]
-                };
+        document.getElementById('ultimo-concurso-info').textContent = data.ultimo_concurso;
+        areaStats.style.display = 'block';
 
-                document.getElementById('ultimo-concurso-info').textContent = data.ultimo_concurso;
-                areaStats.style.display = 'block';
+        const sortedData = data.frequencia.sort((a, b) => a.frequencia - b.frequencia);
+        
+        const menosSorteados = sortedData.slice(0, 10);
+        const maisSorteados = sortedData.slice(-10).reverse();
 
-                const sortedData = data.frequencia.sort((a, b) => a.frequencia - b.frequencia);
-                
-                const menosSorteados = sortedData.slice(0, 10);
-                const maisSorteados = sortedData.slice(-10).reverse();
+        if (graficoMaisSorteados) graficoMaisSorteados.destroy();
+        if (graficoMenosSorteados) graficoMenosSorteados.destroy();
+        
+        const corTextoGrafico = '#FFFDE7';
+        const corGridGrafico = 'rgba(255, 255, 255, 0.2)';
 
-                if (graficoMaisSorteados) graficoMaisSorteados.destroy();
-                if (graficoMenosSorteados) graficoMenosSorteados.destroy();
-                
-                const corTextoGrafico = '#FFFDE7';
-                const corGridGrafico = 'rgba(255, 255, 255, 0.2)';
-
-                const ctxMais = document.getElementById('grafico-mais-sorteados').getContext('2d');
-                graficoMaisSorteados = new Chart(ctxMais, {
-                    type: 'bar',
-                    data: {
-                        labels: maisSorteados.map(item => `Nº ${item.numero}`),
-                        datasets: [{
-                            label: 'Vezes Sorteado',
-                            data: maisSorteados.map(item => item.frequencia),
-                            backgroundColor: '#FFD700',
-                            borderColor: '#FFAA00',
-                            borderWidth: 1
-                        }]
+        const ctxMais = document.getElementById('grafico-mais-sorteados').getContext('2d');
+        graficoMaisSorteados = new Chart(ctxMais, {
+            type: 'bar',
+            data: {
+                labels: maisSorteados.map(item => `Nº ${item.numero}`),
+                datasets: [{
+                    label: 'Vezes Sorteado',
+                    data: maisSorteados.map(item => item.frequencia),
+                    backgroundColor: '#FFD700',
+                    borderColor: '#FFAA00',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: { color: corTextoGrafico },
+                        grid: { color: corGridGrafico }
                     },
-                    options: {
-                        scales: {
-                            y: { beginAtZero: false, ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } },
-                            x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } }
-                        },
-                        plugins: { legend: { labels: { color: corTextoGrafico, font: { size: 14 } } } }
+                    x: {
+                        ticks: { color: corTextoGrafico },
+                        grid: { color: 'transparent' }
                     }
-                });
-
-                const ctxMenos = document.getElementById('grafico-menos-sorteados').getContext('2d');
-                graficoMenosSorteados = new Chart(ctxMenos, {
-                    type: 'bar',
-                    data: {
-                        labels: menosSorteados.map(item => `Nº ${item.numero}`),
-                        datasets: [{
-                            label: 'Vezes Sorteado',
-                            data: menosSorteados.map(item => item.frequencia),
-                            backgroundColor: '#90CAF9',
-                            borderColor: '#42A5F5',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: { beginAtZero: false, ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } },
-                            x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } }
-                        },
-                        plugins: { legend: { labels: { color: corTextoGrafico, font: { size: 14 } } } }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: corTextoGrafico, font: { size: 14 } }
                     }
-                });
-
-            } catch (error) {
-                areaStats.innerHTML = `<p style="color: #ff8a80;">Erro ao carregar estatísticas.</p>`;
-                areaStats.style.display = 'block';
-                 console.error("Erro:", error);
-            } finally {
-                botao.style.display = 'none';
+                }
             }
-        }
+        });
+
+        const ctxMenos = document.getElementById('grafico-menos-sorteados').getContext('2d');
+        graficoMenosSorteados = new Chart(ctxMenos, {
+            type: 'bar',
+            data: {
+                labels: menosSorteados.map(item => `Nº ${item.numero}`),
+                datasets: [{
+                    label: 'Vezes Sorteado',
+                    data: menosSorteados.map(item => item.frequencia),
+                    backgroundColor: '#90CAF9',
+                    borderColor: '#42A5F5',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: { color: corTextoGrafico },
+                        grid: { color: corGridGrafico }
+                    },
+                    x: {
+                        ticks: { color: corTextoGrafico },
+                        grid: { color: 'transparent' }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: corTextoGrafico, font: { size: 14 } }
+                    }
+                }
+            }
+        });
+
+    } catch (error) {
+        areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
+        areaStats.style.display = 'block';
+    } finally {
+        botao.style.display = 'none';
+    }
+}
     </script>
 </body>
 </html>
