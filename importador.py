@@ -1,25 +1,31 @@
+# --- INÍCIO DO importador.py CORRIGIDO ---
+
 import psycopg2
 import os
 from dotenv import load_dotenv
 
-def realizar_importacao():
-    load_dotenv()
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    FILE_PATH_PARA_IMPORTAR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sorteados.txt')
-    BATCH_SIZE = 500
+# Carrega as variáveis do arquivo .env
+load_dotenv()
 
+def realizar_importacao():
+    # Pega a URL de conexão do ambiente (do arquivo .env)
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    
     if not DATABASE_URL:
-        print("ERRO: A variável de ambiente DATABASE_URL não foi definida.")
+        print("ERRO: A variável DATABASE_URL não foi encontrada. Verifique seu arquivo .env")
         return
 
-    print("INFO: Iniciando o script de importação.")
     conn = None
     try:
+        print("INFO: Tentando conectar ao banco de dados...")
+        # A conexão agora usa a variável DATABASE_URL
         conn = psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
-        print("INFO: Conectado ao DB para importação.")
+        print("INFO: CONEXÃO COM O BANCO DE DADOS REALIZADA COM SUCESSO!")
 
-        # Recriar a tabela garante que a estrutura esteja correta
+        FILE_PATH_PARA_IMPORTAR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sorteados.txt')
+        BATCH_SIZE = 500
+
         cur.execute("""
             CREATE TABLE IF NOT EXISTS resultados_sorteados (
                 id SERIAL PRIMARY KEY,
@@ -27,21 +33,22 @@ def realizar_importacao():
                 dezenas TEXT NOT NULL
             );
         """)
-        print("INFO: Tabela 'resultados_sorteados' (com coluna 'concurso') verificada/criada.")
+        print("INFO: Tabela 'resultados_sorteados' verificada/criada.")
         
         batch = []
         total_inserted = 0
         
-        with open(FILE_PATH_PARA_IMPORTAR, 'r', encoding='utf-8') as f:
-            next(f) # Pula a primeira linha (cabeçalho)
+        # O encoding 'cp1252' é ótimo para arquivos de texto do Windows
+        with open(FILE_PATH_PARA_IMPORTAR, 'r', encoding='cp1252') as f:
+            print("INFO: Arquivo 'sorteados.txt' aberto com sucesso.")
+            next(f) 
 
             for line in f:
                 parts = line.strip().split()
-                if len(parts) >= 7: # Garante que a linha tem o concurso + 6 dezenas
+                if len(parts) >= 7:
                     try:
                         num_concurso = int(parts[0])
                         dezenas = parts[1:]
-                        # Ordena as dezenas para garantir um formato único
                         linha_formatada = " ".join(sorted(dezenas, key=int))
                         batch.append((num_concurso, linha_formatada))
                     except ValueError:
@@ -66,12 +73,10 @@ def realizar_importacao():
             print(f"INFO: Lote final inserido. {novos_registros} novos registros adicionados.")
 
         print("\n========================================================")
-        print("IMPORTAÇÃO CONCLUÍDA!")
+        print("IMPORTAÇÃO CONCLUÍDA COM SUCESSO!")
         print(f"{total_inserted} novos concursos foram adicionados ao banco de dados.")
         print("========================================================\n")
 
-    except FileNotFoundError:
-        print(f"ERRO: O arquivo '{FILE_PATH_PARA_IMPORTAR}' não foi encontrado.")
     except Exception as e:
         print(f"\nERRO: Um erro inesperado ocorreu durante a importação: {e}\n")
     finally:
@@ -81,3 +86,5 @@ def realizar_importacao():
 
 if __name__ == "__main__":
     realizar_importacao()
+
+# --- FIM DO importador.py CORRIGIDO ---

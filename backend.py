@@ -1,24 +1,32 @@
+# --- INÍCIO DO backend.py CORRIGIDO ---
+
 import psycopg2
 import os
 from flask import Flask, jsonify, request
 import random
 from collections import Counter
+from dotenv import load_dotenv
 
-# --- CONFIGURAÇÃO ---
+# Carrega as variáveis do arquivo .env (se ele existir)
+load_dotenv()
+
+# Pega a URL de conexão do ambiente UMA VEZ
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
 # --- Aplicação Flask ---
 app = Flask(__name__, static_folder='.', static_url_path='')
 
+# --- FUNÇÃO CENTRAL DE CONEXÃO ---
+def get_db_connection():
+    """Cria e retorna uma nova conexão com o banco de dados usando a variável de ambiente."""
+    conn = psycopg2.connect(DATABASE_URL)
+    return conn
 
 # --- LÓGICA DE GERAÇÃO DE JOGOS (MÉTODO 1: COM FILTRO) ---
 def gerar_jogos_com_base_na_frequencia(count):
-    """
-    Gera jogos com base na frequência dos números sorteados anteriormente.
-    """
     conn = None
     try:
-        conn = psycopg2.connect(DATABASE_URL)
+        conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("SELECT dezenas FROM resultados_sorteados;")
         resultados = cur.fetchall()
@@ -55,9 +63,6 @@ def gerar_jogos_com_base_na_frequencia(count):
 
 # --- LÓGICA DE GERAÇÃO DE JOGOS (MÉTODO 2: PURO ALEATÓRIO) ---
 def gerar_jogos_puramente_aleatorios(count):
-    """
-    Gera jogos de forma 100% aleatória, sem usar o banco de dados.
-    """
     jogos_gerados = set()
     while len(jogos_gerados) < count:
         numeros = random.sample(range(1, 61), 6)
@@ -74,10 +79,6 @@ def index():
 
 @app.route('/get-games/<int:count>')
 def get_games(count):
-    """
-    Rota principal que gera os jogos.
-    Verifica o parâmetro 'filtro' na URL para decidir qual método usar.
-    """
     try:
         usar_filtro = request.args.get('filtro', 'true', type=str).lower() == 'true'
 
@@ -95,10 +96,9 @@ def get_games(count):
 
 @app.route('/status')
 def status_do_banco():
-    """ Rota para verificar a saúde e o conteúdo do banco de dados. """
     conn = None
     try:
-        conn = psycopg2.connect(DATABASE_URL)
+        conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("SELECT COUNT(*) FROM resultados_sorteados;")
         total_rows = cur.fetchone()[0]
@@ -109,24 +109,17 @@ def status_do_banco():
         if conn:
             conn.close()
             
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=port)
-
 @app.route('/get-stats')
 def get_stats():
-    """ Rota para buscar estatísticas do banco de dados. """
     conn = None
     try:
-        conn = psycopg2.connect(DATABASE_URL)
+        conn = get_db_connection()
         cur = conn.cursor()
 
-        # 1. Obter o número do último concurso
         cur.execute("SELECT MAX(concurso) FROM resultados_sorteados;")
         ultimo_concurso_result = cur.fetchone()
         ultimo_concurso = ultimo_concurso_result[0] if ultimo_concurso_result else 0
 
-        # 2. Obter a frequência de todos os números
         cur.execute("""
             SELECT numero::integer, COUNT(*) as frequencia
             FROM (
@@ -138,7 +131,6 @@ def get_stats():
         """)
         frequencia_numeros = cur.fetchall()
         
-        # Formata os dados para o frontend
         stats_data = [{"numero": n, "frequencia": f} for n, f in frequencia_numeros]
 
         return jsonify({
@@ -151,3 +143,9 @@ def get_stats():
     finally:
         if conn:
             conn.close()
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
+
+# --- FIM DO backend.py CORRIGIDO ---
