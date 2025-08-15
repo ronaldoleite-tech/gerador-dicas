@@ -1,4 +1,4 @@
-# --- INÍCIO DO CÓDIGO FINAL E INTELIGENTE ---
+# --- ESTE É O CONTEÚDO DO ARQUIVO backend.py (PARA O RENDER) ---
 
 import psycopg2
 import os
@@ -7,38 +7,17 @@ import random
 from collections import Counter
 from dotenv import load_dotenv
 
-# Carrega as variáveis do arquivo .env (se ele existir no ambiente local)
 load_dotenv()
-
-# --- Aplicação Flask ---
+DATABASE_URL = os.environ.get('DATABASE_URL')
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-# --- FUNÇÃO CENTRAL DE CONEXÃO (INTELIGENTE) ---
 def get_db_connection():
-    """
-    Cria e retorna uma nova conexão.
-    Detecta se está no ambiente de produção (Render) ou local.
-    """
-    # O Render define a variável DATABASE_URL automaticamente no ambiente de produção.
-    database_url = os.environ.get('DATABASE_URL')
-
-    if database_url:
-        # Se a variável existe, estamos no Render. Conecte-se usando ela.
-        print("INFO: Conectando ao banco de dados de produção (Render)...")
-        conn = psycopg2.connect(database_url)
-    else:
-        # Se não, estamos no ambiente local. Use a conexão direta à prova de bugs.
-        print("INFO: Conectando ao banco de dados LOCAL...")
-        conn = psycopg2.connect(
-            host="localhost",
-            port="5432",
-            dbname="sorte_analisada_local",
-            user="postgres",
-            password="Dev12345"  # Sua senha local
-        )
+    # Conexão por URL, necessária para o ambiente de produção (Render)
+    conn = psycopg2.connect(DATABASE_URL)
     return conn
 
-# --- LÓGICA DE GERAÇÃO DE JOGOS (MÉTODO 1: COM FILTRO) ---
+# ... (todo o resto do seu código de gerar jogos e rotas continua aqui, exatamente como antes) ...
+# (O resto do arquivo é idêntico ao do backend_LOCAL.py)
 def gerar_jogos_com_base_na_frequencia(count):
     conn = None
     try:
@@ -77,7 +56,6 @@ def gerar_jogos_com_base_na_frequencia(count):
         if conn:
             conn.close()
 
-# --- LÓGICA DE GERAÇÃO DE JOGOS (MÉTODO 2: PURO ALEATÓRIO) ---
 def gerar_jogos_puramente_aleatorios(count):
     jogos_gerados = set()
     while len(jogos_gerados) < count:
@@ -85,9 +63,6 @@ def gerar_jogos_puramente_aleatorios(count):
         jogo_formatado = " ".join(f"{num:02}" for num in sorted(numeros))
         jogos_gerados.add(jogo_formatado)
     return list(jogos_gerados)
-
-
-# --- ROTAS DA APLICAÇÃO ---
 
 @app.route('/')
 def index():
@@ -97,14 +72,10 @@ def index():
 def get_games(count):
     try:
         usar_filtro = request.args.get('filtro', 'true', type=str).lower() == 'true'
-
         if usar_filtro:
-            print("INFO: Gerando jogos com filtro de frequência.")
             jogos = gerar_jogos_com_base_na_frequencia(count)
         else:
-            print("INFO: Gerando jogos puramente aleatórios (sem filtro).")
             jogos = gerar_jogos_puramente_aleatorios(count)
-        
         return jsonify(jogos)
     except Exception as e:
         print(f"ERRO: Erro ao buscar jogos: {e}")
@@ -131,11 +102,9 @@ def get_stats():
     try:
         conn = get_db_connection()
         cur = conn.cursor()
-
         cur.execute("SELECT MAX(concurso) FROM resultados_sorteados;")
         ultimo_concurso_result = cur.fetchone()
         ultimo_concurso = ultimo_concurso_result[0] if ultimo_concurso_result else 0
-
         cur.execute("""
             SELECT numero::integer, COUNT(*) as frequencia
             FROM (
@@ -146,9 +115,7 @@ def get_stats():
             ORDER BY frequencia DESC;
         """)
         frequencia_numeros = cur.fetchall()
-        
         stats_data = [{"numero": n, "frequencia": f} for n, f in frequencia_numeros]
-
         return jsonify({
             "ultimo_concurso": ultimo_concurso,
             "frequencia": stats_data
@@ -163,5 +130,3 @@ def get_stats():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
-
-# --- FIM DO CÓDIGO FINAL E INTELIGENTE ---

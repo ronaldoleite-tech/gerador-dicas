@@ -33,3 +33,6 @@ venv/
 # Banco de dados local
 *.sqlite3
 *.db
+
+#Backend Local
+backend_LOCAL.py
