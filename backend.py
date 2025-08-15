@@ -1,24 +1,41 @@
-# --- INÍCIO DO CÓDIGO FINAL E DEFINITIVO ---
+# --- INÍCIO DO CÓDIGO FINAL E INTELIGENTE ---
 
 import psycopg2
 import os
 from flask import Flask, jsonify, request
 import random
 from collections import Counter
+from dotenv import load_dotenv
+
+# Carrega as variáveis do arquivo .env (se ele existir no ambiente local)
+load_dotenv()
 
 # --- Aplicação Flask ---
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-# --- FUNÇÃO CENTRAL DE CONEXÃO (MÉTODO DIRETO À PROVA DE BUGS) ---
+# --- FUNÇÃO CENTRAL DE CONEXÃO (INTELIGENTE) ---
 def get_db_connection():
-    """Cria e retorna uma nova conexão com o banco de dados usando o método direto."""
-    conn = psycopg2.connect(
-        host="localhost",
-        port="5432",
-        dbname="sorte_analisada_local",
-        user="postgres",
-        password="Dev12345"  # Sua senha simples e segura
-    )
+    """
+    Cria e retorna uma nova conexão.
+    Detecta se está no ambiente de produção (Render) ou local.
+    """
+    # O Render define a variável DATABASE_URL automaticamente no ambiente de produção.
+    database_url = os.environ.get('DATABASE_URL')
+
+    if database_url:
+        # Se a variável existe, estamos no Render. Conecte-se usando ela.
+        print("INFO: Conectando ao banco de dados de produção (Render)...")
+        conn = psycopg2.connect(database_url)
+    else:
+        # Se não, estamos no ambiente local. Use a conexão direta à prova de bugs.
+        print("INFO: Conectando ao banco de dados LOCAL...")
+        conn = psycopg2.connect(
+            host="localhost",
+            port="5432",
+            dbname="sorte_analisada_local",
+            user="postgres",
+            password="Dev12345"  # Sua senha local
+        )
     return conn
 
 # --- LÓGICA DE GERAÇÃO DE JOGOS (MÉTODO 1: COM FILTRO) ---
@@ -147,4 +164,4 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
 
-# --- FIM DO CÓDIGO FINAL E DEFINITIVO ---
+# --- FIM DO CÓDIGO FINAL E INTELIGENTE ---
