@@ -30,8 +30,8 @@
     <meta name="twitter:image" content="https://sorteanalisada.com.br/logotipo.png">
 
     <!-- Favicon -->
-    <link rel="icon" href="images/logotipo.png" type="image/png"> <!-- ATUALIZEI O FAVICON TAMBÉM -->
-    
+    <link rel="icon" href="logotipo.png" type="image/png">
+   
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"
      crossorigin="anonymous"></script>
 
@@ -46,7 +46,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Sorte Analisada",
-      "url": "https://sorteanalisada.com.br", 
+      "url": "https://sorteanalisada.com.br",
       "description": "Gere dicas da Mega-Sena e aumente suas chances com combinações únicas e aleatórias.",
       "applicationCategory": "Game",
       "operatingSystem": "All",
@@ -150,6 +150,7 @@
         }
         #area-resultados { min-height: 100px; }
 
+        /* --- MUDANÇA PRINCIPAL AQUI --- */
         .jogo {
             background-color: rgba(0, 0, 0, 0.2);
             padding: 1rem;
@@ -157,26 +158,29 @@
             border-radius: 12px;
             border-left: 4px solid var(--cor-dourado);
             transition: transform 0.3s ease;
+           
+            /* Propriedades de layout aplicadas diretamente aqui */
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 5px 10px;
+            flex-wrap: wrap; /* A propriedade mais importante para a quebra de linha */
+            gap: 5px 10px;  /* Espaçamento vertical e horizontal entre os números */
         }
         .jogo:hover { transform: scale(1.02); }
 
+        /* O container interno foi removido do CSS */
+       
         .numero {
             font-size: 1.7rem;
             font-weight: 700;
             color: var(--cor-texto);
-            padding: 0 5px;
         }
         .separador-numero {
             font-size: 1.5rem;
             color: var(--cor-dourado);
             font-weight: 700;
         }
-        
+       
         .spinner {
             border: 5px solid rgba(255, 255, 255, 0.2);
             border-top: 5px solid var(--cor-dourado);
@@ -187,7 +191,7 @@
             margin: 2rem auto;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
+       
         .nav-interna {
             padding: 1.5rem 0;
             margin-top: 1rem;
@@ -286,7 +290,7 @@
             .container { padding: 1.5rem 1rem; }
             h1 { font-size: 1.8rem; }
             .imagem-ouro { width: 120px; }
-            
+           
             .grupo-botoes {
                 flex-direction: column;
                 align-items: center;
@@ -300,17 +304,14 @@
             }
 
             .jogo {
-                padding: 0.8rem 0.6rem;
-            }
-            .numeros-container {
-                gap: 6px;
+                padding: 0.8rem;
+                gap: 3px 6px;
             }
             .numero {
-                font-size: 1.2rem;
-                padding: 0 2px;
+                font-size: 1.4rem;
             }
             .separador-numero {
-                font-size: 1.1rem;
+                font-size: 1.3rem;
             }
 
             .footer-section p { text-align: left; }
@@ -321,9 +322,13 @@
     <div class="container">
         <!-- O resto do seu <body> continua aqui, sem alterações -->
         <header>
-            <img src="images/logotipo.png" alt="Logotipo Sorte Analisada com uma lupa e um trevo da sorte, com 2 folhas dourada" class="imagem-ouro" loading="lazy">
+
+           <!-- LINHA NOVA E CORRETA -->
+<img src="images/logotipo.png" alt="Logotipo Sorte Analisada com uma lupa e um trevo da sorte, com 2 folhas dourada" class="imagem-ouro" loading="lazy">
+
+
             <h1>Sorte Analisada</h1>
-            <p class="subtitulo">Acredite na sua sorte!</p>   
+            <p class="subtitulo">Acredite na sua sorte!</p>  
         </header>
 
         <main>
@@ -356,7 +361,7 @@
                     </label>
                 </div>
             </section>
-            
+           
             <section class="secao-botoes">
                 <h2>Escolha a quantidade de dicas:</h2>
                 <div class="grupo-botoes">
@@ -386,19 +391,19 @@
                 <p>Lembre-se, jogar nas loterias é só para maiores de 18 anos. Jogue sempre com responsabilidade!</p>
                 <p style="text-align: center;"><strong>Boa sorte!</strong></p>
             </section>
-            
+           
             <section id="links" class="footer-section" aria-labelledby="links-titulo">
                 <h2 id="links-titulo">Links Oficiais</h2>
                 <a href="https://loterias.caixa.gov.br/Paginas/mega-sena.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Site Oficial da Mega-Sena</a>
                 <a href="https://www.loteriasonline.caixa.gov.br/silce-web/#/termos-de-uso" target="_blank" rel="noopener noreferrer" class="link-centralizado">Loterias Online Caixa</a>
                 <a href="https://www.caixa.gov.br/jogo-responsavel/Paginas/default.aspx" target="_blank" rel="noopener noreferrer" class="link-centralizado">Jogo Responsável</a>
             </section>
-             
+            
             <section id="estatisticas" class="footer-section" aria-labelledby="stats-titulo">
                <h2 id="stats-titulo">Estatísticas dos Sorteios</h2>
                <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
                <p style="text-align: center; margin: 1rem 0;">Análise baseada até o concurso <strong id="ultimo-concurso-info">...</strong>.</p>
-        
+       
             <div class="grupo-botoes" style="margin-bottom: 2rem;">
                 <button class="botao-gerar" onclick="exibirEstatisticas()">Carregar Gráficos de Frequência</button>
             </div>
@@ -418,7 +423,7 @@
                 <h2 id="doacao-titulo">Ganhou com nossas dicas?</h2>
                 <p>Se você ganhou na loteria com nossos números, queremos te parabenizar! Nossa comunidade é feita de pessoas que buscam a sorte e, se você quiser fazer parte da nossa rede de apoio, considere doar para o site. Agradecemos a sua colaboração, que nos ajuda a manter o site funcionando e a oferecer essa ferramenta para mais pessoas. Juntos, podemos alcançar mais sonhos!</p>
                 <p><strong>Apoie com um PIX:</strong></p>
-                <img src="images/placeholder-qrcode.png" alt="QR Code para doação via PIX" class="qrcode-pix"> <!-- ATUALIZEI ESTE CAMINHO TAMBÉM -->
+                <img src="images/placeholder-qrcode.png" alt="QR Code para doação via PIX" class="qrcode-pix">
                 <p style="font-size: 0.8rem; text-align: center; margin-top: 1rem;"><em>*Doações são voluntárias e não vinculadas a ganhos futuros. Apreciamos o apoio, mas lembre-se: jogar é um risco financeiro.</em></p>
             </section>
 
@@ -457,37 +462,34 @@
 
             try {
                 const response = await fetch(`/get-games/${quantidade}?filtro=${filtroAtivado}&dezenas=${dezenas}`);
-                
+               
                 if (!response.ok) {
                     throw new Error(`Erro do servidor: ${response.statusText}`);
                 }
                 const jogos = await response.json();
-                
+               
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
-                
+               
+                // --- MUDANÇA PRINCIPAL NO SCRIPT ---
                 jogos.forEach(linha => {
                     const jogoContainer = document.createElement('div');
-                    jogoContainer.className = 'jogo';
+                    jogoContainer.className = 'jogo'; // Este é o nosso contêiner flexível principal
 
-                    const numerosContainer = document.createElement('div');
-                    numerosContainer.className = 'numeros-container';
-                    
                     const numeros = linha.trim().split(/\s+/);
                     numeros.forEach((num, index) => {
                         const divNumero = document.createElement('span');
                         divNumero.className = 'numero';
                         divNumero.textContent = num;
-                        numerosContainer.appendChild(divNumero);
+                        jogoContainer.appendChild(divNumero); // Adiciona o número direto no .jogo
 
                         if (index < numeros.length - 1) {
                             const separador = document.createElement('span');
                             separador.className = 'separador-numero';
                             separador.textContent = '-';
-                            numerosContainer.appendChild(separador);
+                            jogoContainer.appendChild(separador); // Adiciona o separador direto no .jogo
                         }
                     });
 
-                    jogoContainer.appendChild(numerosContainer);
                     areaResultados.appendChild(jogoContainer);
                 });
 
@@ -495,34 +497,34 @@
                 areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos. Verifique sua conexão ou tente novamente mais tarde.</p>`;
             }
         }
-        
+       
 let graficoMaisSorteados = null;
 let graficoMenosSorteados = null;
 
 async function exibirEstatisticas() {
     const areaStats = document.getElementById('area-estatisticas');
     const botao = document.querySelector('#estatisticas .botao-gerar');
-    
+   
     botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
     botao.disabled = true;
 
     try {
         const response = await fetch('/get-stats');
         if (!response.ok) throw new Error('Falha ao buscar dados do servidor.');
-        
+       
         const data = await response.json();
 
         document.getElementById('ultimo-concurso-info').textContent = data.ultimo_concurso;
         areaStats.style.display = 'block';
 
         const sortedData = data.frequencia.sort((a, b) => a.frequencia - b.frequencia);
-        
+       
         const menosSorteados = sortedData.slice(0, 10);
         const maisSorteados = sortedData.slice(-10).reverse();
 
         if (graficoMaisSorteados) graficoMaisSorteados.destroy();
         if (graficoMenosSorteados) graficoMenosSorteados.destroy();
-        
+       
         const corTextoGrafico = '#FFFDE7';
         const corGridGrafico = 'rgba(255, 255, 255, 0.2)';
 
