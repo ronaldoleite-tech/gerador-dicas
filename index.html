@@ -216,6 +216,14 @@
             line-height: 1.7;
             text-align: justify;
         }
+        .footer-section h3 { /* Estilo para os subtítulos da nova seção */
+            color: #E0E0E0;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
         .footer-section a {
             color: var(--cor-dourado-hover);
             font-weight: 500;
@@ -272,7 +280,6 @@
         input:checked + .slider { background-color: var(--cor-dourado); }
         input:checked + .slider:before { transform: translateX(22px); }
         
-        /* --- ESTILOS PARA NOVA SEÇÃO MONTE CARLO --- */
         .secao-monte-carlo {
             padding: 1.5rem;
             margin: 2rem 0;
@@ -281,7 +288,7 @@
             background: rgba(0,0,0,0.1);
         }
         #area-monte-carlo-resultado {
-            min-height: 70px; /* Altura para acomodar o jogo ou o spinner */
+            min-height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -305,7 +312,7 @@
             .jogo { padding: 0.8rem; }
             .numero { font-size: 1.4rem; }
             .separador-numero { font-size: 1.3rem; }
-            .footer-section p { text-align: left; }
+            .footer-section p, .footer-section h3 { text-align: left; }
         }
     </style>
 </head>
@@ -318,18 +325,11 @@
         </header>
 
         <main>
-            <!-- =============================================== -->
-            <!-- ====== NOVA SEÇÃO DE SIMULAÇÃO MONTE CARLO ====== -->
-            <!-- =============================================== -->
             <section class="secao-monte-carlo">
                 <h2 style="font-size: 1.2rem; margin-top: 0;">Dica Especial: Simulação Monte Carlo</h2>
-                <div id="area-monte-carlo-resultado">
-                    <!-- O resultado do jogo aparecerá aqui -->
-                </div>
+                <div id="area-monte-carlo-resultado"></div>
                 <button class="botao-gerar" onclick="gerarJogoMonteCarlo()" style="margin-top: 1rem;">Gerar Sugestão de 6 Dezenas</button>
             </section>
-            <!-- =============================================== -->
-            <!-- =============================================== -->
 
             <section class="secao-controles">
                 <div class="controle-item">
@@ -375,7 +375,8 @@
 
         <nav class="nav-interna">
             <a href="#sobre">Sobre</a>
-            <a href="#simulacao-monte-carlo">Simulação Monte Carlo</a> <!-- NOVO LINK AQUI -->
+            <a href="#sobre-filtros">Nossos Filtros</a> <!-- NOVO LINK -->
+            <a href="#simulacao-monte-carlo">Simulação Monte Carlo</a>
             <a href="#links">Links Oficiais</a>
             <a href="#estatisticas">Estatísticas</a>
             <a href="#doacao">Apoie o Projeto</a>
@@ -393,14 +394,25 @@
             </section>
             
             <!-- =============================================== -->
-            <!-- ====== NOVA SEÇÃO DE EXPLICAÇÃO NO RODAPÉ ======= -->
+            <!-- ====== NOVA SEÇÃO DE EXPLICAÇÃO DOS FILTROS ====== -->
             <!-- =============================================== -->
+            <section id="sobre-filtros" class="footer-section" aria-labelledby="filtros-titulo">
+                <h2 id="filtros-titulo">Entenda Nossos Filtros</h2>
+                <p>Para oferecer diferentes estratégias de jogo, o Sorte Analisada trabalha com duas abordagens distintas. Entenda o que acontece quando você ativa ou desativa nossos filtros inteligentes.</p>
+                
+                <h3>Com o Filtro Ativado (ON)</h3>
+                <p>Nosso sistema analisa todo o histórico de resultados da Mega-Sena. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, aumentando a probabilidade de serem escolhidos para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm mais tendência a aparecer.</p>
+
+                <h3>Com o Filtro Desativado (OFF)</h3>
+                <p>A geração é 100% aleatória. Cada número, de 01 a 60, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
+            </section>
+            <!-- =============================================== -->
+            <!-- =============================================== -->
+            
             <section id="simulacao-monte-carlo" class="footer-section" aria-labelledby="smc-titulo">
                 <h2 id="smc-titulo">O que é a Simulação de Monte Carlo?</h2>
                 <p>A simulação de Monte Carlo é uma técnica computacional que utiliza amostragem aleatória repetida para modelar a probabilidade de diferentes resultados em situações incertas. Basicamente, ela estima resultados prováveis através da execução de um modelo várias vezes com diferentes conjuntos de números aleatórios. Essa técnica é amplamente utilizada em diversas áreas para analisar riscos e incertezas, como finanças, engenharia, previsão de vendas e gerenciamento de projetos.</p>
             </section>
-            <!-- =============================================== -->
-            <!-- =============================================== -->
             
             <section id="links" class="footer-section" aria-labelledby="links-titulo">
                 <h2 id="links-titulo">Links Oficiais</h2>
@@ -462,9 +474,6 @@
     </div>
 
     <script>
-        // =============================================== //
-        // ========= NOVA FUNÇÃO JAVASCRIPT AQUI ========= //
-        // =============================================== //
         async function gerarJogoMonteCarlo() {
             const areaResultado = document.getElementById('area-monte-carlo-resultado');
             areaResultado.innerHTML = '<div class="spinner"></div>';
@@ -477,7 +486,7 @@
                 const data = await response.json();
                 const linha = data.jogo;
                 
-                areaResultado.innerHTML = ''; // Limpa o spinner
+                areaResultado.innerHTML = ''; 
 
                 const jogoContainer = document.createElement('div');
                 jogoContainer.className = 'jogo';
@@ -503,7 +512,6 @@
                 areaResultado.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogo. Tente novamente.</p>`;
             }
         }
-
 
         async function gerarJogos(quantidade) {
             const areaResultados = document.getElementById('area-resultados');
