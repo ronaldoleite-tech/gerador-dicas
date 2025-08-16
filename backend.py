@@ -1,4 +1,4 @@
-# --- ESTE É O CONTEÚDO DO ARQUIVO backend.py (PARA O RENDER) ---
+# --- CONTEÚDO COMPLETO DO ARQUIVO backend.py (ATUALIZADO) ---
 
 import psycopg2
 import os
@@ -12,13 +12,51 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 app = Flask(__name__, static_folder='.', static_url_path='')
 
 def get_db_connection():
-    # Conexão por URL, necessária para o ambiente de produção (Render)
     conn = psycopg2.connect(DATABASE_URL)
     return conn
 
-# ... (todo o resto do seu código de gerar jogos e rotas continua aqui, exatamente como antes) ...
-# (O resto do arquivo é idêntico ao do backend_LOCAL.py)
-def gerar_jogos_com_base_na_frequencia(count):
+# --- NOVA FUNÇÃO DA SIMULAÇÃO DE MONTE CARLO ---
+def gerar_jogo_monte_carlo():
+    conn = None
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT dezenas FROM resultados_sorteados;")
+        resultados = cur.fetchall()
+        if not resultados:
+            raise ValueError("O banco de dados está vazio para a simulação.")
+
+        todos_os_numeros = []
+        for linha in resultados:
+            numeros_da_linha = [int(n) for n in linha[0].split()]
+            todos_os_numeros.extend(numeros_da_linha)
+
+        frequencia_historica = Counter(todos_os_numeros)
+        numeros_possiveis = list(frequencia_historica.keys())
+        pesos_historicos = list(frequencia_historica.values())
+
+        # --- Início da Simulação ---
+        # Simulamos 100.000 sorteios futuros baseados nas probabilidades passadas.
+        simulacoes = 100000
+        resultados_simulacao = Counter()
+
+        for _ in range(simulacoes):
+            # Em cada simulação, sorteamos 6 dezenas com base nos pesos históricos
+            sorteio_simulado = random.choices(numeros_possiveis, weights=pesos_historicos, k=6)
+            resultados_simulacao.update(sorteio_simulado)
+        
+        # Pegamos os 6 números mais frequentes da simulação
+        jogo_monte_carlo = resultados_simulacao.most_common(6)
+        numeros_do_jogo = [num for num, freq in jogo_monte_carlo]
+        
+        jogo_formatado = " ".join(f"{num:02}" for num in sorted(numeros_do_jogo))
+        return jogo_formatado
+
+    finally:
+        if conn:
+            conn.close()
+
+def gerar_jogos_com_base_na_frequencia(count, dezenas=6):
     conn = None
     try:
         conn = get_db_connection()
@@ -43,7 +81,7 @@ def gerar_jogos_com_base_na_frequencia(count):
         
         while len(jogos_gerados) < count and tentativas < max_tentativas:
             jogo_atual = set()
-            while len(jogo_atual) < 6:
+            while len(jogo_atual) < dezenas:
                 numero_sorteado = random.choices(numeros_possiveis, weights=pesos, k=1)[0]
                 jogo_atual.add(numero_sorteado)
             
@@ -56,10 +94,10 @@ def gerar_jogos_com_base_na_frequencia(count):
         if conn:
             conn.close()
 
-def gerar_jogos_puramente_aleatorios(count):
+def gerar_jogos_puramente_aleatorios(count, dezenas=6):
     jogos_gerados = set()
     while len(jogos_gerados) < count:
-        numeros = random.sample(range(1, 61), 6)
+        numeros = random.sample(range(1, 61), dezenas)
         jogo_formatado = " ".join(f"{num:02}" for num in sorted(numeros))
         jogos_gerados.add(jogo_formatado)
     return list(jogos_gerados)
@@ -68,14 +106,26 @@ def gerar_jogos_puramente_aleatorios(count):
 def index():
     return app.send_static_file('index.html')
 
+# --- NOVA ROTA PARA A SIMULAÇÃO ---
+@app.route('/get-monte-carlo-game')
+def get_monte_carlo_game():
+    try:
+        jogo = gerar_jogo_monte_carlo()
+        return jsonify({"jogo": jogo})
+    except Exception as e:
+        print(f"ERRO: Erro ao gerar jogo Monte Carlo: {e}")
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/get-games/<int:count>')
 def get_games(count):
     try:
         usar_filtro = request.args.get('filtro', 'true', type=str).lower() == 'true'
+        dezenas = request.args.get('dezenas', 6, type=int)
+        
         if usar_filtro:
-            jogos = gerar_jogos_com_base_na_frequencia(count)
+            jogos = gerar_jogos_com_base_na_frequencia(count, dezenas)
         else:
-            jogos = gerar_jogos_puramente_aleatorios(count)
+            jogos = gerar_jogos_puramente_aleatorios(count, dezenas)
         return jsonify(jogos)
     except Exception as e:
         print(f"ERRO: Erro ao buscar jogos: {e}")
@@ -129,4 +179,5 @@ def get_stats():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=port)
+    # Adicione debug=True para facilitar o desenvolvimento local
+    app.run(host='0.0.0.0', port=port, debug=True)
