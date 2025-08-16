@@ -1,10 +1,16 @@
-# --- CONTEÚDO PARA O ARQUIVO importador.py (PRODUÇÃO) ---
-
+# --- Conteúdo FINAL E CORRIGIDO para importador_local.py ---
 import psycopg2
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
+# --- CONEXÃO DIRETA COM O BANCO DE DADOS LOCAL ---
+def get_db_connection():
+    return psycopg2.connect(
+        host="localhost",
+        port="5432",
+        dbname="sorte_analisada_local",
+        user="postgres",
+        password="Dev12345" # Verifique se esta é sua senha local correta
+    )
 
 LOTERIAS_A_IMPORTAR = {
     'megasena': 'sorteadosmegasena.txt',
@@ -13,24 +19,23 @@ LOTERIAS_A_IMPORTAR = {
 }
 
 def realizar_importacao():
-    # --- USA A VARIÁVEL DE AMBIENTE PARA CONECTAR AO RENDER ---
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    
-    if not DATABASE_URL:
-        print("ERRO: A variável DATABASE_URL não foi encontrada. Verifique seu arquivo .env")
-        return
-
     conn = None
     try:
-        print("INFO: Tentando conectar ao banco de dados de PRODUÇÃO...")
-        conn = psycopg2.connect(DATABASE_URL)
+        print("INFO: Conectando ao banco de dados LOCAL...")
+        conn = get_db_connection()
         cur = conn.cursor()
-        print("INFO: CONEXÃO COM O BANCO DE DADOS DE PRODUÇÃO REALIZADA COM SUCESSO!")
+        print("INFO: Conexão bem-sucedida.")
 
-        print("INFO: Verificando e atualizando a estrutura da tabela 'resultados_sorteados'...")
+        print("INFO: Atualizando estrutura da tabela...")
+        # Adiciona a coluna se ela não existir
         cur.execute("ALTER TABLE resultados_sorteados ADD COLUMN IF NOT EXISTS tipo_loteria VARCHAR(50);")
+        
+        # --- MUDANÇA PRINCIPAL E FINAL AQUI ---
+        # 1. Tenta remover a restrição antiga de concurso único (NÃO dá erro se não existir)
         cur.execute("ALTER TABLE resultados_sorteados DROP CONSTRAINT IF EXISTS resultados_sorteados_concurso_key;")
+        # 2. Tenta remover a nova restrição (para garantir que possamos recriá-la)
         cur.execute("ALTER TABLE resultados_sorteados DROP CONSTRAINT IF EXISTS resultados_sorteados_concurso_loteria_unique;")
+        # 3. Adiciona a nova restrição correta (concurso + loteria)
         cur.execute("ALTER TABLE resultados_sorteados ADD CONSTRAINT resultados_sorteados_concurso_loteria_unique UNIQUE (concurso, tipo_loteria);")
         conn.commit()
         print("INFO: Estrutura da tabela atualizada com a nova regra de unicidade.")
@@ -75,5 +80,3 @@ def realizar_importacao():
 
 if __name__ == "__main__":
     realizar_importacao()
-
-# --- FIM DO CÓDIGO ---
