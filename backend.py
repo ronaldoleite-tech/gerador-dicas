@@ -6,6 +6,7 @@ from flask import Flask, jsonify, request
 import random
 from collections import Counter
 from dotenv import load_dotenv
+import math
 
 load_dotenv()
 DATABASE_URL = os.environ.get('DATABASE_URL')
@@ -15,8 +16,18 @@ def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL)
     return conn
 
-# --- NOVA FUNÇÃO DA SIMULAÇÃO DE MONTE CARLO ---
+# --- FUNÇÃO AUXILIAR PARA VERIFICAR NÚMEROS PRIMOS ---
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+# --- FUNÇÃO DA SIMULAÇÃO DE MONTE CARLO (EXISTENTE) ---
 def gerar_jogo_monte_carlo():
+    # ... (código existente, sem alterações)
     conn = None
     try:
         conn = get_db_connection()
@@ -34,18 +45,14 @@ def gerar_jogo_monte_carlo():
         frequencia_historica = Counter(todos_os_numeros)
         numeros_possiveis = list(frequencia_historica.keys())
         pesos_historicos = list(frequencia_historica.values())
-
-        # --- Início da Simulação ---
-        # Simulamos 100.000 sorteios futuros baseados nas probabilidades passadas.
+        
         simulacoes = 100000
         resultados_simulacao = Counter()
 
         for _ in range(simulacoes):
-            # Em cada simulação, sorteamos 6 dezenas com base nos pesos históricos
             sorteio_simulado = random.choices(numeros_possiveis, weights=pesos_historicos, k=6)
             resultados_simulacao.update(sorteio_simulado)
         
-        # Pegamos os 6 números mais frequentes da simulação
         jogo_monte_carlo = resultados_simulacao.most_common(6)
         numeros_do_jogo = [num for num, freq in jogo_monte_carlo]
         
@@ -56,6 +63,7 @@ def gerar_jogo_monte_carlo():
         if conn:
             conn.close()
 
+# ... (outras funções de geração de jogos existentes, sem alterações) ...
 def gerar_jogos_com_base_na_frequencia(count, dezenas=6):
     conn = None
     try:
@@ -102,11 +110,12 @@ def gerar_jogos_puramente_aleatorios(count, dezenas=6):
         jogos_gerados.add(jogo_formatado)
     return list(jogos_gerados)
 
+
+# --- ROTAS DA APLICAÇÃO ---
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
 
-# --- NOVA ROTA PARA A SIMULAÇÃO ---
 @app.route('/get-monte-carlo-game')
 def get_monte_carlo_game():
     try:
@@ -133,6 +142,7 @@ def get_games(count):
 
 @app.route('/status')
 def status_do_banco():
+    # ... (código existente, sem alterações)
     conn = None
     try:
         conn = get_db_connection()
@@ -152,24 +162,43 @@ def get_stats():
     try:
         conn = get_db_connection()
         cur = conn.cursor()
+        
+        # --- Cálculo de frequência (existente) ---
         cur.execute("SELECT MAX(concurso) FROM resultados_sorteados;")
-        ultimo_concurso_result = cur.fetchone()
-        ultimo_concurso = ultimo_concurso_result[0] if ultimo_concurso_result else 0
+        ultimo_concurso = cur.fetchone()[0] or 0
         cur.execute("""
-            SELECT numero::integer, COUNT(*) as frequencia
-            FROM (
-                SELECT unnest(string_to_array(dezenas, ' ')) as numero
-                FROM resultados_sorteados
-            ) as numeros_individuais
-            GROUP BY numero
-            ORDER BY frequencia DESC;
+            SELECT numero::integer, COUNT(*) FROM (
+                SELECT unnest(string_to_array(dezenas, ' ')) as numero FROM resultados_sorteados
+            ) as numeros_individuais GROUP BY numero ORDER BY numero::integer ASC;
         """)
-        frequencia_numeros = cur.fetchall()
-        stats_data = [{"numero": n, "frequencia": f} for n, f in frequencia_numeros]
+        frequencia_numeros = [{"numero": n, "frequencia": f} for n, f in cur.fetchall()]
+
+        # --- NOVOS CÁLCULOS DE PRIMOS E PARES/ÍMPARES ---
+        cur.execute("SELECT dezenas FROM resultados_sorteados;")
+        todos_sorteios = cur.fetchall()
+        
+        contagem_primos_por_sorteio = []
+        contagem_pares_por_sorteio = []
+
+        for sorteio_tuple in todos_sorteios:
+            numeros = [int(n) for n in sorteio_tuple[0].split()]
+            # Apenas para jogos de 6 dezenas
+            if len(numeros) == 6:
+                primos_no_sorteio = sum(1 for n in numeros if is_prime(n))
+                pares_no_sorteio = sum(1 for n in numeros if n % 2 == 0)
+                contagem_primos_por_sorteio.append(primos_no_sorteio)
+                contagem_pares_por_sorteio.append(pares_no_sorteio)
+
+        stats_primos = Counter(contagem_primos_por_sorteio)
+        stats_pares = Counter(contagem_pares_por_sorteio)
+
         return jsonify({
             "ultimo_concurso": ultimo_concurso,
-            "frequencia": stats_data
+            "frequencia": frequencia_numeros,
+            "stats_primos": dict(stats_primos),
+            "stats_pares": dict(stats_pares)
         })
+
     except Exception as e:
         print(f"ERRO: Erro ao buscar estatísticas: {e}")
         return jsonify({"error": str(e)}), 500
@@ -179,5 +208,4 @@ def get_stats():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
-    # Adicione debug=True para facilitar o desenvolvimento local
     app.run(host='0.0.0.0', port=port, debug=True)

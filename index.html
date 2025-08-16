@@ -4,43 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO -->
     <title>Sorte Analisada - Gerador de Palpites para a Mega-Sena</title>
     <meta name="description" content="Gere palpites inteligentes para a Mega-Sena com combinações exclusivas. Escolha entre 1, 5 ou 10 jogos e aumente suas chances!">
-    <meta name="keywords" content="mega-sena, dicas, palpites, loteria, números da sorte, jogos, sorteio, como ganhar, probabilidades, apostas, monte carlo">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="keywords" content="mega-sena, dicas, palpites, loteria, números da sorte, jogos, sorteio, como ganhar, probabilidades, apostas, monte carlo, estatísticas, primos, pares, ímpares">
     <meta name="author" content="Ronaldo Leite">
-
-    <!-- Canonical -->
     <link rel="canonical" href="https://sorteanalisada.com.br/">
-
-    <!-- Open Graph -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:title" content="Sorte Analisada - Gerador de Palpites para a Mega-Sena">
-    <meta property="og:description" content="Escolha 1, 5 ou 10 combinações únicas para a Mega-Sena. Gere jogos exclusivos e aposte com mais confiança.">
+    <meta property="og:description" content="Use estatísticas avançadas e simulações para gerar seus palpites para a Mega-Sena.">
     <meta property="og:image" content="https://sorteanalisada.com.br/images/logotipo.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sorteanalisada.com.br/">
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sorte Analisada - Gerador de Palpites para a Mega-Sena">
-    <meta name="twitter:description" content="Gere jogos exclusivos para a Mega-Sena e aumente suas chances. Escolha 1, 5 ou 10 dicas agora!">
+    <meta name="twitter:description" content="Gere jogos exclusivos para a Mega-Sena e aumente suas chances.">
     <meta name="twitter:image" content="https://sorteanalisada.com.br/images/logotipo.png">
-
-    <!-- Favicon -->
     <link rel="icon" href="images/logotipo.png" type="image/png">
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"
-     crossorigin="anonymous"></script>
-
-    <!-- Fonts -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Dados Estruturados Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,7 +40,6 @@
       }
     }
     </script>
-
     <style>
         :root {
             --cor-fundo: linear-gradient(180deg, #0d47a1, #1976d2, #42a5f5);
@@ -92,223 +74,55 @@
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        h2 {
-            color: #bbdefb;
-            margin-bottom: 15px;
-        }
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
-            color: var(--cor-dourado);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.5rem;
-        }
-        .subtitulo {
-            font-size: 1.6rem;
-            font-weight: 400;
-            margin-bottom: 1rem;
-            color: #bbdefb;
-        }
-        .imagem-ouro {
-            background-color: #FFF8E1;
-            padding: 8px;
-            border-radius: 10px;
-            width: 150px;
-            height: auto;
-            border: 3px solid var(--cor-dourado);
-            box-shadow: var(--sombra-dourada);
-            transition: transform 0.3s ease;
-        }
+        h2 { color: #bbdefb; margin-bottom: 15px; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--cor-dourado); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.5rem; }
+        .subtitulo { font-size: 1.6rem; font-weight: 400; margin-bottom: 1rem; color: #bbdefb; }
+        .imagem-ouro { background-color: #FFF8E1; padding: 8px; border-radius: 10px; width: 150px; height: auto; border: 3px solid var(--cor-dourado); box-shadow: var(--sombra-dourada); transition: transform 0.3s ease; }
         .imagem-ouro:hover { transform: scale(1.05); }
         .secao-botoes h2 { font-size: 1.2rem; margin-bottom: 1rem; font-weight: 500; }
         .grupo-botoes { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .botao-gerar {
-            background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover));
-            color: #000;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .botao-gerar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
-        }
-        .titulo-sugestoes {
-            font-size: 1.2rem;
-            font-family: 'Orbitron', sans-serif;
-            color: var(--cor-dourado);
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
+        .botao-gerar { background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; border: none; padding: 0.8rem 1.5rem; font-size: 1rem; font-weight: bold; border-radius: 40px; cursor: pointer; transition: all 0.3s ease-in-out; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+        .botao-gerar:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4); }
+        .titulo-sugestoes { font-size: 1.2rem; font-family: 'Orbitron', sans-serif; color: var(--cor-dourado); margin-top: 2rem; margin-bottom: 1rem; }
         #area-resultados { min-height: 100px; }
-        .jogo {
-            background-color: rgba(0, 0, 0, 0.2);
-            padding: 1rem;
-            margin: 0.7rem auto;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-left: 4px solid var(--cor-dourado);
-            transition: transform 0.3s ease;
-            flex-wrap: wrap;
-            gap: 5px 10px;
-        }
+        .jogo { background-color: rgba(0, 0, 0, 0.2); padding: 1rem; margin: 0.7rem auto; border-radius: 12px; display: flex; justify-content: center; align-items: center; border-left: 4px solid var(--cor-dourado); transition: transform 0.3s ease; flex-wrap: wrap; gap: 5px 10px; }
         .jogo:hover { transform: scale(1.02); }
-        .numero {
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: var(--cor-texto);
-        }
-        .separador-numero {
-            font-size: 1.5rem;
-            color: var(--cor-dourado);
-            font-weight: 700;
-        }
-        .spinner {
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            border-top: 5px solid var(--cor-dourado);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
-        }
+        .numero { font-size: 1.7rem; font-weight: 700; color: var(--cor-texto); }
+        .separador-numero { font-size: 1.5rem; color: var(--cor-dourado); font-weight: 700; }
+        .spinner { border: 5px solid rgba(255, 255, 255, 0.2); border-top: 5px solid var(--cor-dourado); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 2rem auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .nav-interna {
-            padding: 1.5rem 0;
-            margin-top: 1rem;
-            border-top: 1px solid var(--cor-divisoria-ouro);
-            border-bottom: 1px solid var(--cor-divisoria-ouro);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
-        .nav-interna a {
-            color: var(--cor-dourado);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+        .nav-interna { padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid var(--cor-divisoria-ouro); border-bottom: 1px solid var(--cor-divisoria-ouro); display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        .nav-interna a { color: var(--cor-dourado); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
         .nav-interna a:hover { color: var(--cor-dourado-hover); }
         .page-footer { margin-top: 2rem; }
-        .footer-section {
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--cor-divisoria-ouro);
-        }
+        .footer-section { padding: 2rem 0; border-bottom: 1px solid var(--cor-divisoria-ouro); }
         .footer-section:last-child { border-bottom: none; }
-        .footer-section h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--cor-dourado);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .footer-section p, .footer-section a {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            text-align: justify;
-        }
-        .footer-section h3 { /* Estilo para os subtítulos da nova seção */
-            color: #E0E0E0;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            text-align: left;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-        }
-        .footer-section a {
-            color: var(--cor-dourado-hover);
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-        }
+        .footer-section h2 { font-family: 'Orbitron', sans-serif; color: var(--cor-dourado); font-size: 1.5rem; margin-bottom: 1rem; }
+        .footer-section p, .footer-section a { font-size: 0.95rem; line-height: 1.7; text-align: justify; }
+        .footer-section h3 { color: #E0E0E0; margin-top: 1.5rem; margin-bottom: 0.5rem; text-align: left; font-family: 'Poppins', sans-serif; font-weight: 500; }
+        .footer-section a { color: var(--cor-dourado-hover); font-weight: 500; text-decoration: none; display: inline-block; }
         .footer-section a:hover { text-decoration: underline; }
         .link-centralizado { display: block; text-align: center; margin-top: 1rem; }
-        .qrcode-pix {
-            width: 180px;
-            height: 180px;
-            background-color: white;
-            border: 4px solid var(--cor-dourado);
-            border-radius: 10px;
-            margin: 1rem auto;
-            display: block;
-        }
-        .secao-controles {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin: 1.5rem 0 1rem 0;
-        }
-        .controle-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .controle-item label {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--cor-texto);
-        }
-        .seletor-custom {
-            background-color: rgba(0, 0, 0, 0.3);
-            color: var(--cor-dourado);
-            padding: 8px 12px;
-            border: 1px solid var(--cor-dourado);
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        .seletor-custom:focus {
-            outline: none;
-            box-shadow: var(--sombra-dourada);
-        }
+        .qrcode-pix { width: 180px; height: 180px; background-color: white; border: 4px solid var(--cor-dourado); border-radius: 10px; margin: 1rem auto; display: block; }
+        .secao-controles { display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap; margin: 1.5rem 0 1rem 0; }
+        .controle-item { display: flex; align-items: center; gap: 12px; }
+        .controle-item label { font-size: 1rem; font-weight: 500; color: var(--cor-texto); }
+        .seletor-custom { background-color: rgba(0, 0, 0, 0.3); color: var(--cor-dourado); padding: 8px 12px; border: 1px solid var(--cor-dourado); border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 1rem; cursor: pointer; }
+        .seletor-custom:focus { outline: none; box-shadow: var(--sombra-dourada); }
         .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #555; transition: .4s; border-radius: 28px; }
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--cor-dourado); }
         input:checked + .slider:before { transform: translateX(22px); }
-        
-        .secao-monte-carlo {
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border: 1px solid var(--cor-divisoria-ouro);
-            border-radius: 16px;
-            background: rgba(0,0,0,0.1);
-        }
-        #area-monte-carlo-resultado {
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
+        .secao-monte-carlo { padding: 1.5rem; margin: 2rem 0; border: 1px solid var(--cor-divisoria-ouro); border-radius: 16px; background: rgba(0,0,0,0.1); }
+        #area-monte-carlo-resultado { min-height: 70px; display: flex; align-items: center; justify-content: center; }
         @media (max-width: 600px) {
             .container { padding: 1.5rem 1rem; }
             h1 { font-size: 1.8rem; }
             .imagem-ouro { width: 120px; }
-            .grupo-botoes {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.8rem;
-            }
-            .botao-gerar {
-                width: 90%;
-                max-width: 300px;
-                padding: 0.7rem 1rem;
-                font-size: 0.95rem;
-            }
+            .grupo-botoes { flex-direction: column; align-items: center; gap: 0.8rem; }
+            .botao-gerar { width: 90%; max-width: 300px; padding: 0.7rem 1rem; font-size: 0.95rem; }
             .jogo { padding: 0.8rem; }
             .numero { font-size: 1.4rem; }
             .separador-numero { font-size: 1.3rem; }
@@ -319,7 +133,7 @@
 <body>
     <div class="container">
         <header>
-            <img src="images/logotipo.png" alt="Logotipo Sorte Analisada com uma lupa e um trevo da sorte, com 2 folhas dourada" class="imagem-ouro" loading="lazy">
+            <img src="images/logotipo.png" alt="Logotipo Sorte Analisada" class="imagem-ouro" loading="lazy">
             <h1>Sorte Analisada</h1>
             <p class="subtitulo">Acredite na sua sorte!</p>   
         </header>
@@ -335,21 +149,7 @@
                 <div class="controle-item">
                     <label for="dezenas-select">Dezenas por jogo:</label>
                     <select id="dezenas-select" class="seletor-custom">
-                        <option value="6">6 Dezenas</option>
-                        <option value="7">7 Dezenas</option>
-                        <option value="8">8 Dezenas</option>
-                        <option value="9">9 Dezenas</option>
-                        <option value="10">10 Dezenas</option>
-                        <option value="11">11 Dezenas</option>
-                        <option value="12">12 Dezenas</option>
-                        <option value="13">13 Dezenas</option>
-                        <option value="14">14 Dezenas</option>
-                        <option value="15">15 Dezenas</option>
-                        <option value="16">16 Dezenas</option>
-                        <option value="17">17 Dezenas</option>
-                        <option value="18">18 Dezenas</option>
-                        <option value="19">19 Dezenas</option>
-                        <option value="20">20 Dezenas</option>
+                        <option value="6">6 Dezenas</option><option value="7">7 Dezenas</option><option value="8">8 Dezenas</option><option value="9">9 Dezenas</option><option value="10">10 Dezenas</option><option value="11">11 Dezenas</option><option value="12">12 Dezenas</option><option value="13">13 Dezenas</option><option value="14">14 Dezenas</option><option value="15">15 Dezenas</option><option value="16">16 Dezenas</option><option value="17">17 Dezenas</option><option value="18">18 Dezenas</option><option value="19">19 Dezenas</option><option value="20">20 Dezenas</option>
                     </select>
                 </div>
                 <div class="controle-item">
@@ -374,40 +174,26 @@
         </main>
 
         <nav class="nav-interna">
-            <a href="#sobre">Sobre</a>
-            <a href="#sobre-filtros">Nossos Filtros</a> <!-- NOVO LINK -->
-            <a href="#simulacao-monte-carlo">Simulação Monte Carlo</a>
-            <a href="#links">Links Oficiais</a>
-            <a href="#estatisticas">Estatísticas</a>
-            <a href="#doacao">Apoie o Projeto</a>
-            <a href="#contato">Contato</a>
-            <a href="#termos">Termos de Uso</a>
+            <a href="#sobre">Sobre</a> <a href="#sobre-filtros">Nossos Filtros</a> <a href="#simulacao-monte-carlo">Simulação Monte Carlo</a> <a href="#links">Links Oficiais</a> <a href="#estatisticas">Estatísticas</a> <a href="#doacao">Apoie o Projeto</a> <a href="#contato">Contato</a> <a href="#termos">Termos de Uso</a>
         </nav>
 
         <footer class="page-footer">
             <section id="sobre" class="footer-section" aria-labelledby="sobre-titulo">
                 <h2 id="sobre-titulo">Sobre</h2>
-                <p>Fazer uma fezinha nas loterias é uma das paixões dos brasileiros e a favorita certamente é a Mega-Sena. E para escolher os números da sorte, vale tudo: combinar datas importantes, placas de carros, números favoritos, surpresinha...</p>
-                <p>Agora, você pode selecionar os números para os seus jogos aqui no Sorte Analisada: escolha entre 1, 5 ou 10 dicas de jogos. Você pode usar nossos filtros inteligentes, que analisam os números mais sorteados, ou desligá-los para gerar números totalmente aleatórios. Perfeito para apostas individuais ou para bolões com amigos e colegas!</p>
+                <p>Fazer uma fezinha nas loterias é uma das paixões dos brasileiros e a favorita certamente é a Mega-Sena. Para escolher os números da sorte, vale tudo: combinar datas importantes, placas de carros, números favoritos, surpresinha...</p>
+                <p>Agora, você pode selecionar os números para os seus jogos aqui no Sorte Analisada: escolha entre 1, 5 ou 10 dicas de jogos. Você pode usar nossos filtros inteligentes, que analisam os números mais sorteados, ou desligá-los para gerar números totalmente aleatórios. Perfeito para apostas individuais ou para bolões!</p>
                 <p>Lembre-se, jogar nas loterias é só para maiores de 18 anos. Jogue sempre com responsabilidade!</p>
                 <p style="text-align: center;"><strong>Boa sorte!</strong></p>
             </section>
             
-            <!-- =============================================== -->
-            <!-- ====== NOVA SEÇÃO DE EXPLICAÇÃO DOS FILTROS ====== -->
-            <!-- =============================================== -->
             <section id="sobre-filtros" class="footer-section" aria-labelledby="filtros-titulo">
                 <h2 id="filtros-titulo">Entenda Nossos Filtros</h2>
                 <p>Para oferecer diferentes estratégias de jogo, o Sorte Analisada trabalha com duas abordagens distintas. Entenda o que acontece quando você ativa ou desativa nossos filtros inteligentes.</p>
-                
                 <h3>Com o Filtro Ativado (ON)</h3>
                 <p>Nosso sistema analisa todo o histórico de resultados da Mega-Sena. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, aumentando a probabilidade de serem escolhidos para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm mais tendência a aparecer.</p>
-
                 <h3>Com o Filtro Desativado (OFF)</h3>
                 <p>A geração é 100% aleatória. Cada número, de 01 a 60, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
             </section>
-            <!-- =============================================== -->
-            <!-- =============================================== -->
             
             <section id="simulacao-monte-carlo" class="footer-section" aria-labelledby="smc-titulo">
                 <h2 id="smc-titulo">O que é a Simulação de Monte Carlo?</h2>
@@ -426,21 +212,35 @@
                <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
                <p style="text-align: center; margin: 1rem 0;">Análise baseada até o concurso <strong id="ultimo-concurso-info">...</strong>.</p>
         
-            <div class="grupo-botoes" style="margin-bottom: 2rem;">
-                <button class="botao-gerar" onclick="exibirEstatisticas()">Carregar Gráficos de Frequência</button>
-            </div>
+                <div class="grupo-botoes" style="margin-bottom: 2rem;">
+                    <button class="botao-gerar" onclick="exibirEstatisticas()">Carregar Gráficos de Análise</button>
+                </div>
 
-              <div id="area-estatisticas" style="display: none;">
-               <div>
-                 <h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3>
-                 <canvas id="grafico-mais-sorteados"></canvas>
-               </div>
-              <div style="margin-top: 2rem;">
-                <h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3>
-                <canvas id="grafico-menos-sorteados"></canvas>
-             </div>
-        </div>
-    </section>
+                <div id="area-estatisticas" style="display: none;">
+                    <div>
+                        <h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3>
+                        <canvas id="grafico-mais-sorteados"></canvas>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3>
+                        <canvas id="grafico-menos-sorteados"></canvas>
+                    </div>
+                    <!-- =============================================== -->
+                    <!-- ========= NOVOS GRÁFICOS INSERIDOS AQUI ========= -->
+                    <!-- =============================================== -->
+                    <div style="margin-top: 2rem;">
+                        <h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos por Sorteio</h3>
+                        <canvas id="grafico-primos"></canvas>
+                    </div>
+                     <div style="margin-top: 2rem;">
+                        <h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares por Sorteio</h3>
+                        <canvas id="grafico-pares-impares"></canvas>
+                    </div>
+                    <!-- =============================================== -->
+                    <!-- =============================================== -->
+                </div>
+            </section>
+
              <section id="doacao" class="footer-section" aria-labelledby="doacao-titulo">
                 <h2 id="doacao-titulo">Ganhou com nossas dicas?</h2>
                 <p>Se você ganhou na loteria com nossos números, queremos te parabenizar! Nossa comunidade é feita de pessoas que buscam a sorte e, se você quiser fazer parte da nossa rede de apoio, considere doar para o site. Agradecemos a sua colaboração, que nos ajuda a manter o site funcionando e a oferecer essa ferramenta para mais pessoas. Juntos, podemos alcançar mais sonhos!</p>
@@ -458,56 +258,47 @@
             <section id="termos" class="footer-section" aria-labelledby="termos-titulo">
                 <h2 id="termos-titulo">Termo de Uso</h2>
                 <p><strong>TERMO DE RESPONSABILIDADE E ISENÇÃO DE GARANTIAS</strong></p>
-                <p>O site <strong>Sorte Analisada</strong> ("sorteanalisada.com.br") é um serviço gratuito e meramente informativo, que utiliza algoritmos para <strong>gerar sugestões aleatórias de números</strong> para jogos da Mega-Sena e similares. O Site <strong>não garante, promete ou sugere</strong> que o uso dessas sugestões aumente as chances de ganhar prêmios, uma vez que os resultados de loterias são <strong>inteiramente aleatórios e sujeitos a probabilidades extremamente baixas</strong>.</p>
+                <p>O site <strong>Sorte Analisada</strong> ("sorteanalisada.com.br") é um serviço gratuito e meramente informativo, que utiliza algoritmos para <strong>gerar sugestões aleatórias de números</strong> para jogos da Mega-Sena e similares. O Site <strong>não garante, promete ou sugere</strong> que o uso dessas sugestões aumente as chances de ganhar prêmios...</p>
                 <p>Ao utilizar este Site, o usuário <strong>declara e concorda</strong> que:</p>
                 <ol style="text-align: left; padding-left: 20px; line-height: 1.7;">
-                    <li><strong>Não há garantia de ganhos:</strong> As sugestões fornecidas são baseadas em sorteios aleatórios e não constituem aconselhamento profissional, estratégia vencedora ou interferência nos sorteios oficiais.</li>
-                    <li><strong>Jogos de azar são para maiores de 18 anos:</strong> O acesso e uso do Site são destinados exclusivamente a pessoas maiores de 18 anos, conforme a legislação brasileira.</li>
-                    <li><strong>Uso por conta e risco:</strong> O usuário é <strong>inteiramente responsável</strong> por qualquer decisão de apostar valores em loterias, assumindo todos os riscos financeiros e consequências legais.</li>
-                    <li><strong>Isenção de responsabilidade:</strong> O Site, seus desenvolvedores e parceiros <strong>não se responsabilizam</strong> por perdas financeiras, vícios em jogos de azar ou quaisquer danos diretos ou indiretos decorrentes do uso das sugestões aqui geradas.</li>
-                    <li><strong>Finalidade lúdica:</strong> O Site tem caráter exclusivamente recreativo e não possui vínculo com a Caixa Econômica Federal ou quaisquer órgãos oficiais de loterias.</li>
+                    <li><strong>Não há garantia de ganhos:</strong> As sugestões fornecidas são baseadas em sorteios aleatórios...</li>
+                    <li><strong>Jogos de azar são para maiores de 18 anos:</strong> O acesso e uso do Site são destinados exclusivamente a pessoas maiores de 18 anos...</li>
+                    <li><strong>Uso por conta e risco:</strong> O usuário é <strong>inteiramente responsável</strong> por qualquer decisão de apostar valores em loterias...</li>
+                    <li><strong>Isenção de responsabilidade:</strong> O Site, seus desenvolvedores e parceiros <strong>não se responsabilizam</strong> por perdas financeiras...</li>
+                    <li><strong>Finalidade lúdica:</strong> O Site tem caráter exclusivamente recreativo e não possui vínculo com a Caixa Econômica Federal...</li>
                 </ol>
-                <p>O usuário <strong>reconhece</strong> que os jogos de azar podem ser viciantes e compromete-se a jogar com moderação, buscando ajuda profissional se necessário. Ao gerar sugestões neste Site, você <strong>aceita integralmente estes termos</strong>.</p>
+                <p>O usuário <strong>reconhece</strong> que os jogos de azar podem ser viciantes e compromete-se a jogar com moderação... Ao gerar sugestões neste Site, você <strong>aceita integralmente estes termos</strong>.</p>
                 <p style="font-size: 0.8rem; text-align: right; margin-top: 1rem;"><em>Última atualização: 07 de Agosto de 2024.</em></p>
             </section>
         </footer>
     </div>
 
     <script>
+        let graficoMaisSorteados = null, graficoMenosSorteados = null, graficoPrimos = null, graficoParesImpares = null;
+
         async function gerarJogoMonteCarlo() {
             const areaResultado = document.getElementById('area-monte-carlo-resultado');
             areaResultado.innerHTML = '<div class="spinner"></div>';
-
             try {
                 const response = await fetch('/get-monte-carlo-game');
-                if (!response.ok) {
-                    throw new Error(`Erro do servidor: ${response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`Erro: ${response.statusText}`);
                 const data = await response.json();
-                const linha = data.jogo;
-                
-                areaResultado.innerHTML = ''; 
-
+                areaResultado.innerHTML = '';
                 const jogoContainer = document.createElement('div');
                 jogoContainer.className = 'jogo';
-                
-                const numeros = linha.trim().split(/\s+/);
-                numeros.forEach((num, index) => {
+                data.jogo.trim().split(/\s+/).forEach((num, index, arr) => {
                     const divNumero = document.createElement('span');
                     divNumero.className = 'numero';
                     divNumero.textContent = num;
                     jogoContainer.appendChild(divNumero);
-
-                    if (index < numeros.length - 1) {
+                    if (index < arr.length - 1) {
                         const separador = document.createElement('span');
                         separador.className = 'separador-numero';
                         separador.textContent = '-';
                         jogoContainer.appendChild(separador);
                     }
                 });
-                
                 areaResultado.appendChild(jogoContainer);
-
             } catch (error) {
                 areaResultado.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogo. Tente novamente.</p>`;
             }
@@ -516,110 +307,73 @@
         async function gerarJogos(quantidade) {
             const areaResultados = document.getElementById('area-resultados');
             areaResultados.innerHTML = '<div class="spinner"></div>';
-
             const filtroAtivado = document.getElementById('filtro-toggle').checked;
             const dezenas = document.getElementById('dezenas-select').value;
-
             try {
                 const response = await fetch(`/get-games/${quantidade}?filtro=${filtroAtivado}&dezenas=${dezenas}`);
-                
-                if (!response.ok) {
-                    throw new Error(`Erro do servidor: ${response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`Erro: ${response.statusText}`);
                 const jogos = await response.json();
-                
                 areaResultados.innerHTML = '<h2 class="titulo-sugestoes">Boa sorte!</h2>';
-                
                 jogos.forEach(linha => {
                     const jogoContainer = document.createElement('div');
                     jogoContainer.className = 'jogo';
-                    
-                    const numeros = linha.trim().split(/\s+/);
-                    numeros.forEach((num, index) => {
+                    linha.trim().split(/\s+/).forEach((num, index, arr) => {
                         const divNumero = document.createElement('span');
                         divNumero.className = 'numero';
                         divNumero.textContent = num;
                         jogoContainer.appendChild(divNumero);
-
-                        if (index < numeros.length - 1) {
+                        if (index < arr.length - 1) {
                             const separador = document.createElement('span');
                             separador.className = 'separador-numero';
                             separador.textContent = '-';
                             jogoContainer.appendChild(separador);
                         }
                     });
-
                     areaResultados.appendChild(jogoContainer);
                 });
-
             } catch (error) {
-                areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos. Verifique sua conexão ou tente novamente mais tarde.</p>`;
+                areaResultados.innerHTML = `<p style="color: #ff8a80;">Erro ao gerar jogos. Tente novamente mais tarde.</p>`;
             }
         }
-        
-        let graficoMaisSorteados = null;
-        let graficoMenosSorteados = null;
 
         async function exibirEstatisticas() {
             const areaStats = document.getElementById('area-estatisticas');
             const botao = document.querySelector('#estatisticas .botao-gerar');
-            
             if (botao.style.display === 'none') return;
-
             botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
             botao.disabled = true;
 
             try {
                 const response = await fetch('/get-stats');
                 if (!response.ok) throw new Error('Falha ao buscar dados do servidor.');
-                
                 const data = await response.json();
-
                 document.getElementById('ultimo-concurso-info').textContent = data.ultimo_concurso;
                 areaStats.style.display = 'block';
 
-                const sortedData = data.frequencia.sort((a, b) => a.frequencia - b.frequencia);
-                
-                const menosSorteados = sortedData.slice(0, 10);
-                const maisSorteados = data.frequencia.sort((a, b) => b.frequencia - a.frequencia).slice(0, 10);
-
+                // Destruir gráficos antigos
                 if (graficoMaisSorteados) graficoMaisSorteados.destroy();
                 if (graficoMenosSorteados) graficoMenosSorteados.destroy();
+                if (graficoPrimos) graficoPrimos.destroy();
+                if (graficoParesImpares) graficoParesImpares.destroy();
+
+                const corTextoGrafico = '#FFFDE7', corGridGrafico = 'rgba(255, 255, 255, 0.2)';
                 
-                const corTextoGrafico = '#FFFDE7';
-                const corGridGrafico = 'rgba(255, 255, 255, 0.2)';
+                // Gráficos Mais e Menos Sorteados
+                const maisSorteados = [...data.frequencia].sort((a, b) => b.frequencia - a.frequencia).slice(0, 10);
+                const menosSorteados = [...data.frequencia].sort((a, b) => a.frequencia - b.frequencia).slice(0, 10);
+                
+                graficoMaisSorteados = new Chart(document.getElementById('grafico-mais-sorteados').getContext('2d'), { type: 'bar', data: { labels: maisSorteados.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado', data: maisSorteados.map(i => i.frequencia), backgroundColor: '#FFD700' }] }, options: { scales: { y: { ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } }, x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } } }, plugins: { legend: { labels: { color: corTextoGrafico } } } } });
+                graficoMenosSorteados = new Chart(document.getElementById('grafico-menos-sorteados').getContext('2d'), { type: 'bar', data: { labels: menosSorteados.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado', data: menosSorteados.map(i => i.frequencia), backgroundColor: '#90CAF9' }] }, options: { scales: { y: { ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } }, x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } } }, plugins: { legend: { labels: { color: corTextoGrafico } } } } });
 
-                const ctxMais = document.getElementById('grafico-mais-sorteados').getContext('2d');
-                graficoMaisSorteados = new Chart(ctxMais, {
-                    type: 'bar',
-                    data: {
-                        labels: maisSorteados.map(item => `Nº ${item.numero}`),
-                        datasets: [{
-                            label: 'Vezes Sorteado',
-                            data: maisSorteados.map(item => item.frequencia),
-                            backgroundColor: '#FFD700',
-                            borderColor: '#FFAA00',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: { scales: { y: { beginAtZero: false, ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } }, x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } } }, plugins: { legend: { labels: { color: corTextoGrafico, font: { size: 14 } } } } }
-                });
+                // Gráfico de Números Primos
+                const labelsPrimos = Object.keys(data.stats_primos).sort().map(k => `${k} Primos`);
+                const dataPrimos = Object.keys(data.stats_primos).sort().map(k => data.stats_primos[k]);
+                graficoPrimos = new Chart(document.getElementById('grafico-primos').getContext('2d'), { type: 'bar', data: { labels: labelsPrimos, datasets: [{ label: 'Sorteios com esta quantidade', data: dataPrimos, backgroundColor: '#81C784' }] }, options: { scales: { y: { ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } }, x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } } }, plugins: { legend: { labels: { color: corTextoGrafico } } } } });
 
-                const ctxMenos = document.getElementById('grafico-menos-sorteados').getContext('2d');
-                graficoMenosSorteados = new Chart(ctxMenos, {
-                    type: 'bar',
-                    data: {
-                        labels: menosSorteados.map(item => `Nº ${item.numero}`),
-                        datasets: [{
-                            label: 'Vezes Sorteado',
-                            data: menosSorteados.map(item => item.frequencia),
-                            backgroundColor: '#90CAF9',
-                            borderColor: '#42A5F5',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: { scales: { y: { beginAtZero: false, ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } }, x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } } }, plugins: { legend: { labels: { color: corTextoGrafico, font: { size: 14 } } } } }
-                });
+                // Gráfico de Pares e Ímpares
+                const labelsPares = Object.keys(data.stats_pares).sort().map(k => `${k} Pares / ${6-k} Ímpares`);
+                const dataPares = Object.keys(data.stats_pares).sort().map(k => data.stats_pares[k]);
+                graficoParesImpares = new Chart(document.getElementById('grafico-pares-impares').getContext('2d'), { type: 'bar', data: { labels: labelsPares, datasets: [{ label: 'Sorteios com esta combinação', data: dataPares, backgroundColor: '#FF8A65' }] }, options: { scales: { y: { ticks: { color: corTextoGrafico }, grid: { color: corGridGrafico } }, x: { ticks: { color: corTextoGrafico }, grid: { color: 'transparent' } } }, plugins: { legend: { labels: { color: corTextoGrafico } } } } });
 
             } catch (error) {
                 areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
