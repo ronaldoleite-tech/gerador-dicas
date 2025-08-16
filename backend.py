@@ -1,4 +1,4 @@
-# --- CONTEÚDO COMPLETO DO ARQUIVO backend.py (PRONTO PARA MÚLTIPLAS LOTERIAS) ---
+# --- CONTEÚDO COMPLETO DO ARQUIVO backend.py (CORRIGIDO) ---
 
 import psycopg2
 import os
@@ -12,12 +12,11 @@ load_dotenv()
 DATABASE_URL = os.environ.get('DATABASE_URL')
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-# --- 1. CONFIGURAÇÃO CENTRAL DE LOTERIAS ---
-# Para adicionar uma nova loteria, basta adicionar uma entrada aqui.
+# --- CONFIGURAÇÃO CENTRAL DE LOTERIAS (COM A CORREÇÃO) ---
 LOTTERY_CONFIG = {
-    'megasena': {'min_num': 1, 'max_num': 60, 'min_dezenas': 6, 'max_dezenas': 20, 'num_bolas_sorteadas': 6},
-    'quina':    {'min_num': 1, 'max_num': 80, 'min_dezenas': 5, 'max_dezenas': 15, 'num_bolas_sorteadas': 5},
-    'lotofacil':{'min_num': 1, 'max_num': 25, 'min_dezenas': 15, 'max_dezenas': 20, 'num_bolas_sorteadas': 15}
+    'megasena': {'min_num': 1, 'max_num': 60, 'min_dezenas': 6, 'max_dezenas': 20, 'num_bolas_sorteadas': 6, 'default_dezenas': 6},
+    'quina':    {'min_num': 1, 'max_num': 80, 'min_dezenas': 5, 'max_dezenas': 15, 'num_bolas_sorteadas': 5, 'default_dezenas': 5},
+    'lotofacil':{'min_num': 1, 'max_num': 25, 'min_dezenas': 15, 'max_dezenas': 20, 'num_bolas_sorteadas': 15, 'default_dezenas': 15}
 }
 
 def get_db_connection():
@@ -29,8 +28,6 @@ def is_prime(n):
     for i in range(2, int(math.sqrt(n)) + 1):
         if n % i == 0: return False
     return True
-
-# --- 2. FUNÇÕES ADAPTADAS PARA RECEBER O PARÂMETRO 'loteria' ---
 
 def gerar_jogo_monte_carlo(loteria='megasena'):
     conn = None
@@ -96,7 +93,6 @@ def gerar_jogos_puramente_aleatorios(loteria, count, dezenas):
         jogos_gerados.add(jogo_formatado)
     return list(jogos_gerados)
 
-# --- 3. ROTAS ATUALIZADAS PARA ACEITAR O PARÂMETRO 'loteria' ---
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
