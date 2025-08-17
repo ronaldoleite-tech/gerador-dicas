@@ -182,7 +182,6 @@
         /* --- Estilos do Rodapé Final --- */
         .site-footer { margin-top: 2rem; padding: 1.5rem 1rem; border-top: 1px solid var(--cor-divisoria-ouro); }
         
-        /* NOVO ESTILO: Título para redes sociais */
         .footer-social-title {
             font-size: 1rem;
             font-weight: 700;
@@ -314,7 +313,79 @@
 
         <!-- Container para todo o conteúdo do rodapé (seções informativas) -->
         <div class="footer-content">
-            <!-- ... (todas as seções como 'sobre', 'filtros', etc. continuam aqui, inalteradas) ... -->
+            <section id="sobre" class="footer-section">
+                <h2>Sobre</h2>
+                <p>O Sorte Analisada nasceu para ser seu parceiro na jornada da sorte, oferecendo uma plataforma completa para gerar palpites inteligentes para as Loterias. Use nossos filtros baseados em frequência histórica ou opte por uma "surpresinha" 100% aleatória. Nossas ferramentas são perfeitas para apostas individuais ou para organizar bolões com amigos. Lembre-se: jogos de loteria são destinados a <strong>maiores de 18 anos</strong>. Aposte com responsabilidade e que a sorte esteja ao seu lado!</p>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+            
+            <section id="sobre-filtros" class="footer-section">
+                 <h2>Entenda Nossos Filtros</h2>
+                <h3>Com o Filtro Ativado (ON)</h3>
+                <p>Nosso sistema analisa todo o histórico de resultados da loteria selecionada. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, aumentando a probabilidade de serem escolhidos para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm mais tendência a aparecer.</p>
+                <h3>Com o Filtro Desativado (OFF)</h3>
+                <p>A geração é 100% aleatória. Cada número, dentro do universo da loteria escolhida, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+            
+            <section id="simulacao-monte-carlo-info" class="footer-section">
+                <h2>O que é a Simulação de Monte Carlo?</h2>
+                <p>É uma técnica computacional que simula milhares de sorteios aleatórios para identificar combinações de números que, estatisticamente, teriam alta probabilidade de aparecer. No nosso site, usamos essa simulação para oferecer uma "dica especial", um palpite único gerado a partir de uma análise de probabilidade avançada, ideal para quem busca uma aposta diferenciada.</p>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+            
+            <section id="estatisticas" class="footer-section">
+               <h2>Estatísticas dos Sorteios</h2>
+               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
+               <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
+                <div class="grupo-botoes" style="margin-bottom: 2rem;">
+                    <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
+                </div>
+                <div id="area-estatisticas" style="display: none;">
+                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3><canvas id="grafico-mais-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3><canvas id="grafico-menos-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
+                </div>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+
+            <section id="parceiros" class="footer-section">
+                <h2>Apoiadores que Fazem a Sorte Acontecer</h2>
+                <p style="margin-bottom: 2rem; text-align: center; line-height: 1.8;">O Sorte Analisada cresce graças ao apoio de marcas que acreditam na nossa missão de levar entretenimento e análise de qualidade para apostadores de todo o Brasil. Agradecemos a confiança por fazerem parte desta jornada.</p>
+                <div class="partner-ad-container">
+                    <h3 class="partner-title">SISTEMAS IDEAL, AUTOMAÇÃO COMERCIAL</h3>
+                    <img src="images/Ideal.jpg" alt="Logo da Sistemas Ideal Automação Comercial" class="partner-logo">
+                    <p class="partner-text">Automação Comercial | Sat | Erp |<br>Pontos de Vendas em geral</p>
+                    <a href="https://wa.me/5511962779427" class="partner-cta-button" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        WhatsApp 11 96277-9427
+                    </a>
+                    <a href="https://linktr.ee/sistemas_ideal?fbclid=PAQ0xDSwMO5VJleHRuA2FlbQIxMQABp6bwYGcDvVxhsmmaSphrP4hglvs3Y4t4W-zZMB90tSkMbfImd7UJWwwFuyAZ_aem_FSR9c1Ytg3B8pgZkdqgkqw" class="partner-social-link" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                        <span>Siga-nos no Instagram</span>
+                    </a>
+                </div>
+                <div style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
+                    <h3 style="text-align: center; color: var(--cor-dourado);">Quer ver sua marca em destaque aqui?</h3>
+                    <p style="margin-top: 1rem; margin-bottom: 1.5rem; text-align: center;">Conecte seu negócio a uma comunidade engajada que busca por sorte e novas oportunidades. Aumente sua visibilidade e apoie um projeto em constante crescimento.</p>
+                    <a href="mailto:ronaldoleitetec@gmail.com?subject=Interesse em Parceria - Sorte Analisada" class="botao-gerar" style="text-decoration: none;">Anuncie</a>
+                </div>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+            
+            <section id="doacao" class="footer-section">
+                <h2>Apoie o Projeto</h2>
+                <p>Se nossos palpites e análises foram úteis para você, considere apoiar o projeto com uma doação via PIX. Sua contribuição é fundamental para que possamos continuar oferecendo esta ferramenta de forma gratuita.</p>
+                <img src="images/placeholder-qrcode.png" alt="QR Code para doação via PIX" style="width: 180px; height: 180px; background-color: white; border: 4px solid var(--cor-dourado); border-radius: 10px; margin: 1rem auto; display: block;">
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+            
+            <section id="termos" class="footer-section">
+                <h2>Termo de Uso</h2>
+                <p>O site <strong>Sorte Analisada</strong> é uma ferramenta de entretenimento destinada a maiores de 18 anos. Geramos sugestões de números para jogos de loteria com base em algoritmos e dados históricos, mas <strong>não oferecemos nenhuma garantia de prêmios ou acertos</strong>. Os resultados das loterias são imprevisíveis e dependem exclusivamente da sorte. Este site não possui qualquer vínculo com a Caixa Econômica Federal ou qualquer outra entidade lotérica. Jogue com responsabilidade e por sua conta e risco.</p>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
         </div>
 
         <!-- Rodapé final com links de contato e copyright -->
