@@ -23,6 +23,7 @@ def process_file(cursor, loteria, filename):
     print(f"INFO: Processando arquivo '{filename}' para a loteria '{loteria}'...")
     
     with open(file_path, 'r', encoding='utf-8') as f:
+
         header = next(f).strip().split('\t') # Lê o cabeçalho
         col_indices = list(range(1, len(header))) # Pega os índices das dezenas
 
