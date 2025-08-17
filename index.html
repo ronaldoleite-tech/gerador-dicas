@@ -72,15 +72,15 @@
             margin-bottom: .5rem;
         }
         
-        /* NOVO ESTILO: Texto da loteria selecionada */
+        /* ALTERADO: Texto da loteria selecionada com mais destaque */
         .loteria-display {
-            font-size: 1.3rem;
-            font-weight: 500;
+            font-size: 1.6rem; /* Aumentado */
+            font-weight: 700;    /* Em negrito */
             color: var(--cor-loteria-display);
             margin-top: 0.5rem;
-            height: 1.6rem; /* Reserva espaço para evitar pulo de layout */
+            height: 1.8rem; /* Ajustado para nova altura da fonte */
             transition: opacity .3s ease-in-out;
-            opacity: 0; /* Começa invisível e aparece com JS */
+            opacity: 0;
         }
 
         .botao-gerar {
@@ -102,14 +102,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem; /* Reduzido o gap */
+            gap: 1rem;
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
             border-radius: 12px;
             border: 1px solid var(--cor-divisoria-ouro);
         }
 
-        /* NOVO ESTILO: Título do Parceiro */
         .partner-title {
             font-size: 1.3rem;
             font-weight: 700;
@@ -150,7 +149,6 @@
             box-shadow: 0 0 15px rgba(37, 211, 102, 0.5);
         }
         
-        /* NOVO ESTILO: Ícone social do parceiro */
         .partner-social-link {
             display: inline-flex;
             align-items: center;
@@ -195,14 +193,12 @@
         .footer-section h2 { font-family: 'Orbitron', sans-serif; color: var(--cor-dourado); font-size: 1.5rem; margin-bottom: 1rem; }
         .footer-section p { font-size: .95rem; line-height: 1.7; text-align: justify; }
         .footer-section h3 { color: #E0E0E0; margin-top: 1.5rem; margin-bottom: .5rem; text-align: left; }
-        /* AJUSTE RESPONSIVO: Centraliza os controles quando quebram a linha */
         .secao-controles { display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin: 1.5rem 0; }
         .controle-item { display: flex; align-items: center; gap: 12px; }
         .seletor-custom { background-color: rgba(0, 0, 0, .3); color: var(--cor-dourado); padding: 8px 12px; border: 1px solid var(--cor-dourado); border-radius: 8px; font-size: 1rem; cursor: pointer; }
         .secao-monte-carlo { padding: 1.5rem; margin: 2rem 0; border: 1px solid var(--cor-divisoria-ouro); border-radius: 16px; background: rgba(0, 0, 0, .1); }
         .secao-monte-carlo h2 { font-size: 1.3rem !important; text-shadow: var(--sombra-dourada); color: var(--cor-dourado); }
         #area-monte-carlo-resultado { min-height: 70px; display: flex; align-items: center; justify-content: center; }
-        /* AJUSTE RESPONSIVO: Centraliza os botões em telas menores */
         .grupo-botoes-loteria { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
         .grupo-botoes { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 1rem; }
         .botao-loteria { padding: 10px 20px; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer; border: 2px solid var(--cor-loteria-inativa); background-color: var(--cor-loteria-inativa); color: var(--cor-texto); transition: all .3s ease; }
@@ -217,6 +213,18 @@
         .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
         .voltar-topo:hover { color: var(--cor-dourado-hover); }
 
+        /* ADICIONADO: Media Query para ajustar texto em telas pequenas */
+        @media (max-width: 600px) {
+            .footer-section p {
+                text-align: left; /* Altera para alinhamento à esquerda */
+            }
+
+            /* Garante que o parágrafo com estilo inline também seja alinhado à esquerda */
+            #parceiros div[style*="margin-top: 2.5rem"] p {
+                text-align: left !important;
+            }
+        }
+
     </style>
 </head>
 <body onload="mudarLoteria('megasena')">
@@ -229,7 +237,6 @@
             <img src="images/logotipo.png" alt="Logotipo Sorte Analisada" class="imagem-ouro" loading="lazy">
             <h1>Sorte Analisada</h1>
             <p class="subtitulo">Acredite na sua sorte!</p>
-            <!-- NOVO ELEMENTO: Exibe a loteria selecionada -->
             <p id="loteria-selecionada" class="loteria-display"></p>
         </header>
 
@@ -313,7 +320,6 @@
                <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
                <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
                 <div class="grupo-botoes" style="margin-bottom: 2rem;">
-                    <!-- BOTÃO ALTERADO -->
                     <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
                 </div>
                 <div id="area-estatisticas" style="display: none;">
@@ -402,7 +408,6 @@
             displayLoteria.textContent = config.nome;
             displayLoteria.style.opacity = 1;
 
-            // ===== TEXTO DO BOTÃO MONTE CARLO ALTERADO AQUI =====
             document.getElementById('botao-monte-carlo').textContent = `Sugestão de ${config.num_bolas} dezenas`;
             
             atualizarOpcoesDezenas();
@@ -414,7 +419,6 @@
             if (botaoStats) {
                 botaoStats.style.display = 'block';
                 botaoStats.disabled = false;
-                // ===== TEXTO DO BOTÃO ESTATÍSTICAS ALTERADO AQUI =====
                 botaoStats.innerHTML = 'Estatísticas';
             }
         }
@@ -557,7 +561,6 @@
             } catch (error) {
                 areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
                 areaStats.style.display = 'block';
-                // ===== TEXTO DO BOTÃO ESTATÍSTICAS ALTERADO AQUI (EM CASO DE ERRO) =====
                 botao.innerHTML = 'Estatísticas';
             } finally {
                 setBotoesEstado(false);
