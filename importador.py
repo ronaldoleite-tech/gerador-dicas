@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import os
 import psycopg2
 from dotenv import load_dotenv
@@ -8,11 +9,23 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 
 # Mapeamento dos arquivos para os tipos de loteria
 LOTTERY_FILES = {
+=======
+# --- CONTEÚDO PARA O ARQUIVO importador.py (PRODUÇÃO) ---
+
+import psycopg2
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+LOTERIAS_A_IMPORTAR = {
+>>>>>>> b5a16f8da4c597da7cbb44dab00d0b27f7048733
     'megasena': 'sorteadosmegasena.txt',
     'quina': 'sorteadosquina.txt',
     'lotofacil': 'sorteadoslotofacil.txt'
 }
 
+<<<<<<< HEAD
 def process_file(cursor, loteria, filename):
     """Processa um arquivo de sorteio e insere no banco de dados."""
     file_path = os.path.join(os.path.dirname(__file__), filename)
@@ -101,3 +114,70 @@ else:
         if conn:
             conn.close()
             print("INFO: Conexão com o banco de dados fechada.")
+=======
+def realizar_importacao():
+    # --- USA A VARIÁVEL DE AMBIENTE PARA CONECTAR AO RENDER ---
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    
+    if not DATABASE_URL:
+        print("ERRO: A variável DATABASE_URL não foi encontrada. Verifique seu arquivo .env")
+        return
+
+    conn = None
+    try:
+        print("INFO: Tentando conectar ao banco de dados de PRODUÇÃO...")
+        conn = psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()
+        print("INFO: CONEXÃO COM O BANCO DE DADOS DE PRODUÇÃO REALIZADA COM SUCESSO!")
+
+        print("INFO: Verificando e atualizando a estrutura da tabela 'resultados_sorteados'...")
+        cur.execute("ALTER TABLE resultados_sorteados ADD COLUMN IF NOT EXISTS tipo_loteria VARCHAR(50);")
+        cur.execute("ALTER TABLE resultados_sorteados DROP CONSTRAINT IF EXISTS resultados_sorteados_concurso_key;")
+        cur.execute("ALTER TABLE resultados_sorteados DROP CONSTRAINT IF EXISTS resultados_sorteados_concurso_loteria_unique;")
+        cur.execute("ALTER TABLE resultados_sorteados ADD CONSTRAINT resultados_sorteados_concurso_loteria_unique UNIQUE (concurso, tipo_loteria);")
+        conn.commit()
+        print("INFO: Estrutura da tabela atualizada com a nova regra de unicidade.")
+
+        total_inserido_geral = 0
+        for tipo_loteria, nome_arquivo in LOTERIAS_A_IMPORTAR.items():
+            print(f"\n--- Processando: {tipo_loteria.upper()} ---")
+            caminho_arquivo = os.path.join(os.path.dirname(os.path.abspath(__file__)), nome_arquivo)
+            if not os.path.exists(caminho_arquivo):
+                print(f"AVISO: Arquivo '{nome_arquivo}' não encontrado. Pulando.")
+                continue
+
+            with open(caminho_arquivo, 'r', encoding='latin-1') as f:
+                print(f"INFO: Lendo '{nome_arquivo}'...")
+                next(f)
+                batch = []
+                for line in f:
+                    try:
+                        parts = line.strip().split()
+                        if len(parts) < 2: continue
+                        num_concurso = int(parts[0])
+                        dezenas = " ".join(sorted(parts[1:], key=int))
+                        batch.append((num_concurso, dezenas, tipo_loteria))
+                    except ValueError:
+                        continue
+                
+                if batch:
+                    insert_query = "INSERT INTO resultados_sorteados (concurso, dezenas, tipo_loteria) VALUES (%s, %s, %s) ON CONFLICT (concurso, tipo_loteria) DO NOTHING"
+                    cur.executemany(insert_query, batch)
+                    conn.commit()
+                    print(f"INFO: {cur.rowcount} novos registros de {tipo_loteria.upper()} inseridos.")
+                    total_inserido_geral += cur.rowcount
+        
+        print(f"\nIMPORTAÇÃO CONCLUÍDA. Total de novos registros: {total_inserido_geral}")
+
+    except Exception as e:
+        print(f"\nERRO DURANTE A IMPORTAÇÃO: {e}\n")
+    finally:
+        if conn:
+            conn.close()
+            print("INFO: Conexão fechada.")
+
+if __name__ == "__main__":
+    realizar_importacao()
+
+# --- FIM DO CÓDIGO ---
+>>>>>>> b5a16f8da4c597da7cbb44dab00d0b27f7048733
