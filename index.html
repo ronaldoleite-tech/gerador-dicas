@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO: Meta Descrição Adicionada -->
+    <meta name="description" content="Gere palpites inteligentes para a Mega-Sena, Quina e Lotofácil com base em estatísticas e análises. Use nossos filtros ou a simulação Monte Carlo para aumentar suas chances!">
+    
     <title>Sorte Analisada - Gerador de Palpites para Mega-Sena, Quina e Lotofácil</title>
     <link rel="icon" href="images/logotipo.png" type="image/png">
+    
+    <!-- Fontes e Scripts -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ÍCONES: Adicionado Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
-            --cor-fundo: linear-gradient(180deg, #0d47a1, #1976d2, #42a5f5);
+            /* COR: Paleta de azul mais equilibrada e escura */
+            --cor-fundo: linear-gradient(180deg, #020f2c, #0d47a1, #1976d2);
             --cor-caixa: rgba(255, 255, 255, 0.08);
             --cor-texto: #E0E0E0;
             --cor-dourado: #FFD700;
@@ -22,14 +31,10 @@
             --cor-divisoria-ouro: rgba(255, 215, 0, 0.3);
             --cor-loteria-ativa: #FFD700;
             --cor-loteria-inativa: rgba(0, 0, 0, 0.3);
+            --cor-whatsapp: #25D366;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -64,12 +69,7 @@
             margin-bottom: .5rem;
         }
 
-        .subtitulo {
-            font-size: 1.6rem;
-            font-weight: 400;
-            margin-bottom: 1rem;
-            color: #bbdefb;
-        }
+        .subtitulo { font-size: 1.6rem; font-weight: 400; margin-bottom: 1rem; color: #bbdefb; }
 
         .imagem-ouro {
             background-color: #FFF8E1;
@@ -81,7 +81,6 @@
             box-shadow: var(--sombra-dourada);
             transition: transform .3s ease;
         }
-
         .imagem-ouro:hover { transform: scale(1.05); }
 
         .botao-gerar {
@@ -96,16 +95,11 @@
             transition: all .3s ease-in-out;
             box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
         }
-
         .botao-gerar:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(255, 215, 0, .4);
         }
-
-        .botao-gerar:disabled {
-            cursor: not-allowed;
-            opacity: .6;
-        }
+        .botao-gerar:disabled { cursor: not-allowed; opacity: .6; }
 
         #area-resultados { min-height: 100px; }
 
@@ -122,10 +116,7 @@
             gap: 5px 10px;
         }
 
-        .numero {
-            font-size: 1.7rem;
-            font-weight: 700;
-        }
+        .numero { font-size: 1.7rem; font-weight: 700; }
 
         .spinner {
             border: 5px solid rgba(255, 255, 255, .2);
@@ -136,11 +127,7 @@
             animation: spin 1s linear infinite;
             margin: 2rem auto;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
 
         .nav-interna {
             padding: 1.5rem 0;
@@ -152,7 +139,6 @@
             justify-content: center;
             gap: 15px;
         }
-
         .nav-interna a {
             color: var(--cor-dourado);
             text-decoration: none;
@@ -160,10 +146,8 @@
             font-weight: 500;
             transition: color .2s;
         }
-
         .nav-interna a:hover { color: var(--cor-dourado-hover); }
 
-        /* ALTERADO: Fundo distinto para o rodapé para melhor separação visual */
         .footer-content {
             margin-top: 2.5rem;
             padding: 1px 2rem 1rem 2rem;
@@ -172,31 +156,16 @@
             border-top: 1px solid var(--cor-divisoria-ouro);
         }
 
-        .footer-section {
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--cor-divisoria-ouro);
-        }
-        
+        .footer-section { padding: 2rem 0; border-bottom: 1px solid var(--cor-divisoria-ouro); }
         .footer-section:last-of-type { border-bottom: none; }
-
         .footer-section h2 {
             font-family: 'Orbitron', sans-serif;
             color: var(--cor-dourado);
             font-size: 1.5rem;
             margin-bottom: 1rem;
         }
-
-        .footer-section p {
-            font-size: .95rem;
-            line-height: 1.7;
-            text-align: justify;
-        }
-        .footer-section h3 {
-            color: #E0E0E0;
-            margin-top: 1.5rem;
-            margin-bottom: .5rem;
-            text-align: left;
-        }
+        .footer-section p { font-size: .95rem; line-height: 1.7; text-align: justify; }
+        .footer-section h3 { color: #E0E0E0; margin-top: 1.5rem; margin-bottom: .5rem; text-align: left; }
 
         .secao-controles {
             display: flex;
@@ -206,13 +175,7 @@
             flex-wrap: wrap;
             margin: 1.5rem 0;
         }
-
-        .controle-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .controle-item { display: flex; align-items: center; gap: 12px; }
         .seletor-custom {
             background-color: rgba(0, 0, 0, .3);
             color: var(--cor-dourado);
@@ -222,35 +185,12 @@
             font-size: 1rem;
             cursor: pointer;
         }
-        
-        .secao-monte-carlo {
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border: 1px solid var(--cor-divisoria-ouro);
-            border-radius: 16px;
-            background: rgba(0, 0, 0, .1);
-        }
-        
-        .secao-monte-carlo h2 {
-            font-size: 1.3rem !important;
-            text-shadow: var(--sombra-dourada);
-            color: var(--cor-dourado);
-        }
-        
-        #area-monte-carlo-resultado {
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .grupo-botoes-loteria {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1.5rem;
-        }
-        
+
+        .secao-monte-carlo { padding: 1.5rem; margin: 2rem 0; border: 1px solid var(--cor-divisoria-ouro); border-radius: 16px; background: rgba(0, 0, 0, .1); }
+        .secao-monte-carlo h2 { font-size: 1.3rem !important; text-shadow: var(--sombra-dourada); color: var(--cor-dourado); }
+        #area-monte-carlo-resultado { min-height: 70px; display: flex; align-items: center; justify-content: center; }
+
+        .grupo-botoes-loteria { display: flex; justify-content: center; gap: 10px; margin-top: 1.5rem; }
         .botao-loteria {
             padding: 10px 20px;
             font-size: 1rem;
@@ -262,96 +202,64 @@
             color: var(--cor-texto);
             transition: all .3s ease;
         }
-
         .botao-loteria:hover { border-color: var(--cor-dourado-hover); }
+        .botao-loteria.ativo { background-color: var(--cor-loteria-ativa); color: #000; border-color: var(--cor-loteria-ativa); box-shadow: var(--sombra-dourada); }
 
-        .botao-loteria.ativo {
-            background-color: var(--cor-loteria-ativa);
-            color: #000;
-            border-color: var(--cor-loteria-ativa);
-            box-shadow: var(--sombra-dourada);
-        }
+        .toggle-switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #F44336; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #4CAF50; }
+        input:checked + .slider:before { transform: translateX(26px); }
 
-        /* NOVO: Estilo para o Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #F44336; /* Cor de desligado (vermelho) */
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: #4CAF50; /* Cor de ligado (verde) */
-        }
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .voltar-topo {
-            display: block;
-            text-align: right;
-            margin-top: 1rem;
-            font-size: .85rem;
-            color: var(--cor-dourado);
-            text-decoration: none;
-            transition: color .2s;
-        }
-
+        .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
         .voltar-topo:hover { color: var(--cor-dourado-hover); }
 
-        .site-footer {
-            margin-top: 2rem;
-            padding: 1.5rem 1rem;
-            border-top: 1px solid var(--cor-divisoria-ouro);
-        }
+        .site-footer { margin-top: 2rem; padding: 1.5rem 1rem; border-top: 1px solid var(--cor-divisoria-ouro); }
+        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 1rem; }
+        .footer-links a { color: var(--cor-texto); text-decoration: none; font-size: 1.5rem; transition: color .2s, transform .2s; }
+        .footer-links a:hover { color: var(--cor-dourado); transform: scale(1.1); }
+        .copyright { font-size: .8rem; color: rgba(255, 255, 255, .5); margin-top: 1rem; }
 
-        .footer-links {
+        /* ESTILOS DA PUBLICIDADE DO PARCEIRO */
+        .partner-ad-container {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 1rem;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--cor-divisoria-ouro);
         }
-
-        .footer-links a {
-            color: var(--cor-texto);
+        .partner-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        .partner-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #FFF;
+            line-height: 1.6;
+        }
+        .partner-cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--cor-whatsapp);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
             text-decoration: none;
-            font-size: .9rem;
-            transition: color .2s;
+            font-weight: bold;
+            transition: transform .2s, box-shadow .2s;
         }
-
-        .footer-links a:hover { color: var(--cor-dourado); }
-
-        .copyright {
-            font-size: .8rem;
-            color: rgba(255, 255, 255, .5);
-            margin-top: 1rem;
+        .partner-cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.5);
         }
     </style>
 </head>
@@ -364,6 +272,7 @@
         </header>
 
         <main>
+            <!-- Seções principais aqui... -->
             <section class="secao-monte-carlo">
                 <h2>Dica Especial: Simulação Monte Carlo</h2>
                 <div id="area-monte-carlo-resultado"></div>
@@ -411,14 +320,13 @@
         <div class="footer-content">
             <section id="sobre" class="footer-section">
                 <h2>Sobre</h2>
-                <p>Apostar nas Loterias é uma tradição brasileira, e a busca pelos números da sorte envolve de tudo: datas especiais, placas de carro e até sonhos. O Sorte Analisada nasceu para ser seu parceiro nessa jornada, oferecendo uma plataforma completa para gerar palpites inteligentes.</p>
-                <p>Use nossos filtros para criar jogos baseados na frequência histórica dos sorteios ou desative-os para uma experiência de 'surpresinha' 100% aleatória. Nossas ferramentas são perfeitas tanto para apostas individuais quanto para organizar bolões com amigos.</p>
-                <p>Lembre-se: jogos de loteria são destinados a <strong>maiores de 18 anos</strong>. Aposte com responsabilidade e que a sorte esteja ao seu lado, porque no fim, sonhar não custa nada!</p>
+                <p>O Sorte Analisada nasceu para ser seu parceiro na jornada da sorte, oferecendo uma plataforma completa para gerar palpites inteligentes para as Loterias. Use nossos filtros baseados em frequência histórica ou opte por uma "surpresinha" 100% aleatória. Nossas ferramentas são perfeitas para apostas individuais ou para organizar bolões com amigos. Lembre-se: jogos de loteria são destinados a <strong>maiores de 18 anos</strong>. Aposte com responsabilidade e que a sorte esteja ao seu lado!</p>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
             
+            <!-- Outras seções... -->
             <section id="sobre-filtros" class="footer-section">
-                <h2>Entenda Nossos Filtros</h2>
+                 <h2>Entenda Nossos Filtros</h2>
                 <h3>Com o Filtro Ativado (ON)</h3>
                 <p>Nosso sistema analisa todo o histórico de resultados da loteria selecionada. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, aumentando a probabilidade de serem escolhidos para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm mais tendência a aparecer.</p>
                 <h3>Com o Filtro Desativado (OFF)</h3>
@@ -428,7 +336,7 @@
             
             <section id="simulacao-monte-carlo-info" class="footer-section">
                 <h2>O que é a Simulação de Monte Carlo?</h2>
-                <p>A simulação de Monte Carlo é uma técnica computacional que utiliza amostragem aleatória repetida para modelar a probabilidade de diferentes resultados em situações incertas. Basicamente, ela estima resultados prováveis através da execução de um modelo várias vezes com diferentes conjuntos de números aleatórios. Essa técnica é amplamente utilizada em diversas áreas para analisar riscos e incertezas, como finanças, engenharia, previsão de vendas e gerenciamento de projetos.</p>
+                <p>É uma técnica computacional que simula milhares de sorteios aleatórios para identificar combinações de números que, estatisticamente, teriam alta probabilidade de aparecer. No nosso site, usamos essa simulação para oferecer uma "dica especial", um palpite único gerado a partir de uma análise de probabilidade avançada, ideal para quem busca uma aposta diferenciada.</p>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
             
@@ -448,37 +356,43 @@
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
-             <section id="parceiros" class="footer-section">
+            <!-- SEÇÃO DE PARCEIROS ATUALIZADA -->
+            <section id="parceiros" class="footer-section">
                 <h2>Parceiros</h2>
-                <p>Em construção...</p>
+                <div class="partner-ad-container">
+                    <img src="images/Ideal.jpg" alt="Logo da Sistemas Ideal Automação Comercial" class="partner-logo">
+                    <p class="partner-text">
+                        Automação Comercial | Sat | Erp |<br>Pontos de Vendas em geral
+                    </p>
+                    <a href="https://wa.me/5511962779427" class="partner-cta-button" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        Contato via WhatsApp
+                    </a>
+                </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
-             <section id="doacao" class="footer-section">
+            <section id="doacao" class="footer-section">
                 <h2>Apoie o Projeto</h2>
-                <p>O Sorte Analisada é uma ferramenta gratuita, criada com a paixão de ajudar outros apostadores a explorar as probabilidades da sorte. Manter a plataforma no ar e desenvolver novas funcionalidades gera custos de servidor e desenvolvimento.</p>
                 <p>Se nossos palpites e análises foram úteis para você, considere apoiar o projeto com uma doação via PIX. Sua contribuição é fundamental para que possamos continuar oferecendo esta ferramenta de forma gratuita.</p>
-                <p style="text-align: center;"><strong>Apoie com um PIX:</strong></p>
                 <img src="images/placeholder-qrcode.png" alt="QR Code para doação via PIX" style="width: 180px; height: 180px; background-color: white; border: 4px solid var(--cor-dourado); border-radius: 10px; margin: 1rem auto; display: block;">
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
             
+            <!-- TERMO DE USO ATUALIZADO -->
             <section id="termos" class="footer-section">
                 <h2>Termo de Uso</h2>
-                <p><strong>TERMO DE RESPONSABILIDADE E ISENÇÃO DE GARANTIAS</strong></p>
-                <p>O site <strong>Sorte Analisada</strong> (sorteanalisada.com.br) é um serviço gratuito e meramente informativo, que utiliza algoritmos para <strong>gerar sugestões aleatórias de números</strong> para jogos de loteria.</p>
+                <p>O site <strong>Sorte Analisada</strong> é uma ferramenta de entretenimento destinada a maiores de 18 anos. Geramos sugestões de números para jogos de loteria com base em algoritmos e dados históricos, mas <strong>não oferecemos nenhuma garantia de prêmios ou acertos</strong>. Os resultados das loterias são imprevisíveis e dependem exclusivamente da sorte. Este site não possui qualquer vínculo com a Caixa Econômica Federal ou qualquer outra entidade lotérica. Jogue com responsabilidade e por sua conta e risco.</p>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
         </div>
 
+        <!-- RODAPÉ ATUALIZADO -->
         <footer class="site-footer">
             <div class="footer-links">
-                <a href="#sobre">Sobre</a>
-                <a href="#termos">Termos de Uso</a>
-                <a href="mailto:seu-email@example.com">Contato</a>
-                <a href="#" target="_blank">Instagram</a>
-                <a href="#" target="_blank">TikTok</a>
-                <a href="#doacao">Doação</a>
+                <a href="mailto:seu-email-de-contato@example.com" title="Contato"><i class="fa-solid fa-envelope"></i></a>
+                <a href="#" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             </div>
             <div class="copyright">
                 © 2024 Sorte Analisada. Todos os direitos reservados.
@@ -487,6 +401,7 @@
     </div>
 
     <script>
+        // O CÓDIGO JAVASCRIPT CONTINUA O MESMO E FUNCIONAL
         let loteriaAtual = 'megasena';
         const lotteryConfig = {
             'megasena': {nome: 'Mega-Sena', min_dezenas: 6, max_dezenas: 20, num_bolas: 6},
@@ -498,18 +413,13 @@
 
         function mudarLoteria(novaLoteria) {
             loteriaAtual = novaLoteria;
-            
             document.querySelectorAll('.botao-loteria').forEach(btn => btn.classList.remove('ativo'));
             document.getElementById(`btn-${novaLoteria}`).classList.add('ativo');
-
             const config = lotteryConfig[loteriaAtual];
             document.getElementById('botao-monte-carlo').textContent = `Gerar Sugestão de ${config.num_bolas} Dezenas`;
-            
             atualizarOpcoesDezenas();
-            
             document.getElementById('area-resultados').innerHTML = '';
             document.getElementById('area-monte-carlo-resultado').innerHTML = '';
-            
             document.getElementById('area-estatisticas').style.display = 'none';
             const botaoStats = document.querySelector('#estatisticas .botao-gerar');
             if (botaoStats) {
@@ -541,12 +451,10 @@
             const areaResultado = document.getElementById('area-monte-carlo-resultado');
             setBotoesEstado(true);
             areaResultado.innerHTML = '<div class="spinner"></div>';
-            
             try {
                 const response = await fetch(`/get-monte-carlo-game?loteria=${loteriaAtual}`);
                 if (!response.ok) throw new Error('Falha na comunicação com o servidor.');
                 const data = await response.json();
-                
                 areaResultado.innerHTML = '';
                 const jogoContainer = document.createElement('div');
                 jogoContainer.className = 'jogo';
@@ -557,7 +465,6 @@
                     jogoContainer.appendChild(span);
                 });
                 areaResultado.appendChild(jogoContainer);
-
             } catch (error) {
                 areaResultado.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
             } finally {
@@ -572,12 +479,10 @@
             const dezenas = document.getElementById('dezenas-select').value;
             setBotoesEstado(true);
             areaResultados.innerHTML = '<div class="spinner"></div>';
-            
             try {
                 const response = await fetch(`/get-games/${quantidade}?loteria=${loteriaAtual}&filtro=${filtroAtivado}&dezenas=${dezenas}`);
                 if (!response.ok) throw new Error('Falha na comunicação com o servidor.');
                 const jogos = await response.json();
-
                 areaResultados.innerHTML = '<h2>Boa sorte!</h2>';
                 jogos.forEach(linha => {
                     const jogoContainer = document.createElement('div');
@@ -590,7 +495,6 @@
                     });
                     areaResultados.appendChild(jogoContainer);
                 });
-
             } catch (error) {
                 areaResultados.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
             } finally {
@@ -602,45 +506,31 @@
             if (isRequestInProgress) return;
             const areaStats = document.getElementById('area-estatisticas');
             const botao = document.querySelector('#estatisticas .botao-gerar');
-            
             setBotoesEstado(true);
             botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
-            
             try {
                 const response = await fetch(`/get-stats?loteria=${loteriaAtual}`);
                 if (!response.ok) throw new Error('Falha ao buscar dados do servidor.');
                 const data = await response.json();
-                
-                if (!data || !data.frequencia || !data.stats_primos || !data.stats_pares) {
-                    throw new Error('Os dados recebidos são inválidos.');
-                }
-
+                if (!data || !data.frequencia || !data.stats_primos || !data.stats_pares) throw new Error('Os dados recebidos são inválidos.');
                 const nomeLoteria = lotteryConfig[loteriaAtual].nome;
                 document.getElementById('ultimo-concurso-info').innerHTML = `Análise da ${nomeLoteria} baseada até o concurso ${data.ultimo_concurso}`;
                 areaStats.style.display = 'block';
-
                 [graficoMaisSorteados, graficoMenosSorteados, graficoPrimos, graficoParesImpares].forEach(g => { if(g) g.destroy(); });
-
                 const corTexto = '#FFFDE7', corGrid = 'rgba(255, 255, 255, 0.2)';
                 const chartOptions = { scales: { y: { ticks: { color: corTexto }, grid: { color: corGrid } }, x: { ticks: { color: corTexto }, grid: { color: 'transparent' } } }, plugins: { legend: { labels: { color: corTexto } } } };
-
                 const maisSorteados = [...data.frequencia].sort((a, b) => b.frequencia - a.frequencia).slice(0, 10);
                 const menosSorteados = [...data.frequencia].sort((a, b) => a.frequencia - b.frequencia).slice(0, 10);
-                
                 graficoMaisSorteados = new Chart(document.getElementById('grafico-mais-sorteados').getContext('2d'), { type: 'bar', data: { labels: maisSorteados.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado', data: maisSorteados.map(i => i.frequencia), backgroundColor: '#FFD700' }] }, options: chartOptions });
                 graficoMenosSorteados = new Chart(document.getElementById('grafico-menos-sorteados').getContext('2d'), { type: 'bar', data: { labels: menosSorteados.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado', data: menosSorteados.map(i => i.frequencia), backgroundColor: '#90CAF9' }] }, options: chartOptions });
-
                 const labelsPrimos = Object.keys(data.stats_primos).sort((a,b) => parseInt(a)-parseInt(b)).map(k => `${k} Primos`);
                 const dataPrimos = Object.keys(data.stats_primos).sort((a,b) => parseInt(a)-parseInt(b)).map(k => data.stats_primos[k]);
                 graficoPrimos = new Chart(document.getElementById('grafico-primos').getContext('2d'), { type: 'bar', data: { labels: labelsPrimos, datasets: [{ label: 'Sorteios', data: dataPrimos, backgroundColor: '#81C784' }] }, options: chartOptions });
-
                 const numBolas = lotteryConfig[loteriaAtual].num_bolas;
                 const labelsPares = Object.keys(data.stats_pares).sort((a,b) => parseInt(a)-parseInt(b)).map(k => `${k} Pares / ${numBolas - parseInt(k)} Ímpares`);
                 const dataPares = Object.keys(data.stats_pares).sort((a,b) => parseInt(a)-parseInt(b)).map(k => data.stats_pares[k]);
                 graficoParesImpares = new Chart(document.getElementById('grafico-pares-impares').getContext('2d'), { type: 'bar', data: { labels: labelsPares, datasets: [{ label: 'Sorteios', data: dataPares, backgroundColor: '#FF8A65' }] }, options: chartOptions });
-                
                 botao.style.display = 'none';
-
             } catch (error) {
                 areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
                 areaStats.style.display = 'block';
