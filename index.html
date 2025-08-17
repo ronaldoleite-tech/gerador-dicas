@@ -25,7 +25,7 @@
             --cor-texto: #E0E0E0;
             --cor-dourado: #FFD700;
             --cor-dourado-hover: #FFAA00;
-            --cor-loteria-display: #81d4fa; /* NOVA COR PARA O NOME DA LOTERIA */
+            --cor-loteria-display: #81d4fa;
             --sombra-dourada: 0 0 12px rgba(255, 215, 0, 0.4);
             --sombra-caixa: 0 8px 25px rgba(0, 0, 0, 0.5);
             --cor-divisoria-ouro: rgba(255, 215, 0, 0.3);
@@ -213,14 +213,10 @@
         .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
         .voltar-topo:hover { color: var(--cor-dourado-hover); }
 
-        /* ADICIONADO: Media Query para ajustar texto em telas pequenas */
+        /* ALTERADO: Media Query para ajustar texto em telas pequenas */
         @media (max-width: 600px) {
             .footer-section p {
-                text-align: left; /* Altera para alinhamento à esquerda */
-            }
-
-            /* Garante que o parágrafo com estilo inline também seja alinhado à esquerda */
-            #parceiros div[style*="margin-top: 2.5rem"] p {
+                /* Garante que TODOS os parágrafos nas seções do rodapé fiquem alinhados à esquerda */
                 text-align: left !important;
             }
         }
@@ -342,7 +338,7 @@
                         <i class="fa-brands fa-whatsapp"></i>
                         WhatsApp 11 96277-9427
                     </a>
-                    <a href="https://www.instagram.com/sistemasideal" class="partner-social-link" target="_blank">
+                    <a href="https://linktr.ee/sistemas_ideal?fbclid=PAQ0xDSwMO5VJleHRuA2FlbQIxMQABp6bwYGcDvVxhsmmaSphrP4hglvs3Y4t4W-zZMB90tSkMbfImd7UJWwwFuyAZ_aem_FSR9c1Ytg3B8pgZkdqgkqw" class="partner-social-link" target="_blank">
                         <i class="fa-brands fa-instagram"></i>
                         <span>Siga-nos no Instagram</span>
                     </a>
