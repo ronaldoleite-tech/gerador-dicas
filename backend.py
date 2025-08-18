@@ -51,11 +51,13 @@ def is_prime(n):
         if n % i == 0: return False
     return True
 
+# >>> INÍCIO DA SEÇÃO MODIFICADA <<<
 def gerar_jogo_monte_carlo(loteria='megasena'):
     """
     Gera um jogo único usando a simulação de Monte Carlo.
-    A lógica simula milhares de sorteios baseados na frequência histórica dos números
-    para encontrar a combinação com maior probabilidade estatística.
+    A lógica simula milhares de sorteios baseados na frequência histórica dos números.
+    O resultado da simulação é então usado como um novo conjunto de pesos para
+    sortear um jogo final, garantindo variedade a cada execução.
     
     Args:
         loteria (str): O tipo de loteria para a simulação.
@@ -69,32 +71,43 @@ def gerar_jogo_monte_carlo(loteria='megasena'):
         conn = get_db_connection()
         cur = conn.cursor()
 
-        # Busca todos os resultados históricos para a loteria especificada
         cur.execute("SELECT dezenas FROM resultados_sorteados WHERE tipo_loteria = %s;", (loteria,))
         resultados = cur.fetchall()
         if not resultados: raise ValueError(f"O banco de dados está vazio para a simulação de {loteria}.")
 
-        # Calcula a frequência de cada número sorteado
         todos_os_numeros = [int(n) for linha in resultados for n in linha[0].split()]
         frequencia_historica = Counter(todos_os_numeros)
         numeros_possiveis = list(frequencia_historica.keys())
         pesos_historicos = list(frequencia_historica.values())
 
-        # Executa a simulação
-        simulacoes = 100000  # Número de sorteios simulados
+        simulacoes = 100000
         resultados_simulacao = Counter()
         for _ in range(simulacoes):
+            # A simulação continua a mesma, com reposição para ser mais rápida
             sorteio_simulado = random.choices(numeros_possiveis, weights=pesos_historicos, k=config['num_bolas_sorteadas'])
             resultados_simulacao.update(sorteio_simulado)
         
-        # Pega os números mais comuns da simulação para formar o jogo
-        jogo_monte_carlo = resultados_simulacao.most_common(config['num_bolas_sorteadas'])
-        numeros_do_jogo = [num for num, freq in jogo_monte_carlo]
+        # --- ALTERAÇÃO PRINCIPAL AQUI ---
+        # Em vez de pegar os mais comuns, usamos o resultado da simulação como novos pesos.
         
-        return " ".join(f"{num:02}" for num in sorted(numeros_do_jogo))
+        # 1. Prepara os novos dados para o sorteio final
+        numeros_da_simulacao = list(resultados_simulacao.keys())
+        pesos_da_simulacao = list(resultados_simulacao.values())
+        
+        # 2. Gera um jogo único e sem repetição usando os novos pesos
+        numeros_do_jogo = set()
+        # Usamos um loop para garantir que o jogo tenha o número de dezenas correto,
+        # já que random.choices pode retornar números repetidos.
+        while len(numeros_do_jogo) < config['num_bolas_sorteadas']:
+            # Sorteia um número de cada vez para evitar repetições
+            numero_sorteado = random.choices(numeros_da_simulacao, weights=pesos_da_simulacao, k=1)[0]
+            numeros_do_jogo.add(numero_sorteado)
+            
+        return " ".join(f"{num:02}" for num in sorted(list(numeros_do_jogo)))
+    
     finally:
-        # Garante que a conexão com o banco de dados seja sempre fechada, mesmo se ocorrer um erro
         if conn: conn.close()
+# >>> FIM DA SEÇÃO MODIFICADA <<<
 
 def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas):
     """
