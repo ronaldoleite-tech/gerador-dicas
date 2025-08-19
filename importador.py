@@ -33,7 +33,8 @@ def process_file(cursor, loteria, filename):
     print(f"INFO: Processando arquivo '{filename}' para a loteria '{loteria}'...")
     
     newly_inserted = 0
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, 'r', encoding='latin-1') as f:
+    #with open(file_path, 'r', encoding='utf-8') as f:
         try:
             # Lê o cabeçalho para determinar as colunas das dezenas
             header = next(f).strip().split('\t')
