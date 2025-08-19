@@ -185,6 +185,11 @@
                     <select id="dezenas-select" class="seletor-custom"></select>
                 </div>
                 <div class="controle-item">
+                    <label for="numeros-ancora">Seus números:</label>
+                    <input type="text" id="numeros-ancora" class="seletor-custom" placeholder="Ex: 7, 25" 
+                           style="width: 120px;" maxlength="15" pattern="^[\d\s,]*$">
+                </div>
+                <div class="controle-item">
                     <label for="filtro-toggle">Filtros: OFF | ON</label>
                     <label class="toggle-switch">
                         <input type="checkbox" id="filtro-toggle" checked>
@@ -355,12 +360,14 @@
         async function gerarJogoMonteCarlo() {
             const botaoMonteCarlo = document.getElementById('botao-monte-carlo');
             if (botaoMonteCarlo.disabled) return;
+
             const areaResultado = document.getElementById('area-monte-carlo-resultado');
+            const numerosAncora = document.getElementById('numeros-ancora').value;
             botaoMonteCarlo.disabled = true;
             areaResultado.innerHTML = '<div class="spinner"></div>';
             
             try {
-                const response = await fetch(`/get-monte-carlo-game?loteria=${loteriaAtual}`);
+                const response = await fetch(`/get-monte-carlo-game?loteria=${loteriaAtual}&ancora=${numerosAncora}`);
                 if (!response.ok) throw new Error('Falha na comunicação com o servidor.');
                 const data = await response.json();
                 
@@ -407,11 +414,12 @@
             const areaResultados = document.getElementById('area-resultados');
             const filtroAtivado = document.getElementById('filtro-toggle').checked;
             const dezenas = document.getElementById('dezenas-select').value;
+            const numerosAncora = document.getElementById('numeros-ancora').value;
             setBotoesEstado(true);
             areaResultados.innerHTML = '<div class="spinner"></div>';
             
             try {
-                const response = await fetch(`/get-games/${quantidade}?loteria=${loteriaAtual}&filtro=${filtroAtivado}&dezenas=${dezenas}`);
+                const response = await fetch(`/get-games/${quantidade}?loteria=${loteriaAtual}&filtro=${filtroAtivado}&dezenas=${dezenas}&ancora=${numerosAncora}`);
                 if (!response.ok) throw new Error('Falha na comunicação com o servidor.');
                 const jogos = await response.json();
 
