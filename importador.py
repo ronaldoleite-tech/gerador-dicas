@@ -7,23 +7,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- Constantes de Configuração ---
-# Pega a URL do banco de dados do arquivo .env
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
-# Mapeia o nome da loteria no banco para o nome do arquivo de texto
+# --- ALTERAÇÃO AQUI: ADICIONAMOS A NOVA LOTERIA À LISTA DE IMPORTAÇÃO ---
 LOTTERY_FILES = {
     'megasena': 'sorteadosmegasena.txt',
     'quina': 'sorteadosquina.txt',
-    'lotofacil': 'sorteadoslotofacil.txt'
+    'lotofacil': 'sorteadoslotofacil.txt',
+    'diadesorte': 'sorteadosdiadesorte.txt'  # <-- ESTA É A LINHA QUE FALTAVA
 }
 
-# Tamanho do lote para inserção no banco de dados para melhor performance
 BATCH_SIZE = 500
 
 def process_file(cursor, loteria, filename):
     """
     Processa um único arquivo de sorteio e insere os novos registros no banco de dados.
-    Usa um sistema de lotes (batch) para otimizar a inserção.
     """
     file_path = os.path.join(os.path.dirname(__file__), filename)
     if not os.path.exists(file_path):
@@ -33,12 +31,10 @@ def process_file(cursor, loteria, filename):
     print(f"INFO: Processando arquivo '{filename}' para a loteria '{loteria}'...")
     
     newly_inserted = 0
+    # Usamos latin-1 para compatibilidade máxima com arquivos gerados no Windows
     with open(file_path, 'r', encoding='latin-1') as f:
-    #with open(file_path, 'r', encoding='utf-8') as f:
         try:
-            # Lê o cabeçalho para determinar as colunas das dezenas
             header = next(f).strip().split('\t')
-            # Os índices das dezenas começam na coluna 1 (a 0 é o concurso)
             col_indices = list(range(1, len(header)))
 
             batch = []
@@ -49,24 +45,21 @@ def process_file(cursor, loteria, filename):
                 
                 try:
                     concurso = int(parts[0])
-                    # Lê, converte para int, ordena e formata as dezenas
                     dezenas = sorted([int(parts[i]) for i in col_indices])
-                    dezenas_str = " ".join(f"{d:02}" for d in dezenas) # Formata com zero à esquerda (ex: 01 05 12)
+                    dezenas_str = " ".join(f"{d:02}" for d in dezenas)
                     
                     batch.append((concurso, loteria, dezenas_str))
 
-                    # Quando o lote atinge o tamanho máximo, insere no banco
                     if len(batch) >= BATCH_SIZE:
                         insert_query = "INSERT INTO resultados_sorteados (concurso, tipo_loteria, dezenas) VALUES (%s, %s, %s) ON CONFLICT (concurso, tipo_loteria) DO NOTHING;"
                         cursor.executemany(insert_query, batch)
-                        newly_inserted += cursor.rowcount # Conta quantos registros foram realmente inseridos
-                        batch = [] # Limpa o lote
+                        newly_inserted += cursor.rowcount
+                        batch = []
 
                 except (ValueError, IndexError):
                     print(f"AVISO: Linha com formato inesperado no arquivo {filename}: {line.strip()}")
                     continue
             
-            # Insere o lote final que sobrou
             if batch:
                 insert_query = "INSERT INTO resultados_sorteados (concurso, tipo_loteria, dezenas) VALUES (%s, %s, %s) ON CONFLICT (concurso, tipo_loteria) DO NOTHING;"
                 cursor.executemany(insert_query, batch)
@@ -93,8 +86,6 @@ def main():
         cur = conn.cursor()
         print("INFO: Conexão com o banco de dados estabelecida com sucesso.")
 
-        # Cria a tabela de forma segura se ela ainda não existir.
-        # Esta é a única estrutura necessária.
         print("INFO: Verificando/Criando a tabela 'resultados_sorteados'...")
         cur.execute("""
             CREATE TABLE IF NOT EXISTS resultados_sorteados (
@@ -109,10 +100,9 @@ def main():
 
         total_inserted = 0
         for loteria, filename in LOTTERY_FILES.items():
-            # Processa cada arquivo definido nas constantes
             inserted_count = process_file(cur, loteria, filename)
             total_inserted += inserted_count
-            conn.commit() # Salva as alterações no banco após cada arquivo
+            conn.commit()
 
         print("\n========================================================")
         print("IMPORTAÇÃO CONCLUÍDA!")
@@ -128,7 +118,5 @@ def main():
             conn.close()
             print("INFO: Conexão com o banco de dados fechada.")
 
-# --- Bloco de Execução ---
-# Este código só será executado quando você rodar o script diretamente
 if __name__ == "__main__":
     main()
