@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 import math
 import re
 
-# --- (Inicialização e Configuração - sem alterações) ---
+# --- Inicialização e Configuração ---
 load_dotenv()
 DATABASE_URL = os.environ.get('DATABASE_URL')
 app = Flask(__name__, static_folder='.', static_url_path='')
@@ -32,7 +32,7 @@ def is_prime(n):
         if n % i == 0: return False
     return True
 
-# --- ALTERAÇÃO 1: FUNÇÃO DE VALIDAÇÃO SIMPLIFICADA E REFORÇADA PARA NÚMERO ÚNICO ---
+# --- ALTERAÇÃO: FUNÇÃO DE VALIDAÇÃO SIMPLIFICADA PARA NÚMERO ÚNICO ---
 def validar_e_sanitizar_ancora(ancora_str, loteria):
     """
     Valida e sanitiza a entrada para um ÚNICO número da sorte.
@@ -173,7 +173,6 @@ def get_games(count):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ... (rota /get-stats e bloco de execução principal sem alterações) ...
 @app.route('/get-stats')
 def get_stats():
     loteria = request.args.get('loteria', 'megasena', type=str)
