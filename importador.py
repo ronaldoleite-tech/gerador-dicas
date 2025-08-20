@@ -17,14 +17,15 @@ LOTERIAS_API = {
     'diadesorte': 'https://servicebus2.caixa.gov.br/portaldeloterias/api/diadesorte'
 }
 
-# --- ALTERAÇÃO: Adicionamos um cabeçalho para simular um navegador ---
+# --- CORREÇÃO: Adicionamos um cabeçalho para simular um navegador e evitar o erro 403 ---
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
 
-# --- Funções do Banco de Dados (sem alterações) ---
+# --- Funções do Banco de Dados ---
 
 def criar_tabela_se_nao_existir(conn):
+    """Garante que a tabela de resultados exista no banco de dados."""
     with conn.cursor() as cur:
         cur.execute("""
             CREATE TABLE IF NOT EXISTS resultados_sorteados (
@@ -40,6 +41,7 @@ def criar_tabela_se_nao_existir(conn):
     print("Tabela 'resultados_sorteados' verificada/criada com sucesso.")
 
 def get_ultimo_concurso(conn, loteria):
+    """Busca o número do último concurso registrado para uma loteria específica."""
     with conn.cursor() as cur:
         cur.execute(
             "SELECT MAX(concurso) FROM resultados_sorteados WHERE tipo_loteria = %s;",
@@ -51,27 +53,30 @@ def get_ultimo_concurso(conn, loteria):
 # --- Função Principal de Importação ---
 
 def importar_resultados():
+    """Função principal que orquestra a busca e inserção de novos resultados."""
     conn = None
     try:
         print("Conectando ao banco de dados...")
         conn = psycopg2.connect(DATABASE_URL)
         criar_tabela_se_nao_existir(conn)
 
+        # Itera sobre cada loteria configurada
         for nome_loteria, url_base in LOTERIAS_API.items():
             print(f"\n--- Verificando Loteria: {nome_loteria.upper()} ---")
             
             ultimo_concurso_db = get_ultimo_concurso(conn, nome_loteria)
             print(f"Último concurso no banco de dados: {ultimo_concurso_db}")
 
+            # Pega o último concurso da API da Caixa
             try:
-                # --- ALTERAÇÃO: Usamos o cabeçalho na requisição ---
+                # --- CORREÇÃO: Usamos o cabeçalho na requisição ---
                 response = requests.get(url_base, headers=HEADERS, timeout=15)
-                response.raise_for_status()
+                response.raise_for_status() # Lança um erro se a requisição falhar (como 403)
                 dados_api = response.json()
                 ultimo_concurso_api = dados_api.get('numero')
             except requests.RequestException as e:
                 print(f"Erro ao acessar a API da Caixa para {nome_loteria}: {e}")
-                continue
+                continue # Pula para a próxima loteria
 
             if not ultimo_concurso_api:
                 print("Não foi possível obter o número do último concurso da API.")
@@ -79,6 +84,7 @@ def importar_resultados():
                 
             print(f"Último concurso na API da Caixa: {ultimo_concurso_api}")
 
+            # Compara e importa os concursos faltantes
             if ultimo_concurso_api > ultimo_concurso_db:
                 print(f"Novos resultados encontrados! Importando de {ultimo_concurso_db + 1} até {ultimo_concurso_api}...")
                 
@@ -86,11 +92,12 @@ def importar_resultados():
                 for concurso_num in range(ultimo_concurso_db + 1, ultimo_concurso_api + 1):
                     try:
                         url_concurso = f"{url_base}/{concurso_num}"
-                        # --- ALTERAÇÃO: Usamos o cabeçalho na requisição ---
+                        # --- CORREÇÃO: Usamos o cabeçalho na requisição ---
                         res_concurso = requests.get(url_concurso, headers=HEADERS, timeout=15)
                         res_concurso.raise_for_status()
                         dados_concurso = res_concurso.json()
 
+                        # Extrai e formata os dados
                         dezenas_lista = dados_concurso.get('listaDezenas')
                         if not dezenas_lista:
                             print(f"  - Concurso {concurso_num} sem lista de dezenas. Pulando.")
@@ -98,8 +105,10 @@ def importar_resultados():
                         
                         dezenas_str = " ".join(f"{int(n):02}" for n in dezenas_lista)
                         data_str = dados_concurso.get('dataApuracao')
+                        # Formata a data de DD/MM/YYYY para YYYY-MM-DD
                         data_formatada = f"{data_str[6:]}-{data_str[3:5]}-{data_str[:2]}"
 
+                        # Insere no banco de dados
                         with conn.cursor() as cur:
                             cur.execute(
                                 """
