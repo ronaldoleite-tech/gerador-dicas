@@ -44,6 +44,7 @@
             --cor-whatsapp: #25D366;
             --cor-instagram: #E4405F;
             --cor-tiktok: #00f2ea;
+            --cor-sucesso: #4CAF50;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body {
@@ -123,24 +124,31 @@
         .imagem-ouro:hover { transform: scale(1.05); }
         .botao-gerar:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255, 215, 0, .4); }
         #area-resultados { min-height: 100px; }
-        .jogo { background-color: rgba(0, 0, 0, .2); padding: 1rem; margin: .7rem auto; border-radius: 12px; display: flex; justify-content: center; align-items: center; border-left: 4px solid var(--cor-dourado); flex-wrap: wrap; gap: 5px 10px; }
+        
+        .jogo { 
+            background-color: rgba(0, 0, 0, .2); padding: 1rem; margin: .7rem auto; 
+            border-radius: 12px; display: flex; justify-content: center; 
+            align-items: center; border-left: 4px solid var(--cor-dourado); 
+            flex-wrap: wrap; gap: 5px 10px; 
+        }
+        .numeros-container { display: flex; flex-wrap: wrap; gap: 5px 10px; }
         .numero { font-size: 1.7rem; font-weight: 700; }
         
-        /* SPINNER COM TREVO (CORRIGIDO) */
+        /* -- NOVO: Estilo para o botão de copiar -- */
+        .botao-copiar {
+            background: none; border: none; color: var(--cor-texto); 
+            cursor: pointer; font-size: 1.2rem; margin-left: 15px;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .botao-copiar:hover { color: var(--cor-dourado); transform: scale(1.1); }
+        .botao-copiar .fa-check { color: var(--cor-sucesso); }
+        
         .spinner {
-            width: 50px;
-            height: 50px;
-            background-image: url('images/trevodourado.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            animation: spin 1.5s linear infinite;
-            margin: 2rem auto;
-            border: none; 
+            width: 50px; height: 50px; background-image: url('images/trevodourado.png');
+            background-size: contain; background-repeat: no-repeat;
+            animation: spin 1.5s linear infinite; margin: 2rem auto; border: none; 
         }
-        @keyframes spin { 
-            0% { transform: rotate(0deg); } 
-            100% { transform: rotate(360deg); } 
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .nav-interna { padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid var(--cor-divisoria-ouro); border-bottom: 1px solid var(--cor-divisoria-ouro); display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
         .nav-interna a { color: var(--cor-dourado); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
@@ -161,30 +169,29 @@
         .grupo-botoes { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 1rem; }
         .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
         .voltar-topo:hover { color: var(--cor-dourado-hover); }
+        
+        /* -- AJUSTE: E-mail com quebra de linha em telas pequenas -- */
+        #contato a { word-break: break-all; }
+        
         #feedback-area .botao-feedback { background: none; border: 2px solid var(--cor-dourado); color: var(--cor-dourado); padding: 8px 16px; margin: 0 5px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
         #feedback-area .botao-feedback:hover { background: var(--cor-dourado); color: black; }
         #feedback-message { margin-top: 1rem; font-weight: bold; }
         .artigo-blog { margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
         
         .footer-section h2::before {
-            content: '';
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            background-image: url('images/trevodourado.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            margin-right: 12px;
-            vertical-align: middle;
+            content: ''; display: inline-block; width: 24px; height: 24px;
+            background-image: url('images/trevodourado.png'); background-size: contain;
+            background-repeat: no-repeat; margin-right: 12px; vertical-align: middle;
         }
         
         #termos h2::before, #politica h2::before, #contato h2::before, #sobre h2::before {
-            content: none;
-            margin-right: 0;
+            content: none; margin-right: 0;
         }
 
         @media (max-width: 600px) {
             .footer-section p { text-align: left !important; }
+            /* -- AJUSTE: Garante que o botão não quebre de forma estranha -- */
+            #informativo .botao-gerar { padding: .8rem 1rem; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -252,7 +259,7 @@
         <nav class="nav-interna">
             <a href="#sobre">Sobre</a>
             <a href="#sobre-filtros">Métodos</a>
-            <a href="#blog">Dicas e Estratégias</a>
+            <a href="#blog">Curiosidades</a>
             <a href="#estatisticas">Estatísticas</a>
             <a href="#parceiros">Parceiros</a>
             <a href="#jogorresponsavel">Jogo Responsável</a>
@@ -290,33 +297,24 @@
                 <div style="text-align:center; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
                     <img src="images/informativo.jpg" alt="Informativo da Mega-Sena" style="max-width: 95%; border-radius: 8px; border: 2px solid var(--cor-dourado);">
                     <p style="font-size: 1.2rem; margin: 1.5rem 0; text-align: center;">A Mega-Sena Acumulou, aproveite para gerar seus números aqui no Sorte Analisada!</p>
-                    <a href="#gerador" class="botao-gerar">Gerar meus números agora!</a>
+                    <a href="#gerador" class="botao-gerar">Gerar agora!</a>
                 </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
             
             <section id="blog" class="footer-section">
-                <h2>Dicas e Estratégias</h2>
+                <h2>Curiosidades</h2>
                 <div class="artigo-blog">
-                    <h3>Dicas de Jogo Responsável: Como Apostar com Consciência e Manter a Diversão</h3>
-                    <p>A emoção de preencher um bilhete de loteria e sonhar com os números sorteados é uma experiência compartilhada por milhões de brasileiros. É um momento de esperança e diversão. Mas como garantir que essa atividade se mantenha sempre no campo do entretenimento, sem se tornar uma fonte de estresse? A resposta está em uma prática simples, mas poderosa: o <strong>Jogo Responsável</strong>.</p>
-                    <p>Apostar com consciência não significa perder a magia do jogo, mas sim ganhar controle sobre ele. É a diferença entre uma diversão saudável e um hábito arriscado. No Sorte Analisada, queremos que sua experiência seja a melhor possível, por isso, preparamos este guia com dicas práticas para você apostar de forma segura e inteligente.</p>
+                    <h3>Dicas de Jogo Responsável: Aposte com Consciência</h3>
+                    <p>Apostar na loteria deve ser sempre uma fonte de entretenimento, e não de estresse. Para garantir que a experiência seja segura e divertida, pratique o <strong>Jogo Responsável</strong>.</p>
                     
-                    <h4>1. O Principal Motivo: Entretenimento, Não Investimento</h4>
-                    <p>A regra de ouro do Jogo Responsável é entender a natureza das loterias. Trate o dinheiro da aposta como um ingresso para um espetáculo: você paga pela experiência e pela possibilidade de uma surpresa incrível. Nunca considere a loteria como uma fonte de renda ou uma solução para problemas financeiros.</p>
+                    <br>
+                    <p>O segredo é simples: encare o valor da aposta como um custo de lazer, e não como um investimento. Antes de jogar, <strong>defina um orçamento</strong> que não comprometa suas finanças e siga-o à risca. Gerencie também o seu tempo, evitando que o jogo interfira em suas responsabilidades.</p>
 
-                    <h4>2. Defina um Orçamento de Aposta (e Siga-o!)</h4>
-                    <p>Antes de jogar, olhe para suas finanças e decida qual valor você pode gastar com lazer naquele mês. Esse é o seu "orçamento da sorte". Pode ser R$ 20, R$ 50, o que for confortável para você. Uma vez definido, seja rigoroso. Se o orçamento acabar, a diversão daquele mês também acabou. Volte a jogar apenas no próximo mês, com um novo orçamento.</p>
-
-                    <h4>3. Gerencie seu Tempo, Não Deixe o Jogo Gerenciar Você</h4>
-                    <p>Assim como o dinheiro, seu tempo é precioso. Não deixe que o hábito de apostar interfira em seu trabalho, seus relacionamentos ou outras responsabilidades. Defina momentos específicos para fazer seus jogos e conferir os resultados, e evite que isso consuma seu dia a dia.</p>
-
-                    <h4>4. Evite "Correr Atrás do Prejuízo"</h4>
-                    <p>Um dos maiores riscos para qualquer apostador é a mentalidade de "preciso recuperar o que perdi". Perder faz parte do jogo; na verdade, é o resultado mais provável. Se você não ganhou, aceite o resultado e siga em frente. Tentar compensar uma perda com mais apostas geralmente leva a perdas ainda maiores.</p>
-
-                    <h4>5. Reconheça os Sinais de Alerta</h4>
-                    <p>É fundamental ser honesto consigo mesmo. O jogo pode estar se tornando um problema se você: gasta mais dinheiro ou tempo do que planejou; mente para amigos e familiares sobre seus hábitos de aposta; pede dinheiro emprestado para jogar; ou sente ansiedade quando não pode apostar. Se você se identifica com um ou mais desses pontos, talvez seja a hora de dar uma pausa e procurar ajuda.</p>
+                    <br>
+                    <p>Lembre-se que perder é o resultado mais provável, então <strong>nunca tente "correr atrás do prejuízo"</strong> com mais apostas. Por fim, seja honesto consigo mesmo. Se perceber que está gastando mais do que o planejado, escondendo o hábito ou sentindo ansiedade para jogar, é hora de procurar ajuda.
                 </div>
+
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
@@ -394,7 +392,7 @@
                 <h2>Contato</h2>
                 <p style="text-align: center;">Ficou com alguma dúvida ou tem uma sugestão? Adoramos ouvir nossos usuários! Envie um e-mail para:</p>
                 <p style="font-size: 1.2rem; font-weight: bold; margin-top: 1rem; text-align: center;">
-                    <a href="mailto:ronaldoleite@sorteanalisada.com.br" title="Contato" style="color: var(--cor-dourado); text-decoration: none; display: inline-flex; align-items: center; gap: 10px;">
+                    <a href="mailto:ronaldoleite@sorteanalisada.com.br" title="Contato" style="color: var(--cor-dourado); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
                         <i class="fa-solid fa-envelope"></i>
                         <span>ronaldoleite@sorteanalisada.com.br</span>
                     </a>
@@ -484,6 +482,22 @@
             document.querySelectorAll('.botao-gerar').forEach(btn => btn.disabled = desabilitar);
         }
 
+        // -- NOVA: Função para copiar os números --
+        function copiarNumeros(buttonEl) {
+            const jogoContainer = buttonEl.closest('.jogo');
+            const numeros = [...jogoContainer.querySelectorAll('.numero')].map(n => n.textContent).join(' ');
+            
+            navigator.clipboard.writeText(numeros).then(() => {
+                const originalIcon = buttonEl.innerHTML;
+                buttonEl.innerHTML = '<i class="fa-solid fa-check"></i>';
+                setTimeout(() => {
+                    buttonEl.innerHTML = originalIcon;
+                }, 2000);
+            }).catch(err => {
+                console.error('Falha ao copiar números: ', err);
+            });
+        }
+
         async function gerarJogoMonteCarlo() {
             const botaoMonteCarlo = document.getElementById('botao-monte-carlo');
             if (botaoMonteCarlo.disabled) return;
@@ -501,11 +515,16 @@
                 areaResultado.innerHTML = '';
                 const jogoContainer = document.createElement('div');
                 jogoContainer.className = 'jogo';
+
+                // -- ATUALIZADO: Cria container para números e botão de copiar --
+                const numerosContainer = document.createElement('div');
+                numerosContainer.className = 'numeros-container';
+
                 data.jogo.trim().split(/\s+/).forEach(num => {
                     const span = document.createElement('span');
                     span.className = 'numero';
                     span.textContent = num;
-                    jogoContainer.appendChild(span);
+                    numerosContainer.appendChild(span);
                 });
 
                 if (loteriaAtual === 'diadesorte') {
@@ -514,8 +533,17 @@
                     const spanMes = document.createElement('span');
                     spanMes.textContent = `| Mês: ${mesSorteado}`;
                     spanMes.style.cssText = 'font-weight:bold; margin-left:15px; font-size: 1.2rem;';
-                    jogoContainer.appendChild(spanMes);
+                    numerosContainer.appendChild(spanMes);
                 }
+
+                const copyButton = document.createElement('button');
+                copyButton.className = 'botao-copiar';
+                copyButton.innerHTML = '<i class="fa-regular fa-copy"></i>';
+                copyButton.title = 'Copiar números';
+                copyButton.onclick = function() { copiarNumeros(this); };
+
+                jogoContainer.appendChild(numerosContainer);
+                jogoContainer.appendChild(copyButton);
                 areaResultado.appendChild(jogoContainer);
 
             } catch (error) {
@@ -557,11 +585,16 @@
                 jogos.forEach(linha => {
                     const jogoContainer = document.createElement('div');
                     jogoContainer.className = 'jogo';
+                    
+                    // -- ATUALIZADO: Cria container para números e botão de copiar --
+                    const numerosContainer = document.createElement('div');
+                    numerosContainer.className = 'numeros-container';
+                    
                     linha.trim().split(/\s+/).forEach(num => {
                         const span = document.createElement('span');
                         span.className = 'numero';
                         span.textContent = num;
-                        jogoContainer.appendChild(span);
+                        numerosContainer.appendChild(span);
                     });
 
                     if (loteriaAtual === 'diadesorte') {
@@ -569,8 +602,17 @@
                         const spanMes = document.createElement('span');
                         spanMes.textContent = `| Mês: ${mesSorteado}`;
                         spanMes.style.cssText = 'font-weight:bold; margin-left:15px; font-size: 1.2rem;';
-                        jogoContainer.appendChild(spanMes);
+                        numerosContainer.appendChild(spanMes);
                     }
+                    
+                    const copyButton = document.createElement('button');
+                    copyButton.className = 'botao-copiar';
+                    copyButton.innerHTML = '<i class="fa-regular fa-copy"></i>';
+                    copyButton.title = 'Copiar números';
+                    copyButton.onclick = function() { copiarNumeros(this); };
+
+                    jogoContainer.appendChild(numerosContainer);
+                    jogoContainer.appendChild(copyButton);
                     areaResultados.appendChild(jogoContainer);
                 });
 
