@@ -124,7 +124,6 @@
         .imagem-ouro:hover { transform: scale(1.05); }
         .botao-gerar:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255, 215, 0, .4); }
         #area-resultados { min-height: 100px; }
-        
         .jogo { 
             background-color: rgba(0, 0, 0, .2); padding: 1rem; margin: .7rem auto; 
             border-radius: 12px; display: flex; justify-content: center; 
@@ -133,8 +132,6 @@
         }
         .numeros-container { display: flex; flex-wrap: wrap; gap: 5px 10px; }
         .numero { font-size: 1.7rem; font-weight: 700; }
-        
-        /* -- NOVO: Estilo para o botão de copiar -- */
         .botao-copiar {
             background: none; border: none; color: var(--cor-texto); 
             cursor: pointer; font-size: 1.2rem; margin-left: 15px;
@@ -142,7 +139,6 @@
         }
         .botao-copiar:hover { color: var(--cor-dourado); transform: scale(1.1); }
         .botao-copiar .fa-check { color: var(--cor-sucesso); }
-        
         .spinner {
             width: 50px; height: 50px; background-image: url('images/trevodourado.png');
             background-size: contain; background-repeat: no-repeat;
@@ -169,28 +165,52 @@
         .grupo-botoes { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 1rem; }
         .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
         .voltar-topo:hover { color: var(--cor-dourado-hover); }
-        
-        /* -- AJUSTE: E-mail com quebra de linha em telas pequenas -- */
         #contato a { word-break: break-all; }
-        
         #feedback-area .botao-feedback { background: none; border: 2px solid var(--cor-dourado); color: var(--cor-dourado); padding: 8px 16px; margin: 0 5px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
         #feedback-area .botao-feedback:hover { background: var(--cor-dourado); color: black; }
         #feedback-message { margin-top: 1rem; font-weight: bold; }
         .artigo-blog { margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
-        
         .footer-section h2::before {
             content: ''; display: inline-block; width: 24px; height: 24px;
             background-image: url('images/trevodourado.png'); background-size: contain;
             background-repeat: no-repeat; margin-right: 12px; vertical-align: middle;
         }
-        
         #termos h2::before, #politica h2::before, #contato h2::before, #sobre h2::before {
             content: none; margin-right: 0;
         }
 
+        /* --- NOVO CSS PARA A SEÇÃO DE ÚLTIMOS RESULTADOS --- */
+        .resultado-item {
+            background: rgba(0,0,0,0.25);
+            border-left: 4px solid var(--cor-loteria-display);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .resultado-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .resultado-concurso { font-size: 1.1rem; font-weight: bold; color: white; }
+        .resultado-data { font-size: 0.9rem; color: var(--cor-texto); }
+        .resultado-dezenas {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+            color: var(--cor-dourado);
+        }
+        .resultado-status { font-size: 0.95rem; font-weight: 500; }
+        .status-acumulou { color: #FFB74D; } /* Laranja */
+        .status-ganhador { color: #81C784; } /* Verde */
+
         @media (max-width: 600px) {
             .footer-section p { text-align: left !important; }
-            /* -- AJUSTE: Garante que o botão não quebre de forma estranha -- */
             #informativo .botao-gerar { padding: .8rem 1rem; font-size: 0.9rem; }
         }
     </style>
@@ -256,11 +276,13 @@
             <section id="area-resultados" aria-live="polite" aria-atomic="true"></section>
         </main>
         
+        <!-- ALTERAÇÃO: Adicionado link para a nova seção -->
         <nav class="nav-interna">
             <a href="#sobre">Sobre</a>
             <a href="#sobre-filtros">Métodos</a>
             <a href="#blog">Curiosidades</a>
             <a href="#estatisticas">Estatísticas</a>
+            <a href="#ultimos-resultados">Últimos Resultados</a>
             <a href="#parceiros">Parceiros</a>
             <a href="#jogorresponsavel">Jogo Responsável</a>
             <a href="#contato">Contato</a>
@@ -307,14 +329,11 @@
                 <div class="artigo-blog">
                     <h3>Dicas de Jogo Responsável: Aposte com Consciência</h3>
                     <p>Apostar na loteria deve ser sempre uma fonte de entretenimento, e não de estresse. Para garantir que a experiência seja segura e divertida, pratique o <strong>Jogo Responsável</strong>.</p>
-                    
                     <br>
                     <p>O segredo é simples: encare o valor da aposta como um custo de lazer, e não como um investimento. Antes de jogar, <strong>defina um orçamento</strong> que não comprometa suas finanças e siga-o à risca. Gerencie também o seu tempo, evitando que o jogo interfira em suas responsabilidades.</p>
-
                     <br>
                     <p>Lembre-se que perder é o resultado mais provável, então <strong>nunca tente "correr atrás do prejuízo"</strong> com mais apostas. Por fim, seja honesto consigo mesmo. Se perceber que está gastando mais do que o planejado, escondendo o hábito ou sentindo ansiedade para jogar, é hora de procurar ajuda.
                 </div>
-
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
@@ -330,6 +349,17 @@
                     <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3><canvas id="grafico-menos-sorteados"></canvas></div>
                     <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
                     <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
+                </div>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+            
+            <!-- NOVA SEÇÃO DE ÚLTIMOS RESULTADOS -->
+            <section id="ultimos-resultados" class="footer-section">
+                <h2>Últimos Resultados</h2>
+                <p>Confira os últimos 36 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
+                <div id="lista-ultimos-resultados" style="margin-top: 2rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
+                    <!-- Os resultados serão inseridos aqui pelo JavaScript -->
+                    <div class="spinner"></div>
                 </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
@@ -394,7 +424,6 @@
                 <p style="font-size: 1.2rem; font-weight: bold; margin-top: 1rem; text-align: center;">
                     <a href="mailto:ronaldoleite@sorteanalisada.com.br" title="Contato" style="color: var(--cor-dourado); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
                         <i class="fa-solid fa-envelope"></i>
-                        <!--<span>ronaldoleite@sorteanalisada.com.br</span> -->
                     </a>
                 </p>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
@@ -463,6 +492,9 @@
                 botaoStats.disabled = false;
                 botaoStats.innerHTML = 'Estatísticas';
             }
+            
+            // --- ALTERAÇÃO: Chama a função para carregar os últimos resultados ---
+            carregarUltimosResultados(novaLoteria);
         }
 
         function atualizarOpcoesDezenas() {
@@ -482,7 +514,6 @@
             document.querySelectorAll('.botao-gerar').forEach(btn => btn.disabled = desabilitar);
         }
 
-        // -- NOVA: Função para copiar os números --
         function copiarNumeros(buttonEl) {
             const jogoContainer = buttonEl.closest('.jogo');
             const numeros = [...jogoContainer.querySelectorAll('.numero')].map(n => n.textContent).join(' ');
@@ -512,11 +543,12 @@
                 if (!response.ok) throw new Error('Falha na comunicação com o servidor.');
                 const data = await response.json();
                 
+                if (data.error) throw new Error(data.error);
+
                 areaResultado.innerHTML = '';
                 const jogoContainer = document.createElement('div');
                 jogoContainer.className = 'jogo';
 
-                // -- ATUALIZADO: Cria container para números e botão de copiar --
                 const numerosContainer = document.createElement('div');
                 numerosContainer.className = 'numeros-container';
 
@@ -547,7 +579,8 @@
                 areaResultado.appendChild(jogoContainer);
 
             } catch (error) {
-                areaResultado.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
+                console.error("Erro na Dica Especial:", error);
+                areaResultado.innerHTML = `<p style="color: #ff8a80;">Não foi possível gerar a dica. Tente novamente.</p>`;
             } finally {
                 let segundosRestantes = 15;
                 botaoMonteCarlo.textContent = `Aguarde ${segundosRestantes}s...`;
@@ -564,6 +597,7 @@
             }
         }
 
+        // --- ATUALIZAÇÃO: Melhoria no tratamento de erro "Failed to fetch" ---
         async function gerarJogos(quantidade) {
             if (isRequestInProgress) return;
             const areaResultados = document.getElementById('area-resultados');
@@ -576,8 +610,16 @@
             
             try {
                 const response = await fetch(`/get-games/${quantidade}?loteria=${loteriaAtual}&estrategia=${estrategia}&dezenas=${dezenas}&ancora=${numerosAncora}`);
-                if (!response.ok) throw new Error('Falha na comunicação com o servidor.');
+                
+                if (!response.ok) {
+                    throw new Error(`Erro na comunicação com o servidor: ${response.statusText}`);
+                }
+                
                 const jogos = await response.json();
+
+                if (jogos.error) {
+                    throw new Error(`Erro no servidor: ${jogos.error}`);
+                }
 
                 areaResultados.innerHTML = '<h2>Boa sorte!</h2>';
                 const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -586,7 +628,6 @@
                     const jogoContainer = document.createElement('div');
                     jogoContainer.className = 'jogo';
                     
-                    // -- ATUALIZADO: Cria container para números e botão de copiar --
                     const numerosContainer = document.createElement('div');
                     numerosContainer.className = 'numeros-container';
                     
@@ -617,7 +658,8 @@
                 });
 
             } catch (error) {
-                areaResultados.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
+                console.error('Detalhes do erro:', error);
+                areaResultados.innerHTML = `<p style="color: #ff8a80;">Falha na conexão. Por favor, tente novamente em alguns segundos.</p>`;
             } finally {
                 setBotoesEstado(false);
             }
@@ -701,6 +743,57 @@
             } catch (error) {
                 messageEl.textContent = 'Erro ao enviar. Tente novamente.';
                 messageEl.style.color = '#ff8a80';
+            }
+        }
+
+        // --- NOVA FUNÇÃO PARA CARREGAR OS ÚLTIMOS RESULTADOS ---
+        async function carregarUltimosResultados(loteria) {
+            const container = document.getElementById('lista-ultimos-resultados');
+            container.innerHTML = '<div class="spinner"></div>'; // Mostra o spinner enquanto carrega
+            
+            try {
+                const response = await fetch(`/get-ultimos-resultados?loteria=${loteria}`);
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar os resultados.');
+                }
+                const resultados = await response.json();
+                
+                if (resultados.error) {
+                    throw new Error(resultados.error);
+                }
+
+                if (resultados.length === 0) {
+                    container.innerHTML = '<p>Nenhum resultado encontrado para esta loteria.</p>';
+                    return;
+                }
+
+                let html = '';
+                resultados.forEach(res => {
+                    let statusHtml = '';
+                    if (res.acumulou) {
+                        statusHtml = `<span class="status-acumulou">ACUMULOU</span>`;
+                    } else {
+                        const ganhadorLabel = res.ganhadores > 1 ? 'Ganhadores' : 'Ganhador';
+                        statusHtml = `<span class="status-ganhador">${res.ganhadores} ${ganhadorLabel}</span>`;
+                    }
+
+                    html += `
+                        <div class="resultado-item">
+                            <div class="resultado-header">
+                                <span class="resultado-concurso">Concurso ${res.concurso}</span>
+                                <span class="resultado-data">${res.data}</span>
+                            </div>
+                            <div class="resultado-dezenas">${res.dezenas}</div>
+                            <div class="resultado-status">${statusHtml}</div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+
+            } catch (error) {
+                console.error('Erro ao carregar últimos resultados:', error);
+                container.innerHTML = `<p style="color: #ff8a80;">Não foi possível carregar os resultados. Tente novamente mais tarde.</p>`;
             }
         }
     </script>

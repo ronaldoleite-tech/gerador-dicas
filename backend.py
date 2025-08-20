@@ -8,6 +8,7 @@ from collections import Counter
 from dotenv import load_dotenv
 import math
 import re
+from datetime import date # IMPORTANTE: Adicionado para formatar a data
 
 # --- Inicialização e Configuração ---
 load_dotenv()
@@ -42,8 +43,6 @@ def is_prime(n):
         if n % i == 0: return False
     return True
 
-# --- SUA FUNÇÃO ORIGINAL (CORRETA PARA 1 NÚMERO) ---
-# Esta função está perfeita para aceitar apenas um número da sorte.
 def validar_e_sanitizar_ancora(ancora_str, loteria):
     if not ancora_str or not ancora_str.strip().isdigit():
         return []
@@ -57,7 +56,6 @@ def validar_e_sanitizar_ancora(ancora_str, loteria):
     except (ValueError, TypeError):
         return []
 
-# --- (gerar_jogo_monte_carlo - sem alterações, já está ok) ---
 def gerar_jogo_monte_carlo(loteria='megasena', numeros_ancora=[]):
     conn = None
     try:
@@ -77,7 +75,6 @@ def gerar_jogo_monte_carlo(loteria='megasena', numeros_ancora=[]):
         frequencia_historica = Counter(todos_os_numeros)
         numeros_possiveis = list(frequencia_historica.keys())
         pesos_historicos = list(frequencia_historica.values())
-
         simulacoes = 100000
         resultados_simulacao = Counter()
         for _ in range(simulacoes):
@@ -98,14 +95,12 @@ def gerar_jogo_monte_carlo(loteria='megasena', numeros_ancora=[]):
     finally:
         if conn: conn.close()
 
-# --- FUNÇÃO DE GERAR JOGOS COM CORREÇÃO DE LOOP ---
 def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[], estrategia='geral'):
     conn = None
     try:
         config = LOTTERY_CONFIG[loteria]
         dezenas_a_gerar = dezenas - len(numeros_ancora)
         if dezenas_a_gerar < 0: return []
-
         conn = get_db_connection()
         cur = conn.cursor()
         
@@ -122,7 +117,6 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
         
         todos_os_numeros_sorteados = [int(n) for linha in resultados for n in linha[0].split() if int(n) not in numeros_ancora]
         frequencia = Counter(todos_os_numeros_sorteados)
-        
         universo_possivel = [n for n in range(config['min_num'], config['max_num'] + 1) if n not in numeros_ancora]
         
         if estrategia == 'frias':
@@ -130,17 +124,14 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
             if len(numeros_possiveis) < dezenas_a_gerar:
                  numeros_possiveis.extend([item[0] for item in frequencia.most_common()[:-len(numeros_possiveis)-1:-1]])
             pesos = None
-        else: # 'geral' ou 'quentes'
+        else:
             numeros_possiveis = list(frequencia.keys())
             pesos = list(frequencia.values())
-
         if not numeros_possiveis:
              return gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
-
         jogos_gerados = set()
         while len(jogos_gerados) < count:
             if dezenas_a_gerar > 0:
-                # CORREÇÃO: Lógica mais segura para garantir números únicos e evitar loops
                 numeros_novos = set()
                 if pesos is None:
                     k = min(dezenas_a_gerar, len(numeros_possiveis))
@@ -155,7 +146,6 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
             else:
                 jogos_gerados.add(frozenset(numeros_ancora))
                 break
-
         return [" ".join(f"{num:02}" for num in sorted(list(jogo))) for jogo in jogos_gerados]
     finally:
         if conn: conn.close()
@@ -167,7 +157,6 @@ def gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora=[])
     
     universo = [n for n in range(config['min_num'], config['max_num'] + 1) if n not in numeros_ancora]
     k = min(dezenas_a_gerar, len(universo))
-
     jogos_gerados = set()
     while len(jogos_gerados) < count:
         numeros_novos = random.sample(universo, k)
@@ -176,7 +165,7 @@ def gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora=[])
         jogos_gerados.add(jogo_formatado)
     return list(jogos_gerados)
 
-# --- (Endpoints - sem alterações, já estão ok) ---
+# --- Endpoints da API ---
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
@@ -204,7 +193,6 @@ def get_games(count):
     
     if dezenas < len(numeros_ancora):
         dezenas = len(numeros_ancora)
-
     try:
         if estrategia == 'aleatorio':
             jogos = gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
@@ -273,8 +261,44 @@ def get_stats():
     finally:
         if conn: conn.close()
 
+# --- NOVO ENDPOINT PARA A SEÇÃO DE ÚLTIMOS RESULTADOS ---
+@app.route('/get-ultimos-resultados')
+def get_ultimos_resultados():
+    loteria = request.args.get('loteria', 'megasena', type=str)
+    conn = None
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou 
+            FROM resultados_sorteados 
+            WHERE tipo_loteria = %s 
+            ORDER BY concurso DESC 
+            LIMIT 36;
+        """, (loteria,))
+        
+        resultados = []
+        for row in cur.fetchall():
+            # Formata a data para o padrão brasileiro (DD/MM/YYYY)
+            data_formatada = row[1].strftime('%d/%m/%Y') if isinstance(row[1], date) else row[1]
+            
+            resultados.append({
+                "concurso": row[0],
+                "data": data_formatada,
+                "dezenas": row[2],
+                "ganhadores": row[3],
+                "acumulou": row[4]
+            })
+            
+        cur.close()
+        return jsonify(resultados)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if conn: conn.close()
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
-    # MELHORIA: Desativar debug em produção para mais segurança
     debug_mode = os.environ.get('RENDER') is None
     app.run(host='0.0.0.0', port=port, debug=debug_mode)

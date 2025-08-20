@@ -5,12 +5,9 @@ import requests
 import psycopg2
 from dotenv import load_dotenv
 
-# --- Configuração ---
 load_dotenv()
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
-# --- ATUALIZAÇÃO: Usando a nova API do Heroku ---
-# A API espera os nomes das loterias em minúsculas e sem acentos
 LOTERIAS_API = {
     'megasena': 'https://loteriascaixa-api.herokuapp.com/api/megasena',
     'lotofacil': 'https://loteriascaixa-api.herokuapp.com/api/lotofacil',
@@ -18,11 +15,9 @@ LOTERIAS_API = {
     'diadesorte': 'https://loteriascaixa-api.herokuapp.com/api/diadesorte'
 }
 
-# --- Funções do Banco de Dados (sem alterações) ---
-
 def criar_tabela_se_nao_existir(conn):
-    """Garante que a tabela de resultados exista no banco de dados."""
     with conn.cursor() as cur:
+        # --- ALTERAÇÃO: Adicionamos as colunas 'ganhadores' e 'acumulou' ---
         cur.execute("""
             CREATE TABLE IF NOT EXISTS resultados_sorteados (
                 id SERIAL PRIMARY KEY,
@@ -30,6 +25,8 @@ def criar_tabela_se_nao_existir(conn):
                 concurso INTEGER NOT NULL,
                 data_sorteio DATE,
                 dezenas VARCHAR(255) NOT NULL,
+                ganhadores INTEGER,
+                acumulou BOOLEAN,
                 UNIQUE (tipo_loteria, concurso)
             );
         """)
@@ -37,19 +34,12 @@ def criar_tabela_se_nao_existir(conn):
     print("Tabela 'resultados_sorteados' verificada/criada com sucesso.")
 
 def get_ultimo_concurso(conn, loteria):
-    """Busca o número do último concurso registrado para uma loteria específica."""
     with conn.cursor() as cur:
-        cur.execute(
-            "SELECT MAX(concurso) FROM resultados_sorteados WHERE tipo_loteria = %s;",
-            (loteria,)
-        )
+        cur.execute("SELECT MAX(concurso) FROM resultados_sorteados WHERE tipo_loteria = %s;", (loteria,))
         resultado = cur.fetchone()[0]
         return resultado if resultado else 0
 
-# --- Função Principal de Importação ---
-
 def importar_resultados():
-    """Função principal que orquestra a busca e inserção de novos resultados."""
     conn = None
     try:
         print("Conectando ao banco de dados...")
@@ -58,17 +48,14 @@ def importar_resultados():
 
         for nome_loteria, url_base in LOTERIAS_API.items():
             print(f"\n--- Verificando Loteria: {nome_loteria.upper()} ---")
-            
             ultimo_concurso_db = get_ultimo_concurso(conn, nome_loteria)
             print(f"Último concurso no banco de dados: {ultimo_concurso_db}")
 
             try:
-                # Busca o último concurso disponível na nova API
                 url_latest = f"{url_base}/latest"
-                response = requests.get(url_latest, timeout=30) # Aumentado o timeout para Heroku
+                response = requests.get(url_latest, timeout=30)
                 response.raise_for_status()
                 dados_api = response.json()
-                # ATUALIZAÇÃO: O campo agora é 'concurso'
                 ultimo_concurso_api = dados_api.get('concurso')
             except requests.RequestException as e:
                 print(f"Erro ao acessar a API para {nome_loteria}: {e}")
@@ -91,38 +78,38 @@ def importar_resultados():
                         res_concurso.raise_for_status()
                         dados_concurso = res_concurso.json()
 
-                        # ATUALIZAÇÃO: O campo de dezenas agora é 'dezenas'
                         dezenas_lista = dados_concurso.get('dezenas')
-                        if not dezenas_lista:
-                            print(f"  - Concurso {concurso_num} sem dezenas. Pulando.")
-                            continue
+                        if not dezenas_lista: continue
                         
-                        dezenas_str = " ".join(sorted(dezenas_lista)) # A API retorna strings, não precisa formatar
-                        # ATUALIZAÇÃO: O campo de data agora é 'data'
+                        dezenas_str = " ".join(sorted(dezenas_lista))
                         data_str = dados_concurso.get('data')
                         data_formatada = f"{data_str[6:]}-{data_str[3:5]}-{data_str[:2]}"
+                        
+                        # --- ALTERAÇÃO: Captura dos novos dados ---
+                        acumulou = dados_concurso.get('acumulou', False)
+                        # Pega os ganhadores da primeira faixa de premiação
+                        ganhadores_faixa1 = 0
+                        if dados_concurso.get('premiacoes') and len(dados_concurso['premiacoes']) > 0:
+                            ganhadores_faixa1 = dados_concurso['premiacoes'][0].get('ganhadores', 0)
 
                         with conn.cursor() as cur:
+                            # --- ALTERAÇÃO: Insere os novos dados no banco ---
                             cur.execute(
                                 """
-                                INSERT INTO resultados_sorteados (tipo_loteria, concurso, data_sorteio, dezenas)
-                                VALUES (%s, %s, %s, %s) ON CONFLICT (tipo_loteria, concurso) DO NOTHING;
+                                INSERT INTO resultados_sorteados (tipo_loteria, concurso, data_sorteio, dezenas, ganhadores, acumulou)
+                                VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT (tipo_loteria, concurso) DO NOTHING;
                                 """,
-                                (nome_loteria, concurso_num, data_formatada, dezenas_str)
+                                (nome_loteria, concurso_num, data_formatada, dezenas_str, ganhadores_faixa1, acumulou)
                             )
                         novos_registros += 1
-                    except requests.RequestException as e:
-                        print(f"  - Erro ao buscar concurso {concurso_num}: {e}. Pulando.")
-                    except (KeyError, TypeError, IndexError) as e:
-                        print(f"  - Erro ao processar dados do concurso {concurso_num}: {e}. Pulando.")
+                    except Exception as e:
+                        print(f"  - Erro ao processar concurso {concurso_num}: {e}. Pulando.")
                 
                 conn.commit()
                 print(f"Sucesso! {novos_registros} novos resultados para {nome_loteria} foram importados.")
             else:
                 print("Nenhum novo resultado para importar. O banco de dados está atualizado.")
 
-    except psycopg2.Error as e:
-        print(f"Erro de banco de dados: {e}")
     except Exception as e:
         print(f"Ocorreu um erro inesperado: {e}")
     finally:
