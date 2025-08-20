@@ -12,8 +12,8 @@
         gtag('js', new Date());
 
         gtag('config', 'G-PPB7LRV5SJ');
-        
-    </script>
+        </script>
+
     <!-- ============== METADADOS E SEO ============== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -98,7 +98,7 @@
             cursor: pointer;
             transition: all .3s ease-in-out;
             box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
-            text-decoration: none; /* Para links com a classe */
+            text-decoration: none;
         }
         .botao-gerar:disabled { cursor: not-allowed; opacity: .6; }
         .partner-ad-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid var(--cor-divisoria-ouro); }
@@ -125,8 +125,23 @@
         #area-resultados { min-height: 100px; }
         .jogo { background-color: rgba(0, 0, 0, .2); padding: 1rem; margin: .7rem auto; border-radius: 12px; display: flex; justify-content: center; align-items: center; border-left: 4px solid var(--cor-dourado); flex-wrap: wrap; gap: 5px 10px; }
         .numero { font-size: 1.7rem; font-weight: 700; }
-        .spinner { border: 5px solid rgba(255, 255, 255, .2); border-top: 5px solid var(--cor-dourado); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 2rem auto; }
-        @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+        
+        /* SPINNER COM TREVO (CORRIGIDO) */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            background-image: url('images/trevodourado.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: spin 1.5s linear infinite;
+            margin: 2rem auto;
+            border: none; 
+        }
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+
         .nav-interna { padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid var(--cor-divisoria-ouro); border-bottom: 1px solid var(--cor-divisoria-ouro); display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
         .nav-interna a { color: var(--cor-dourado); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
         .nav-interna a:hover { color: var(--cor-dourado-hover); }
@@ -150,6 +165,24 @@
         #feedback-area .botao-feedback:hover { background: var(--cor-dourado); color: black; }
         #feedback-message { margin-top: 1rem; font-weight: bold; }
         .artigo-blog { margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
+        
+        .footer-section h2::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-image: url('images/trevodourado.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+        
+        #termos h2::before, #politica h2::before, #contato h2::before, #sobre h2::before {
+            content: none;
+            margin-right: 0;
+        }
+
         @media (max-width: 600px) {
             .footer-section p { text-align: left !important; }
         }
@@ -267,7 +300,7 @@
                 <div class="artigo-blog">
                     <h3>Dicas de Jogo Responsável: Como Apostar com Consciência e Manter a Diversão</h3>
                     <p>A emoção de preencher um bilhete de loteria e sonhar com os números sorteados é uma experiência compartilhada por milhões de brasileiros. É um momento de esperança e diversão. Mas como garantir que essa atividade se mantenha sempre no campo do entretenimento, sem se tornar uma fonte de estresse? A resposta está em uma prática simples, mas poderosa: o <strong>Jogo Responsável</strong>.</p>
-                    <p>Apostar com consciência não significa perder a magia do jogo, mas sim ganhar controle sobre ele. É a diferença between uma diversão saudável e um hábito arriscado. No Sorte Analisada, queremos que sua experiência seja a melhor possível, por isso, preparamos este guia com dicas práticas para você apostar de forma segura e inteligente.</p>
+                    <p>Apostar com consciência não significa perder a magia do jogo, mas sim ganhar controle sobre ele. É a diferença entre uma diversão saudável e um hábito arriscado. No Sorte Analisada, queremos que sua experiência seja a melhor possível, por isso, preparamos este guia com dicas práticas para você apostar de forma segura e inteligente.</p>
                     
                     <h4>1. O Principal Motivo: Entretenimento, Não Investimento</h4>
                     <p>A regra de ouro do Jogo Responsável é entender a natureza das loterias. Trate o dinheiro da aposta como um ingresso para um espetáculo: você paga pela experiência e pela possibilidade de uma surpresa incrível. Nunca considere a loteria como uma fonte de renda ou uma solução para problemas financeiros.</p>
@@ -333,7 +366,7 @@
                 <img src="images/placeholder-qrcode.png" alt="QR Code para doação via PIX" style="width: 180px; height: 180px; background-color: white; border: 4px solid var(--cor-dourado); border-radius: 10px; margin: 1rem auto; display: block;">
                 
                 <div id="feedback-area" style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
-                    <img src="images/trevodourado.png" alt="Trevo Dourado" style="height: 80px; margin-bottom: 1rem;">
+                    <img src="images/trevodourado.png" alt="Trevo Dourado" style="height: 60px; margin-bottom: 1rem;">
                     <h4>Sua opinião nos ajuda a melhorar! O site foi útil para você?</h4>
                     <div style="margin-top: 1rem;">
                         <button class="botao-feedback" onclick="submitFeedback('sim')">👍 Sim</button>
@@ -398,7 +431,7 @@
                 <a href="https://www.tiktok.com/@sorte_analisada?_t=ZM-8yxvja7YoS8&_r=1" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
             </div>
             <div class="copyright">
-              <!-- © --> ™ 2025 Sorte Analisada. Todos os direitos reservados.
+                ™ 2025 Sorte Analisada. Todos os direitos reservados.
             </div>
         </footer>
     </div>
@@ -554,7 +587,7 @@
             const botao = document.querySelector('#estatisticas .botao-gerar');
             
             setBotoesEstado(true);
-            botao.innerHTML = '<div class="spinner" style="width:20px; height:20px; border-width:3px; margin:0 auto;"></div>';
+            botao.innerHTML = '<div class="spinner"></div>';
             
             try {
                 const response = await fetch(`/get-stats?loteria=${loteriaAtual}`);
