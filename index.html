@@ -208,6 +208,18 @@
         .resultado-status { font-size: 0.95rem; font-weight: 500; }
         .status-acumulou { color: #FFB74D; } /* Laranja */
         .status-ganhador { color: #81C784; } /* Verde */
+        
+        /* --- ALTERAÇÃO: Novo estilo para o Mês da Sorte --- */
+        .resultado-mes {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--cor-texto);
+            margin-top: -0.5rem; /* Ajuste para ficar mais próximo das dezenas */
+            margin-bottom: 0.8rem;
+        }
+        .resultado-mes strong {
+            color: var(--cor-dourado);
+        }
 
         @media (max-width: 600px) {
             .footer-section p { text-align: left !important; }
@@ -276,7 +288,6 @@
             <section id="area-resultados" aria-live="polite" aria-atomic="true"></section>
         </main>
         
-        <!-- ALTERAÇÃO: Adicionado link para a nova seção -->
         <nav class="nav-interna">
             <a href="#sobre">Sobre</a>
             <a href="#sobre-filtros">Métodos</a>
@@ -353,11 +364,12 @@
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
             
-            <!-- NOVA SEÇÃO DE ÚLTIMOS RESULTADOS -->
             <section id="ultimos-resultados" class="footer-section">
                 <h2>Últimos Resultados</h2>
                 <p>Confira os últimos 36 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
-                <div id="lista-ultimos-resultados" style="margin-top: 2rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
+                <!-- ALTERAÇÃO: Adicionado H3 para o nome da loteria -->
+                <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
+                <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
                     <!-- Os resultados serão inseridos aqui pelo JavaScript -->
                     <div class="spinner"></div>
                 </div>
@@ -481,6 +493,10 @@
             const displayLoteria = document.getElementById('loteria-selecionada');
             displayLoteria.textContent = config.nome;
             displayLoteria.style.opacity = 1;
+
+            // --- ALTERAÇÃO: Atualiza o nome da loteria na seção de resultados ---
+            document.getElementById('nome-loteria-resultados').textContent = config.nome;
+            
             document.getElementById('botao-monte-carlo').textContent = `Sugestão de ${config.num_bolas} dezenas`;
             atualizarOpcoesDezenas();
             document.getElementById('area-resultados').innerHTML = '';
@@ -493,7 +509,6 @@
                 botaoStats.innerHTML = 'Estatísticas';
             }
             
-            // --- ALTERAÇÃO: Chama a função para carregar os últimos resultados ---
             carregarUltimosResultados(novaLoteria);
         }
 
@@ -597,7 +612,6 @@
             }
         }
 
-        // --- ATUALIZAÇÃO: Melhoria no tratamento de erro "Failed to fetch" ---
         async function gerarJogos(quantidade) {
             if (isRequestInProgress) return;
             const areaResultados = document.getElementById('area-resultados');
@@ -746,10 +760,10 @@
             }
         }
 
-        // --- NOVA FUNÇÃO PARA CARREGAR OS ÚLTIMOS RESULTADOS ---
+        // --- FUNÇÃO DE ÚLTIMOS RESULTADOS MODIFICADA ---
         async function carregarUltimosResultados(loteria) {
             const container = document.getElementById('lista-ultimos-resultados');
-            container.innerHTML = '<div class="spinner"></div>'; // Mostra o spinner enquanto carrega
+            container.innerHTML = '<div class="spinner"></div>';
             
             try {
                 const response = await fetch(`/get-ultimos-resultados?loteria=${loteria}`);
@@ -767,6 +781,9 @@
                     return;
                 }
 
+                // --- ALTERAÇÃO: Ordena os concursos do menor para o maior ---
+                resultados.sort((a, b) => a.concurso - b.concurso);
+
                 let html = '';
                 resultados.forEach(res => {
                     let statusHtml = '';
@@ -777,6 +794,13 @@
                         statusHtml = `<span class="status-ganhador">${res.ganhadores} ${ganhadorLabel}</span>`;
                     }
 
+                    // --- ALTERAÇÃO: Adiciona o Mês da Sorte para Dia de Sorte ---
+                    // (Assumindo que o backend retorne um campo `res.mes_sorte`)
+                    let mesDaSorteHtml = '';
+                    if (loteria === 'diadesorte' && res.mes_sorte) {
+                         mesDaSorteHtml = `<div class="resultado-mes">Mês da Sorte: <strong>${res.mes_sorte}</strong></div>`;
+                    }
+
                     html += `
                         <div class="resultado-item">
                             <div class="resultado-header">
@@ -784,12 +808,16 @@
                                 <span class="resultado-data">${res.data}</span>
                             </div>
                             <div class="resultado-dezenas">${res.dezenas}</div>
+                            ${mesDaSorteHtml}
                             <div class="resultado-status">${statusHtml}</div>
                         </div>
                     `;
                 });
 
                 container.innerHTML = html;
+
+                // --- ALTERAÇÃO: Rola para o final da lista após o carregamento ---
+                container.scrollTop = container.scrollHeight;
 
             } catch (error) {
                 console.error('Erro ao carregar últimos resultados:', error);
