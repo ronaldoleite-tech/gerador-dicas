@@ -285,12 +285,11 @@
         
         <nav class="nav-interna">
             <a href="#sobre">Sobre</a>
-            <a href="#sobre-filtros">Métodos</a>
-            <a href="#estatisticas">Estatísticas</a>
+            <a href="#sobre-filtros">Métodos</a> 
             <a href="#ultimos-resultados">Últimos Resultados</a>
-            <a href="#informativo">Informativo</a>
-            <a href="#blog">Curiosidades</a>
             <a href="#jogorresponsavel">Jogo Responsável</a>
+            <a href="#blog">Curiosidades</a>
+            <a href="#estatisticas">Estatísticas</a>
             <a href="#parceiros">Parceiros</a>
             <a href="#contato">Contato</a>
             <a href="#termos">Termos</a>
@@ -321,22 +320,6 @@
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
             
-            <section id="estatisticas" class="footer-section">
-               <h2>Estatísticas dos Sorteios</h2>
-               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
-               <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
-                <div class="grupo-botoes" style="margin-bottom: 2rem;">
-                    <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
-                </div>
-                <div id="area-estatisticas" style="display: none;">
-                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3><canvas id="grafico-mais-sorteados"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3><canvas id="grafico-menos-sorteados"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
-                </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-            
             <section id="ultimos-resultados" class="footer-section">
                 <h2>Últimos Resultados</h2>
                 <p>Confira os últimos 36 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
@@ -346,19 +329,27 @@
                 </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
-            
-            <section id="informativo" class="footer-section">
-                <h2>Informativo</h2>
-                <div style="text-align:center; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
-                    <img src="images/informativo.jpg" alt="Informativo da Mega-Sena" style="max-width: 100%; border-radius: 8px; border: 2px solid var(--cor-dourado);">
-                    <p style="font-size: 1.2rem; margin: 1.5rem 0; text-align: center;">* Este site é independente e não possui vínculo com a Caixa Econômica Federal®. As informações sobre sorteios são de caráter informativo.<br><br>Gere seus palpites aqui no Sorte Analisada!</p>
-                    <a href="#gerador" class="botao-gerar">Gerar agora!</a>
-                </div>
+
+            <section id="jogorresponsavel" class="footer-section">
+                <h2>Nosso Compromisso com o Jogo Responsável</h2>
+                <p>Acreditamos que apostar deve ser uma fonte de diversão, não uma necessidade. Encare como um lazer, defina limites claros de gastos e entenda que as probabilidades são remotas. A maior vitória é jogar com consciência e controle. Se o jogo deixar de ser divertido, procure ajuda.</p>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
             <section id="blog" class="footer-section">
                 <h2>Curiosidades</h2>
+
+                  <div class="artigo-blog">
+                    <h3>Lotofácil da Independência 2025, Acumulada em mais de R$ 220 milhões! </h3>
+                    <p><strong>A Lotofácil da Independência 2025</strong> promete agitar o Brasil com o maior prêmio da história: nada menos que <strong>R$ 220 milhões</strong>! E o melhor: esse concurso especial não <strong>acumula</strong>. Se ninguém fizer 15 pontos, a bolada vai descendo para quem acertar 14, 13, 12 ou até 11 números.  </p>
+                    <br>
+                    <p>No ano passado, o prêmio foi de R$ 202,5 milhões e 86 sortudos dividiram a fortuna, cada um levando R$ 2,35 milhões. Isso mostra que, mesmo com tanta gente apostando, sempre há espaço para quem joga com estratégia e um pouquinho de sorte.  </p>
+                    <br>
+                    <p>Para entrar na disputa, basta escolher de 15 a 20 dezenas, pagando a partir de R$ 3,50. E se quiser aumentar as chances sem pesar no bolso, participe de um<strong>Bolão</strong>, onde o valor é dividido entre os participantes. Assim dá pra jogar mais números e torcer em grupo! </p>
+                    <br>
+                    <p>Aqui no site, você encontra ferramentas que usam estatísticas para montar palpites equilibrados. Nada de apostar no chute: é sorte com estratégia! Quem sabe, desta vez, é você que sai comemorando o feriado milionário. 💰 </p>
+                    </div>
+
                   <div class="artigo-blog">
                     <h3>Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena</h3>
                     <p>Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada no concurso 2.720 da Mega-Sena, para o espanto de fãs em todo o Brasil.</p>
@@ -393,16 +384,25 @@
                         <li>Em <strong>Até que a Sorte nos Separe</strong>, Tino (Leandro Hassum) ganha R$ 100 milhões e nos ensina, com muito humor, como não administrar uma fortuna.</li>
                         <li>Na novela <strong>Fina Estampa</strong>, a persistente "Pereirão" prova que a teimosia compensa, apostando sempre nos mesmos números até faturar R$ 50 milhões.</li>
                         <li>O caso mais famoso é o de <strong>'Lost'</strong>. Hurley ganha com a sequência 4-8-15-16-23-42, que se tornou tão icônica que fãs apostaram nela na vida real e acabaram sendo premiados de verdade!</li>
+                        <li>Outros filmes que aparecem números do bilhete de loteria: O Pagamento (Paycheck, 2003), estrelado por Ben Affleck. No final deste filme de ficção científica, a personagem de Affleck recebe um bilhete de loteria de um futuro que foi deixado para ele. E o filme Atraídos Pelo Destino (título original: It Could Happen to You), de 1994. Onde Nicolas Cage ganha na loteria, Na trama, um policial chamado Charlie Lang (Cage) promete metade de um possível prémio da lotaria a uma garçonete (Bridget Fonda) como gorjeta, e ele ganha o dinheiro. Essas histórias nos lembram do poder de um simples bilhete. Gostou das dicas de filmes? Então, agora e só preparar a pipoca!</li>
                     </ul>
-                    <p>Essas histórias nos lembram do poder de um simples bilhete. E você, o que faria como milionário?</p>
                 </div>
-              
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
-            <section id="jogorresponsavel" class="footer-section">
-                <h2>Nosso Compromisso com o Jogo Responsável</h2>
-                <p>Acreditamos que apostar deve ser uma fonte de diversão, não uma necessidade. Encare como um lazer, defina limites claros de gastos e entenda que as probabilidades são remotas. A maior vitória é jogar com consciência e controle. Se o jogo deixar de ser divertido, procure ajuda.</p>
+            <section id="estatisticas" class="footer-section">
+               <h2>Estatísticas dos Sorteios</h2>
+               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
+               <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
+                <div class="grupo-botoes" style="margin-bottom: 2rem;">
+                    <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
+                </div>
+                <div id="area-estatisticas" style="display: none;">
+                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3><canvas id="grafico-mais-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3><canvas id="grafico-menos-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
+                </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
@@ -461,7 +461,7 @@
             
             <section id="termos" class="footer-section">
                 <h2>Termo de Uso</h2>
-                <p>O site <strong>Sorte Analisada</strong> é uma ferramenta de entretenimento destinada a maiores de 18 anos. Geramos sugestões de números para jogos de loteria com base em algoritmos e dados históricos, mas <strong>não oferecemos nenhuma garantia de prêmios ou acertos</strong>. Os resultados das loterias são imprevisíveis e dependem exclusivamente da sorte. Este site não possui qualquer vínculo com a Caixa Econômica Federal ou qualquer outra entidade lotérica. Jogue com responsabilidade e por sua conta e risco.</p>
+                <p>O site <strong>Sorte Analisada</strong> é uma ferramenta de entretenimento destinada a maiores de 18 anos. Geramos sugestões de números para jogos de loteria com base em algoritmos e dados históricos, mas <strong>não oferecemos nenhuma garantia de prêmios ou acertos</strong>. Os resultados das loterias são imprevisíveis e dependem exclusivamente da sorte. Este site não possui qualquer vínculo com a Caixa Econômica Federal® ou qualquer outra entidade lotérica. Jogue com responsabilidade e por sua conta e risco.</p>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
@@ -629,7 +629,7 @@
 
             const instrucao = document.createElement('p');
             instrucao.className = 'instrucao-aposta';
-            instrucao.textContent = 'Palpites gerados com sucesso! Lembre-se: para concorrer, você precisa registrar estes números em uma aposta oficial. Faça isso em qualquer lotérica ou no site da Caixa. Boa sorte!';
+            instrucao.textContent = 'Palpites gerados com sucesso! Lembre-se: para concorrer, você precisa registrar estes números em uma aposta oficial. Faça isso em qualquer lotérica ou no site de apostas da Caixa Economica Federal®. Boa sorte!';
             areaResultados.appendChild(instrucao);
         }
 
