@@ -1,4 +1,3 @@
-# importador.py
 # -*- coding: utf-8 -*-
 import os
 import requests
@@ -17,7 +16,7 @@ LOTERIAS_API = {
 
 def criar_tabela_se_nao_existir(conn):
     with conn.cursor() as cur:
-        # --- ALTERAÇÃO: Adicionamos as colunas 'ganhadores' e 'acumulou' ---
+        # --- ALTERAÇÃO: Adicionamos a coluna 'mes_sorte' que estava faltando ---
         cur.execute("""
             CREATE TABLE IF NOT EXISTS resultados_sorteados (
                 id SERIAL PRIMARY KEY,
@@ -27,6 +26,7 @@ def criar_tabela_se_nao_existir(conn):
                 dezenas VARCHAR(255) NOT NULL,
                 ganhadores INTEGER,
                 acumulou BOOLEAN,
+                mes_sorte VARCHAR(50), -- <-- COLUNA ADICIONADA
                 UNIQUE (tipo_loteria, concurso)
             );
         """)
@@ -85,21 +85,24 @@ def importar_resultados():
                         data_str = dados_concurso.get('data')
                         data_formatada = f"{data_str[6:]}-{data_str[3:5]}-{data_str[:2]}"
                         
-                        # --- ALTERAÇÃO: Captura dos novos dados ---
                         acumulou = dados_concurso.get('acumulou', False)
-                        # Pega os ganhadores da primeira faixa de premiação
                         ganhadores_faixa1 = 0
                         if dados_concurso.get('premiacoes') and len(dados_concurso['premiacoes']) > 0:
                             ganhadores_faixa1 = dados_concurso['premiacoes'][0].get('ganhadores', 0)
+                        
+                        # --- ALTERAÇÃO: Captura do Mês da Sorte (apenas para Dia de Sorte) ---
+                        mes_sorte = None
+                        if nome_loteria == 'diadesorte':
+                            mes_sorte = dados_concurso.get('mesSorte')
 
                         with conn.cursor() as cur:
-                            # --- ALTERAÇÃO: Insere os novos dados no banco ---
+                            # --- ALTERAÇÃO: Insere os novos dados, incluindo o mes_sorte ---
                             cur.execute(
                                 """
-                                INSERT INTO resultados_sorteados (tipo_loteria, concurso, data_sorteio, dezenas, ganhadores, acumulou)
-                                VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT (tipo_loteria, concurso) DO NOTHING;
+                                INSERT INTO resultados_sorteados (tipo_loteria, concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte)
+                                VALUES (%s, %s, %s, %s, %s, %s, %s) ON CONFLICT (tipo_loteria, concurso) DO NOTHING;
                                 """,
-                                (nome_loteria, concurso_num, data_formatada, dezenas_str, ganhadores_faixa1, acumulou)
+                                (nome_loteria, concurso_num, data_formatada, dezenas_str, ganhadores_faixa1, acumulou, mes_sorte)
                             )
                         novos_registros += 1
                     except Exception as e:

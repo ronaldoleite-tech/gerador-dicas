@@ -7,7 +7,7 @@ from collections import Counter
 from dotenv import load_dotenv
 import math
 import re
-from datetime import date # IMPORTANTE: Adicionado para formatar a data
+from datetime import date
 
 # --- Inicialização e Configuração ---
 load_dotenv()
@@ -100,12 +100,14 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
         config = LOTTERY_CONFIG[loteria]
         dezenas_a_gerar = dezenas - len(numeros_ancora)
         if dezenas_a_gerar < 0: return []
+        
         conn = get_db_connection()
         cur = conn.cursor()
         
         query = "SELECT dezenas FROM resultados_sorteados WHERE tipo_loteria = %s"
         params = [loteria]
-        if estrategia in ['quentes', 'frias']:
+        # --- ALTERAÇÃO: Adicionamos 'mistas' à lista de estratégias que usam os concursos recentes ---
+        if estrategia in ['quentes', 'frias', 'mistas']:
             query += " ORDER BY concurso DESC LIMIT %s"
             params.append(CONCURSOS_RECENTES)
         
@@ -118,24 +120,77 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
         frequencia = Counter(todos_os_numeros_sorteados)
         universo_possivel = [n for n in range(config['min_num'], config['max_num'] + 1) if n not in numeros_ancora]
         
+        jogos_gerados = set()
+        
+        # --- LÓGICA EXISTENTE PARA 'FRIAS' E 'QUENTES' (GERAL) ---
         if estrategia == 'frias':
             numeros_possiveis = [n for n in universo_possivel if n not in frequencia]
             if len(numeros_possiveis) < dezenas_a_gerar:
                  numeros_possiveis.extend([item[0] for item in frequencia.most_common()[:-len(numeros_possiveis)-1:-1]])
             pesos = None
-        else:
+        
+        # --- NOVA LÓGICA PARA 'MISTAS' ---
+        elif estrategia == 'mistas':
+            # 1. Definir o grupo de números quentes (os que saíram)
+            numeros_quentes = list(frequencia.keys())
+            pesos_quentes = list(frequencia.values())
+            
+            # 2. Definir o grupo de números frios (os que não saíram + os menos frequentes)
+            numeros_frios = [n for n in universo_possivel if n not in frequencia]
+            if len(numeros_frios) < dezenas_a_gerar:
+                numeros_frios.extend([item[0] for item in frequencia.most_common()[:-len(numeros_frios)-1:-1]])
+            
+            if not numeros_quentes or not numeros_frios:
+                return gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
+
+            # 3. Gerar os jogos
+            while len(jogos_gerados) < count:
+                numeros_novos = set()
+                if dezenas_a_gerar > 0:
+                    # Dividir a quantidade a ser gerada entre quentes e frios
+                    num_a_gerar_quentes = math.ceil(dezenas_a_gerar / 2)
+                    num_a_gerar_frios = math.floor(dezenas_a_gerar / 2)
+                    
+                    # Garantir que não vamos pedir mais números do que os disponíveis nos grupos
+                    num_a_gerar_quentes = min(num_a_gerar_quentes, len(numeros_quentes))
+                    num_a_gerar_frios = min(num_a_gerar_frios, len(numeros_frios))
+
+                    # Selecionar dezenas quentes com base na frequência (pesos)
+                    dezenas_quentes_selecionadas = set()
+                    while len(dezenas_quentes_selecionadas) < num_a_gerar_quentes:
+                        dezena = random.choices(numeros_quentes, weights=pesos_quentes, k=1)[0]
+                        dezenas_quentes_selecionadas.add(dezena)
+
+                    # Selecionar dezenas frias de forma aleatória (sem pesos)
+                    dezenas_frias_selecionadas = set(random.sample(numeros_frios, num_a_gerar_frios))
+                    
+                    numeros_novos = dezenas_quentes_selecionadas.union(dezenas_frias_selecionadas)
+
+                    # Caso a união não dê o total (por sobreposição), completar com aleatórios
+                    while len(numeros_novos) < dezenas_a_gerar:
+                        universo_completo = list(set(numeros_quentes + numeros_frios))
+                        numeros_novos.add(random.choice(universo_completo))
+
+                jogo_completo = frozenset(numeros_novos.union(set(numeros_ancora)))
+                if len(jogo_completo) == dezenas:
+                    jogos_gerados.add(jogo_completo)
+
+            return [" ".join(f"{num:02}" for num in sorted(list(jogo))) for jogo in jogos_gerados]
+
+        else: # Estratégia 'geral' ou 'quentes'
             numeros_possiveis = list(frequencia.keys())
             pesos = list(frequencia.values())
+
         if not numeros_possiveis:
              return gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
-        jogos_gerados = set()
+             
         while len(jogos_gerados) < count:
             if dezenas_a_gerar > 0:
                 numeros_novos = set()
-                if pesos is None:
+                if pesos is None: # Lógica para 'frias'
                     k = min(dezenas_a_gerar, len(numeros_possiveis))
                     numeros_novos = set(random.sample(numeros_possiveis, k))
-                else:
+                else: # Lógica para 'geral' e 'quentes'
                     while len(numeros_novos) < dezenas_a_gerar:
                         numero_sorteado = random.choices(numeros_possiveis, weights=pesos, k=1)[0]
                         numeros_novos.add(numero_sorteado)
