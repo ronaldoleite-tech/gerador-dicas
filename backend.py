@@ -1,4 +1,3 @@
-# backend.py
 # -*- coding: utf-8 -*-
 import psycopg2
 import os
@@ -44,7 +43,7 @@ def is_prime(n):
     return True
 
 def validar_e_sanitizar_ancora(ancora_str, loteria):
-    if not ancora_str or not ancora_str.strip().isdigit():
+    if not ancora_str or not re.match(r'^\d+$', ancora_str.strip()):
         return []
     config = LOTTERY_CONFIG[loteria]
     try:
@@ -261,7 +260,6 @@ def get_stats():
     finally:
         if conn: conn.close()
 
-# --- NOVO ENDPOINT PARA A SEÇÃO DE ÚLTIMOS RESULTADOS ---
 @app.route('/get-ultimos-resultados')
 def get_ultimos_resultados():
     loteria = request.args.get('loteria', 'megasena', type=str)
@@ -270,7 +268,7 @@ def get_ultimos_resultados():
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou 
+            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte 
             FROM resultados_sorteados 
             WHERE tipo_loteria = %s 
             ORDER BY concurso DESC 
@@ -279,7 +277,6 @@ def get_ultimos_resultados():
         
         resultados = []
         for row in cur.fetchall():
-            # Formata a data para o padrão brasileiro (DD/MM/YYYY)
             data_formatada = row[1].strftime('%d/%m/%Y') if isinstance(row[1], date) else row[1]
             
             resultados.append({
@@ -287,7 +284,8 @@ def get_ultimos_resultados():
                 "data": data_formatada,
                 "dezenas": row[2],
                 "ganhadores": row[3],
-                "acumulou": row[4]
+                "acumulou": row[4],
+                "mes_sorte": row[5]
             })
             
         cur.close()
