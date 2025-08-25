@@ -1,515 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    
-    <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
-
-    <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-PPB7LRV5SJ');
-        </script>
-
-    <!-- ============== METADADOS E SEO ============== -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gere palpites inteligentes para a Mega-Sena, Quina, Lotofácil e Dia de Sorte com base em estatísticas e análises. Use nossos filtros ou a simulação Monte Carlo para aumentar suas chances!">
-    <title>Sorte Analisada - Gerador de Palpites para Loterias</title>
-    <link rel="icon" href="images/logotipo.png" type="image/png">
-    
-    <!-- ============== FONTES E SCRIPTS EXTERNOS ============== -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Biblioteca para os gráficos de estatísticas -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!-- Biblioteca para os ícones (WhatsApp, redes sociais) -->
-
-    <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
-    <style>
-        :root {
-            --cor-fundo: linear-gradient(180deg, #020f2c, #0d47a1, #1976d2);
-            --cor-caixa: rgba(255, 255, 255, 0.08);
-            --cor-texto: #E0E0E0;
-            --cor-dourado: #FFD700;
-            --cor-dourado-hover: #FFAA00;
-            --cor-loteria-display: #81d4fa;
-            --sombra-dourada: 0 0 12px rgba(255, 215, 0, 0.4);
-            --sombra-caixa: 0 8px 25px rgba(0, 0, 0, 0.5);
-            --cor-divisoria-ouro: rgba(255, 215, 0, 0.3);
-            --cor-whatsapp: #25D366;
-            --cor-instagram: #E4405F;
-            --cor-tiktok: #00f2ea;
-            --cor-sucesso: #4CAF50;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--cor-fundo);
-            color: var(--cor-texto);
-            margin: 0;
-            padding: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-        .container {
-            background: var(--cor-caixa);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: var(--sombra-caixa);
-            padding: 2rem;
-            max-width: 800px;
-            width: 95%;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        h1, h2, h3, h4 {
-             font-family: 'Orbitron', sans-serif;
-        }
-        h1 {
-            font-size: 2.2rem;
-            color: var(--cor-dourado);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: .5rem;
-        }
-        .loteria-display {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--cor-loteria-display);
-            margin-top: 0.5rem;
-            height: 1.8rem;
-            transition: opacity .3s ease-in-out;
-            opacity: 0;
-        }
-        .botao-gerar {
-            background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover));
-            color: #000;
-            border: none;
-            padding: .8rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all .3s ease-in-out;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
-            text-decoration: none;
-        }
-        .botao-gerar:disabled { cursor: not-allowed; opacity: .6; }
-        .partner-ad-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid var(--cor-divisoria-ouro); }
-        .partner-title { font-size: 1.3rem; font-weight: 700; color: var(--cor-dourado); text-transform: uppercase; margin-bottom: 1rem; line-height: 1.4; }
-        .partner-logo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-        .partner-text { font-size: 1.2rem; font-weight: 500; color: #FFF; line-height: 1.6; }
-        .partner-cta-button { display: inline-flex; align-items: center; gap: 10px; background: var(--cor-whatsapp); color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: transform .2s, box-shadow .2s; margin-top: 0.5rem; }
-        .partner-cta-button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(37, 211, 102, 0.5); }
-        .partner-social-link { display: inline-flex; align-items: center; gap: 10px; color: var(--cor-texto); text-decoration: none; margin-top: 1rem; font-weight: 500; transition: color .2s; }
-        .partner-social-link i { font-size: 1.5rem; color: var(--cor-instagram); }
-        .partner-social-link:hover { color: var(--cor-instagram); }
-        .site-footer { margin-top: 2rem; padding: 1.5rem 1rem; border-top: 1px solid var(--cor-divisoria-ouro); }
-        .footer-social-title { font-size: 1rem; font-weight: 700; color: var(--cor-texto); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 1px; }
-        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 1.5rem; }
-        .footer-links a { color: var(--cor-texto); text-decoration: none; font-size: 2rem; transition: color .2s, transform .2s; }
-        .footer-links a:hover { color: var(--cor-dourado); transform: scale(1.1); }
-        .footer-links .fa-instagram:hover { color: var(--cor-instagram); }
-        .footer-links .fa-tiktok:hover { color: var(--cor-tiktok); }
-        .copyright { font-size: .8rem; color: rgba(255, 255, 255, .5); margin-top: 1rem; }
-        .subtitulo { font-size: 1.6rem; font-weight: 400; margin-bottom: 0; color: #bbdefb; }
-        .imagem-ouro { background-color: #FFF8E1; padding: 8px; border-radius: 10px; width: 150px; height: auto; border: 3px solid var(--cor-dourado); box-shadow: var(--sombra-dourada); transition: transform .3s ease; }
-        .imagem-ouro:hover { transform: scale(1.05); }
-        .botao-gerar:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255, 215, 0, .4); }
-        #area-resultados { min-height: 100px; }
-        .jogo { 
-            background-color: rgba(0, 0, 0, .2); padding: 1rem; margin: .7rem auto; 
-            border-radius: 12px; display: flex; justify-content: center; 
-            align-items: center; border-left: 4px solid var(--cor-dourado); 
-            flex-wrap: wrap; gap: 5px 10px; 
-        }
-        .numeros-container { display: flex; flex-wrap: wrap; gap: 5px 10px; }
-        .numero { font-size: 1.7rem; font-weight: 700; }
-        .botao-copiar {
-            background: none; border: none; color: var(--cor-texto); 
-            cursor: pointer; font-size: 1.2rem; margin-left: 15px;
-            transition: color 0.2s, transform 0.2s;
-        }
-        .botao-copiar:hover { color: var(--cor-dourado); transform: scale(1.1); }
-        .botao-copiar .fa-check { color: var(--cor-sucesso); }
-        .spinner {
-            width: 50px; height: 50px; background-image: url('images/trevodourado.png');
-            background-size: contain; background-repeat: no-repeat;
-            animation: spin 1.5s linear infinite; margin: 2rem auto; border: none; 
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .nav-interna { padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid var(--cor-divisoria-ouro); border-bottom: 1px solid var(--cor-divisoria-ouro); display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
-        .nav-interna a { color: var(--cor-dourado); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
-        .nav-interna a:hover { color: var(--cor-dourado-hover); }
-        .footer-content { margin-top: 2.5rem; padding: 1px 2rem 1rem 2rem; background: rgba(0, 0, 0, 0.15); border-radius: 12px; border-top: 1px solid var(--cor-divisoria-ouro); }
-        .footer-section { padding: 2rem 0; border-bottom: 1px solid var(--cor-divisoria-ouro); }
-        .footer-section:last-of-type { border-bottom: none; }
-        .footer-section h2 { color: var(--cor-dourado); font-size: 1.5rem; margin-bottom: 1rem; }
-        .footer-section p { font-size: .95rem; line-height: 1.7; text-align: justify; }
-        .footer-section h3 { color: #E0E0E0; margin-top: 1.5rem; margin-bottom: .5rem; text-align: left; }
-        .secao-controles { display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin: 2.5rem 0; }
-        .controle-item { display: flex; align-items: center; gap: 8px; }
-        .controle-item img { height: 24px; vertical-align: middle; }
-        .seletor-custom { background-color: rgba(0, 0, 0, .3); color: var(--cor-dourado); padding: 8px 12px; border: 1px solid var(--cor-dourado); border-radius: 8px; font-size: 1rem; cursor: pointer; }
-        .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
-        .voltar-topo:hover { color: var(--cor-dourado-hover); }
-        #contato a { word-break: break-all; }
-        #feedback-area .botao-feedback { background: none; border: 2px solid var(--cor-dourado); color: var(--cor-dourado); padding: 8px 16px; margin: 0 5px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
-        #feedback-area .botao-feedback:hover { background: var(--cor-dourado); color: black; }
-        #feedback-message { margin-top: 1rem; font-weight: bold; }
-        .artigo-blog { margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
-        .footer-section h2::before {
-            content: ''; display: inline-block; width: 24px; height: 24px;
-            background-image: url('images/trevodourado.png'); background-size: contain;
-            background-repeat: no-repeat; margin-right: 12px; vertical-align: middle;
-        }
-        #termos h2::before, #politica h2::before, #contato h2::before, #sobre h2::before {
-            content: none; margin-right: 0;
-        }
-        .resultado-item {
-            background: rgba(0,0,0,0.25);
-            border-left: 4px solid var(--cor-loteria-display);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            text-align: left;
-        }
-        .resultado-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.8rem;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .resultado-concurso { font-size: 1.1rem; font-weight: bold; color: white; }
-        .resultado-data { font-size: 0.9rem; color: var(--cor-texto); }
-        .resultado-dezenas {
-            font-size: 1.4rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 0.8rem;
-            color: var(--cor-dourado);
-        }
-        .resultado-status { font-size: 0.95rem; font-weight: 500; }
-        .status-acumulou { color: #FFB74D; }
-        .status-ganhador { color: #81C784; }
-        .resultado-mes {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--cor-texto);
-            margin-top: -0.5rem;
-            margin-bottom: 0.8rem;
-        }
-        .resultado-mes strong {
-            color: var(--cor-dourado);
-        }
-        .instrucao-aposta {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #bbdefb;
-            border-left: 3px solid var(--cor-loteria-display);
-        }
-
-        @media (max-width: 600px) {
-            .footer-section p { text-align: left !important; }
-            #informativo .botao-gerar { padding: .8rem 1rem; font-size: 0.9rem; }
-        }
-    </style>
-</head>
-<body onload="mudarLoteria('megasena')">
-
-    <div class="container">
-
-        <header id="gerador">
-            <img src="images/logotipo.png" alt="Logotipo Sorte Analisada" class="imagem-ouro" loading="lazy">
-            <h1>Sorte Analisada</h1>
-            <p class="subtitulo">Acredite na sua sorte!</p>
-            <p id="loteria-selecionada" class="loteria-display"></p>
-        </header>
-
-        <main>
-            <section class="secao-controles">
-                <div class="controle-item">
-                    <label for="loteria-select">Loteria:</label>
-                    <select id="loteria-select" class="seletor-custom" onchange="mudarLoteria(this.value)">
-                        <option value="megasena">Mega-Sena</option>
-                        <option value="quina">Quina</option>
-                        <option value="lotofacil">Lotofácil</option>
-                        <option value="diadesorte">Dia de Sorte</option>
-                    </select>
-                </div>
-                <div class="controle-item">
-                    <label for="dezenas-select">Dezenas:</label>
-                    <select id="dezenas-select" class="seletor-custom"></select>
-                </div>
-                <div class="controle-item">
-                    <label for="quantidade-select">Jogos:</label>
-                    <select id="quantidade-select" class="seletor-custom"></select>
-                </div>
-                <div class="controle-item">
-                    <label for="numeros-ancora">Nº da sorte</label>
-                    <img src="images/trevodourado.png" alt="Trevo da Sorte">
-                    <input type="text" id="numeros-ancora" class="seletor-custom" placeholder="Ex: 7" 
-                           style="width: 80px;" maxlength="2" pattern="\d*">
-                </div>
-                <div class="controle-item">
-                    <label for="estrategia-select">Estratégia:</label>
-                    <select id="estrategia-select" class="seletor-custom" onchange="handleEstrategiaChange()">
-                        <option value="geral">Frequência Geral</option>
-                        <option value="quentes">Dezenas Quentes</option>
-                        <option value="mistas">Dezenas Mistas</option>
-                        <option value="frias">Dezenas Frias</option>
-                        <option value="aleatorio">Aleatório (Surpresinha)</option>
-                        <option value="montecarlo">Simulação de Monte Carlo</option>
-                    </select>
-                </div>
-            </section>
-            
-            <button id="botao-gerar-principal" class="botao-gerar" onclick="gerarPalpites()" style="padding: 1rem 2rem; font-size: 1.1rem;">
-                Gerar Palpites
-            </button>
-
-            <section id="area-resultados" aria-live="polite" aria-atomic="true" style="margin-top:1.5rem;"></section>
-        </main>
-        
-        <nav class="nav-interna">
-            <a href="#sobre">Sobre</a>
-            <a href="#sobre-filtros">Métodos</a> 
-            <a href="#ultimos-resultados">Últimos Resultados</a>
-            <a href="#jogorresponsavel">Jogo Responsável</a>
-            <a href="#blog">Curiosidades</a>
-            <a href="#estatisticas">Estatísticas</a>
-            <a href="#parceiros">Parceiros</a>
-            <a href="#contato">Contato</a>
-            <a href="#termos">Termos</a>
-            <a href="#politica">Privacidade</a> 
-        </nav>
-
-        <div class="footer-content">
-            <section id="sobre" class="footer-section">
-                <h2>Nossa Missão é Analisar a Sorte</h2>
-                <p>O Sorte Analisada é seu parceiro inteligente para criar palpites de loteria. Nascemos da paixão por números para oferecer uma ferramenta que vai além da "surpresinha", usando estatísticas e algoritmos para gerar sugestões com lógica. Lembre-se: somos uma plataforma de entretenimento. A sorte é o fator principal, e o jogo deve ser sempre responsável.</p>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-            
-            <section id="sobre-filtros" class="footer-section">
-                 <h2>Entenda Nossos Métodos</h2>
-                <h3>Com a Estratégia: Simulação de Monte Carlo</h3>
-                <p>Imagine realizar milhares de sorteios em segundos para ver quais números se destacam. É isso que a Simulação de Monte Carlo faz. Usando processamento computacional, ela analisa probabilidades em larga escala para gerar um palpite único e sofisticado, ideal para quem busca uma aposta diferenciada e com análise profunda.</p>
-                <h3>Com a Estratégia: Frequência Geral</h3>
-                <p>Nosso sistema analisa todo o histórico de resultados da loteria selecionada. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, aumentando a probabilidade de serem escolhidos para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm uma tendência histórica a aparecer.</p>
-                <h3>Com a Estratégia: Dezenas Quentes, Mistas e Frias</h3>
-                <p>Esta estratégia foca apenas nos resultados mais recentes (últimos 100 concursos) para apelar a diferentes perfis de apostador. Você pode escolher entre:<br>
-                <strong>&bull; Dezenas "Quentes":</strong> O sistema prioriza os números que estão saindo com alta frequência recentemente. A ideia é "aproveitar a maré" e apostar no que está em alta.<br>
-                <strong>&bull; Dezenas "Mistas":</strong> O equilíbrio perfeito. O sistema seleciona metade das dezenas do grupo das "Quentes" e a outra metade do grupo das "Frias". Ideal para quem busca uma aposta balanceada, combinando tendências com números "atrasados".<br>
-                <strong>&bull; Dezenas "Frias":</strong> O sistema dá preferência aos números que não são sorteados há muito tempo. A aposta aqui é que eles estão "atrasados" e uma hora terão que sair.</p>
-                <h3>Com a Estratégia: Aleatório (Surpresinha)</h3>
-                <p>A geração é 100% aleatória. Cada número, dentro do universo da loteria escolhida, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
-                <h3>Com o seu Número da Sorte (Jogo Âncora)</h3>
-                <p>Todo mundo tem um número especial! Use-o para "ancorar" o seu jogo. Ao inseri-lo, nosso sistema o mantém fixo e gera as dezenas restantes de forma inteligente para completar seu palpite. É a maneira perfeita de combinar sua intuição com a análise do nosso sistema.</p>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-            
-            <section id="ultimos-resultados" class="footer-section">
-                <h2>Últimos Resultados</h2>
-                <p>Confira os últimos 20 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
-                <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
-                <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
-                    <div class="spinner"></div>
-                </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-            <section id="jogorresponsavel" class="footer-section">
-                <h2>Nosso Compromisso com o Jogo Responsável</h2>
-                <p>Apostar deve ser uma fonte de diversão, não uma necessidade. Encare como lazer, defina limites claros de gastos e entenda que as probabilidades de ganho são remotas. A maior vitória é jogar com consciência e controle. Se o jogo deixar de ser divertido, não hesite em procurar ajuda.</p>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-            <section id="blog" class="footer-section">
-                <h2>Curiosidades</h2>
-
-                  <div class="artigo-blog">
-                    <h3>Lotofácil da Independência 2025: Prêmio de R$ 220 Milhões em 6 de Setembro!</h3>
-                    <p><strong>A Lotofácil da Independência 2025</strong> promete agitar o Brasil com um prêmio estimado em <strong>R$ 220 milhões!</strong> E o melhor: este concurso especial <strong>não acumula</strong>. O sorteio está confirmado para o dia <strong>6 de setembro</strong>. Se ninguém acertar os 15 pontos, a bolada é dividida entre quem acerta 14, 13 ou menos, até que haja um ganhador.</p>
-                    <br>
-                    <p>No ano anterior, o prêmio de R$ 206 milhões foi dividido entre 86 sortudos, mostrando que as chances são reais. Para concorrer, basta escolher de 15 a 20 dezenas, com a aposta mínima custando R$ 3,50. Quer aumentar suas chances? Participe de um <strong>Bolão</strong> e jogue com mais números dividindo o custo.</p>
-                    <br>
-                    <p>Use nossas ferramentas para criar palpites baseados em <strong>estatísticas</strong> e combine a sorte com a estratégia. Quem sabe você não celebra a independência <strong>milionário</strong> este ano? 💰</p>
-                    </div>
-
-                  <div class="artigo-blog">
-                    <h3>Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena</h3>
-                    <p>Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada no concurso 2.720 da Mega-Sena, para o espanto de fãs em todo o Brasil.</p>
-                    <br>
-                    <p>A combinação sorteada foi <strong>08-15-16-23-42-43</strong>, quase idêntica à sequência <strong>4-8-15-16-23-42</strong> que assombrava o personagem Hurley. Na ficção, ele usa os números para ficar milionário, mas acaba atraindo uma série de tragédias, convencendo-se de que são amaldiçoados.</p>
-                    <br>
-                    <p> E na vida real? A "maldição" de Hurley parece ter atacado: o prêmio principal acumulou em R$ 37 milhões! No entanto, a sorte foi distribuída de outra forma: um número impressionante de apostas <strong>(2.967 na quina e 6.884 na quadra)</strong> foi premiado, provavelmente por fãs que arriscaram a famosa sequência.</p>
-                    <br>
-                    <p> No fim, a história se repete: os números que criaram um milionário azarado na ficção, na vida real espalharam a sorte para milhares. Uma prova de que o universo tem um ótimo senso de humor 😄</p>
-                    </div>
-                <div class="artigo-blog">
-                    <h3>Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar?</h3>
-                    <p>Todo brasileiro já se imaginou milionário, conferindo aquele bilhete premiado. Mas, diante de tantas opções, qual loteria oferece o caminho "menos difícil" para a fortuna? Para especialistas em probabilidades "não existe jogo fácil, mas sim o menos impossível".</p>
-                    <p>Esqueça a Mega-Sena por um instante. A grande campeã em probabilidade é a <strong>Dia de Sorte</strong>. Com uma aposta simples, sua chance de levar o prêmio máximo é de <strong>1 em 2,6 milhões</strong>. Parece muito? Para efeito de comparação, a chance na Mega-Sena é de 1 em 50 milhões! Isso torna a Dia de Sorte quase 20 vezes mais "fácil".</p>
-                    <p>No entanto, não se engane, são "jogos de azar por um motivo muito simples: a chance de você perder é sempre maior". A emoção é o grande motor, mas é crucial entender a ordem dos fatores que levam a um prêmio: <strong>1º Sorte, 2º Dinheiro (para mais apostas) e 3º Estratégia</strong>.</p>
-                    <p><strong>No Sorte Analisada</strong>, nós te ajudamos com o terceiro fator, oferecendo as melhores ferramentas de <strong>estratégia</strong>. Mas lembre-se sempre: a <strong>sorte</strong> é a grande estrela do show! 🍀</p>
-                </div>
-
-                <div class="artigo-blog">
-                    <h3>Quina: Seis Chances de Transformar Sua Vida Toda Semana! </h3>
-                    <p><strong>A Quina</strong>, lançada em 1994, é uma das loterias mais queridas pelos brasileiros, oferecendo <strong>seis chances de ganhar por semana</strong> – de segunda a sábado. O prêmio principal é para quem acerta as 5 dezenas entre 1 e 80, mas também há prêmios para quem acerta 2, 3 ou 4 números.</p>
-                    <p>A Quina uma das loterias mais <strong>tradicionais</strong> do país. Com sorteios regulares e valores de apostas acessíveis, ela se tornou uma das favoritas dos apostadores. Além do prêmio milionário, a Quina também tem a possibilidade de acumular, deixando o prêmio ainda mais tentador.</p>
-                    <p>Sua mecânica simples e a frequência dos sorteios fazem dela uma oportunidade constante para quem <strong>sonha</strong> em mudar de vida. 🤞</p>
-                </div>
-
-
-                <div class="artigo-blog">
-                    <h3>O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta</h3>
-                    <p>Sabia que apostar com mais dezenas na Mega-Sena não só aumenta suas chances, mas pode te dar vários prêmios de uma só vez? É o chamado desdobramento: uma única aposta com mais números funciona como um combo, contendo várias combinações premiadas. Na prática, seus ganhos se multiplicam.</p>
-                    <p><strong>Exemplo: Você joga com 7 números.</strong></p>
-                    <ul style="text-align: left; padding-left: 20px; margin: 0.5rem 0;">
-                        <li>Se acertar os 6 números sorteados, você ganha 1 prêmio da Sena + 6 prêmios da Quina.</li>
-                        <li>Se acertar 5 números, você ganha 2 prêmios da Quina + 5 prêmios da Quadra.</li>
-                    </ul>
-                    <p>A lógica cresce: acertar a Sena com 10 números paga o prêmio principal mais 24 Quinas e 90 Quadras! Apostar com mais dezenas custa mais caro, mas é a estratégia mais poderosa para turbinar seus ganhos, especialmente em bolões. 🤞</p>
-                </div>
-                 <div class="artigo-blog">
-                    <h3>Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas</h3>
-                    <p>A chance de ganhar na loteria é mínima, mas nas telas a sorte parece bem mais generosa! Relembre alguns personagens que desafiaram as probabilidades e ficaram milionários da noite para o dia.</p>
-                    <ul style="text-align: left; padding-left: 20px; margin: 0.5rem 0;">
-                        <li><strong>Até que a Sorte nos Separe</strong> - filme de comédia brasileiro de 2012, Tino (Leandro Hassum) ganha R$ 100 milhões e nos ensina, com muito humor, como não administrar uma fortuna.</li>
-                        <li><strong>Fina Estampa</strong> - novela de 2011,  a persistente "Pereirão" prova que a teimosia compensa, apostando sempre nos mesmos números até faturar R$ 50 milhões.</li>
-                        <li><strong>'Lost'</strong> - A série de 2004, tem o caso mais famoso. Hurley ganha com a sequência 4-8-15-16-23-42, que se tornou tão icônica que fãs apostaram nela na vida real e acabaram sendo premiados de verdade!</li>
-                        <li><strong>O Pagamento (Paycheck, 2003)</strong>, estrelado por Ben Affleck. No final deste filme de ficção científica, a personagem de Affleck recebe um bilhete de loteria de um futuro que foi deixado para ele.</li>
-                        <li><strong>Atraídos Pelo Destino (It Could Happen to You)</strong>, de 1994. Onde Nicolas Cage ganha na loteria, Na trama, um policial chamado Charlie Lang (Cage) promete metade de um possível prémio da lotaria a uma garçonete (Bridget Fonda) como gorjeta, e ele ganha o dinheiro.</li>
-                        <li><strong>Chuva de Milhões (Brewster's Millions)</strong>, é um filme de comédia norte-americano de 1985, estrelado por Richard Pryor e dirigido por Walter Hill. (Richard Pryor) Montgomery Brewster, é um pobre jogador de beisebol, que descobre ser o único parente vivo do extravagante multimilionário Rupert Horn (Hume Cronyn). Monty tem a oportunidade de herdar 300 milhões de dólares, mas apenas se conseguir gastar 30 em um único mês, sem obter nenhum bem. Caso fracasse, retornará à pobreza. Este filme incrível não tem os números da sorte, mas faz você imaginar como seria, caso seja o grande sortudo e resolva sair por aí gastando tudo!</li>
-                    </ul>
-                    <p>Essas histórias nos lembram do poder de um simples bilhete. Gostou das dicas de filmes? Então, agora e só preparar a pipoca! 🍿</p>
-                </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-            <section id="estatisticas" class="footer-section">
-               <h2>Estatísticas dos Sorteios</h2>
-               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
-               <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
-                <div class="grupo-botoes" style="margin-bottom: 2rem;">
-                    <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
-                </div>
-                <div id="area-estatisticas" style="display: none;">
-                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3><canvas id="grafico-mais-sorteados"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3><canvas id="grafico-menos-sorteados"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
-                </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-            <section id="parceiros" class="footer-section">
-                <h2>Apoiadores que Fazem a Sorte Acontecer</h2>
-                <p style="margin-bottom: 2rem; text-align: center; line-height: 1.8;">O Sorte Analisada cresce graças ao apoio de marcas que acreditam na nossa missão de levar entretenimento e análise de qualidade para apostadores de todo o Brasil. Agradecemos a confiança por fazerem parte desta jornada.</p>
-                <div class="partner-ad-container">
-                    <h3 class="partner-title">SISTEMAS IDEAL, AUTOMAÇÃO COMERCIAL</h3>
-                    <img src="images/Ideal.jpg" alt="Logo da Sistemas Ideal Automação Comercial" class="partner-logo">
-                    <p class="partner-text">Automação Comercial | Sat | Erp |<br>Pontos de Vendas em geral</p>
-                    <a href="https://wa.me/5511962779427" class="partner-cta-button" target="_blank">
-                        <i class="fa-brands fa-whatsapp"></i>
-                        (11) 96277-9427
-                    </a>
-                    <a href="https://linktr.ee/sistemas_ideal?fbclid=PAQ0xDSwMO5VJleHRuA2FlbQIxMQABp6bwYGcDvVxhsmmaSphrP4hglvs3Y4t4W-zZMB90tSkMbfImd7UJWwwFuyAZ_aem_FSR9c1Ytg3B8pgZkdqgkqw" class="partner-social-link" target="_blank">
-                        <i class="fa-brands fa-instagram"></i>
-                        <span>Siga-nos no Instagram</span>
-                    </a>
-                </div>
-                <div style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
-                    <h3 style="text-align: center; color: var(--cor-dourado);">Quer ver sua marca em destaque aqui?</h3>
-                    <p style="margin-top: 1rem; margin-bottom: 1.5rem; text-align: center;">Conecte seu negócio a uma comunidade engajada que busca por sorte e novas oportunidades. Aumente sua visibilidade e apoie um projeto em constante crescimento.</p>
-                    <a href="mailto:ronaldoleite@sorteanalisada.com.br?subject=Interesse em Parceria - Sorte Analisada" class="botao-gerar" style="text-decoration: none;">Anuncie</a>
-                </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-            <section id="doacao" class="footer-section">
-                <h2>Apoie o Projeto</h2>
-                <p>Se nossos palpites e análises foram úteis para você, considere apoiar o projeto com uma doação via PIX. Sua contribuição é fundamental para que possamos continuar oferecendo esta ferramenta de forma gratuita.</p>
-                <img src="images/placeholder-qrcode.png" alt="QR Code para doação via PIX" style="width: 180px; height: 180px; background-color: white; border: 4px solid var(--cor-dourado); border-radius: 10px; margin: 1rem auto; display: block;">
-                
-                <div id="feedback-area" style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
-                    <img src="images/trevodourado.png" alt="Trevo Dourado" style="height: 60px; margin-bottom: 1rem;">
-                    <h4>Sua opinião nos ajuda a melhorar! O site foi útil para você?</h4>
-                    <div style="margin-top: 1rem;">
-                        <button class="botao-feedback" onclick="submitFeedback('sim')">👍 Sim</button>
-                        <button class="botao-feedback" onclick="submitFeedback('nao')">👎 Não</button>
-                    </div>
-                    <p id="feedback-message"></p>
-                </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-            <section id="contato" class="footer-section">
-                <h2>Contato</h2>
-                <p style="text-align: center;">Ficou com alguma dúvida ou tem uma sugestão? Adoramos ouvir nossos usuários! Clique em SORTE ANALISADA para enviar um e-mail:</p>
-                <p style="font-size: 1.1rem; font-weight: bold; margin-top: 1rem; text-align: center;">
-                <a href="mailto:ronaldoleite@sorteanalisada.com.br" title="Contato" style="color: var(--cor-dourado); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
-                <i class="fa-solid fa-envelope"> Sorte Analisada</i>
-                </a>
-
-                </p>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-            
-            <section id="termos" class="footer-section">
-                <h2>Termo de Uso</h2>
-                <p>O site <strong>Sorte Analisada</strong> é uma ferramenta gratuíta de entretenimento destinada a maiores de 18 anos. Geramos sugestões de números para jogos de loteria com base em algoritmos, dados históricos e também números aleatórios. <strong>Não oferecemos nenhuma garantia de prêmios ou acertos</strong>. Os resultados das loterias são imprevisíveis e dependem exclusivamente da sorte. Este site não comercializa produtos Lotéricos e não possui qualquer vínculo com a Caixa Econômica Federal® ou qualquer outra entidade lotérica. Jogue com responsabilidade e por sua conta e riscos.</p>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-           <section id="politica" class="footer-section">
-                <h2>Política de Privacidade</h2>
-                <p><strong>Última atualização:</strong> 22 de Agosto de 2025<br><br>
-                A sua privacidade é importante para nós. É política do site <strong>www.sorteanalisada.com.br</strong> respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site.<br><br>
-                <strong>1. Coleta de Dados</strong><br>
-                Nós não coletamos informações de identificação pessoal dos nossos usuários, como nome, e-mail, endereço ou número de telefone. O uso da nossa ferramenta de geração de palpites é completamente anônimo.<br><br>
-                <strong>2. Cookies e Dados de Navegação</strong><br>
-                Podemos coletar dados não pessoais para fins de análise e melhoria do serviço através de ferramentas como o Google Analytics. O site também pode utilizar cookies para melhorar a experiência do usuário. Você pode desativar os cookies nas configurações do seu navegador.<br><br>
-                <strong>3. Dados da Pesquisa de Satisfação</strong><br>
-                Na seção "Apoie o Projeto", oferecemos uma pesquisa opcional de "Sim/Não". A resposta é registrada de forma anônima em nosso banco de dados com o único propósito de avaliar a satisfação geral dos usuários.<br><br>
-                O uso continuado de nosso site será considerado como aceitação de nossas práticas em torno de privacidade. Se você tiver alguma dúvida, entre em contato conosco.</p>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-        </div>
-
-        <footer class="site-footer">
-            <h4 class="footer-social-title">Siga a Sorte Analisada</h4> 
-            <div class="footer-links">
-                <a href="https://www.instagram.com/sorte_analisada/?igsh=cW8zenNycWVieXF1#" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a> 
-                <a href="https://www.tiktok.com/@sorte_analisada?_t=ZM-8yxvja7YoS8&_r=1" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-            </div>
-            <div class="copyright">
-                ™ 2025 Sorte Analisada. Todos os direitos reservados.
-                <br>
-                <br>
-                <br>
-                Créditos: 
-                <br>
-                <a href="https://pt.dreamstime.com/ilustração-stock-trevo-dourado-com-quatro-folhas-image54683740" class="copyright">54683740</a> @ <a href="https://pt.dreamstime.com/deskcube_info" class="copyright">Deskcube</a> | <a href="https://pt.dreamstime.com/stock-photos" class="copyright">Dreamstime.com</a>
-            </div>  
-        </footer>
-    </div>
-
     <script>
         let loteriaAtual = 'megasena';
         const lotteryConfig = {
@@ -574,16 +62,21 @@
             const estrategia = document.getElementById('estrategia-select').value;
             const dezenasSelect = document.getElementById('dezenas-select');
             const quantidadeSelect = document.getElementById('quantidade-select');
+            const ancoraInput = document.getElementById('numeros-ancora');
             const config = lotteryConfig[loteriaAtual];
 
-            if (estrategia === 'montecarlo') {
+            // Desabilita controles para estratégias especiais
+            if (estrategia === 'montecarlo' || estrategia === 'sorteanalisadapremium') {
                 dezenasSelect.value = config.num_bolas;
                 dezenasSelect.disabled = true;
                 quantidadeSelect.value = 1;
                 quantidadeSelect.disabled = true;
+                ancoraInput.value = '';
+                ancoraInput.disabled = true;
             } else {
                 dezenasSelect.disabled = false;
                 quantidadeSelect.disabled = false;
+                ancoraInput.disabled = false;
             }
         }
 
@@ -667,6 +160,8 @@
                 let url = '';
                 if (estrategia === 'montecarlo') {
                     url = `/get-monte-carlo-game?loteria=${loteriaAtual}&ancora=${numerosAncora}`;
+                } else if (estrategia === 'sorteanalisadapremium') {
+                    url = `/get-sorte-analisada-premium-game?loteria=${loteriaAtual}`;
                 } else {
                     url = `/get-games/${quantidade}?loteria=${loteriaAtual}&estrategia=${estrategia}&dezenas=${dezenas}&ancora=${numerosAncora}`;
                 }
@@ -681,15 +176,16 @@
                     throw new Error(`Erro no servidor: ${data.error}`);
                 }
 
-                const jogosParaRenderizar = estrategia === 'montecarlo' ? [data.jogo] : data;
+                const jogosParaRenderizar = (estrategia === 'montecarlo' || estrategia === 'sorteanalisadapremium') ? [data.jogo] : data;
                 renderizarJogos(jogosParaRenderizar, areaResultados);
 
             } catch (error) {
                 console.error('Detalhes do erro:', error);
                 areaResultados.innerHTML = `<p style="color: #ff8a80;">Falha na conexão. Por favor, tente novamente em alguns segundos.</p>`;
             } finally {
-                 if (estrategia === 'montecarlo') {
-                    let countdown = 10;
+                 if (estrategia === 'montecarlo' || estrategia === 'sorteanalisadapremium') {
+                    let cooldownTime = estrategia === 'sorteanalisadapremium' ? 20 : 10;
+                    let countdown = cooldownTime;
                     const botao = document.getElementById('botao-gerar-principal');
                     botao.innerHTML = `Aguarde ${countdown}s...`;
                     
@@ -711,6 +207,7 @@
             }
         }
 
+        // ... (as funções exibirEstatisticas, submitFeedback e carregarUltimosResultados permanecem as mesmas) ...
         async function exibirEstatisticas() {
             const botao = document.querySelector('#estatisticas .botao-gerar');
              if (isRequestInProgress || botao.disabled) return;
@@ -850,5 +347,3 @@
             }
         }
     </script>
-</body>
-</html>

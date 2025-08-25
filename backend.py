@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import math
 import re
 from datetime import date
+import numpy as np # <-- Importação necessária para a nova estratégia
 
 # --- Inicialização e Configuração ---
 load_dotenv()
@@ -21,7 +22,7 @@ LOTTERY_CONFIG = {
 }
 CONCURSOS_RECENTES = 100
 
-# --- Funções Auxiliares e de Lógica ---
+# --- Funções Auxiliares e de Lógica (Comuns) ---
 
 def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL)
@@ -36,6 +37,7 @@ def get_db_connection():
         conn.commit()
     return conn
 
+# ... (as funções is_prime e validar_e_sanitizar_ancora permanecem as mesmas) ...
 def is_prime(n):
     if n < 2: return False
     for i in range(2, int(math.sqrt(n)) + 1):
@@ -55,6 +57,10 @@ def validar_e_sanitizar_ancora(ancora_str, loteria):
     except (ValueError, TypeError):
         return []
 
+
+# --- FUNÇÕES DAS ESTRATÉGIAS DE GERAÇÃO ---
+
+# ... (a função gerar_jogo_monte_carlo permanece a mesma) ...
 def gerar_jogo_monte_carlo(loteria='megasena', numeros_ancora=[]):
     conn = None
     try:
@@ -94,6 +100,129 @@ def gerar_jogo_monte_carlo(loteria='megasena', numeros_ancora=[]):
     finally:
         if conn: conn.close()
 
+
+# --- NOVAS FUNÇÕES PARA A ESTRATÉGIA PREMIUM ---
+
+def _analisar_perfil_historico(loteria, resultados):
+    """Analisa todos os resultados para extrair o 'DNA' de um jogo vencedor."""
+    config = LOTTERY_CONFIG[loteria]
+    somas = []
+    paridades = []
+    distribuicoes_quadrantes = []
+    
+    limite_q1 = math.ceil(config['max_num'] / 4)
+    limite_q2 = limite_q1 * 2
+    limite_q3 = limite_q1 * 3
+
+    for linha in resultados:
+        dezenas = [int(n) for n in linha[0].split()]
+        if len(dezenas) != config['num_bolas_sorteadas']: continue
+
+        somas.append(sum(dezenas))
+        
+        num_pares = sum(1 for d in dezenas if d % 2 == 0)
+        paridades.append((num_pares, config['num_bolas_sorteadas'] - num_pares))
+        
+        quadrantes = set()
+        for d in dezenas:
+            if d <= limite_q1: quadrantes.add(1)
+            elif d <= limite_q2: quadrantes.add(2)
+            elif d <= limite_q3: quadrantes.add(3)
+            else: quadrantes.add(4)
+        distribuicoes_quadrantes.append(len(quadrantes))
+
+    soma_ideal = (int(np.percentile(somas, 25)), int(np.percentile(somas, 75))) if somas else (0, 0)
+    paridade_ideal = Counter(paridades).most_common(2) if paridades else []
+    quadrantes_ideal = Counter(distribuicoes_quadrantes).most_common(1)[0][0] if distribuicoes_quadrantes else 3
+
+    return {
+        "soma_ideal": soma_ideal,
+        "paridade_ideal": [p[0] for p in paridade_ideal],
+        "quadrantes_ideal": quadrantes_ideal
+    }
+
+def _calcular_score_do_jogo(jogo_set, perfil, config):
+    """Calcula a 'nota de qualidade' de um jogo com base no perfil histórico."""
+    score = 0
+    dezenas = list(jogo_set)
+    
+    soma_jogo = sum(dezenas)
+    if perfil["soma_ideal"][0] <= soma_jogo <= perfil["soma_ideal"][1]:
+        score += 1
+        
+    num_pares = sum(1 for d in dezenas if d % 2 == 0)
+    paridade_jogo = (num_pares, config['num_bolas_sorteadas'] - num_pares)
+    if paridade_jogo in perfil["paridade_ideal"]:
+        score += 1
+        
+    limite_q1 = math.ceil(config['max_num'] / 4)
+    limite_q2 = limite_q1 * 2
+    limite_q3 = limite_q1 * 3
+    quadrantes = set()
+    for d in dezenas:
+        if d <= limite_q1: quadrantes.add(1)
+        elif d <= limite_q2: quadrantes.add(2)
+        elif d <= limite_q3: quadrantes.add(3)
+        else: quadrantes.add(4)
+    if len(quadrantes) >= perfil["quadrantes_ideal"]:
+        score += 1
+        
+    return score
+
+def gerar_jogo_sorte_analisada_premium(loteria='megasena'):
+    """Gera um jogo único e estruturalmente balanceado."""
+    conn = None
+    try:
+        config = LOTTERY_CONFIG[loteria]
+        dezenas_a_gerar = config['num_bolas_sorteadas']
+        
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT dezenas FROM resultados_sorteados WHERE tipo_loteria = %s;", (loteria,))
+        resultados = cur.fetchall()
+        if not resultados:
+            raise ValueError("Base de dados histórica não encontrada para análise.")
+        
+        perfil_historico = _analisar_perfil_historico(loteria, resultados)
+        combinacoes_passadas = {frozenset(int(n) for n in linha[0].split()) for linha in resultados}
+
+        todos_os_numeros = [int(n) for linha in resultados for n in linha[0].split()]
+        frequencia_historica = Counter(todos_os_numeros)
+        numeros_possiveis = list(frequencia_historica.keys())
+        pesos_historicos = list(frequencia_historica.values())
+        
+        pool_candidatos = set()
+        num_candidatos = 200
+        while len(pool_candidatos) < num_candidatos:
+            jogo_candidato = frozenset(random.choices(numeros_possiveis, weights=pesos_historicos, k=dezenas_a_gerar))
+            if len(jogo_candidato) == dezenas_a_gerar:
+                pool_candidatos.add(jogo_candidato)
+        
+        candidatos_unicos = [jogo for jogo in pool_candidatos if jogo not in combinacoes_passadas]
+        
+        if not candidatos_unicos:
+            while True:
+                jogo_aleatorio = frozenset(random.sample(range(config['min_num'], config['max_num'] + 1), dezenas_a_gerar))
+                if jogo_aleatorio not in combinacoes_passadas:
+                    return " ".join(f"{num:02}" for num in sorted(list(jogo_aleatorio)))
+
+        jogos_pontuados = []
+        for jogo_set in candidatos_unicos:
+            score = _calcular_score_do_jogo(jogo_set, perfil_historico, config)
+            jogos_pontuados.append((score, jogo_set))
+            
+        jogos_pontuados.sort(key=lambda x: x[0], reverse=True)
+        
+        melhor_score = jogos_pontuados[0][0]
+        melhores_jogos = [jogo for score, jogo in jogos_pontuados if score == melhor_score]
+        
+        jogo_escolhido = random.choice(melhores_jogos)
+        
+        return " ".join(f"{num:02}" for num in sorted(list(jogo_escolhido)))
+    finally:
+        if conn: conn.close()
+
+# ... (as funções gerar_jogos_com_base_na_frequencia e gerar_jogos_puramente_aleatorios permanecem as mesmas) ...
 def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[], estrategia='geral'):
     conn = None
     try:
@@ -106,7 +235,6 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
         
         query = "SELECT dezenas FROM resultados_sorteados WHERE tipo_loteria = %s"
         params = [loteria]
-        # --- ALTERAÇÃO: Adicionamos 'mistas' à lista de estratégias que usam os concursos recentes ---
         if estrategia in ['quentes', 'frias', 'mistas']:
             query += " ORDER BY concurso DESC LIMIT %s"
             params.append(CONCURSOS_RECENTES)
@@ -122,20 +250,15 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
         
         jogos_gerados = set()
         
-        # --- LÓGICA EXISTENTE PARA 'FRIAS' E 'QUENTES' (GERAL) ---
         if estrategia == 'frias':
             numeros_possiveis = [n for n in universo_possivel if n not in frequencia]
             if len(numeros_possiveis) < dezenas_a_gerar:
                  numeros_possiveis.extend([item[0] for item in frequencia.most_common()[:-len(numeros_possiveis)-1:-1]])
             pesos = None
         
-        # --- NOVA LÓGICA PARA 'MISTAS' ---
         elif estrategia == 'mistas':
-            # 1. Definir o grupo de números quentes (os que saíram)
             numeros_quentes = list(frequencia.keys())
             pesos_quentes = list(frequencia.values())
-            
-            # 2. Definir o grupo de números frios (os que não saíram + os menos frequentes)
             numeros_frios = [n for n in universo_possivel if n not in frequencia]
             if len(numeros_frios) < dezenas_a_gerar:
                 numeros_frios.extend([item[0] for item in frequencia.most_common()[:-len(numeros_frios)-1:-1]])
@@ -143,30 +266,22 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
             if not numeros_quentes or not numeros_frios:
                 return gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
 
-            # 3. Gerar os jogos
             while len(jogos_gerados) < count:
                 numeros_novos = set()
                 if dezenas_a_gerar > 0:
-                    # Dividir a quantidade a ser gerada entre quentes e frios
                     num_a_gerar_quentes = math.ceil(dezenas_a_gerar / 2)
                     num_a_gerar_frios = math.floor(dezenas_a_gerar / 2)
-                    
-                    # Garantir que não vamos pedir mais números do que os disponíveis nos grupos
                     num_a_gerar_quentes = min(num_a_gerar_quentes, len(numeros_quentes))
                     num_a_gerar_frios = min(num_a_gerar_frios, len(numeros_frios))
 
-                    # Selecionar dezenas quentes com base na frequência (pesos)
                     dezenas_quentes_selecionadas = set()
                     while len(dezenas_quentes_selecionadas) < num_a_gerar_quentes:
                         dezena = random.choices(numeros_quentes, weights=pesos_quentes, k=1)[0]
                         dezenas_quentes_selecionadas.add(dezena)
 
-                    # Selecionar dezenas frias de forma aleatória (sem pesos)
                     dezenas_frias_selecionadas = set(random.sample(numeros_frios, num_a_gerar_frios))
-                    
                     numeros_novos = dezenas_quentes_selecionadas.union(dezenas_frias_selecionadas)
 
-                    # Caso a união não dê o total (por sobreposição), completar com aleatórios
                     while len(numeros_novos) < dezenas_a_gerar:
                         universo_completo = list(set(numeros_quentes + numeros_frios))
                         numeros_novos.add(random.choice(universo_completo))
@@ -219,11 +334,14 @@ def gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora=[])
         jogos_gerados.add(jogo_formatado)
     return list(jogos_gerados)
 
+
 # --- Endpoints da API ---
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
 
+# ... (a rota /get-monte-carlo-game permanece a mesma) ...
 @app.route('/get-monte-carlo-game')
 def get_monte_carlo_game():
     loteria = request.args.get('loteria', 'megasena', type=str)
@@ -235,6 +353,17 @@ def get_monte_carlo_game():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# NOVA ROTA PARA A ESTRATÉGIA PREMIUM
+@app.route('/get-sorte-analisada-premium-game')
+def get_sorte_analisada_premium_game():
+    loteria = request.args.get('loteria', 'megasena', type=str)
+    try:
+        jogo = gerar_jogo_sorte_analisada_premium(loteria)
+        return jsonify({"jogo": jogo})
+    except Exception as e:
+        print(f"ERRO em /get-sorte-analisada-premium-game: {e}")
+        return jsonify({"error": str(e)}), 500
+        
 @app.route('/get-games/<int:count>')
 def get_games(count):
     loteria = request.args.get('loteria', 'megasena', type=str)
@@ -256,6 +385,7 @@ def get_games(count):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ... (as rotas /submit-feedback, /get-stats, e /get-ultimos-resultados permanecem as mesmas) ...
 @app.route('/submit-feedback', methods=['POST'])
 def submit_feedback():
     conn = None
