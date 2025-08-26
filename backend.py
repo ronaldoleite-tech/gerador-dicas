@@ -1,19 +1,22 @@
+# --- CÓDIGO COMPLETO E FINAL para backend.py ---
+
 # -*- coding: utf-8 -*-
 import psycopg2
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template # <-- render_template foi adicionado
 import random
 from collections import Counter
 from dotenv import load_dotenv
 import math
 import re
 from datetime import date
-import numpy as np # <-- Importação necessária para a nova estratégia
+import numpy as np
 
 # --- Inicialização e Configuração ---
 load_dotenv()
 DATABASE_URL = os.environ.get('DATABASE_URL')
-app = Flask(__name__, static_folder='.', static_url_path='')
+# Flask agora procurará a pasta 'templates' automaticamente
+app = Flask(__name__) 
 LOTTERY_CONFIG = {
     'megasena':   {'min_num': 1, 'max_num': 60, 'num_bolas_sorteadas': 6, 'default_dezenas': 6},
     'quina':      {'min_num': 1, 'max_num': 80, 'num_bolas_sorteadas': 5, 'default_dezenas': 5},
@@ -22,8 +25,7 @@ LOTTERY_CONFIG = {
 }
 CONCURSOS_RECENTES = 100
 
-# --- Funções Auxiliares e de Lógica (Comuns) ---
-
+# --- Funções Auxiliares e de Lógica ---
 def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL)
     with conn.cursor() as cur:
@@ -37,7 +39,6 @@ def get_db_connection():
         conn.commit()
     return conn
 
-# ... (as funções is_prime e validar_e_sanitizar_ancora permanecem as mesmas) ...
 def is_prime(n):
     if n < 2: return False
     for i in range(2, int(math.sqrt(n)) + 1):
@@ -57,10 +58,8 @@ def validar_e_sanitizar_ancora(ancora_str, loteria):
     except (ValueError, TypeError):
         return []
 
-
 # --- FUNÇÕES DAS ESTRATÉGIAS DE GERAÇÃO ---
 
-# ... (a função gerar_jogo_monte_carlo permanece a mesma) ...
 def gerar_jogo_monte_carlo(loteria='megasena', numeros_ancora=[]):
     conn = None
     try:
@@ -100,29 +99,20 @@ def gerar_jogo_monte_carlo(loteria='megasena', numeros_ancora=[]):
     finally:
         if conn: conn.close()
 
-
-# --- NOVAS FUNÇÕES PARA A ESTRATÉGIA PREMIUM ---
+# --- FUNÇÕES PARA A ESTRATÉGIA SORTE ANALISADA PREMIUM ---
 
 def _analisar_perfil_historico(loteria, resultados):
-    """Analisa todos os resultados para extrair o 'DNA' de um jogo vencedor."""
     config = LOTTERY_CONFIG[loteria]
-    somas = []
-    paridades = []
-    distribuicoes_quadrantes = []
-    
+    somas, paridades, distribuicoes_quadrantes = [], [], []
     limite_q1 = math.ceil(config['max_num'] / 4)
-    limite_q2 = limite_q1 * 2
-    limite_q3 = limite_q1 * 3
+    limite_q2, limite_q3 = limite_q1 * 2, limite_q1 * 3
 
     for linha in resultados:
         dezenas = [int(n) for n in linha[0].split()]
         if len(dezenas) != config['num_bolas_sorteadas']: continue
-
         somas.append(sum(dezenas))
-        
         num_pares = sum(1 for d in dezenas if d % 2 == 0)
         paridades.append((num_pares, config['num_bolas_sorteadas'] - num_pares))
-        
         quadrantes = set()
         for d in dezenas:
             if d <= limite_q1: quadrantes.add(1)
@@ -135,42 +125,24 @@ def _analisar_perfil_historico(loteria, resultados):
     paridade_ideal = Counter(paridades).most_common(2) if paridades else []
     quadrantes_ideal = Counter(distribuicoes_quadrantes).most_common(1)[0][0] if distribuicoes_quadrantes else 3
 
-    return {
-        "soma_ideal": soma_ideal,
-        "paridade_ideal": [p[0] for p in paridade_ideal],
-        "quadrantes_ideal": quadrantes_ideal
-    }
+    return {"soma_ideal": soma_ideal, "paridade_ideal": [p[0] for p in paridade_ideal], "quadrantes_ideal": quadrantes_ideal}
 
 def _calcular_score_do_jogo(jogo_set, perfil, config):
-    """Calcula a 'nota de qualidade' de um jogo com base no perfil histórico."""
     score = 0
     dezenas = list(jogo_set)
-    
-    soma_jogo = sum(dezenas)
-    if perfil["soma_ideal"][0] <= soma_jogo <= perfil["soma_ideal"][1]:
+    if perfil["soma_ideal"][0] <= sum(dezenas) <= perfil["soma_ideal"][1]:
         score += 1
-        
     num_pares = sum(1 for d in dezenas if d % 2 == 0)
-    paridade_jogo = (num_pares, config['num_bolas_sorteadas'] - num_pares)
-    if paridade_jogo in perfil["paridade_ideal"]:
+    if (num_pares, config['num_bolas_sorteadas'] - num_pares) in perfil["paridade_ideal"]:
         score += 1
-        
     limite_q1 = math.ceil(config['max_num'] / 4)
-    limite_q2 = limite_q1 * 2
-    limite_q3 = limite_q1 * 3
-    quadrantes = set()
-    for d in dezenas:
-        if d <= limite_q1: quadrantes.add(1)
-        elif d <= limite_q2: quadrantes.add(2)
-        elif d <= limite_q3: quadrantes.add(3)
-        else: quadrantes.add(4)
+    limite_q2, limite_q3 = limite_q1 * 2, limite_q1 * 3
+    quadrantes = {1 if d <= limite_q1 else 2 if d <= limite_q2 else 3 if d <= limite_q3 else 4 for d in dezenas}
     if len(quadrantes) >= perfil["quadrantes_ideal"]:
         score += 1
-        
     return score
 
 def gerar_jogo_sorte_analisada_premium(loteria='megasena'):
-    """Gera um jogo único e estruturalmente balanceado."""
     conn = None
     try:
         config = LOTTERY_CONFIG[loteria]
@@ -180,8 +152,7 @@ def gerar_jogo_sorte_analisada_premium(loteria='megasena'):
         cur = conn.cursor()
         cur.execute("SELECT dezenas FROM resultados_sorteados WHERE tipo_loteria = %s;", (loteria,))
         resultados = cur.fetchall()
-        if not resultados:
-            raise ValueError("Base de dados histórica não encontrada para análise.")
+        if not resultados: raise ValueError("Base de dados histórica não encontrada para análise.")
         
         perfil_historico = _analisar_perfil_historico(loteria, resultados)
         combinacoes_passadas = {frozenset(int(n) for n in linha[0].split()) for linha in resultados}
@@ -206,23 +177,17 @@ def gerar_jogo_sorte_analisada_premium(loteria='megasena'):
                 if jogo_aleatorio not in combinacoes_passadas:
                     return " ".join(f"{num:02}" for num in sorted(list(jogo_aleatorio)))
 
-        jogos_pontuados = []
-        for jogo_set in candidatos_unicos:
-            score = _calcular_score_do_jogo(jogo_set, perfil_historico, config)
-            jogos_pontuados.append((score, jogo_set))
-            
+        jogos_pontuados = [( _calcular_score_do_jogo(jogo_set, perfil_historico, config), jogo_set) for jogo_set in candidatos_unicos]
         jogos_pontuados.sort(key=lambda x: x[0], reverse=True)
         
         melhor_score = jogos_pontuados[0][0]
         melhores_jogos = [jogo for score, jogo in jogos_pontuados if score == melhor_score]
         
         jogo_escolhido = random.choice(melhores_jogos)
-        
         return " ".join(f"{num:02}" for num in sorted(list(jogo_escolhido)))
     finally:
         if conn: conn.close()
 
-# ... (as funções gerar_jogos_com_base_na_frequencia e gerar_jogos_puramente_aleatorios permanecem as mesmas) ...
 def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[], estrategia='geral'):
     conn = None
     try:
@@ -336,12 +301,11 @@ def gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora=[])
 
 
 # --- Endpoints da API ---
-
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    # Usa o método render_template, que procura na pasta 'templates'
+    return render_template('index.html')
 
-# ... (a rota /get-monte-carlo-game permanece a mesma) ...
 @app.route('/get-monte-carlo-game')
 def get_monte_carlo_game():
     loteria = request.args.get('loteria', 'megasena', type=str)
@@ -353,7 +317,6 @@ def get_monte_carlo_game():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# NOVA ROTA PARA A ESTRATÉGIA PREMIUM
 @app.route('/get-sorte-analisada-premium-game')
 def get_sorte_analisada_premium_game():
     loteria = request.args.get('loteria', 'megasena', type=str)
@@ -385,7 +348,6 @@ def get_games(count):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ... (as rotas /submit-feedback, /get-stats, e /get-ultimos-resultados permanecem as mesmas) ...
 @app.route('/submit-feedback', methods=['POST'])
 def submit_feedback():
     conn = None
