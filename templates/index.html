@@ -1,4 +1,4 @@
-<!-- CÓDIGO COMPLETO E FINAL para index.html (deve estar na pasta /templates) -->
+<!-- CÓDIGO COMPLETO E FINAL para index.html -->
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -21,15 +21,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gere palpites inteligentes para a Mega-Sena, Quina, Lotofácil e Dia de Sorte com base em estatísticas e análises. Use nossos filtros ou a simulação Monte Carlo para aumentar suas chances!">
     <title>Sorte Analisada - Gerador de Palpites para Loterias</title>
-    <link rel="icon" href="/images/logotipo.png" type="image/png">
+    <!-- MUDANÇA: Caminho do ícone corrigido para apontar para a pasta static -->
+    <link rel="icon" href="/static/images/logotipo.png" type="image/png">
     
     <!-- ============== FONTES E SCRIPTS EXTERNOS ============== -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Biblioteca para os gráficos de estatísticas -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!-- Biblioteca para os ícones (WhatsApp, redes sociais) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
     <style>
@@ -142,7 +143,8 @@
         .botao-copiar:hover { color: var(--cor-dourado); transform: scale(1.1); }
         .botao-copiar .fa-check { color: var(--cor-sucesso); }
         .spinner {
-            width: 50px; height: 50px; background-image: url('/images/trevodourado.png');
+            /* MUDANÇA: Caminho do spinner corrigido */
+            width: 50px; height: 50px; background-image: url('/static/images/trevodourado.png');
             background-size: contain; background-repeat: no-repeat;
             animation: spin 1.5s linear infinite; margin: 2rem auto; border: none; 
         }
@@ -169,7 +171,8 @@
         .artigo-blog { margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
         .footer-section h2::before {
             content: ''; display: inline-block; width: 24px; height: 24px;
-            background-image: url('/images/trevodourado.png'); background-size: contain;
+            /* MUDANÇA: Caminho do trevo no ::before corrigido */
+            background-image: url('/static/images/trevodourado.png'); background-size: contain;
             background-repeat: no-repeat; margin-right: 12px; vertical-align: middle;
         }
         #termos h2::before, #politica h2::before, #contato h2::before, #sobre h2::before {
@@ -235,7 +238,8 @@
     <div class="container">
 
         <header id="gerador">
-            <img src="/images/logotipo.png" alt="Logotipo Sorte Analisada" class="imagem-ouro" loading="lazy">
+             <!-- MUDANÇA: Caminho do logotipo corrigido -->
+            <img src="/static/images/logotipo.png" alt="Logotipo Sorte Analisada" class="imagem-ouro" loading="lazy">
             <h1>Sorte Analisada</h1>
             <p class="subtitulo">Acredite na sua sorte!</p>
             <p id="loteria-selecionada" class="loteria-display"></p>
@@ -262,20 +266,22 @@
                 </div>
                 <div class="controle-item">
                     <label for="numeros-ancora">Nº da sorte</label>
-                    <img src="/images/trevodourado.png" alt="Trevo da Sorte">
+                    <!-- MUDANÇA: Caminho do trevo da sorte corrigido -->
+                    <img src="/static/images/trevodourado.png" alt="Trevo da Sorte">
                     <input type="text" id="numeros-ancora" class="seletor-custom" placeholder="Ex: 7" 
                            style="width: 80px;" maxlength="2" pattern="\d*">
                 </div>
                 <div class="controle-item">
                     <label for="estrategia-select">Estratégia:</label>
+                    <!-- MUDANÇA: Ordem das estratégias alterada -->
                     <select id="estrategia-select" class="seletor-custom" onchange="handleEstrategiaChange()">
-                        <option value="sorteanalisadapremium">🎯 Sorte Analisada (Premium)</option>
                         <option value="geral">Frequência Geral</option>
                         <option value="quentes">Dezenas Quentes</option>
                         <option value="mistas">Dezenas Mistas</option>
                         <option value="frias">Dezenas Frias</option>
                         <option value="aleatorio">Aleatório (Surpresinha)</option>
                         <option value="montecarlo">Simulação de Monte Carlo</option>
+                        <option value="sorteanalisadapremium">🎯 Sorte Analisada (Premium)</option>
                     </select>
                 </div>
             </section>
@@ -309,10 +315,9 @@
             
             <section id="sobre-filtros" class="footer-section">
                  <h2>Entenda Nossos Métodos</h2>
-                <!-- ADICIONE A EXPLICAÇÃO DA NOVA ESTRATÉGIA AQUI -->
+                 <!-- MUDANÇA: Adicionada a explicação da nova estratégia -->
                 <h3>Com a Estratégia: 🎯 Sorte Analisada (Premium)</h3>
                 <p>Nossa estratégia mais avançada. Ela não olha apenas para os números mais sorteados, mas para o "DNA de um bilhete vencedor". Analisamos o equilíbrio entre dezenas pares e ímpares, a soma total dos números e sua distribuição pelo volante em todo o histórico de resultados. Com base nesse perfil, geramos centenas de jogos candidatos, filtramos todos que já foram sorteados, e pontuamos os restantes para encontrar o palpite único que seja estatisticamente forte e estruturalmente balanceado, oferecendo uma aposta inédita e inteligente.</p>
-                
                 <h3>Com a Estratégia: Simulação de Monte Carlo</h3>
                 <p>Imagine realizar milhares de sorteios em segundos para ver quais números se destacam. É isso que a Simulação de Monte Carlo faz. Usando processamento computacional, ela analisa probabilidades em larga escala para gerar um palpite único e sofisticado, ideal para quem busca uma aposta diferenciada e com análise profunda.</p>
                 <h3>Com a Estratégia: Frequência Geral</h3>
@@ -430,7 +435,8 @@
                 <p style="margin-bottom: 2rem; text-align: center; line-height: 1.8;">O Sorte Analisada cresce graças ao apoio de marcas que acreditam na nossa missão de levar entretenimento e análise de qualidade para apostadores de todo o Brasil. Agradecemos a confiança por fazerem parte desta jornada.</p>
                 <div class="partner-ad-container">
                     <h3 class="partner-title">SISTEMAS IDEAL, AUTOMAÇÃO COMERCIAL</h3>
-                    <img src="/images/Ideal.jpg" alt="Logo da Sistemas Ideal Automação Comercial" class="partner-logo">
+                    <!-- MUDANÇA: Caminho do logo do parceiro corrigido -->
+                    <img src="/static/images/Ideal.jpg" alt="Logo da Sistemas Ideal Automação Comercial" class="partner-logo">
                     <p class="partner-text">Automação Comercial | Sat | Erp |<br>Pontos de Vendas em geral</p>
                     <a href="https://wa.me/5511962779427" class="partner-cta-button" target="_blank">
                         <i class="fa-brands fa-whatsapp"></i>
@@ -452,10 +458,12 @@
             <section id="doacao" class="footer-section">
                 <h2>Apoie o Projeto</h2>
                 <p>Se nossos palpites e análises foram úteis para você, considere apoiar o projeto com uma doação via PIX. Sua contribuição é fundamental para que possamos continuar oferecendo esta ferramenta de forma gratuita.</p>
-                <img src="/images/placeholder-qrcode.png" alt="QR Code para doação via PIX" style="width: 180px; height: 180px; background-color: white; border: 4px solid var(--cor-dourado); border-radius: 10px; margin: 1rem auto; display: block;">
+                <!-- MUDANÇA: Caminho do QR Code corrigido -->
+                <img src="/static/images/placeholder-qrcode.png" alt="QR Code para doação via PIX" style="width: 180px; height: 180px; background-color: white; border: 4px solid var(--cor-dourado); border-radius: 10px; margin: 1rem auto; display: block;">
                 
                 <div id="feedback-area" style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
-                    <img src="/images/trevodourado.png" alt="Trevo Dourado" style="height: 60px; margin-bottom: 1rem;">
+                     <!-- MUDANÇA: Caminho do trevo dourado corrigido -->
+                    <img src="/static/images/trevodourado.png" alt="Trevo Dourado" style="height: 60px; margin-bottom: 1rem;">
                     <h4>Sua opinião nos ajuda a melhorar! O site foi útil para você?</h4>
                     <div style="margin-top: 1rem;">
                         <button class="botao-feedback" onclick="submitFeedback('sim')">👍 Sim</button>
@@ -517,6 +525,7 @@
         </footer>
     </div>
 
+    <!-- O SCRIPT JAVASCRIPT PERMANECE O MESMO DA RESPOSTA ANTERIOR -->
     <script>
         let loteriaAtual = 'megasena';
         const lotteryConfig = {
