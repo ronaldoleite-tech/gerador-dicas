@@ -1,5 +1,3 @@
-<!-- CÓDIGO COMPLETO E FINAL para index.html -->
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -19,9 +17,8 @@
     <!-- ============== METADADOS E SEO ============== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gere palpites inteligentes para a Mega-Sena, Quina, Lotofácil e Dia de Sorte com base em estatísticas e análises. Use nossos filtros ou a simulação Monte Carlo para aumentar suas chances!">
-    <title>Sorte Analisada - Gerador de Palpites para Loterias</title>
-    <!-- MUDANÇA: Caminho do ícone corrigido para apontar para a pasta static -->
+    <meta name="description" content="Gere palpites inteligentes para a Mega-Sena, Quina, Lotofácil e Dia de Sorte com base em estatísticas e análises de dados. Use nossos filtros ou a simulação de Monte Carlo para aumentar suas chances!">
+    <title>Sorte Analisada - Gerador de Palpites para Loterias: Mega-Sena, Quina, Lotofácil e Dia de Sorte. </title>
     <link rel="icon" href="/static/images/logotipo.png" type="image/png">
     
     <!-- ============== FONTES E SCRIPTS EXTERNOS ============== -->
@@ -339,6 +336,22 @@
                 </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
+             
+            <section id="estatisticas" class="footer-section">
+               <h2>Estatísticas dos Sorteios</h2>
+               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
+               <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
+                <div class="grupo-botoes" style="margin-bottom: 2rem;">
+                    <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
+                </div>
+                <div id="area-estatisticas" style="display: none;">
+                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3><canvas id="grafico-mais-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3><canvas id="grafico-menos-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
+                </div>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
 
             <section id="jogorresponsavel" class="footer-section">
                 <h2>Nosso Compromisso com o Jogo Responsável</h2>
@@ -422,22 +435,6 @@
                     <p> No fim, a história se repete: os números que criaram um milionário azarado na ficção, na vida real espalharam a sorte para milhares. Uma prova de que o universo tem um ótimo senso de humor. 😄</p>
                     </div>
 
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-            <section id="estatisticas" class="footer-section">
-               <h2>Estatísticas dos Sorteios</h2>
-               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
-               <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
-                <div class="grupo-botoes" style="margin-bottom: 2rem;">
-                    <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
-                </div>
-                <div id="area-estatisticas" style="display: none;">
-                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3><canvas id="grafico-mais-sorteados"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3><canvas id="grafico-menos-sorteados"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
-                </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
