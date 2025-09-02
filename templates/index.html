@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
 
     <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-PPB7LRV5SJ');
-        </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PPB7LRV5SJ');
+    </script>
 
     <!-- ============== METADADOS E SEO ============== -->
     <meta charset="UTF-8">
@@ -140,7 +138,6 @@
         .botao-copiar:hover { color: var(--cor-dourado); transform: scale(1.1); }
         .botao-copiar .fa-check { color: var(--cor-sucesso); }
         .spinner {
-            /* MUDANÇA: Caminho do spinner corrigido */
             width: 50px; height: 50px; background-image: url('/static/images/trevodourado.png');
             background-size: contain; background-repeat: no-repeat;
             animation: spin 1.5s linear infinite; margin: 2rem auto; border: none; 
@@ -168,7 +165,6 @@
         .artigo-blog { margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
         .footer-section h2::before {
             content: ''; display: inline-block; width: 24px; height: 24px;
-            /* MUDANÇA: Caminho do trevo no ::before corrigido */
             background-image: url('/static/images/trevodourado.png'); background-size: contain;
             background-repeat: no-repeat; margin-right: 12px; vertical-align: middle;
         }
@@ -291,9 +287,9 @@
             <a href="#sobre">Sobre</a>
             <a href="#sobre-filtros">Métodos</a> 
             <a href="#ultimos-resultados">Últimos Resultados</a>
-            <a href="#jogorresponsavel">Jogo Responsável</a>
-            <a href="#blog">Curiosidades</a>
             <a href="#estatisticas">Estatísticas</a>
+            <a href="#jogorresponsavel">Jogo Responsável</a>
+            <a href="/blog">Blog</a> <!-- Alterado para link externo -->
             <a href="#parceiros">Parceiros</a>
             <a href="#contato">Contato</a>
             <a href="#termos">Termos</a>
@@ -312,7 +308,7 @@
                 <h3>Com a Estratégia: Frequência Geral</h3>
                 <p>Nosso sistema analisa todo o histórico de resultados da loteria selecionada. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, aumentando a probabilidade de serem escolhidos para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm uma tendência histórica a aparecer.</p>
                 <h3>Com a Estratégia: Dezenas Quentes, Mistas e Frias</h3>
-                <p>Esta estratégia foca apenas nos resultados mais recentes (últimos 100 concursos) para apelar a diferentes perfis de apostador. Você pode escolher entre:<br>
+                <p>Esta estratégia foca apenas nos resultados mais recentes (últimos 100 concursos) para apelir a diferentes perfis de apostador. Você pode escolher entre:<br>
                 <strong>&bull; Dezenas "Quentes":</strong> O sistema prioriza os números que estão saindo com alta frequência recentemente. A ideia é "aproveitar a maré" e ter uma sugestão do que está em alta.<br>
                 <strong>&bull; Dezenas "Mistas":</strong> O equilíbrio perfeito. O sistema seleciona metade das dezenas do grupo das "Quentes" e a outra metade do grupo das "Frias". Ideal para quem busca uma sugestão balanceada, combinando tendências com números "atrasados".<br>
                 <strong>&bull; Dezenas "Frias":</strong> O sistema dá preferência aos números que não são sorteados há muito tempo. A sugestão aqui é que eles estão "atrasados" e uma hora terão que sair.</p>
@@ -356,85 +352,6 @@
             <section id="jogorresponsavel" class="footer-section">
                 <h2>Nosso Compromisso com o Jogo Responsável</h2>
                 <p>Apostar deve ser uma fonte de diversão, não uma necessidade. Encare como lazer, defina limites claros de gastos e entenda que as probabilidades de ganho são remotas. A maior vitória é jogar com consciência e controle. Se o jogo deixar de ser divertido, não hesite em procurar ajuda.</p>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-
-            <section id="blog" class="footer-section">
-                <h2>Curiosidades sobre as Loterias</h2>
-
-                     <div class="artigo-blog">
-                    <h3>Sorte Analisada: jogue com estratégia e aumente suas chances. </h3>
-                    <p>Se você sempre apostou na loteria apenas com a intuição, chegou a hora de dar um <strong>upgrade na sorte!</strong> O Sorte Analisada nasceu para transformar palpites em estratégias, usando estatísticas e análises de dados de jogos anteriores. Nada de chutar no escuro – aqui você aposta com <strong>inteligência</strong>.</p>
-                    <br>
-                    <p>Nos bastidores, o site roda simulações de Monte Carlo, analisa padrões históricos e até combina dezenas “quentes” e “frias”. Isso significa que os jogos sugeridos não são aleatórios qualquer: eles carregam um <strong>tempero extra de lógica</strong>, aumentando as chances de você chegar mais perto do prêmio. </p>
-                    <br>
-                    <p>E não pense que isso tira a emoção! Muito pelo contrário: cada jogo é como um quebra-cabeça que equilibra <strong>probabilidade e sorte</strong>. O sistema descarta combinações improváveis, valoriza padrões que já deram resultado e entrega palpites que fazem sentido para quem quer <strong>jogar gastando menos e sonhando mais</strong>.</p>
-                    <br>
-                    <p>Nosso objetivo é simples: se um ou vários usuários ganharem o prêmio principal com a ajuda do site, <strong>a missão do projeto estará cumprida</strong>. Afinal, aqui a sorte é analisada, mas a vitória continua sendo sua. Bora <strong>apostar com estratégia</strong>? 🎲</p>
-                    </div>
-
-                    <div class="artigo-blog">
-                    <h3><strong>Cardano</strong>: O Gênio do Acaso que Desvendou os Dados antes das Loterias</h3>
-                    <p>Antes de existirem sites de dicas lotéricas, havia um homem do Renascimento, Girolamo Cardano. Médico, astrólogo, inventor e, acima de tudo, um <strong>matemático brilhante</strong>, Cardano foi uma mente inquieta que viveu no século XVI. Sua vida foi uma mistura de genialidade e controvérsia, mas seu legado para o mundo das probabilidades é imensurável. Ele foi um dos primeiros a levar a sério a ideia de medir o incerto.</p>
-                    <br>
-                    <p>Em uma época em que os <strong>jogos de azar</strong> eram vistos apenas como diversão ou vício, Cardano os enxergou como um problema matemático a ser decifrado. Ele escreveu "Liber de Ludo Aleae" (Livro sobre os Jogos de Azar), onde, pela primeira vez, tentou aplicar cálculos para prever resultados. Ele estudou os dados não com superstição, mas com lógica, estabelecendo as fundações do que viria a ser a <strong>teoria das probabilidades</strong>.</p>
-                    <br>
-                    <p>O trabalho pioneiro de Cardano é a base de tudo o que fazemos hoje. Quando um algoritmo moderno calcula as chances de um número ser sorteado ou analisa a frequência de dezenas, está usando princípios que ele ajudou a criar. Ele nos mostrou que mesmo na aparente <strong>aleatoriedade</strong> existem padrões e leis matemáticas. Sua grande sacada foi entender que o acaso pode ser, até certo ponto, medido.</p>
-                    <br>
-                    <p>Portanto, da próxima vez que você analisar um gráfico de probabilidades ou considerar uma dica baseada em <strong>estatísticas</strong>, lembre-se de Girolamo Cardano. Ele foi o visionário que olhou para um jogo de dados e viu não só sorte ou azar, mas um universo de possibilidades esperando para ser calculado. Um verdadeiro pai da <strong>estratégia</strong>, muito antes das loterias modernas sequer existirem. 📊</p>
-                    </div>
-
-                <div class="artigo-blog">
-                    <h3>Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar?</h3>
-                    <p>Todo brasileiro já se imaginou milionário, conferindo aquele bilhete premiado. Mas, diante de tantas opções, qual loteria oferece o caminho "menos difícil" para a fortuna? Para especialistas em probabilidades "não existe jogo fácil, mas sim o menos impossível".</p>
-                    <p>Esqueça a Mega-Sena por um instante. A grande campeã em probabilidade é a <strong>Dia de Sorte</strong>. Com uma aposta simples, sua chance de levar o prêmio máximo é de <strong>1 em 2,6 milhões</strong>. Parece muito? Para efeito de comparação, a chance na Mega-Sena é de 1 em 50 milhões! Isso torna a Dia de Sorte quase 20 vezes mais "fácil".</p>
-                    <p>No entanto, não se engane, são "jogos de azar por um motivo muito simples: a chance de você perder é sempre maior". A emoção é o grande motor, mas é crucial entender a ordem dos fatores que levam a um prêmio: <strong>1º Sorte, 2º Dinheiro (para mais apostas) e 3º Estratégia</strong>.</p>
-                    <p><strong>No Sorte Analisada</strong>, nós te ajudamos com o terceiro fator, oferecendo as melhores ferramentas de <strong>estratégia</strong>. Mas lembre-se sempre: a <strong>sorte</strong> é a grande estrela do show! 🍀</p>
-                </div>
-
-                <div class="artigo-blog">
-                    <h3>Quina: Seis Chances de Transformar Sua Vida Toda Semana! </h3>
-                    <p><strong>A Quina</strong>, lançada em 1994, é uma das loterias mais queridas pelos brasileiros, oferecendo <strong>seis chances de ganhar por semana</strong> – de segunda a sábado. O prêmio principal é para quem acerta as 5 dezenas entre 1 e 80, mas também há prêmios para quem acerta 2, 3 ou 4 números.</p>
-                    <p>A Quina uma das loterias mais <strong>tradicionais</strong> do país. Com sorteios regulares e valores de apostas acessíveis, ela se tornou uma das favoritas dos apostadores. Além do prêmio milionário, a Quina também tem a possibilidade de acumular, deixando o prêmio ainda mais tentador.</p>
-                    <p>Sua mecânica simples e a frequência dos sorteios fazem dela uma oportunidade constante para quem <strong>sonha</strong> em mudar de vida. 🍀</p>
-                </div>
-
-                <div class="artigo-blog">
-                    <h3>O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta</h3>
-                    <p>Sabia que apostar com mais dezenas na Mega-Sena não só aumenta suas chances, mas pode te dar vários prêmios de uma só vez? É o chamado desdobramento: uma única aposta com mais números funciona como um combo, contendo várias combinações premiadas. Na prática, seus ganhos se multiplicam.</p>
-                    <p><strong>Exemplo: Você joga com 7 números.</strong></p>
-                    <ul style="text-align: left; padding-left: 20px; margin: 0.5rem 0;">
-                        <li>Se acertar os 6 números sorteados, você ganha 1 prêmio da Sena + 6 prêmios da Quina.</li>
-                        <li>Se acertar 5 números, você ganha 2 prêmios da Quina + 5 prêmios da Quadra.</li>
-                    </ul>
-                    <p>A lógica cresce: acertar a Sena com 10 números paga o prêmio principal mais 24 Quinas e 90 Quadras! Apostar com mais dezenas custa mais caro, mas é a estratégia mais poderosa para turbinar seus ganhos, especialmente em bolões. 🤞</p>
-                </div>
-
-                 <div class="artigo-blog">
-                    <h3>Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas</h3>
-                    <p>A chance de ganhar na loteria é mínima, mas nas telas a sorte parece bem mais generosa! Relembre alguns personagens que desafiaram as probabilidades e ficaram milionários da noite para o dia.</p>
-                    <ul style="text-align: left; padding-left: 20px; margin: 0.5rem 0;">
-                        <li><strong>Até que a Sorte nos Separe</strong> - filme de comédia brasileiro de 2012, Tino (Leandro Hassum) ganha R$ 100 milhões e nos ensina, com muito humor, como não administrar uma fortuna.</li>
-                        <li><strong>Fina Estampa</strong> - novela de 2011,  a persistente "Pereirão" prova que a teimosia compensa, apostando sempre nos mesmos números até faturar R$ 50 milhões.</li>
-                        <li><strong>'Lost'</strong> - A série de 2004, tem o caso mais famoso. Hurley ganha com a sequência 4-8-15-16-23-42, que se tornou tão icônica que fãs apostaram nela na vida real e acabaram sendo premiados de verdade!</li>
-                        <li><strong>O Pagamento (Paycheck, 2003)</strong>, estrelado por Ben Affleck. No final deste filme de ficção científica, a personagem de Affleck recebe um bilhete de loteria de um futuro que foi deixado para ele.</li>
-                        <li><strong>Atraídos Pelo Destino (It Could Happen to You)</strong>, de 1994. Onde Nicolas Cage ganha na loteria, Na trama, um policial chamado Charlie Lang (Cage) promete metade de um possível prémio da lotaria a uma garçonete (Bridget Fonda) como gorjeta, e ele ganha o dinheiro.</li>
-                        <li><strong>Chuva de Milhões (Brewster's Millions)</strong>, é um filme de comédia norte-americano de 1985, estrelado por Richard Pryor e dirigido por Walter Hill. (Richard Pryor) Montgomery Brewster, é um pobre jogador de beisebol, que descobre ser o único parente vivo do extravagante multimilionário Rupert Horn (Hume Cronyn). Monty tem a oportunidade de herdar 300 milhões de dólares, mas apenas se conseguir gastar 30 Milhões de dólares em um único mês, sem obter nenhum bem. Caso fracasse, retornará à pobreza. Este filme incrível não tem os números da sorte, mas faz você imaginar como seria, caso seja o grande sortudo e resolva sair por aí gastando tudo!</li>
-                    </ul>
-                    <p>Essas histórias nos lembram do poder de um simples bilhete. Gostou das dicas de filmes? Então, agora e só preparar a pipoca! 🍿</p>
-                </div>
-
-                <div class="artigo-blog">
-                    <h3>Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena</h3>
-                    <p>Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada no concurso 2.720 da Mega-Sena, para o espanto de fãs em todo o Brasil.</p>
-                    <br>
-                    <p>A combinação sorteada foi <strong>08-15-16-23-42-43</strong>, quase idêntica à sequência <strong>4-8-15-16-23-42</strong> que assombrava o personagem Hurley. Na ficção, ele usa os números para ficar milionário, mas acaba atraindo uma série de tragédias, convencendo-se de que são amaldiçoados.</p>
-                    <br>
-                    <p> E na vida real? A "maldição" de Hurley parece ter atacado: o prêmio principal acumulou em R$ 37 milhões! No entanto, a sorte foi distribuída de outra forma: um número impressionante de apostas <strong>(2.967 na quina e 6.884 na quadra)</strong> foi premiado, provavelmente por fãs que arriscaram a famosa sequência.</p>
-                    <br>
-                    <p> No fim, a história se repete: os números que criaram um milionário azarado na ficção, na vida real espalharam a sorte para milhares. Uma prova de que o universo tem um ótimo senso de humor. 😄</p>
-                    </div>
-
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
@@ -504,7 +421,7 @@
                 <strong>1. Coleta de Dados</strong><br>
                 Nós não coletamos informações de identificação pessoal dos nossos usuários, como nome, e-mail, endereço ou número de telefone. O uso da nossa ferramenta de geração de palpites é completamente anônimo.<br><br>
                 <strong>2. Cookies e Dados de Navegação</strong><br>
-                Podemos coletar dados não pessoais para fins de análise e melhoria do serviço através de ferramentas como o Google Analytics. O site também pode utilizar cookies para melhorar a experiência do usuário. Você pode desativar os cookies nas configurações do seu navegador.<br><br>
+                Podemos coletar dados não pessoais para fins de análise e melhoria do serviço através de ferramentas como o Google Analytics. O site também pode utilizar cookies para melhorar a experiência do usuario. Você pode desativar os cookies nas configurações do seu navegador.<br><br>
                 <strong>3. Dados da Pesquisa de Satisfação</strong><br>
                 Na seção "Apoie o Projeto", oferecemos uma pesquisa opcional de "Sim/Não". A resposta é registrada de forma anônima em nosso banco de dados com o único propósito de avaliar a satisfação geral dos usuários.<br><br>
                 O uso continuado de nosso site será considerado como aceitação de nossas práticas em torno de privacidade. Se você tiver alguma dúvida, entre em contato conosco.</p>

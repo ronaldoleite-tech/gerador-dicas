@@ -306,6 +306,10 @@ def index():
     # Usa o método render_template, que procura na pasta 'templates'
     return render_template('index.html')
 
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
+
 @app.route('/get-monte-carlo-game')
 def get_monte_carlo_game():
     loteria = request.args.get('loteria', 'megasena', type=str)
