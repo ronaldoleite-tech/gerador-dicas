@@ -99,10 +99,28 @@
         .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
         .voltar-topo:hover { color: var(--cor-dourado-hover); }
         .artigo-blog { margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
-        .artigo-blog h3 { color: var(--cor-dourado); margin-bottom: 1rem; }
+        .artigo-blog h3 { color: var(--cor-dourado); margin-bottom: 1rem; cursor: pointer; transition: color .2s; }
+        .artigo-blog h3:hover { color: var(--cor-dourado-hover); }
         .artigo-blog p { font-size: .95rem; line-height: 1.7; text-align: justify; margin-bottom: 1rem; }
         .artigo-blog ul { text-align: left; padding-left: 20px; margin: 0.5rem 0; }
         .artigo-blog li { margin-bottom: 0.5rem; }
+        .artigo-conteudo { display: none; margin-top: 1rem; }
+        .artigo-expandido { display: block; }
+        .artigo-resumo { color: #bbdefb; font-style: italic; margin-top: 0.5rem; font-size: 0.9rem; }
+        .partner-ad-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid var(--cor-divisoria-ouro); }
+        .partner-title { font-size: 1.3rem; font-weight: 700; color: var(--cor-dourado); text-transform: uppercase; margin-bottom: 1rem; line-height: 1.4; }
+        .partner-logo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .partner-text { font-size: 1.2rem; font-weight: 500; color: #FFF; line-height: 1.6; }
+        .partner-cta-button { display: inline-flex; align-items: center; gap: 10px; background: var(--cor-whatsapp); color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: transform .2s, box-shadow .2s; margin-top: 0.5rem; }
+        .partner-cta-button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(37, 211, 102, 0.5); }
+        .partner-social-link { display: inline-flex; align-items: center; gap: 10px; color: var(--cor-texto); text-decoration: none; margin-top: 1rem; font-weight: 500; transition: color .2s; }
+        .partner-social-link i { font-size: 1.5rem; color: var(--cor-instagram); }
+        .partner-social-link:hover { color: var(--cor-instagram); }
+        .cta-gerador { background: linear-gradient(135deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; padding: 1rem 2rem; margin: 2rem 0; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: bold; font-size: 1.1rem; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3); }
+        .cta-gerador:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5); }
+        .destaque-gerador { background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05)); border: 2px solid var(--cor-dourado); padding: 2rem; border-radius: 16px; margin: 2rem 0; text-align: center; }
+        .destaque-gerador h2 { color: var(--cor-dourado); margin-bottom: 1rem; font-size: 1.8rem; }
+        .destaque-gerador p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; }
         
         @media (max-width: 600px) {
             .artigo-blog p { text-align: left !important; }
@@ -121,76 +139,121 @@
             <p class="subtitulo">Curiosidades e dicas sobre o mundo das loterias</p>
         </header>
 
+        
+
         <nav class="nav-interna">
             <a href="/">Página Principal</a>
             <a href="#artigos">Artigos</a>
+            <a href="#parceiros">Apoiadores</a>
             <a href="#sobre">Sobre</a>
             <a href="#contato">Contato</a>
         </nav>
 
         <main id="artigos">
             <div class="artigo-blog">
-                <h3>Sorte Analisada: jogue com estratégia e aumente suas chances.</h3>
-                <p>Se você sempre apostou na loteria apenas com a intuição, chegou a hora de dar um <strong>upgrade na sorte!</strong> O Sorte Analisada nasceu para transformar palpites em estratégias, usando estatísticas e análises de dados de jogos anteriores. Nada de chutar no escuro – aqui você aposta com <strong>inteligência</strong>.</p>
-                <p>Nos bastidores, o site roda simulações de Monte Carlo, analisa padrões históricos e até combina dezenas "quentes" e "frias". Isso significa que os jogos sugeridos não são aleatórios qualquer: eles carregam um <strong>tempero extra de lógica</strong>, aumentando as chances de você chegar mais perto do prêmio.</p>
-                <p>E não pense que isso tira a emoção! Muito pelo contrário: cada jogo é como um quebra-cabeça que equilibra <strong>probabilidade e sorte</strong>. O sistema descarta combinações improváveis, valoriza padrões que já deram resultado e entrega palpites que fazem sentido para quem quer <strong>jogar gastando menos e sonhando mais</strong>.</p>
-                <p>Nosso objetivo é simples: se um ou vários usuários ganharem o prêmio principal com a ajuda do site, <strong>a missão do projeto estará cumprida</strong>. Afinal, aqui a sorte é analisada, mas a vitória continua sendo sua. Bora <strong>apostar com estratégia</strong>? 🎲</p>
+                <img src="/static/images/blog1.jpeg" alt="Estratégia" style="height: 90px; margin-right: 10px; vertical-align: middle;">
+                <h3 onclick="toggleArtigo('artigo1')">Sorte Analisada: jogue com estatísticas e estratégia. <i class="fa-solid fa-chevron-down"></i></h3>
+                <p class="artigo-resumo">Se você sempre apostou na loteria apenas com a intuição, chegou a hora de dar um upgrade na sorte! O Sorte Analisada nasceu para transformar palpites em estratégias...</p>
+                <div class="artigo-conteudo" id="artigo1">
+                    <p>Se você sempre apostou na loteria apenas com a intuição, chegou a hora de dar um <strong>upgrade na sorte!</strong> O Sorte Analisada nasceu para transformar palpites em estratégias, usando estatísticas e análises de dados de jogos anteriores. Nada de chutar no escuro – aqui você aposta com <strong>inteligência</strong>.</p>
+                    <p>Nos bastidores, o site roda simulações de Monte Carlo, analisa padrões históricos e até combina dezenas "quentes" e "frias". Isso significa que os jogos sugeridos não são aleatórios qualquer: eles carregam um <strong>tempero extra de lógica</strong>, aumentando as chances de você chegar mais perto do prêmio.</p>
+                    <p>E não pense que isso tira a emoção! Muito pelo contrário: cada jogo é como um quebra-cabeça que equilibra <strong>probabilidade e sorte</strong>. O sistema descarta combinações improváveis, valoriza padrões que já deram resultado e entrega palpites que fazem sentido para quem quer <strong>jogar gastando menos e sonhando mais</strong>.</p>
+                    <p>Nosso objetivo é simples: se um ou vários usuários ganharem o prêmio principal com a ajuda do site, <strong>a missão do projeto estará cumprida</strong>. Afinal, aqui a sorte é analisada, mas a vitória continua sendo sua. Bora <strong>apostar com estratégia</strong>? 🎲</p>
+                </div>
             </div>
 
             <div class="artigo-blog">
-                <h3><strong>Cardano</strong>: O Gênio do Acaso que Desvendou os Dados antes das Loterias</h3>
-                <p>Antes de existirem sites de dicas lotéricas, havia um homem do Renascimento, Girolamo Cardano. Médico, astrólogo, inventor e, acima de tudo, um <strong>matemático brilhante</strong>, Cardano foi uma mente inquieta que viveu no século XVI. Sua vida foi uma mistura de genialidade e controvérsia, mas seu legado para o mundo das probabilidades é imensurável. Ele foi um dos primeiro a levar a sério a ideia de medir o incerto.</p>
-                <p>Em uma época em que os <strong>jogos de azar</strong> eram vistos apenas como diversão ou vício, Cardano os enxergou como um problema matemático a ser decifrado. Ele escreveu "Liber de Ludo Aleae" (Livro sobre os Jogos de Azar), onde, pela primeira vez, tentou aplicar cálculos para prever resultados. Ele estudou os dados não com superstição, mas com lógica, estabelecendo as fundações do que viria a ser a <strong>teoria das probabilidades</strong>.</p>
-                <p>O trabalho pioneiro de Cardano é a base de tudo o que fazemos hoje. Quando um algoritmo moderno calcula as chances de um número ser sorteado ou analisa a frequência de dezenas, está usando princípios que ele ajudou a criar. Ele nos mostrou que mesmo na aparente <strong>aleatoriedade</strong> existem padrões e leis matemáticas. Sua grande sacada foi entender que o acaso pode ser, até certo ponto, medido.</p>
-                <p>Portanto, da próxima vez que você analisar um gráfico de probabilidades ou considerar uma dica baseada em <strong>estatísticas</strong>, lembre-se de Girolamo Cardano. Ele foi o visionário que olhou para um jogo de dados e viu não só sorte ou azar, mas um universo de possibilidades esperando para ser calculado. Um verdadeiro pai da <strong>estratégia</strong>, muito antes das loterias modernas sequer existirem. 📊</p>
+                <img src="/static/images/blog2.jpeg" alt="Estratégia" style="height: 90px; margin-right: 10px; vertical-align: middle;">
+                <h3 onclick="toggleArtigo('artigo2')"><strong>Cardano</strong>: O Gênio do Acaso que Desvendou os Dados antes das Loterias <i class="fa-solid fa-chevron-down"></i></h3>
+                <p class="artigo-resumo">Antes de existirem sites de dicas lotéricas, havia um homem do Renascimento, Girolamo Cardano. Médico, astrólogo, inventor e, acima de tudo, um matemático brilhante...</p>
+                <div class="artigo-conteudo" id="artigo2">
+                    <p>Antes de existirem sites de dicas lotéricas, havia um homem do Renascimento, Girolamo Cardano. Médico, astrólogo, inventor e, acima de tudo, um <strong>matemático brilhante</strong>, Cardano foi uma mente inquieta que viveu no século XVI. Sua vida foi uma mistura de genialidade e controvérsia, mas seu legado para o mundo das probabilidades é imensurável. Ele foi um dos primeiro a levar a sério a ideia de medir o incerto.</p>
+                    <p>Em uma época em que os <strong>jogos de azar</strong> eram vistos apenas como diversão ou vício, Cardano os enxergou como um problema matemático a ser decifrado. Ele escreveu "Liber de Ludo Aleae" (Livro sobre os Jogos de Azar), onde, pela primeira vez, tentou aplicar cálculos para prever resultados. Ele estudou os dados não com superstição, mas com lógica, estabelecendo as fundações do que viria a ser a <strong>teoria das probabilidades</strong>.</p>
+                    <p>O trabalho pioneiro de Cardano é a base de tudo o que fazemos hoje. Quando um algoritmo moderno calcula as chances de um número ser sorteado ou analisa a frequência de dezenas, está usando princípios que ele ajudou a criar. Ele nos mostrou que mesmo na aparente <strong>aleatoriedade</strong> existem padrões e leis matemáticas. Sua grande sacada foi entender que o acaso pode ser, até certo ponto, medido.</p>
+                    <p>Portanto, da próxima vez que você analisar um gráfico de probabilidades ou considerar uma dica baseada em <strong>estatísticas</strong>, lembre-se de Girolamo Cardano. Ele foi o visionário que olhou para um jogo de dados e viu não só sorte ou azar, mas um universo de possibilidades esperando para ser calculado. Um verdadeiro pai da <strong>estratégia</strong>, muito antes das loterias modernas sequer existirem. 📊</p>
+                </div>
             </div>
 
             <div class="artigo-blog">
-                <h3>Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar?</h3>
-                <p>Todo brasileiro já se imaginou milionário, conferindo aquele bilhete premiado. Mas, diante de tantas opções, qual loteria oferece o caminho "menos difícil" para a fortuna? Para especialistas em probabilidades "não existe jogo fácil, mas sim o menos impossível".</p>
-                <p>Esqueça a Mega-Sena por um instante. A grande campeã em probabilidade é a <strong>Dia de Sorte</strong>. Com uma aposta simples, sua chance de levar o prêmio máximo é de <strong>1 em 2,6 milhões</strong>. Parece muito? Para efeito de comparação, a chance na Mega-Sena é de 1 em 50 milhões! Isso torna a Dia de Sorte quase 20 vezes mais "fácil".</p>
-                <p>No entanto, não se engane, são "jogos de azar por um motivo muito simples: a chance de você perder é sempre maior". A emoção é o grande motor, mas é crucial entender a ordem dos fatores que levam a um prêmio: <strong>1º Sorte, 2º Dinheiro (para mais apostas) e 3º Estratégia</strong>.</p>
-                <p><strong>No Sorte Analisada</strong>, nós te ajudamos com o terceiro fator, oferecendo as melhores ferramentas de <strong>estratégia</strong>. Mas lembre-se sempre: a <strong>sorte</strong> é a grande estrela do show! 🍀</p>
+                <img src="/static/images/blog3.jpeg" alt="Estratégia" style="height: 90px; margin-right: 10px; vertical-align: middle;">
+                <h3 onclick="toggleArtigo('artigo3')">Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar? <i class="fa-solid fa-chevron-down"></i></h3>
+                <p class="artigo-resumo">Todo brasileiro já se imaginou milionário, conferindo aquele bilhete premiado. Mas, diante de tantas opções, qual loteria oferece o caminho "menos difícil" para a fortuna?</p>
+                <div class="artigo-conteudo" id="artigo3">
+                    <p>Todo brasileiro já se imaginou milionário, conferindo aquele bilhete premiado. Mas, diante de tantas opções, qual loteria oferece o caminho "menos difícil" para a fortuna? Para especialistas em probabilidades "não existe jogo fácil, mas sim o menos impossível".</p>
+                    <p>Esqueça a Mega-Sena por um instante. A grande campeã em probabilidade é a <strong>Dia de Sorte</strong>. Com uma aposta simples, sua chance de levar o prêmio máximo é de <strong>1 em 2,6 milhões</strong>. Parece muito? Para efeito de comparação, a chance na Mega-Sena é de 1 em 50 milhões! Isso torna a Dia de Sorte quase 20 vezes mais "fácil".</p>
+                    <p>No entanto, não se engane, são "jogos de azar por um motivo muito simples: a chance de você perder é sempre maior". A emoção é o grande motor, mas é crucial entender a ordem dos fatores que levam a um prêmio: <strong>1º Sorte, 2º Dinheiro (para mais apostas) e 3º Estratégia</strong>.</p>
+                    <p><strong>No Sorte Analisada</strong>, nós te ajudamos com o terceiro fator, oferecendo as melhores ferramentas de <strong>estratégia</strong>. Mas lembre-se sempre: a <strong>sorte</strong> é a grande estrela do show! 🍀</p>
+                </div>
             </div>
 
             <div class="artigo-blog">
-                <h3>Quina: Seis Chances de Transformar Sua Vida Toda Semana!</h3>
-                <p><strong>A Quina</strong>, lançada em 1994, é uma das loterias mais queridas pelos brasileiros, oferecendo <strong>seis chances de ganhar por semana</strong> – de segunda a sábado. O prêmio principal é para quem acerta as 5 dezenas entre 1 e 80, mas também há prêmios para quem acerta 2, 3 ou 4 números.</p>
-                <p>A Quina uma das loterias mais <strong>tradicionais</strong> do país. Com sorteios regulares e valores de apostas acessíveis, ela se tornou uma das favoritas dos apostadores. Além do prêmio milionário, a Quina também tem a possibilidade de acumular, deixando o prêmio ainda mais tentador.</p>
-                <p>Sua mecânica simples e a frequência dos sorteios fazem dela uma oportunidade constante para quem <strong>sonha</strong> em mudar de vida. 🍀</p>
+                <img src="/static/images/blog4.jpeg" alt="Estratégia" style="height: 90px; margin-right: 10px; vertical-align: middle;">
+                <h3 onclick="toggleArtigo('artigo4')">Quina: Seis Chances de Transformar Sua Vida Toda Semana! <i class="fa-solid fa-chevron-down"></i></h3>
+                <p class="artigo-resumo">A Quina, lançada em 1994, é uma das loterias mais queridas pelos brasileiros, oferecendo seis chances de ganhar por semana – de segunda a sábado...</p>
+                <div class="artigo-conteudo" id="artigo4">
+                    <p><strong>A Quina</strong>, lançada em 1994, é uma das loterias mais queridas pelos brasileiros, oferecendo <strong>seis chances de ganhar por semana</strong> – de segunda a sábado. O prêmio principal é para quem acerta as 5 dezenas entre 1 e 80, mas também há prêmios para quem acerta 2, 3 ou 4 números.</p>
+                    <p>A Quina uma das loterias mais <strong>tradicionais</strong> do país. Com sorteios regulares e valores de apostas acessíveis, ela se tornou uma das favoritas dos apostadores. Além do prêmio milionário, a Quina também tem a possibilidade de acumular, deixando o prêmio ainda mais tentador.</p>
+                    <p>Sua mecânica simples e a frequência dos sorteios fazem dela uma oportunidade constante para quem <strong>sonha</strong> em mudar de vida. 🍀</p>
+                </div>
             </div>
 
             <div class="artigo-blog">
-                <h3>O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta</h3>
-                <p>Sabia que apostar com mais dezenas na Mega-Sena não só aumenta suas chances, mas pode te dar vários prêmios de uma só vez? É o chamado desdobramento: uma única aposta com mais números funciona como um combo, contendo várias combinações premiadas. Na prática, seus ganhos se multiplicam.</p>
-                <p><strong>Exemplo: Você joga com 7 números.</strong></p>
-                <ul>
-                    <li>Se acertar os 6 números sorteados, você ganha 1 prêmio da Sena + 6 prêmios da Quina.</li>
-                    <li>Se acertar 5 números, você ganha 2 prêmios da Quina + 5 prêmios da Quadra.</li>
-                </ul>
-                <p>A lógica cresce: acertar a Sena com 10 números paga o prêmio principal mais 24 Quinas e 90 Quadras! Apostar com mais dezenas custa mais caro, mas é a estratégia mais poderosa para turbinar seus ganhos, especialmente em bolões. 🤞</p>
+                <img src="/static/images/blog5.jpeg" alt="Estratégia" style="height: 90px; margin-right: 10px; vertical-align: middle;">
+                <h3 onclick="toggleArtigo('artigo5')">O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta <i class="fa-solid fa-chevron-down"></i></h3>
+                <p class="artigo-resumo">Sabia que apostar com mais dezenas na Mega-Sena não só aumenta suas chances, mas pode te dar vários prêmios de uma só vez? É o chamado desdobramento...</p>
+                <div class="artigo-conteudo" id="artigo5">
+                    <p>Sabia que apostar com mais dezenas na Mega-Sena não só aumenta suas chances, mas pode te dar vários prêmios de uma só vez? É o chamado desdobramento: uma única aposta com mais números funciona como um combo, contendo várias combinações premiadas. Na prática, seus ganhos se multiplicam.</p>
+                    <p><strong>Exemplo: Você joga com 7 números.</strong></p>
+                    <ul>
+                        <li>Se acertar os 6 números sorteados, você ganha 1 prêmio da Sena + 6 prêmios da Quina.</li>
+                        <li>Se acertar 5 números, você ganha 2 prêmios da Quina + 5 prêmios da Quadra.</li>
+                    </ul>
+                    <p>A lógica cresce: acertar a Sena com 10 números paga o prêmio principal mais 24 Quinas e 90 Quadras! Apostar com mais dezenas custa mais caro, mas é a estratégia mais poderosa para turbinar seus ganhos, especialmente em bolões. 🤞</p>
+                </div>
             </div>
 
             <div class="artigo-blog">
-                <h3>Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas</h3>
-                <p>A chance de ganhar na loteria é mínima, mais nas telas a sorte parece bem mais generosa! Relembre alguns personagens que desafiaram as probabilidades e ficaram milionários da noite para o dia.</p>
-                <ul>
-                    <li><strong>Até que a Sorte nos Separe</strong> - filme de comédia brasileiro de 2012, Tino (Leandro Hassum) ganha R$ 100 milhões e nos ensina, com muito humor, como não administrar uma fortuna.</li>
-                    <li><strong>Fina Estampa</strong> - novela de 2011, a persistente "Pereirão" prova que a teimosia compensa, apostando sempre nos mesmos números até faturar R$ 50 milhões.</li>
-                    <li><strong>'Lost'</strong> - A série de 2004, tem o caso mais famoso. Hurley ganha com a sequência 4-8-15-16-23-42, que se tornou tão icônica que fãs apostaram nela na vida real e acabaram sendo premiados de verdade!</li>
-                    <li><strong>O Pagamento (Paycheck, 2003)</strong>, estrelado por Ben Affleck. No final deste filme de ficção científica, a personagem de Affleck recebe um bilhete de loteria de um futuro que foi deixado para ele.</li>
-                    <li><strong>Atraídos Pelo Destino (It Could Happen to You)</strong>, de 1994. Onde Nicolas Cage ganha na loteria, Na trama, um policial chamado Charlie Lang (Cage) promete metade de um possível prémio da lotaria a uma garçonete (Bridget Fonda) como gorjeta, e ele ganha o dinheiro.</li>
-                    <li><strong>Chuva de Milhões (Brewster's Millions)</strong>, é um filme de comédia norte-americano de 1985, estrelado por Richard Pryor e dirigido por Walter Hill. (Richard Pryor) Montgomery Brewster, é um pobre jogador de beisebol, que descobre ser o único parente vivo do extravagante multimilionário Rupert Horn (Hume Cronyn). Monty tem a oportunidade de herdar 300 milhões de dólares, mas apenas se conseguir gastar 30 Milhões de dólares em um único mês, sem obter nenhum bem. Caso fracasse, retornará à pobreza. Este filme incrível não tem os números da sorte, mas faz você imaginar como seria, caso seja o grande sortudo e resolva sair por aí gastando tudo!</li>
-                </ul>
-                <p>Essas histórias nos lembram do poder de um simples bilhete. Gostou das dicas de filmes? Então, agora e só preparar a pipoca! 🍿</p>
+                <img src="/static/images/blog6.jpeg" alt="Estratégia" style="height: 90px; margin-right: 10px; vertical-align: middle;">
+                <h3 onclick="toggleArtigo('artigo6')">Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas <i class="fa-solid fa-chevron-down"></i></h3>
+                <p class="artigo-resumo">A chance de ganhar na loteria é mínima, mais nas telas a sorte parece bem mais generosa! Relembre alguns personagens que desafiaram as probabilidades...</p>
+                <div class="artigo-conteudo" id="artigo6">
+                    <p>A chance de ganhar na loteria é mínima, mais nas telas a sorte parece bem mais generosa! Relembre alguns personagens que desafiaram as probabilidades e ficaram milionários da noite para o dia.</p>
+                    <ul>
+                        <li><strong>Até que a Sorte nos Separe</strong> - filme de comédia brasileiro de 2012, Tino (Leandro Hassum) ganha R$ 100 milhões e nos ensina, com muito humor, como não administrar uma fortuna.</li>
+                        <li><strong>Fina Estampa</strong> - novela de 2011, a persistente "Pereirão" prova que a teimosia compensa, apostando sempre nos mesmos números até faturar R$ 50 milhões.</li>
+                        <li><strong>'Lost'</strong> - A série de 2004, tem o caso mais famoso. Hurley ganha com a sequência 4-8-15-16-23-42, que se tornou tão icônica que fãs apostaram nela na vida real e acabaram sendo premiados de verdade!</li>
+                        <li><strong>O Pagamento (Paycheck, 2003)</strong>, estrelado por Ben Affleck. No final deste filme de ficção científica, a personagem de Affleck recebe um bilhete de loteria de um futuro que foi deixado para ele.</li>
+                        <li><strong>Atraídos Pelo Destino (It Could Happen to You)</strong>, de 1994. Onde Nicolas Cage ganha na loteria, Na trama, um policial chamado Charlie Lang (Cage) promete metade de um possível prémio da lotaria a uma garçonete (Bridget Fonda) como gorjeta, e ele ganha o dinheiro.</li>
+                        <li><strong>Chuva de Milhões (Brewster's Millions)</strong>, é um filme de comédia norte-americano de 1985, estrelado por Richard Pryor e dirigido por Walter Hill. (Richard Pryor) Montgomery Brewster, é um pobre jogador de beisebol, que descobre ser o único parente vivo do extravagante multimilionário Rupert Horn (Hume Cronyn). Monty tem a oportunidade de herdar 300 milhões de dólares, mas apenas se conseguir gastar 30 Milhões de dólares em um único mês, sem obter nenhum bem. Caso fracasse, retornará à pobreza. Este filme incrível não tem os números da sorte, mas faz você imaginar como seria, caso seja o grande sortudo e resolva sair por aí gastando tudo!</li>
+                    </ul>
+                    <p>Essas histórias nos lembram do poder de um simples bilhete. Gostou das dicas de filmes? Então, agora e só preparar a pipoca! 🍿</p>
+                </div>
             </div>
 
             <div class="artigo-blog">
-                <h3>Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena</h3>
-                <p>Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada no concurso 2.720 da Mega-Sena, para o espanto de fãs em todo o Brasil.</p>
-                <p>A combinação sorteada foi <strong>08-15-16-23-42-43</strong>, quase idêntica à sequência <strong>4-8-15-16-23-42</strong> que assombrava o personagem Hurley. Na ficção, ele usa os números para ficar milionário, mas acaba atraindo uma série de tragédias, convencendo-se de que são amaldiçoados.</p>
-                <p>E na vida real? A "maldição" de Hurley parece ter atacado: o prêmio principal acumulou em R$ 37 milhões! No entanto, a sorte foi distribuída de outra forma: um número impressionante de apostas <strong>(2.967 na quina e 6.884 na quadra)</strong> foi premiado, provavelmente por fãs que arriscaram a famosa sequência.</p>
-                <p>No fim, a história se repete: os números que criaram um milionário azarado na ficção, na vida real espalharam a sorte para milhares. Uma prova de que o universo tem um ótimo senso de humor. 😄</p>
+                <img src="/static/images/blog7.jpeg" alt="Estratégia" style="height: 90px; margin-right: 10px; vertical-align: middle;">
+                <h3 onclick="toggleArtigo('artigo7')">Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena <i class="fa-solid fa-chevron-down"></i></h3>
+                <p class="artigo-resumo">Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada no concurso 2.720 da Mega-Sena...</p>
+                <div class="artigo-conteudo" id="artigo7">
+                    <p>Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada no concurso 2.720 da Mega-Sena, para o espanto de fãs em todo o Brasil.</p>
+                    <p>A combinação sorteada foi <strong>08-15-16-23-42-43</strong>, quase idêntica à sequência <strong>4-8-15-16-23-42</strong> que assombrava o personagem Hurley. Na ficção, ele usa os números para ficar milionário, mas acaba atraindo uma série de tragédias, convencendo-se de que são amaldiçoados.</p>
+                    <p>E na vida real? A "maldição" de Hurley parece ter atacado: o prêmio principal acumulou em R$ 37 milhões! No entanto, a sorte foi distribuída de outra forma: um número impressionante de apostas <strong>(2.967 na quina e 6.884 na quadra)</strong> foi premiado, provavelmente por fãs que arriscaram a famosa sequência.</p>
+                    <p>No fim, a história se repete: os números que criaram um milionário azarado na ficção, na vida real espalharam a sorte para milhares. Uma prova de que o universo tem um ótimo senso de humor. 😄</p>
+                </div>
+            </div>
+            
+            <div class="artigo-blog">
+                <img src="/static/images/blog8.jpeg" alt="Estratégia" style="height: 90px; margin-right: 10px; vertical-align: middle;">
+                <h3 onclick="toggleArtigo('artigo8')">IA e Loterias: Será que o Bicho Vai Pegar… ou Vai Dar Zebra?<i class="fa-solid fa-chevron-down"></i></h3>
+                <p class="artigo-resumo">A Inteligência Artificial está revolucionando o mundo, da medicina aos carros autônomos, e é natural que alguém pense: "Epa! Será que ela não pode me ajudar a ganhar...</p>
+                <div class="artigo-conteudo" id="artigo8">
+                    <p>A Inteligência Artificial está revolucionando o mundo, da medicina aos carros autônomos, e é natural que alguém pense: "Epa! Será que ela não pode me ajudar a ganhar na Mega-Sena?" A ideia é tentadora: um supercomputador analisando todos os resultados passados, encontrando padrões secretos e cuspindo os números da sorte. Mas segura a emoção aí! Vamos desvendar esse mistério. </p>
+                    <p>A verdade é que a IA pode, sim, ser uma aliada divertida para quem gosta de loterias. Ela é incrível para analisar montanhas de dados históricos, identificar quais números são sorteados com mais frequência (os "queridinhos"), quais pares ou sequências aparecem juntos e até sugerir combinações que gerem uma distribuição estatisticamente mais equilibrada no volante. É como ter um consultor de apostas ultra-rápido e que não dorme nunca.</p>
+                    <p><strong>Porém, e é um "porém" gigante:</strong> loterias são, por definição, jogos de <strong>azar puro</strong>. Cada sorteio é um evento independente e totalmente aleatório. As bolinhas não têm memória. Elas não se lembram que o número 7 saiu três vezes seguidas no mês passado. A IA pode analisar o passado, mas não pode prever o futuro nesse caso. Ela encontra padrões onde, muitas vezes, só existe coincidência.</p>
+                    <p>Portanto, minha opinião é clara: use a IA como uma ferramenta para se divertir e explorar possibilidades, <strong>nunca como uma garantia</strong>. Ela pode ajudar a criar jogos mais diversificados ou seguir estratégias estatísticas curiosas, mas a sorte continuará sendo a grande estrela. O verdadeiro papel da IA aqui é tornar o processo mais interessante, não lucrativo.</p>
+                    <p>No final das contas, a regra de ouro permanece a mesma: aposte sempre com <strong>extrema responsabilidade</strong>, gastando apenas o que estiver disposto a perder. A verdadeira sorte está em usar a IA para coisas que ela realmente domina, como melhorar nossa saúde, educação e criar um mundo mais inteligente. E quem sabe, no futuro, ela não cria um algoritmo que realmente faça a gente ganhar na loteria? Brincadeira! Ou será que não?</p>
+                    <p>E você, já usou a IA para alguma aposta criativa? Conte nos comentários!</p>
+                </div>
             </div>
 
             <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
@@ -218,6 +281,38 @@
             <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
         </section>
 
+        <section id="parceiros" style="margin-top: 3rem; padding: 2rem; background: rgba(0,0,0,0.15); border-radius: 12px; border-top: 1px solid var(--cor-divisoria-ouro);">
+            <h2>Apoiadores que Fazem a Sorte Acontecer</h2>
+            <p style="margin-bottom: 2rem; text-align: center; line-height: 1.8;">O Sorte Analisada cresce graças ao apoio de marcas que acreditam na nossa missão de levar entretenimento e análise de qualidade para apostadores de todo o Brasil. Agradecemos a confiança por fazerem parte desta jornada.</p>
+            <div class="partner-ad-container">
+                <h3 class="partner-title">SISTEMAS IDEAL, AUTOMAÇÃO COMERCIAL</h3>
+                <img src="/static/images/Ideal.jpg" alt="Logo da Sistemas Ideal Automação Comercial" class="partner-logo">
+                <p class="partner-text">Automação Comercial - Sistemas: SAT, ERP e PDV para os Comércios em geral.</p>
+                <a href="https://wa.me/5511962779427" class="partner-cta-button" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    (11) 96277-9427
+                </a>
+                <a href="https://linktr.ee/sistemas_ideal?fbclid=PAQ0xDSwMO5VJleHRuA2FlbQIxMQABp6bwYGcDvVxhsmmaSphrP4hglvs3Y4t4W-zZMB90tSkMbfImd7UJWwwFuyAZ_aem_FSR9c1Ytg3B8pgZkdqgkqw" class="partner-social-link" target="_blank">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>Siga-nos no Instagram</span>
+                </a>
+            </div>
+            <div style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
+                <h3 style="text-align: center; color: var(--cor-dourado);">Quer ver sua marca em destaque aqui?</h3>
+                <p style="margin-top: 1rem; margin-bottom: 1.5rem; text-align: center;">Conecte seu negócio a uma comunidade engajada que busca por sorte e novas oportunidades. Aumente sua visibilidade e apoie um projeto em constante crescimento.</p>
+                <a href="mailto:ronaldoleite@sorteanalisada.com.br?subject=Interesse em Parceria - Sorte Analisada" class="cta-gerador" style="text-decoration: none;">Anuncie</a>
+            </div>
+            <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+        </section>
+        
+        <div class="destaque-gerador">
+            <h2>🎯 Gere Seus Palpites Inteligentes!</h2>
+            <p>Não perca tempo! Use nosso gerador de palpites com análises estatísticas para Mega-Sena, Quina, Lotofácil e Dia de Sorte. Transforme suas apostas com estratégias baseadas em dados!</p>
+            <a href="/" class="cta-gerador">
+                <i class="fa-solid fa-dice"></i> Gerar Palpites Agora
+            </a>
+        </div>
+        
         <footer class="site-footer">
             <h4 class="footer-social-title">Siga a Sorte Analisada</h4> 
             <div class="footer-links">
@@ -237,5 +332,23 @@
             </div>  
         </footer>
     </div>
+
+    <script>
+        function toggleArtigo(artigoId) {
+            const conteudo = document.getElementById(artigoId);
+            const titulo = conteudo.previousElementSibling.previousElementSibling;
+            const icone = titulo.querySelector('i');
+            
+            if (conteudo.classList.contains('artigo-expandido')) {
+                conteudo.classList.remove('artigo-expandido');
+                icone.classList.remove('fa-chevron-up');
+                icone.classList.add('fa-chevron-down');
+            } else {
+                conteudo.classList.add('artigo-expandido');
+                icone.classList.remove('fa-chevron-down');
+                icone.classList.add('fa-chevron-up');
+            }
+        }
+    </script>
 </body>
 </html>
