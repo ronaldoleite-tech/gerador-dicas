@@ -98,15 +98,58 @@
         .nav-interna a:hover { color: var(--cor-dourado-hover); }
         .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
         .voltar-topo:hover { color: var(--cor-dourado-hover); }
-        .artigo-blog { margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
-        .artigo-blog h3 { color: var(--cor-dourado); margin-bottom: 1rem; cursor: pointer; transition: color .2s; }
+
+        /* Melhorias para os artigos */
+        .artigo-blog { 
+            margin-top: 1.5rem; 
+            padding: 1.5rem; 
+            background: rgba(0,0,0,0.2); 
+            border-radius: 12px; 
+            cursor: pointer; /* Indica que o card é clicável */
+            transition: transform .2s ease-in-out, box-shadow .2s ease-in-out; /* Efeito hover no card */
+        }
+        .artigo-blog:hover {
+            transform: translateY(-5px); /* Eleva o card levemente */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6); /* Sombra mais pronunciada */
+        }
+        .artigo-blog-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .artigo-blog h3 { 
+            color: var(--cor-dourado); 
+            margin-bottom: 0; /* Ajuste para flexbox */
+            flex-grow: 1; /* Permite que o título ocupe o espaço restante */
+            text-align: left; /* Alinha o texto à esquerda */
+            cursor: pointer; 
+            transition: color .2s; 
+            font-size: 1.3rem; /* Tamanho de fonte ajustado */
+        }
         .artigo-blog h3:hover { color: var(--cor-dourado-hover); }
         .artigo-blog p { font-size: .95rem; line-height: 1.7; text-align: justify; margin-bottom: 1rem; }
         .artigo-blog ul { text-align: left; padding-left: 20px; margin: 0.5rem 0; }
         .artigo-blog li { margin-bottom: 0.5rem; }
-        .artigo-conteudo { display: none; margin-top: 1rem; }
-        .artigo-expandido { display: block; }
-        .artigo-resumo { color: #bbdefb; font-style: italic; margin-top: 0.5rem; font-size: 0.9rem; }
+        
+        /* Novas regras para transição de altura */
+        .artigo-conteudo { 
+            max-height: 0; /* Inicialmente oculto */
+            overflow: hidden; 
+            transition: max-height 0.6s ease-in-out; /* Transição suave */
+            margin-top: 1rem;
+        }
+        .artigo-expandido { 
+            max-height: 1500px; /* Valor grande o suficiente para conter o conteúdo */
+            display: block; 
+        }
+
+        .artigo-resumo { color: #bbdefb; font-style: italic; margin-top: 0.5rem; font-size: 0.9rem; text-align: left !important; }
+
+        .artigo-blog .fa-chevron-down, .artigo-blog .fa-chevron-up {
+            font-size: 1.1rem; /* Aumenta o tamanho do ícone */
+            margin-left: 10px;
+            color: var(--cor-dourado); /* Cor do ícone */
+        }
         .partner-ad-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid var(--cor-divisoria-ouro); }
         .partner-title { font-size: 1.3rem; font-weight: 700; color: var(--cor-dourado); text-transform: uppercase; margin-bottom: 1rem; line-height: 1.4; }
         .partner-logo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
@@ -122,8 +165,29 @@
         .destaque-gerador h2 { color: var(--cor-dourado); margin-bottom: 1rem; font-size: 1.8rem; }
         .destaque-gerador p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; }
         
-        @media (max-width: 600px) {
-            .artigo-blog p { text-align: left !important; }
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .subtitulo { font-size: 1.3rem; }
+            .container { padding: 1.5rem; }
+            .nav-interna { gap: 10px; }
+            .nav-interna a { font-size: .8rem; }
+            .artigo-blog h3 { font-size: 1.1rem; }
+            .artigo-blog p { font-size: .9rem; text-align: left !important; }
+            .artigo-blog-header img { width: 60px; height: 60px; margin-right: 8px; }
+            .partner-title { font-size: 1.1rem; }
+            .partner-text { font-size: 1rem; }
+            .cta-gerador { padding: 0.8rem 1.5rem; font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; letter-spacing: 1px; }
+            .subtitulo { font-size: 1.1rem; }
+            .container { padding: 1rem; }
+            .nav-interna { flex-direction: column; align-items: center; }
+            .artigo-blog h3 { font-size: 1rem; }
+            .artigo-blog-header img { width: 50px; height: 50px; margin-right: 5px; }
+            .partner-logo { width: 100px; height: 100px; }
+            .partner-cta-button { padding: 10px 20px; font-size: .9rem; }
         }
     </style>
 </head>
@@ -148,9 +212,11 @@
         </nav>
 
         <main id="artigos">
-            <div class="artigo-blog">
-                <img src="/static/images/blog1.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
-                <h3 onclick="toggleArtigo('artigo1')">Sorte Analisada: jogue com estatísticas e estratégia<i class="fa-solid fa-chevron-down"></i></h3>
+            <div class="artigo-blog" onclick="toggleArtigo('artigo1')">
+                <div class="artigo-blog-header">
+                    <img src="/static/images/blog1.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
+                    <h3>Sorte Analisada: jogue com estatísticas e estratégia<i class="fa-solid fa-chevron-down"></i></h3>
+                </div>
                 <p class="artigo-resumo">Se você sempre apostou na loteria apenas com a intuição, chegou a hora de dar um upgrade na sorte! O Sorte Analisada nasceu para transformar palpites em estratégias...</p>
                 <div class="artigo-conteudo" id="artigo1">
                     <p>Se você sempre apostou na loteria apenas com a intuição, chegou a hora de dar um upgrade na sorte! O <strong>Sorte Analisada</strong> nasceu para transformar palpites em estratégias, usando estatísticas e análises de dados de jogos anteriores. Aqui você gera o seu palpite para a aposta com <strong>inteligência</strong>.</p>
@@ -160,9 +226,11 @@
                 </div>
             </div>
 
-            <div class="artigo-blog">
-                <img src="/static/images/blog2.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
-                <h3 onclick="toggleArtigo('artigo2')">Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar? <i class="fa-solid fa-chevron-down"></i></h3>
+            <div class="artigo-blog" onclick="toggleArtigo('artigo2')">
+                <div class="artigo-blog-header">
+                    <img src="/static/images/blog2.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
+                    <h3>Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar? <i class="fa-solid fa-chevron-down"></i></h3>
+                </div>
                 <p class="artigo-resumo">Todo brasileiro já se imaginou milionário, conferindo aquele bilhete premiado. Mas, diante de tantas opções, qual loteria oferece o caminho "menos difícil" para a fortuna?</p>
                 <div class="artigo-conteudo" id="artigo2">
                     <p>Todo brasileiro já se imaginou milionário, conferindo aquele bilhete premiado. Mas, diante de tantas opções, qual loteria oferece o caminho "menos difícil" para a fortuna? Para especialistas em probabilidades "não existe jogo fácil, mas sim o menos impossível".</p>
@@ -172,9 +240,11 @@
                 </div>
             </div>
 
-            <div class="artigo-blog">
-                <img src="/static/images/blog3.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
-                <h3 onclick="toggleArtigo('artigo3')">Quina: Seis Chances de Transformar Sua Vida Toda Semana! <i class="fa-solid fa-chevron-down"></i></h3>
+            <div class="artigo-blog" onclick="toggleArtigo('artigo3')">
+                <div class="artigo-blog-header">
+                    <img src="/static/images/blog3.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
+                    <h3>Quina: Seis Chances de Transformar Sua Vida Toda Semana! <i class="fa-solid fa-chevron-down"></i></h3>
+                </div>
                 <p class="artigo-resumo">A Quina, lançada em 1994, é uma das loterias mais queridas pelos brasileiros, oferecendo seis chances de ganhar por semana – de segunda a sábado...</p>
                 <div class="artigo-conteudo" id="artigo3">
                     <p><strong>A Quina</strong>, lançada em 1994, é uma das loterias mais queridas pelos brasileiros, oferecendo <strong>seis chances de ganhar por semana</strong> – de segunda a sábado. O prêmio principal é para quem acerta as 5 dezenas entre 1 e 80, mas também há prêmios para quem acerta 2, 3 ou 4 números.</p>
@@ -183,9 +253,11 @@
                 </div>
             </div>
 
-            <div class="artigo-blog">
-                <img src="/static/images/blog4.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
-                <h3 onclick="toggleArtigo('artigo4')">O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta <i class="fa-solid fa-chevron-down"></i></h3>
+            <div class="artigo-blog" onclick="toggleArtigo('artigo4')">
+                <div class="artigo-blog-header">
+                    <img src="/static/images/blog4.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
+                    <h3>O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta <i class="fa-solid fa-chevron-down"></i></h3>
+                </div>
                 <p class="artigo-resumo">Sabia que apostar com mais dezenas na Mega-Sena não só aumenta suas chances, mas pode te dar vários prêmios de uma só vez? É o chamado desdobramento...</p>
                 <div class="artigo-conteudo" id="artigo4">
                     <p>Sabia que apostar com mais dezenas na Mega-Sena não só aumenta suas chances, mas pode te dar vários prêmios de uma só vez? É o chamado desdobramento: uma única aposta com mais números funciona como um combo, contendo várias combinações premiadas. Na prática, seus ganhos se multiplicam.</p>
@@ -198,9 +270,11 @@
                 </div>
             </div>
 
-            <div class="artigo-blog">
-                <img src="/static/images/blog5.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
-                <h3 onclick="toggleArtigo('artigo5')">Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas <i class="fa-solid fa-chevron-down"></i></h3>
+            <div class="artigo-blog" onclick="toggleArtigo('artigo5')">
+                <div class="artigo-blog-header">
+                    <img src="/static/images/blog5.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
+                    <h3>Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas <i class="fa-solid fa-chevron-down"></i></h3>
+                </div>
                 <p class="artigo-resumo">A chance de ganhar na loteria é mínima, mais nas telas a sorte parece bem mais generosa! Relembre alguns personagens que desafiaram as probabilidades...</p>
                 <div class="artigo-conteudo" id="artigo5">
                     <p>A chance de ganhar na loteria é mínima, mais nas telas a sorte parece bem mais generosa! Relembre alguns personagens que desafiaram as probabilidades e ficaram milionários da noite para o dia.</p>
@@ -216,10 +290,12 @@
                 </div>
             </div>
 
-            <div class="artigo-blog">
-                <img src="/static/images/blog6.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
-                <h3 onclick="toggleArtigo('artigo6')">Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena <i class="fa-solid fa-chevron-down"></i></h3>
-                <p class="artigo-resumo">Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada no concurso 2.720 da Mega-Sena...</p>
+            <div class="artigo-blog" onclick="toggleArtigo('artigo6')">
+                <div class="artigo-blog-header">
+                    <img src="/static/images/blog6.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
+                    <h3>Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena <i class="fa-solid fa-chevron-down"></i></h3>
+                </div>
+                <p class="artigo-resumo">Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada...</p>
                 <div class="artigo-conteudo" id="artigo6">
                     <p>Prepare-se para uma das maiores coincidências da loteria! A famosa sequência de números da série "Lost", conhecida por trazer sorte e azar, foi sorteada no concurso 2.720 da Mega-Sena, para o espanto de fãs em todo o Brasil.</p>
                     <p>A combinação sorteada foi <strong>08-15-16-23-42-43</strong>, quase idêntica à sequência <strong>4-8-15-16-23-42</strong> que assombrava o personagem Hurley. Na ficção, ele usa os números para ficar milionário, mas acaba atraindo uma série de tragédias, convencendo-se de que são amaldiçoados.</p>
@@ -228,9 +304,11 @@
                 </div>
             </div>
             
-            <div class="artigo-blog">
-                <img src="/static/images/blog7.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
-                <h3 onclick="toggleArtigo('artigo7')">Será que a IA pode ajudar a ganhar na Mega-Sena?<i class="fa-solid fa-chevron-down"></i></h3>
+            <div class="artigo-blog" onclick="toggleArtigo('artigo7')">
+                <div class="artigo-blog-header">
+                    <img src="/static/images/blog7.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
+                    <h3>Será que a IA pode ajudar a ganhar na Mega-Sena?<i class="fa-solid fa-chevron-down"></i></h3>
+                </div>
                 <p class="artigo-resumo">A Inteligência Artificial já está mudando o mundo — da medicina aos carros autônomos, da educação às artes digitais. E claro, sempre aparece aquela pergunta...</p>
                 <div class="artigo-conteudo" id="artigo7">
                     <p>A Inteligência Artificial já está mudando o mundo — da medicina aos carros autônomos, da educação às artes digitais. E claro, sempre aparece aquela pergunta marota: <strong>Será que IA consegue acertar os números da Mega-Sena?</strong></p>
@@ -245,9 +323,11 @@
                 </div>
             </div>
 
-            <div class="artigo-blog">
-                <img src="/static/images/blog8.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
-                <h3 onclick="toggleArtigo('artigo8')"><strong>Cardano</strong>: O Gênio do Acaso que Desvendou os Dados antes das Loterias <i class="fa-solid fa-chevron-down"></i></h3>
+            <div class="artigo-blog" onclick="toggleArtigo('artigo8')">
+                <div class="artigo-blog-header">
+                    <img src="/static/images/blog8.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;">
+                    <h3><strong>Cardano</strong>: O Gênio do Acaso que Desvendou os Dados antes das Loterias <i class="fa-solid fa-chevron-down"></i></h3>
+                </div>
                 <p class="artigo-resumo">Antes de existirem sites de dicas lotéricas, havia um homem do Renascimento, Girolamo Cardano. Médico, astrólogo, inventor e, acima de tudo, um matemático brilhante...</p>
                 <div class="artigo-conteudo" id="artigo8">
                     <p>Antes de existirem sites de dicas lotéricas, havia um homem do Renascimento, Girolamo Cardano. Médico, astrólogo, inventor e, acima de tudo, um <strong>matemático brilhante</strong>, Cardano foi uma mente inquieta que viveu no século XVI. Sua vida foi uma mistura de genialidade e controvérsia, mas seu legado para o mundo das probabilidades é imensurável. Ele foi um dos primeiro a levar a sério a ideia de medir o incerto.</p>
@@ -318,7 +398,7 @@
             <h4 class="footer-social-title">Siga a Sorte Analisada no Instagram</h4> 
             <div class="footer-links">
                 <a href="https://www.instagram.com/sorte_analisada/?igsh=cW8zenNycWVieXF1#" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a> 
-                <!-- <a href="https://www.tiktok.com/@sorte_analisada?_t=ZM-8yxvja7YoS8&_r=1" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>  -->
+              <!-- <a href="https://www.tiktok.com/@sorte_analisada?_t=ZM-8yxvja7YoS8&_r=1" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a> -->
             </div>
             <div class="copyright">
                 ™ 2025 Sorte Analisada. Todos os direitos reservados.
@@ -337,14 +417,20 @@
     <script>
         function toggleArtigo(artigoId) {
             const conteudo = document.getElementById(artigoId);
-            const titulo = conteudo.previousElementSibling.previousElementSibling;
-            const icone = titulo.querySelector('i');
+            const header = conteudo.previousElementSibling.previousElementSibling; // Pega o div .artigo-blog-header
+            const icone = header.querySelector('i');
             
             if (conteudo.classList.contains('artigo-expandido')) {
                 conteudo.classList.remove('artigo-expandido');
                 icone.classList.remove('fa-chevron-up');
                 icone.classList.add('fa-chevron-down');
+                // Adiciona um pequeno atraso para o resumo aparecer suavemente
+                setTimeout(() => {
+                    header.nextElementSibling.style.display = 'block'; // Mostra o resumo
+                }, 500); // Ajuste este tempo para sincronizar com a transição CSS
             } else {
+                // Esconde o resumo imediatamente para não piscar durante a expansão
+                header.nextElementSibling.style.display = 'none'; 
                 conteudo.classList.add('artigo-expandido');
                 icone.classList.remove('fa-chevron-down');
                 icone.classList.add('fa-chevron-up');
@@ -353,3 +439,4 @@
     </script>
 </body>
 </html>
+             
