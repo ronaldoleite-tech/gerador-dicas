@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <link rel="stylesheet" href="static/css/styles.css">
     <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
 
     <!-- Google tag (gtag.js) -->
@@ -176,256 +177,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
-    <style>
-        :root {
-            --cor-fundo: linear-gradient(180deg, #020f2c, #0d47a1, #1976d2);
-            --cor-caixa: rgba(255, 255, 255, 0.08);
-            --cor-texto: #E0E0E0;
-            --cor-dourado: #FFD700;
-            --cor-dourado-hover: #FFAA00;
-            --cor-loteria-display: #81d4fa;
-            --sombra-dourada: 0 0 12px rgba(255, 215, 0, 0.4);
-            --sombra-caixa: 0 8px 25px rgba(0, 0, 0, 0.5);
-            --cor-divisoria-ouro: rgba(255, 215, 0, 0.3);
-            --cor-whatsapp: #25D366;
-            --cor-instagram: #E4405F;
-            --cor-tiktok: #00f2ea;
-            --cor-facebook: #1877F2;
-            --cor-twitter: #000000;
-            --cor-threads: #000000;
-            --cor-sucesso: #4CAF50;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--cor-fundo);
-            color: var(--cor-texto);
-            margin: 0;
-            padding: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-        .container {
-            background: var(--cor-caixa);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: var(--sombra-caixa);
-            padding: 2rem;
-            max-width: 800px;
-            width: 95%;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        h1, h2, h3, h4 {
-             font-family: 'Orbitron', sans-serif;
-        }
-        h1 {
-            font-size: 2.2rem;
-            color: var(--cor-dourado);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: .5rem;
-        }
-        .subtitulo { font-size: 1.6rem; font-weight: 400; margin-bottom: 0; color: #bbdefb; }
-        .imagem-ouro { background-color: #FFF8E1; padding: 8px; border-radius: 10px; width: 150px; height: auto; border: 3px solid var(--cor-dourado); box-shadow: var(--sombra-dourada); transition: transform .3s ease; }
-        .imagem-ouro:hover { transform: scale(1.05); }
-        .site-footer { margin-top: 2rem; padding: 1.5rem 1rem; border-top: 1px solid var(--cor-divisoria-ouro); }
-        .footer-social-title { font-size: 1rem; font-weight: 700; color: var(--cor-texto); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 1px; }
-        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 1.5rem; }
-        .footer-links a { color: var(--cor-texto); text-decoration: none; font-size: 2rem; transition: color .2s, transform .2s; }
-        .footer-links a:hover { color: var(--cor-dourado); transform: scale(1.1); }
-        .footer-links .fa-instagram:hover { color: var(--cor-instagram); }
-        .footer-links .fa-tiktok:hover { color: var(--cor-tiktok); }
-        .copyright { font-size: .8rem; color: rgba(255, 255, 255, .5); margin-top: 1rem; }
-        .nav-interna { padding: 1.5rem 0; margin-top: 1rem; border-top: 1px solid var(--cor-divisoria-ouro); border-bottom: 1px solid var(--cor-divisoria-ouro); display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
-        .nav-interna a { color: var(--cor-dourado); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
-        .nav-interna a:hover { color: var(--cor-dourado-hover); }
-        .voltar-topo { display: block; text-align: right; margin-top: 1rem; font-size: .85rem; color: var(--cor-dourado); text-decoration: none; transition: color .2s; }
-        .voltar-topo:hover { color: var(--cor-dourado-hover); }
-
-        /* Melhorias para os artigos */
-        .artigo-blog { 
-            margin-top: 1.5rem; 
-            padding: 1.5rem; 
-            background: rgba(0,0,0,0.2); 
-            border-radius: 12px; 
-            cursor: pointer;
-            transition: transform .2s ease-in-out, box-shadow .2s ease-in-out;
-            display: none; /* Inicialmente ocultos */
-        }
-        .artigo-blog.visivel {
-            display: block; /* Mostra apenas os artigos visíveis */
-        }
-        .artigo-blog:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-        }
-        .artigo-blog-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .artigo-blog h3 { 
-            color: var(--cor-dourado); 
-            margin-bottom: 0;
-            flex-grow: 1;
-            text-align: left;
-            cursor: pointer; 
-            transition: color .2s; 
-            font-size: 1.3rem;
-        }
-        .artigo-blog h3:hover { color: var(--cor-dourado-hover); }
-        .artigo-blog p { font-size: .95rem; line-height: 1.7; text-align: justify; margin-bottom: 1rem; }
-        .artigo-blog ul { text-align: left; padding-left: 20px; margin: 0.5rem 0; }
-        .artigo-blog li { margin-bottom: 0.5rem; }
-        
-        /* Novas regras para transição de altura */
-        .artigo-conteudo { 
-            max-height: 0;
-            overflow: hidden; 
-            transition: max-height 0.6s ease-in-out;
-            margin-top: 1rem;
-        }
-        .artigo-expandido { 
-            max-height: 1500px;
-            display: block; 
-        }
-
-        .artigo-resumo { color: #bbdefb; font-style: italic; margin-top: 0.5rem; font-size: 0.9rem; text-align: left !important; }
-
-        .artigo-blog .fa-chevron-down, .artigo-blog .fa-chevron-up {
-            font-size: 1.1rem;
-            margin-left: 10px;
-            color: var(--cor-dourado);
-        }
-
-        /* ============== ESTILOS PARA COMPARTILHAMENTO ============== */
-        .share-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 1rem 0;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            flex-wrap: wrap;
-        }
-        .share-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            color: white;
-        }
-        .share-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        .share-btn.whatsapp {
-            background: var(--cor-whatsapp);
-        }
-        .share-btn.facebook {
-            background: var(--cor-facebook);
-        }
-        .share-btn.twitter {
-            background: var(--cor-twitter);
-        }
-        .share-btn.threads {
-            background: var(--cor-threads);
-        }
-         .share-btn.instagram {
-            background: var(--cor-instagram);
-        }
-        .share-btn.tiktok {
-            background: var(--cor-tiktok);
-        }
-
-        .share-btn.copy-link {
-            background: #6c757d;
-        }
-
-        /* ============== ESTILOS PARA PAGINAÇÃO ============== */
-        .carregar-mais-container {
-            text-align: center;
-            margin: 2rem 0;
-        }
-        .carregar-mais {
-            background: linear-gradient(135deg, var(--cor-dourado), var(--cor-dourado-hover));
-            color: #000;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .carregar-mais:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
-        }
-        .carregar-mais:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .partner-ad-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid var(--cor-divisoria-ouro); }
-        .partner-title { font-size: 1.3rem; font-weight: 700; color: var(--cor-dourado); text-transform: uppercase; margin-bottom: 1rem; line-height: 1.4; }
-        .partner-logo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-        .partner-text { font-size: 1.2rem; font-weight: 500; color: #FFF; line-height: 1.6; }
-        .partner-cta-button { display: inline-flex; align-items: center; gap: 10px; background: var(--cor-whatsapp); color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: transform .2s, box-shadow .2s; margin-top: 0.5rem; }
-        .partner-cta-button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(37, 211, 102, 0.5); }
-        .partner-social-link { display: inline-flex; align-items: center; gap: 10px; color: var(--cor-texto); text-decoration: none; margin-top: 1rem; font-weight: 500; transition: color .2s; }
-        .partner-social-link i { font-size: 1.5rem; color: var(--cor-instagram); }
-        .partner-social-link:hover { color: var(--cor-instagram); }
-        .cta-gerador { background: linear-gradient(135deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; padding: 1rem 2rem; margin: 2rem 0; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: bold; font-size: 1.1rem; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3); }
-        .cta-gerador:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5); }
-        .destaque-gerador { background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05)); border: 2px solid var(--cor-dourado); padding: 2rem; border-radius: 16px; margin: 2rem 0; text-align: center; }
-        .destaque-gerador h2 { color: var(--cor-dourado); margin-bottom: 1rem; font-size: 1.8rem; }
-        .destaque-gerador p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; }
-        
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .subtitulo { font-size: 1.3rem; }
-            .container { padding: 1.5rem; }
-            .nav-interna { gap: 10px; }
-            .nav-interna a { font-size: .8rem; }
-            .artigo-blog h3 { font-size: 1.1rem; }
-            .artigo-blog p { font-size: .9rem; text-align: left !important; }
-            .artigo-blog-header img { width: 60px; height: 60px; margin-right: 8px; }
-            .partner-title { font-size: 1.1rem; }
-            .partner-text { font-size: 1rem; }
-            .cta-gerador { padding: 0.8rem 1.5rem; font-size: 1rem; }
-            .share-container { gap: 8px; }
-            .share-btn { padding: 6px 12px; font-size: 0.8rem; }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.5rem; letter-spacing: 1px; }
-            .subtitulo { font-size: 1.1rem; }
-            .container { padding: 1rem; }
-            .nav-interna { flex-direction: column; align-items: center; }
-            .artigo-blog h3 { font-size: 1rem; }
-            .artigo-blog-header img { width: 50px; height: 50px; margin-right: 5px; }
-            .partner-logo { width: 100px; height: 100px; }
-            .partner-cta-button { padding: 10px 20px; font-size: .9rem; }
-            .share-container { flex-direction: row; align-items: center; }
-        }
-    </style>
+    
 </head>
 <body>
 
@@ -459,8 +211,7 @@
                     <p>Nos bastidores, o site roda simulações de Monte Carlo, analisa padrões históricos e até combina dezenas "quentes" e "frias". Isso significa que os jogos sugeridos são combinações baseadas em estatisticas e lógica, melhorando o equilibrio das sugestões para as suas apostas de um modo mais criativo.</p>
                     <p>E não pense que isso tira a emoção! Muito pelo contrário: cada jogo é como um quebra-cabeça que equilibra probabilidade e sorte. O sistema valoriza padrões que já deram resultado e entrega palpites que fazem sentido para quem quer jogar gastando pouco (uma aposta de preferênca) e acredita que analisar os dados pode melhora a performace.</p>
                     <p>Nosso objetivo é: se um ou vários usuários ganharem o prêmio principal com a ajuda do site, a nossa missão estará cumprida. Afinal, aqui a sorte é analisada, mas a vitória, nós desejamos que seja a sua! Bora apostar com estratégia?</p>
-                    
-                    <!-- Compartilhamento específico do artigo -->
+
                     <div class="share-container">
                         Compartilhe: 
                         <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
@@ -538,7 +289,6 @@
                     <p>A Quina uma das loterias mais tradicionais do país. Com sorteios regulares e valores de apostas acessíveis, ela se tornou uma das favoritas dos apostadores. Além do prêmio milionário, a Quina também tem a possibilidade de acumular, deixando o prêmio ainda mais tentador.</p>
                     <p>Sua mecânica simples e a frequência dos sorteios fazem dela uma oportunidade constante para quem sonha em mudar de vida.</p>
                     
-                    <!-- Compartilhamento específico do artigo -->
                     <div class="share-container">
                         Compartilhe: 
                         <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
@@ -618,6 +368,7 @@
                     <p>O cinema e a TV são repletos de personagens que tiveram a sorte grande, servindo de inspiração e diversão. Em "Até que a Sorte nos Separe", um brasileiro ganha R$ 100 milhões e vira lição de como não administrar uma fortuna. A novela "Fina Estampa" mostra que a persistência pode valer a pena, com um personagem que fatura R$ 50 milhões. A série "Lost" apresenta a sequência de números mais icônica, que foi até usada por fãs na vida real.</p> 
                     <p>Filmes como "O Homem que Copiava", "O Pagamento", "Atraídos Pelo Destino" e "Chuva de Milhões" exploram diferentes situações envolvendo prêmios, desde um bilhete do futuro até a promessa de dividir o prêmio e o desafio de gastar uma herança. Essas histórias celebram o sonho e o poder de um simples bilhete de loteria.</p>
                     <p>Gostou das dicas de filmes? Então, agora e só preparar a pipoca!</p>
+                    
                     <div class="share-container">
                         Compartilhe: 
                         <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
@@ -731,6 +482,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="artigo-blog" onclick="toggleArtigo('artigo8')" data-schema='{"@type": "BlogPosting", "headline": "Cardano: O Gênio do Acaso que Desvendou os Dados antes das Loterias", "datePublished": "2025-01-08", "author": {"@type": "Organization", "name": "Sorte Analisada"}}'>
                 <div class="artigo-blog-header">
                     <img src="/static/images/blog8.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
@@ -807,7 +559,6 @@
                     </div>
                 </div>
             </div>
-
             <a href="#" class="voltar-topo">Voltar ao Topo ↑</a>
         </main>
         
@@ -882,111 +633,7 @@
         </footer>
     </div>
 
-    <script>
-        // ============== CONTROLE DE PAGINAÇÃO ============== 
-        let artigosVisiveis = 5;
-        const totalArtigos = 9;
-
-        function carregarMaisArtigos() {
-            const artigos = document.querySelectorAll('.artigo-blog:not(.visivel)');
-            const proximosArtigos = Math.min(4, artigos.length);
-            
-            for (let i = 0; i < proximosArtigos; i++) {
-                artigos[i].classList.add('visivel');
-                artigosVisiveis++;
-            }
-            
-            // Atualiza contador
-            document.getElementById('contador-artigos').textContent = 
-                `Mostrando ${artigosVisiveis} de ${totalArtigos} artigos`;
-            
-            // Esconde o botão se não há mais artigos
-            if (artigosVisiveis >= totalArtigos) {
-                document.querySelector('.carregar-mais').style.display = 'none';
-                document.querySelector('.carregar-mais-container p').innerHTML = 
-                    '<span style="color: var(--cor-sucesso);">✓ Todos os artigos carregados!</span>';
-            }
-            
-            // Scroll suave para o primeiro novo artigo
-            if (artigos.length > 0) {
-                artigos[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-
-        // ============== TOGGLE DE ARTIGOS ============== 
-        function toggleArtigo(artigoId) {
-            const conteudo = document.getElementById(artigoId);
-            const header = conteudo.previousElementSibling.previousElementSibling;
-            const icone = header.querySelector('i');
-            
-            if (conteudo.classList.contains('artigo-expandido')) {
-                conteudo.classList.remove('artigo-expandido');
-                icone.classList.remove('fa-chevron-up');
-                icone.classList.add('fa-chevron-down');
-                setTimeout(() => {
-                    header.nextElementSibling.style.display = 'block';
-                }, 500);
-            } else {
-                header.nextElementSibling.style.display = 'none'; 
-                conteudo.classList.add('artigo-expandido');
-                icone.classList.remove('fa-chevron-down');
-                icone.classList.add('fa-chevron-up');
-            }
-        }
-
-        // ============== FUNÇÕES DE COMPARTILHAMENTO ============== 
-        function compartilharWhatsApp(titulo, url) {
-            const texto = encodeURIComponent(`${titulo} - ${url}`);
-            window.open(`https://wa.me/?text=${texto}`, '_blank');
-        }
-
-        
-        function compartilharFacebook(texto, url) {
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        }
-
-        function compartilharTwitter(texto, url) {
-            const tweet = encodeURIComponent(`${texto} ${url}`);
-            window.open(`https://twitter.com/intent/tweet?text=${tweet}`, '_blank');
-        }
-
-        // Nova função para o Threads
-        function compartilharThreads(texto, url) {
-            const thread = encodeURIComponent(`${texto} ${url}`);
-            window.open(`https://www.threads.net/intent/post?text=${thread}`, '_blank');
-        }
-
-        function compartilharInstagram() {
-            window.open('https://www.instagram.com/', '_blank');
-        }
-
-        function compartilharTikTok() {
-            window.open('https://www.tiktok.com/upload', '_blank');
-        }
-
-        function copiarLink(url) {
-            navigator.clipboard.writeText(url).then(() => {
-                // Feedback visual temporário
-                const btn = event.target.closest('.share-btn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copiado!';
-                btn.style.background = 'var(--cor-sucesso)';
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = '#6c757d';
-                }, 2000);
-            }).catch(() => {
-                alert('Link copiado: ' + url);
-            });
-        }
-
-        // ============== INICIALIZAÇÃO ============== 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Atualiza contador inicial
-            document.getElementById('contador-artigos').textContent = 
-                `Mostrando ${artigosVisiveis} de ${totalArtigos} artigos`;
-        });
-    </script>
+    <script src="static/js/scripts.js"></script>
+    
 </body>
 </html>
