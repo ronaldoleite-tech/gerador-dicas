@@ -29,26 +29,29 @@
             }
         }
 
-        // ============== TOGGLE DE ARTIGOS ============== 
+        // ============== TOGGLE DE ARTIGOS (VERSÃO MELHORADA) ============== 
         function toggleArtigo(artigoId) {
             const conteudo = document.getElementById(artigoId);
-            const header = conteudo.previousElementSibling.previousElementSibling;
-            const icone = header.querySelector('i');
-            
+            // Encontre o resumo dentro do mesmo "pai" que o conteúdo
+            const artigoPai = conteudo.closest('.artigo-blog');
+            const resumo = artigoPai.querySelector('.artigo-resumo');
+            const icone = artigoPai.querySelector('.fa-chevron-down, .fa-chevron-up');
+
+            // Se o artigo está expandido (estado atual)
             if (conteudo.classList.contains('artigo-expandido')) {
                 conteudo.classList.remove('artigo-expandido');
+                resumo.style.display = 'block';
                 icone.classList.remove('fa-chevron-up');
                 icone.classList.add('fa-chevron-down');
-                setTimeout(() => {
-                    header.nextElementSibling.style.display = 'block';
-                }, 500);
-            } else {
-                header.nextElementSibling.style.display = 'none'; 
+            } 
+            // Se o artigo está recolhido (estado atual)
+            else {
                 conteudo.classList.add('artigo-expandido');
+                resumo.style.display = 'none';
                 icone.classList.remove('fa-chevron-down');
                 icone.classList.add('fa-chevron-up');
-            }
         }
+}
 
         // ============== FUNÇÕES DE COMPARTILHAMENTO ============== 
         function compartilharWhatsApp(titulo, url) {

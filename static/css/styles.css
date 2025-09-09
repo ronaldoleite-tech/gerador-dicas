@@ -117,6 +117,10 @@
 
     .artigo-resumo { color: #bbdefb; font-style: italic; margin-top: 0.5rem; font-size: 0.9rem; text-align: left !important; }
 
+    .artigo-expandido .artigo-resumo {
+       display: none;
+    }
+
     .artigo-blog .fa-chevron-down, .artigo-blog .fa-chevron-up {
         font-size: 1.1rem;
         margin-left: 10px;
