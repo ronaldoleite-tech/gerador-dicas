@@ -1,5 +1,4 @@
-
-    let loteriaAtual = 'megasena';
+let loteriaAtual = 'megasena';
     const lotteryConfig = {
         'megasena':   {nome: 'Mega-Sena', min_dezenas: 6, max_dezenas: 20, num_bolas: 6, universo: 60},
         'quina':      {nome: 'Quina', min_dezenas: 5, max_dezenas: 15, num_bolas: 5, universo: 80},
@@ -290,6 +289,95 @@
         }
     }
 
+    // FUNÇÃO CORRIGIDA PARA CARREGAR OS ÚLTIMOS RESULTADOS
+    async function carregarUltimosResultados(loteria) {
+        const areaResultados = document.getElementById('area-ultimos-resultados');
+        
+        if (!areaResultados) {
+            console.error('Elemento area-ultimos-resultados não encontrado');
+            return;
+        }
+
+        try {
+            // Mostrar loading
+            areaResultados.innerHTML = '<div class="spinner" style="margin: 20px auto;"></div>';
+            
+            const response = await fetch(`/get-ultimos-resultados?loteria=${loteria}`);
+            
+            if (!response.ok) {
+                throw new Error(`Erro na comunicação: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.error) {
+                throw new Error(`Erro no servidor: ${data.error}`);
+            }
+
+            if (!Array.isArray(data) || data.length === 0) {
+                areaResultados.innerHTML = '<p style="color: #ff8a80; text-align: center;">Nenhum resultado encontrado para esta loteria.</p>';
+                return;
+            }
+
+            // Renderizar os resultados
+            let html = '';
+            
+            data.forEach((resultado, index) => {
+                const dezenasArray = resultado.dezenas.split(' ');
+                const dezenasHtml = dezenasArray.map(dezena => `<span class="numero-resultado">${dezena}</span>`).join('');
+                
+                // Formatar status de acumulação e valor
+                let statusTexto = resultado.acumulou ? 'Acumulou!' : 'Tem Ganhador!';
+                let valorTexto = resultado.valor_acumulado || 'Não informado';
+                
+                // Se tem valor acumulado, formatar melhor
+                if (valorTexto !== 'Não informado' && valorTexto.includes('R$')) {
+                    // Valor já vem formatado do backend
+                } else if (valorTexto !== 'Não informado') {
+                    valorTexto = `R$ ${valorTexto}`;
+                }
+
+                html += `
+                    <div class="resultado-item ${index === 0 ? 'resultado-mais-recente' : ''}">
+                        <div class="resultado-cabecalho">
+                            <h4>Concurso ${resultado.concurso}</h4>
+                            <span class="resultado-data">${resultado.data}</span>
+                        </div>
+                        <div class="resultado-numeros">
+                            ${dezenasHtml}
+                            ${loteria === 'diadesorte' && resultado.mes_sorte ? 
+                                `<span class="mes-sorte">Mês: ${resultado.mes_sorte}</span>` : ''}
+                        </div>
+                        <div class="resultado-info">
+                            <div class="resultado-status ${resultado.acumulou ? 'acumulou' : 'tem-ganhador'}">
+                                ${statusTexto}
+                            </div>
+                            <div class="resultado-valor">
+                                ${valorTexto}
+                            </div>
+                            ${resultado.ganhadores && !resultado.acumulou ? 
+                                `<div class="resultado-ganhadores">Ganhadores: ${resultado.ganhadores}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            areaResultados.innerHTML = html;
+
+        } catch (error) {
+            console.error('Erro ao carregar últimos resultados:', error);
+            areaResultados.innerHTML = `
+                <div style="text-align: center; color: #ff8a80; padding: 20px;">
+                    <p>Erro ao carregar os resultados.</p>
+                    <button onclick="carregarUltimosResultados('${loteria}')" style="margin-top: 10px; padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        Tentar Novamente
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // FUNÇÃO LEGADA MANTIDA PARA COMPATIBILIDADE (caso seja usada em outro lugar)
     async function fetchLatestResult(loteria) {
         try {
             const response = await fetch(`/get-latest-card-data?loteria=${loteria}`);
@@ -320,4 +408,8 @@
         }
     }
 
-   
+    // INICIALIZAÇÃO AUTOMÁTICA
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carregar os resultados iniciais da Mega-Sena
+        carregarUltimosResultados('megasena');
+    });
