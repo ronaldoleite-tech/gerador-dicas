@@ -474,8 +474,13 @@ def get_latest_card_data():
             
             data_formatada = data_sorteio.strftime('%d/%m/%Y') if data_sorteio else 'N/A'
             
+            # Tratar valores None/NULL
+            acumulou = acumulou if acumulou is not None else False
+            ganhadores = ganhadores if ganhadores is not None else 0
+            valor_acumulado = valor_acumulado if valor_acumulado is not None else 0
+            
             # Corrigir a lógica do valor acumulado
-            if acumulou and valor_acumulado and valor_acumulado > 0:
+            if acumulou and valor_acumulado > 0:
                 # Formatar valor monetário brasileiro
                 valor_formatado = f"R$ {valor_acumulado:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
                 status_acumulado = "ACUMULOU!"
@@ -483,10 +488,14 @@ def get_latest_card_data():
                 # Quando não acumulou, mostrar informação dos ganhadores
                 valor_formatado = "Sorteio realizado"
                 status_acumulado = f"{ganhadores} ganhador{'es' if ganhadores > 1 else ''}"
+            elif acumulou and valor_acumulado == 0:
+                # Acumulou mas valor não disponível
+                valor_formatado = "Valor em processamento"
+                status_acumulado = "ACUMULOU!"
             else:
-                # Fallback para casos indefinidos
-                valor_formatado = "Informação não disponível"
-                status_acumulado = "Aguardando dados"
+                # Caso padrão quando dados estão incompletos
+                valor_formatado = "Aguardando informações"
+                status_acumulado = "Resultado disponível"
 
             # Mapeamento dos nomes das loterias apenas para esta função
             nomes_loterias = {
@@ -512,7 +521,6 @@ def get_latest_card_data():
         return jsonify({"error": str(e)}), 500
     finally:
         if conn: conn.close()
-
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
