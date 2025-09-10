@@ -381,14 +381,14 @@ async function carregarUltimosResultados(loteria) {
 }
 
 // Função para trocar automaticamente as loterias
-function iniciarCarrosselLoterias() {
-    carregarUltimosResultados(loterias[indiceAtual]);
+//function iniciarCarrosselLoterias() {
+    //carregarUltimosResultados(loterias[indiceAtual]);
 
-    setInterval(() => {
-        indiceAtual = (indiceAtual + 1) % loterias.length; // avança e volta pro início
-        carregarUltimosResultados(loterias[indiceAtual]);
-    }, 15000); // 15 segundos
-}
+    //setInterval(() => {
+        //indiceAtual = (indiceAtual + 1) % loterias.length; // avança e volta pro início
+       // carregarUltimosResultados(loterias[indiceAtual]);
+   // }, 15000); // 15 segundos
+//}
 
 // Inicia o carrossel ao carregar a página
 document.addEventListener("DOMContentLoaded", iniciarCarrosselLoterias);
