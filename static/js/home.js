@@ -320,62 +320,75 @@
         }
     }
 
-    // Chame a função para cada loteria que você quer exibir
-    fetchLatestResult('megasena');
+    // Lista das loterias que você quer exibir
+const loterias = ['megasena', 'quina', 'lotofacil', 'diadesorte'];
+let indiceAtual = 0; // começa pela primeira
 
-    async function carregarUltimosResultados(loteria) {
-        const container = document.getElementById('lista-ultimos-resultados');
-        container.innerHTML = '<div class="spinner"></div>';
-        
-        try {
-            const response = await fetch(`/get-ultimos-resultados?loteria=${loteria}`);
-            if (!response.ok) {
-                throw new Error('Falha ao carregar os resultados.');
-            }
-            const resultados = await response.json();
-            
-            if (resultados.error) {
-                throw new Error(resultados.error);
-            }
-
-            if (resultados.length === 0) {
-                container.innerHTML = '<p>Nenhum resultado encontrado para esta loteria.</p>';
-                return;
-            }
-            
-            let html = '';
-            resultados.forEach(res => {
-                let statusHtml = '';
-                if (res.acumulou) {
-                    statusHtml = `<span class="status-acumulou">ACUMULOU</span>`;
-                } else {
-                    const ganhadorLabel = res.ganhadores > 1 ? 'Ganhadores' : 'Ganhador';
-                    statusHtml = `<span class="status-ganhador">${res.ganhadores} ${ganhadorLabel}</span>`;
-                }
-
-                let mesDaSorteHtml = '';
-                if (loteria === 'diadesorte' && res.mes_sorte) {
-                        mesDaSorteHtml = `<div class="resultado-mes">Mês da Sorte: <strong>${res.mes_sorte}</strong></div>`;
-                }
-
-                html += `
-                    <div class="resultado-item">
-                        <div class="resultado-header">
-                            <span class="resultado-concurso">Concurso ${res.concurso}</span>
-                            <span class="resultado-data">${res.data}</span>
-                        </div>
-                        <div class="resultado-dezenas">${res.dezenas}</div>
-                        ${mesDaSorteHtml}
-                        <div class="resultado-status">${statusHtml}</div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-
-        } catch (error) {
-            console.error('Erro ao carregar últimos resultados:', error);
-            container.innerHTML = `<p style="color: #ff8a80;">Não foi possível carregar os resultados. Tente novamente mais tarde.</p>`;
+async function carregarUltimosResultados(loteria) {
+    const container = document.getElementById('lista-ultimos-resultados');
+    container.innerHTML = '<div class="spinner"></div>';
+    
+    try {
+        const response = await fetch(`/get-ultimos-resultados?loteria=${loteria}`);
+        if (!response.ok) {
+            throw new Error('Falha ao carregar os resultados.');
         }
+        const resultados = await response.json();
+        
+        if (resultados.error) {
+            throw new Error(resultados.error);
+        }
+
+        if (resultados.length === 0) {
+            container.innerHTML = `<p>Nenhum resultado encontrado para ${loteria}.</p>`;
+            return;
+        }
+        
+        let html = `<h3 class="titulo-loteria">${loteria.toUpperCase()}</h3>`;
+        resultados.forEach(res => {
+            let statusHtml = '';
+            if (res.acumulou) {
+                statusHtml = `<span class="status-acumulou">ACUMULOU</span>`;
+            } else {
+                const ganhadorLabel = res.ganhadores > 1 ? 'Ganhadores' : 'Ganhador';
+                statusHtml = `<span class="status-ganhador">${res.ganhadores} ${ganhadorLabel}</span>`;
+            }
+
+            let mesDaSorteHtml = '';
+            if (loteria === 'diadesorte' && res.mes_sorte) {
+                mesDaSorteHtml = `<div class="resultado-mes">Mês da Sorte: <strong>${res.mes_sorte}</strong></div>`;
+            }
+
+            html += `
+                <div class="resultado-item">
+                    <div class="resultado-header">
+                        <span class="resultado-concurso">Concurso ${res.concurso}</span>
+                        <span class="resultado-data">${res.data}</span>
+                    </div>
+                    <div class="resultado-dezenas">${res.dezenas}</div>
+                    ${mesDaSorteHtml}
+                    <div class="resultado-status">${statusHtml}</div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+
+    } catch (error) {
+        console.error('Erro ao carregar últimos resultados:', error);
+        container.innerHTML = `<p style="color: #ff8a80;">Não foi possível carregar os resultados. Tente novamente mais tarde.</p>`;
     }
-   
+}
+
+// Função para trocar automaticamente as loterias
+function iniciarCarrosselLoterias() {
+    carregarUltimosResultados(loterias[indiceAtual]);
+
+    setInterval(() => {
+        indiceAtual = (indiceAtual + 1) % loterias.length; // avança e volta pro início
+        carregarUltimosResultados(loterias[indiceAtual]);
+    }, 15000); // 15 segundos
+}
+
+// Inicia o carrossel ao carregar a página
+document.addEventListener("DOMContentLoaded", iniciarCarrosselLoterias);
