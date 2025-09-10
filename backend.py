@@ -23,6 +23,7 @@ LOTTERY_CONFIG = {
     'lotofacil':  {'min_num': 1, 'max_num': 25, 'num_bolas_sorteadas': 15, 'default_dezenas': 15},
     'diadesorte': {'min_num': 1, 'max_num': 31, 'num_bolas_sorteadas': 7, 'default_dezenas': 7}
 }
+
 CONCURSOS_RECENTES = 100
 
 # --- Funções Auxiliares e de Lógica ---
@@ -472,16 +473,31 @@ def get_latest_card_data():
             concurso, data_sorteio, dezenas, mes_sorte, acumulou, valor_acumulado, ganhadores = resultado
             
             data_formatada = data_sorteio.strftime('%d/%m/%Y') if data_sorteio else 'N/A'
-            valor_formatado = f"R$ {valor_acumulado:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.') if valor_acumulado else "Não acumulado"
             
-            # Ajuste para exibir a informação de ganhadores ou acumulado
-            if acumulou:
+            # Corrigir a lógica do valor acumulado
+            if acumulou and valor_acumulado and valor_acumulado > 0:
+                # Formatar valor monetário brasileiro
+                valor_formatado = f"R$ {valor_acumulado:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
                 status_acumulado = "ACUMULOU!"
+            elif not acumulou and ganhadores > 0:
+                # Quando não acumulou, mostrar informação dos ganhadores
+                valor_formatado = "Sorteio realizado"
+                status_acumulado = f"{ganhadores} ganhador{'es' if ganhadores > 1 else ''}"
             else:
-                status_acumulado = f"{ganhadores} ganhador(es)" if ganhadores > 0 else "Nenhum ganhador"
+                # Fallback para casos indefinidos
+                valor_formatado = "Informação não disponível"
+                status_acumulado = "Aguardando dados"
 
+            # Mapeamento dos nomes das loterias apenas para esta função
+            nomes_loterias = {
+                'megasena': 'Mega-Sena',
+                'quina': 'Quina', 
+                'lotofacil': 'Lotofácil',
+                'diadesorte': 'Dia de Sorte'
+            }
+            
             return jsonify({
-                "loteria": loteria.capitalize(),
+                "loteria": nomes_loterias.get(loteria, loteria.capitalize()),
                 "concurso": concurso,
                 "data": data_formatada,
                 "dezenas": dezenas,
