@@ -61,7 +61,7 @@
 
         
        function compartilharFacebook() {
-            const urlDoSite = "https://sorteanalisada.com.br/blog/";
+            const urlDoSite = "https://sorteanalisada.com.br/blog";
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlDoSite)}`, '_blank');
         }
 

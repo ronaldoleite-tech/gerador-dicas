@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <link rel="stylesheet" href="static/css/home.css">
     <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
 
     <!-- Google tag (gtag.js) -->
@@ -35,6 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
+    <link rel="stylesheet" href="static/css/home.css">
     
 </head>
 <body onload="mudarLoteria('megasena')">
@@ -95,28 +95,18 @@
         </main>
 
         <nav class="nav-interna">
-            <a href="#ultimos-resultados">Últimos Resultados</a>
             <a href="#sobre">Sobre</a>
             <a href="#sobre-filtros">Métodos</a>
+            <a href="/blog">Blog Sorte Analisada</a> 
+            <a href="#ultimos-resultados">Últimos Resultados</a>
             <a href="#estatisticas">Estatísticas</a>
             <a href="#opiniao">Sua opinião</a>
             <a href="#jogorresponsavel">Jogo Responsável</a>
             <a href="#contato">Contato</a>
             <a href="#politica">Privacidade</a>
             <a href="#termos">Termos</a>
-            <a href="/blog">Blog Sorte Analisada</a> 
+            
         </nav>
-
-        <div class="footer-content">
-            <section id="ultimos-resultados" class="footer-section">
-                <h2>Últimos Resultados</h2>
-                <p>Confira os últimos 20 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
-                <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
-                <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
-                    <div class="spinner"></div>
-                </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
 
             <section id="sobre" class="footer-section">
                 <h2>Nossa Missão é Analisar a Sorte</h2>
@@ -155,6 +145,29 @@
                     <a href="/blog" style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;">Explorar Blog Sorte Analisada</a>
                     </div>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+
+            <div class="footer-content">
+                
+            <section id="ultimos-resultados" class="footer-section">
+                <h2>Últimos Resultados</h2>
+                <p>Confira os últimos 5 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
+                <br>
+                <div class="controle-item">
+                    <label for="loteria-select">Loteria:</label>
+                    <select id="loteria-select" class="seletor-custom" onchange="mudarLoteria(this.value)">
+                        <option value="megasena">Mega-Sena</option>
+                        <option value="quina">Quina</option>
+                        <option value="lotofacil">Lotofácil</option>
+                        <option value="diadesorte">Dia de Sorte</option>
+                    </select>
+                </div>
+
+                <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
+                <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
+                    <div class="spinner"></div>
+                </div>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
              
             <section id="estatisticas" class="footer-section">
@@ -200,8 +213,6 @@
                 </p>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
-
-            
 
             <section id="jogorresponsavel" class="footer-section">
                 <h2>Nosso Compromisso com o Jogo Responsável</h2>

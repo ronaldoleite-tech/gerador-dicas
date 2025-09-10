@@ -420,11 +420,11 @@ def get_ultimos_resultados():
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte 
+            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado
             FROM resultados_sorteados 
             WHERE tipo_loteria = %s 
             ORDER BY concurso DESC 
-            LIMIT 20;
+            LIMIT 5;
         """, (loteria,))
         
         resultados = []
@@ -437,86 +437,13 @@ def get_ultimos_resultados():
                 "dezenas": row[2],
                 "ganhadores": row[3],
                 "acumulou": row[4],
-                "mes_sorte": row[5]
+                "mes_sorte": row[5],
+                "valor_acumulado": row[6]
             })
             
         cur.close()
         return jsonify(resultados)
         
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    finally:
-        if conn: conn.close()
-
-@app.route('/get-latest-card-data')
-def get_latest_card_data():
-    loteria = request.args.get('loteria', 'megasena', type=str)
-    conn = None
-    try:
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute(
-            """
-            SELECT concurso, data_sorteio, dezenas, mes_sorte, acumulou, valor_acumulado, ganhadores
-            FROM resultados_sorteados
-            WHERE tipo_loteria = %s
-            ORDER BY concurso DESC
-            LIMIT 1;
-            """,
-            (loteria,)
-        )
-        
-        resultado = cur.fetchone()
-        cur.close()
-
-        if resultado:
-            concurso, data_sorteio, dezenas, mes_sorte, acumulou, valor_acumulado, ganhadores = resultado
-            
-            data_formatada = data_sorteio.strftime('%d/%m/%Y') if data_sorteio else 'N/A'
-            
-            # Tratar valores None/NULL
-            acumulou = acumulou if acumulou is not None else False
-            ganhadores = ganhadores if ganhadores is not None else 0
-            valor_acumulado = valor_acumulado if valor_acumulado is not None else 0
-            
-            # Corrigir a lógica do valor acumulado
-            if acumulou and valor_acumulado > 0:
-                # Formatar valor monetário brasileiro
-                valor_formatado = f"R$ {valor_acumulado:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-                status_acumulado = "ACUMULOU!"
-            elif not acumulou and ganhadores > 0:
-                # Quando não acumulou, mostrar informação dos ganhadores
-                valor_formatado = "Sorteio realizado"
-                status_acumulado = f"{ganhadores} ganhador{'es' if ganhadores > 1 else ''}"
-            elif acumulou and valor_acumulado == 0:
-                # Acumulou mas valor não disponível
-                valor_formatado = "Valor em processamento"
-                status_acumulado = "ACUMULOU!"
-            else:
-                # Caso padrão quando dados estão incompletos
-                valor_formatado = "Aguardando informações"
-                status_acumulado = "Resultado disponível"
-
-            # Mapeamento dos nomes das loterias apenas para esta função
-            nomes_loterias = {
-                'megasena': 'Mega-Sena',
-                'quina': 'Quina', 
-                'lotofacil': 'Lotofácil',
-                'diadesorte': 'Dia de Sorte'
-            }
-            
-            return jsonify({
-                "loteria": nomes_loterias.get(loteria, loteria.capitalize()),
-                "concurso": concurso,
-                "data": data_formatada,
-                "dezenas": dezenas,
-                "mes_sorte": mes_sorte,
-                "status_acumulado": status_acumulado,
-                "valor_acumulado": valor_formatado
-            })
-        else:
-            return jsonify({"error": "Resultado não encontrado"}), 404
-            
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
