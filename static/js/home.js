@@ -392,3 +392,24 @@ function iniciarCarrosselLoterias() {
 
 // Inicia o carrossel ao carregar a página
 document.addEventListener("DOMContentLoaded", iniciarCarrosselLoterias);
+
+async function carregarCard(loteria = 'megasena') {
+    try {
+        const response = await fetch(`/get-latest-card-data?loteria=${loteria}`);
+        if (!response.ok) throw new Error("Erro ao buscar os dados do card");
+
+        const data = await response.json();
+
+        document.getElementById("loteria-nome").textContent = data.loteria || "N/A";
+        document.getElementById("concurso-data").textContent = `Concurso ${data.concurso} - ${data.data}`;
+        document.getElementById("dezenas-sorteadas").textContent = data.dezenas || "";
+        document.getElementById("status-loteria").textContent = data.status_acumulado || "";
+        document.getElementById("valor-acumulado").textContent = data.valor_acumulado || "";
+    } catch (err) {
+        console.error("Erro ao carregar card:", err);
+        document.getElementById("loteria-nome").textContent = "Erro ao carregar";
+    }
+}
+
+// chama quando a página carrega
+document.addEventListener("DOMContentLoaded", () => carregarCard());
