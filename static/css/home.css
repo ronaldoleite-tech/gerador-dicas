@@ -285,32 +285,60 @@ h1 {
 }
 
 /* ==============================
-   CARD LOTERIA
+   CARD LOTERIA (CORREÇÃO)
 ============================== */
 .lottery-card {
     max-width: 400px;
     margin: 20px auto;
     padding: 15px;
     border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    color: var(--cor-texto);
+    border-left: 4px solid var(--cor-loteria-display);
 }
-.card-header {
+
+.lottery-card .card-header {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
     margin-bottom: 10px;
+    color: white;
 }
-.card-body { text-align: center; }
-.dezenas {
-    font-size: 1.2em;
+
+.lottery-card .card-body { 
+    text-align: center; 
+}
+
+.lottery-card .dezenas {
+    font-size: 1.4rem;
     margin: 10px 0;
     font-weight: bold;
+    color: var(--cor-dourado);
+    letter-spacing: 2px;
 }
-.card-footer {
+
+.lottery-card .card-footer {
     margin-top: 10px;
     font-size: 0.9em;
-    color: #555;
+    color: var(--cor-texto);
+}
+
+.lottery-card .status-acumulou { 
+    color: #FFB74D; 
+    font-weight: bold;
+}
+
+/* Garantir que os elementos dentro do card não herdem estilos de outras seções */
+.lottery-card * {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Adicionar margem para separar das outras seções */
+.lottery-card + .secao-controles,
+.lottery-card + .partner-ad-container {
+    margin-top: 2rem;
 }
 
 /* ==============================
