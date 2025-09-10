@@ -447,8 +447,8 @@ def get_ultimos_resultados():
     finally:
         if conn: conn.close()
 
-@app.route('/get-latest-result')
-def get_latest_result():
+@app.route('/get-latest-card-data')
+def get_latest_card_data():
     loteria = request.args.get('loteria', 'megasena', type=str)
     conn = None
     try:
@@ -456,7 +456,7 @@ def get_latest_result():
         cur = conn.cursor()
         cur.execute(
             """
-            SELECT concurso, dezenas, valor_acumulado
+            SELECT concurso, data_sorteio, dezenas, mes_sorte, acumulou, valor_acumulado, ganhadores
             FROM resultados_sorteados
             WHERE tipo_loteria = %s
             ORDER BY concurso DESC
@@ -469,12 +469,25 @@ def get_latest_result():
         cur.close()
 
         if resultado:
-            concurso, dezenas, valor_acumulado = resultado
+            concurso, data_sorteio, dezenas, mes_sorte, acumulou, valor_acumulado, ganhadores = resultado
+            
+            data_formatada = data_sorteio.strftime('%d/%m/%Y') if data_sorteio else 'N/A'
+            valor_formatado = f"R$ {valor_acumulado:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.') if valor_acumulado else "Não acumulado"
+            
+            # Ajuste para exibir a informação de ganhadores ou acumulado
+            if acumulou:
+                status_acumulado = "ACUMULOU!"
+            else:
+                status_acumulado = f"{ganhadores} ganhador(es)" if ganhadores > 0 else "Nenhum ganhador"
+
             return jsonify({
                 "loteria": loteria.capitalize(),
                 "concurso": concurso,
+                "data": data_formatada,
                 "dezenas": dezenas,
-                "valor_acumulado": f"R$ {valor_acumulado:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.') if valor_acumulado else "Não acumulado"
+                "mes_sorte": mes_sorte,
+                "status_acumulado": status_acumulado,
+                "valor_acumulado": valor_formatado
             })
         else:
             return jsonify({"error": "Resultado não encontrado"}), 404

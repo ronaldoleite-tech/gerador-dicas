@@ -292,13 +292,26 @@
 
     async function fetchLatestResult(loteria) {
         try {
-            const response = await fetch(`/get-latest-result?loteria=${loteria}`);
+            const response = await fetch(`/get-latest-card-data?loteria=${loteria}`);
             const data = await response.json();
             
             if (response.ok) {
-                document.getElementById(`concurso-${loteria}`).textContent = data.concurso;
-                document.getElementById(`dezenas-${loteria}`).textContent = data.dezenas;
-                document.getElementById(`valor-acumulado-${loteria}`).textContent = data.valor_acumulado;
+                document.getElementById('loteria-nome').textContent = data.loteria;
+                document.getElementById('concurso-data').textContent = `Concurso: ${data.concurso} (${data.data})`;
+                document.getElementById('status-loteria').textContent = data.status_acumulado;
+                document.getElementById('valor-acumulado').textContent = `Valor: ${data.valor_acumulado}`;
+
+                // Gerar as dezenas dinamicamente
+                const dezenasDiv = document.getElementById('dezenas-sorteadas');
+                dezenasDiv.innerHTML = ''; // Limpar dezenas anteriores
+                const dezenasArray = data.dezenas.split(' ');
+                dezenasArray.forEach(dezena => {
+                    const dezenaSpan = document.createElement('span');
+                    dezenaSpan.className = 'dezena';
+                    dezenaSpan.textContent = dezena;
+                    dezenasDiv.appendChild(dezenaSpan);
+                });
+
             } else {
                 console.error('Erro ao buscar resultado:', data.error);
             }
@@ -309,8 +322,6 @@
 
     // Chame a função para cada loteria que você quer exibir
     fetchLatestResult('megasena');
-    fetchLatestResult('lotofacil');
-    // etc...
 
     async function carregarUltimosResultados(loteria) {
         const container = document.getElementById('lista-ultimos-resultados');
