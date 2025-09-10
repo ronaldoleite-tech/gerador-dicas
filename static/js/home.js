@@ -300,7 +300,7 @@
                 document.getElementById('concurso-data').textContent = `Concurso: ${data.concurso} (${data.data})`;
                 document.getElementById('status-loteria').textContent = data.status_acumulado;
                 document.getElementById('valor-acumulado').textContent = `Valor: ${data.valor_acumulado}`;
-
+                
                 // Gerar as dezenas dinamicamente
                 const dezenasDiv = document.getElementById('dezenas-sorteadas');
                 dezenasDiv.innerHTML = ''; // Limpar dezenas anteriores
