@@ -447,6 +447,44 @@ def get_ultimos_resultados():
     finally:
         if conn: conn.close()
 
+@app.route('/get-latest-result')
+def get_latest_result():
+    loteria = request.args.get('loteria', 'megasena', type=str)
+    conn = None
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(
+            """
+            SELECT concurso, dezenas, valor_acumulado
+            FROM resultados_sorteados
+            WHERE tipo_loteria = %s
+            ORDER BY concurso DESC
+            LIMIT 1;
+            """,
+            (loteria,)
+        )
+        
+        resultado = cur.fetchone()
+        cur.close()
+
+        if resultado:
+            concurso, dezenas, valor_acumulado = resultado
+            return jsonify({
+                "loteria": loteria.capitalize(),
+                "concurso": concurso,
+                "dezenas": dezenas,
+                "valor_acumulado": f"R$ {valor_acumulado:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.') if valor_acumulado else "Não acumulado"
+            })
+        else:
+            return jsonify({"error": "Resultado não encontrado"}), 404
+            
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if conn: conn.close()
+
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     debug_mode = os.environ.get('RENDER') is None

@@ -14,6 +14,7 @@ LOTERIAS_API = {
     'diadesorte': 'https://loteriascaixa-api.herokuapp.com/api/diadesorte'
 }
 
+
 def criar_tabela_se_nao_existir(conn):
     with conn.cursor() as cur:
         # --- ALTERAÇÃO: Adicionamos a coluna 'mes_sorte' que estava faltando ---
@@ -27,10 +28,17 @@ def criar_tabela_se_nao_existir(conn):
                 ganhadores INTEGER,
                 acumulou BOOLEAN,
                 mes_sorte VARCHAR(50), -- <-- COLUNA ADICIONADA
-                UNIQUE (tipo_loteria, concurso)
+                UNIQUE (tipo_loteria, concurso) 
             );
+            DO $$ BEGIN
+                IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'decimal_12_2') THEN
+                    CREATE DOMAIN decimal_12_2 AS NUMERIC(12, 2);
+                END IF;
+            END $$;
+            ALTER TABLE resultados_sorteados ADD COLUMN IF NOT EXISTS valor_acumulado DECIMAL(18, 2);
         """)
         conn.commit()
+
     print("Tabela 'resultados_sorteados' verificada/criada com sucesso.")
 
 def get_ultimo_concurso(conn, loteria):
@@ -77,6 +85,7 @@ def importar_resultados():
                         res_concurso = requests.get(url_concurso, timeout=30)
                         res_concurso.raise_for_status()
                         dados_concurso = res_concurso.json()
+                        valor_acumulado = dados_concurso.get('valorAcumulado')
 
                         dezenas_lista = dados_concurso.get('dezenas')
                         if not dezenas_lista: continue
@@ -98,12 +107,32 @@ def importar_resultados():
                         with conn.cursor() as cur:
                             # --- ALTERAÇÃO: Insere os novos dados, incluindo o mes_sorte ---
                             cur.execute(
+                                
                                 """
-                                INSERT INTO resultados_sorteados (tipo_loteria, concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte)
-                                VALUES (%s, %s, %s, %s, %s, %s, %s) ON CONFLICT (tipo_loteria, concurso) DO NOTHING;
+                                INSERT INTO resultados_sorteados (tipo_loteria, concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado
+                                )
+                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                                ON CONFLICT (tipo_loteria, concurso) DO UPDATE SET 
+                                data_sorteio = EXCLUDED.data_sorteio, 
+                                dezenas = EXCLUDED.dezenas, 
+                                ganhadores = EXCLUDED.ganhadores,
+                                acumulou = EXCLUDED.acumulou,
+                                mes_sorte = EXCLUDED.mes_sorte,
+                                valor_acumulado = EXCLUDED.valor_acumulado;
                                 """,
-                                (nome_loteria, concurso_num, data_formatada, dezenas_str, ganhadores_faixa1, acumulou, mes_sorte)
+                                (
+                                    nome_loteria,
+                                    concurso_num,
+                                    data_formatada,
+                                    dezenas_str,
+                                    ganhadores_faixa1,
+                                    acumulou,
+                                    mes_sorte,
+                                    valor_acumulado
+                                )
                             )
+
+                                
                         novos_registros += 1
                     except Exception as e:
                         print(f"  - Erro ao processar concurso {concurso_num}: {e}. Pulando.")

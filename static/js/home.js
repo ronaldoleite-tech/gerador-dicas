@@ -269,6 +269,7 @@
         }
     }
     
+
     async function submitFeedback(choice) {
         const feedbackArea = document.getElementById('feedback-area');
         const messageEl = document.getElementById('feedback-message');
@@ -288,6 +289,28 @@
             messageEl.style.color = '#ff8a80';
         }
     }
+
+    async function fetchLatestResult(loteria) {
+        try {
+            const response = await fetch(`/get-latest-result?loteria=${loteria}`);
+            const data = await response.json();
+            
+            if (response.ok) {
+                document.getElementById(`concurso-${loteria}`).textContent = data.concurso;
+                document.getElementById(`dezenas-${loteria}`).textContent = data.dezenas;
+                document.getElementById(`valor-acumulado-${loteria}`).textContent = data.valor_acumulado;
+            } else {
+                console.error('Erro ao buscar resultado:', data.error);
+            }
+        } catch (error) {
+            console.error('Falha na requisição:', error);
+        }
+    }
+
+    // Chame a função para cada loteria que você quer exibir
+    fetchLatestResult('megasena');
+    fetchLatestResult('lotofacil');
+    // etc...
 
     async function carregarUltimosResultados(loteria) {
         const container = document.getElementById('lista-ultimos-resultados');
