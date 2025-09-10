@@ -195,62 +195,34 @@
         #informativo .botao-gerar { padding: .8rem 1rem; font-size: 0.9rem; }
     }
 
-        .lottery-card {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        font-family: Arial, sans-serif;
-        text-align: center;
-    }
+       .lottery-card {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
 
-    .card-header h3 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: #4CAF50; /* Verde da Mega-Sena */
-    }
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
-    .card-header span {
-        color: #666;
-        font-size: 0.9rem;
-    }
+.card-body {
+    text-align: center;
+}
 
-    .dezenas {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 20px 0;
-    }
+.dezenas {
+    font-size: 1.2em;
+    margin: 10px 0;
+    font-weight: bold;
+}
 
-    .dezena {
-        background-color: #4CAF50;
-        color: white;
-        font-weight: bold;
-        border-radius: 50%;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 5px;
-        font-size: 1.2rem;
-    }
-
-    .card-footer {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    #status-loteria {
-        font-weight: bold;
-        color: #333;
-    }
-
-    #valor-acumulado {
-        color: #E91E63; /* Cor destacada para o valor */
-        font-weight: bold;
-        font-size: 1.1rem;
-    }
+.card-footer {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #555;
+}
