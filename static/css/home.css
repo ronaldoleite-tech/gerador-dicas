@@ -245,6 +245,13 @@
         }
         .resultado-mes strong { color: var(--cor-dourado); }
 
+        .valor-acumulado {
+            display: block;
+            margin-top: 5px;
+            font-weight: bold;
+            color: #ffd700; /* dourado */
+}
+
         /* ==============================
            OUTROS ELEMENTOS
         ============================== */

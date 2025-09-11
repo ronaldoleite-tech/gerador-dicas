@@ -107,4 +107,4 @@
             document.getElementById('contador-artigos').textContent = 
                 `Mostrando ${artigosVisiveis} de ${totalArtigos} artigos`;
         });
-   
+ 

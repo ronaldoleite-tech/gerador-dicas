@@ -418,7 +418,7 @@ def get_ultimos_resultados():
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte 
+            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado
             FROM resultados_sorteados 
             WHERE tipo_loteria = %s 
             ORDER BY concurso DESC 
@@ -435,7 +435,8 @@ def get_ultimos_resultados():
                 "dezenas": row[2],
                 "ganhadores": row[3],
                 "acumulou": row[4],
-                "mes_sorte": row[5]
+                "mes_sorte": row[5],
+                "valor_acumulado": float(row[6]) if row[6] is not None else None
             })
             
         cur.close()

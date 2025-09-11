@@ -313,11 +313,15 @@ let loteriaAtual = 'megasena';
             resultados.forEach(res => {
                 let statusHtml = '';
                 if (res.acumulou) {
-                    statusHtml = `<span class="status-acumulou">ACUMULOU</span>`;
+                    let valorHtml = res.valor_acumulado 
+                        ? `<div class="valor-acumulado">Prêmio estimado: R$ ${res.valor_acumulado.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>` 
+                        : '';
+                    statusHtml = `<span class="status-acumulou">ACUMULOU</span>${valorHtml}`;
                 } else {
                     const ganhadorLabel = res.ganhadores > 1 ? 'Ganhadores' : 'Ganhador';
                     statusHtml = `<span class="status-ganhador">${res.ganhadores} ${ganhadorLabel}</span>`;
                 }
+
 
                 let mesDaSorteHtml = '';
                 if (loteria === 'diadesorte' && res.mes_sorte) {
