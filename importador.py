@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# SCRIPT DE TESTE - Testa apenas um concurso específico
+# SCRIPT PARA ATUALIZAR VALORES ACUMULADOS EXISTENTES
 import os
 import requests
 import psycopg2
@@ -7,6 +7,7 @@ import logging
 from dotenv import load_dotenv
 from datetime import datetime
 from typing import Optional, Dict, Any
+import time
 
 # Configure logging
 logging.basicConfig(
@@ -18,125 +19,146 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
+LOTERIAS_API = {
+    'megasena': 'https://loteriascaixa-api.herokuapp.com/api/megasena',
+    'lotofacil': 'https://loteriascaixa-api.herokuapp.com/api/lotofacil',
+    'quina': 'https://loteriascaixa-api.herokuapp.com/api/quina',
+    'diadesorte': 'https://loteriascaixa-api.herokuapp.com/api/diadesorte'
+}
+
 def processar_valor_acumulado(dados_api: Dict[Any, Any], acumulou: bool) -> Optional[float]:
-    """Process accumulated value from API response with correct field mapping"""
+    """Process accumulated value from API response"""
     if not acumulou:
         return 0.0
     
-    # Try different possible field names from the API
     possible_fields = [
-        'valorEstimadoProximoConcurso',  # Primary field for next contest estimate
-        'valorAcumuladoProximoConcurso', # Alternative accumulated value
-        'valorAcumuladoConcurso_0_5',    # Another possible field
-        'valorAcumulado',                # Original field name (fallback)
+        'valorEstimadoProximoConcurso',
+        'valorAcumuladoProximoConcurso',
+        'valorAcumuladoConcurso_0_5',
+        'valorAcumulado',
     ]
-    
-    valor_acumulado = None
-    field_used = None
     
     for field in possible_fields:
         valor_acumulado = dados_api.get(field)
         if valor_acumulado is not None:
-            field_used = field
-            break
-    
-    if valor_acumulado is None:
-        logger.warning("No accumulated value field found in API response")
-        logger.info(f"Available fields in API response: {list(dados_api.keys())}")
-        return None
-    
-    try:
-        if isinstance(valor_acumulado, str):
-            # Clean currency formatting
-            valor_limpo = (valor_acumulado
-                          .replace('R$', '')
-                          .replace('.', '')
-                          .replace(',', '.')
-                          .strip())
-            resultado = float(valor_limpo) if valor_limpo else 0.0
-        else:
-            # Handle scientific notation (like 5.5E7)
-            resultado = float(valor_acumulado)
-        
-        logger.info(f"✅ SUCCESS! Accumulated value processed: {resultado} (from field: {field_used})")
-        return resultado
-        
-    except (ValueError, TypeError) as e:
-        logger.warning(f"Error processing accumulated value '{valor_acumulado}' from field '{field_used}': {e}")
-        return None
-
-def teste_concurso_especifico():
-    """Test processing a specific contest"""
-    try:
-        # Test with contest 2912 (the one we know is accumulated)
-        url = "https://loteriascaixa-api.herokuapp.com/api/megasena/2912"
-        
-        logger.info("🧪 TESTING SPECIFIC CONTEST...")
-        logger.info(f"Fetching: {url}")
-        
-        response = requests.get(url, timeout=30)
-        response.raise_for_status()
-        dados_api = response.json()
-        
-        logger.info(f"📊 API Response keys: {list(dados_api.keys())}")
-        logger.info(f"📊 Contest: {dados_api.get('concurso')}")
-        logger.info(f"📊 Accumulated: {dados_api.get('acumulou')}")
-        
-        # Test the value processing function
-        acumulou = dados_api.get('acumulou', False)
-        valor = processar_valor_acumulado(dados_api, acumulou)
-        
-        logger.info(f"📊 Processed accumulated value: {valor}")
-        
-        # Show relevant fields from API
-        relevant_fields = [
-            'valorEstimadoProximoConcurso',
-            'valorAcumuladoProximoConcurso', 
-            'valorAcumuladoConcurso_0_5',
-            'valorAcumulado'
-        ]
-        
-        logger.info("📊 Relevant fields in API response:")
-        for field in relevant_fields:
-            if field in dados_api:
-                logger.info(f"   {field}: {dados_api[field]}")
-        
-        # Now try to update this specific contest in the database
-        if valor is not None:
-            logger.info("🔄 Updating database with correct value...")
-            
-            conn = psycopg2.connect(DATABASE_URL)
-            with conn.cursor() as cur:
-                cur.execute("""
-                    UPDATE resultados_sorteados 
-                    SET valor_acumulado = %s, data_importacao = CURRENT_TIMESTAMP
-                    WHERE tipo_loteria = 'megasena' AND concurso = 2912
-                """, (valor,))
-                
-                if cur.rowcount > 0:
-                    conn.commit()
-                    logger.info(f"✅ SUCCESS! Updated contest 2912 with value: {valor}")
-                    
-                    # Verify the update
-                    cur.execute("""
-                        SELECT concurso, acumulou, valor_acumulado, ganhadores 
-                        FROM resultados_sorteados 
-                        WHERE tipo_loteria = 'megasena' AND concurso = 2912
-                    """)
-                    result = cur.fetchone()
-                    if result:
-                        logger.info(f"📋 Verified record: contest={result[0]}, accumulated={result[1]}, value={result[2]}, winners={result[3]}")
+            try:
+                if isinstance(valor_acumulado, str):
+                    valor_limpo = (valor_acumulado
+                                  .replace('R$', '')
+                                  .replace('.', '')
+                                  .replace(',', '.')
+                                  .strip())
+                    return float(valor_limpo) if valor_limpo else 0.0
                 else:
-                    logger.warning("⚠️  No rows updated - contest 2912 may not exist in database")
-            
-            conn.close()
-        else:
-            logger.error("❌ Failed to process accumulated value")
-            
+                    return float(valor_acumulado)
+            except (ValueError, TypeError):
+                continue
+    
+    return None
+
+def buscar_concursos_acumulados(conn):
+    """Get all contests marked as accumulated but with NULL accumulated value"""
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT tipo_loteria, concurso 
+            FROM resultados_sorteados 
+            WHERE acumulou = true 
+            AND (valor_acumulado IS NULL OR valor_acumulado = 0)
+            ORDER BY tipo_loteria, concurso
+        """)
+        return cur.fetchall()
+
+def atualizar_valores_acumulados():
+    """Update accumulated values for all contests marked as accumulated"""
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        
+        # Get contests that need updating
+        concursos_pendentes = buscar_concursos_acumulados(conn)
+        
+        if not concursos_pendentes:
+            logger.info("✅ No contests need updating!")
+            return
+        
+        logger.info(f"📋 Found {len(concursos_pendentes)} contests to update")
+        
+        atualizados = 0
+        erros = 0
+        
+        for tipo_loteria, concurso in concursos_pendentes:
+            try:
+                logger.info(f"🔄 Processing {tipo_loteria} contest {concurso}...")
+                
+                # Get contest data from API
+                url = f"{LOTERIAS_API[tipo_loteria]}/{concurso}"
+                response = requests.get(url, timeout=30)
+                response.raise_for_status()
+                dados_api = response.json()
+                
+                # Process accumulated value
+                acumulou = dados_api.get('acumulou', False)
+                if acumulou:
+                    valor = processar_valor_acumulado(dados_api, acumulou)
+                    
+                    if valor is not None:
+                        # Update database
+                        with conn.cursor() as cur:
+                            cur.execute("""
+                                UPDATE resultados_sorteados 
+                                SET valor_acumulado = %s, data_importacao = CURRENT_TIMESTAMP
+                                WHERE tipo_loteria = %s AND concurso = %s
+                            """, (valor, tipo_loteria, concurso))
+                        
+                        logger.info(f"✅ Updated {tipo_loteria} {concurso}: {valor}")
+                        atualizados += 1
+                    else:
+                        logger.warning(f"⚠️  Could not process value for {tipo_loteria} {concurso}")
+                        erros += 1
+                else:
+                    logger.info(f"ℹ️  Contest {tipo_loteria} {concurso} is no longer accumulated")
+                    # Update to mark as not accumulated
+                    with conn.cursor() as cur:
+                        cur.execute("""
+                            UPDATE resultados_sorteados 
+                            SET acumulou = false, valor_acumulado = 0, data_importacao = CURRENT_TIMESTAMP
+                            WHERE tipo_loteria = %s AND concurso = %s
+                        """, (tipo_loteria, concurso))
+                    atualizados += 1
+                
+                # Small delay to avoid hitting API limits
+                time.sleep(0.5)
+                
+            except Exception as e:
+                logger.error(f"❌ Error processing {tipo_loteria} {concurso}: {e}")
+                erros += 1
+                continue
+        
+        # Commit all changes
+        conn.commit()
+        logger.info(f"🎉 COMPLETED! Updated: {atualizados}, Errors: {erros}")
+        
+        # Show some updated records
+        logger.info("📊 Sample of updated records:")
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT tipo_loteria, concurso, valor_acumulado 
+                FROM resultados_sorteados 
+                WHERE acumulou = true AND valor_acumulado > 0
+                ORDER BY data_importacao DESC 
+                LIMIT 10
+            """)
+            for record in cur.fetchall():
+                logger.info(f"   {record[0]} #{record[1]}: R$ {record[2]:,.2f}")
+        
+        conn.close()
+        
     except Exception as e:
-        logger.error(f"❌ Test failed: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.error(f"❌ Fatal error: {e}")
+        if 'conn' in locals():
+            conn.rollback()
+            conn.close()
 
 if __name__ == "__main__":
-    teste_concurso_especifico()
+    logger.info("🚀 Starting accumulated values update...")
+    atualizar_valores_acumulados()
+    logger.info("✅ Update process completed!")
