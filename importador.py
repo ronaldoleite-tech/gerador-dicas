@@ -90,12 +90,30 @@ def get_ultimo_concurso(conn, loteria: str) -> int:
         resultado = cur.fetchone()[0]
         return resultado if resultado else 0
 
-def processar_valor_acumulado(valor_acumulado: Any, acumulou: bool) -> Optional[float]:
-    """Process accumulated value with better error handling"""
+def processar_valor_acumulado(dados_api: Dict[Any, Any], acumulou: bool) -> Optional[float]:
+    """Process accumulated value from API response with correct field mapping"""
     if not acumulou:
         return 0.0
     
+    # Try different possible field names from the API
+    possible_fields = [
+        'valorEstimadoProximoConcurso',  # Primary field for next contest estimate
+        'valorAcumuladoProximoConcurso', # Alternative accumulated value
+        'valorAcumuladoConcurso_0_5',    # Another possible field
+        'valorAcumulado',                # Original field name (fallback)
+    ]
+    
+    valor_acumulado = None
+    field_used = None
+    
+    for field in possible_fields:
+        valor_acumulado = dados_api.get(field)
+        if valor_acumulado is not None:
+            field_used = field
+            break
+    
     if valor_acumulado is None:
+        logger.warning("No accumulated value field found in API response")
         return None
     
     try:
@@ -106,38 +124,16 @@ def processar_valor_acumulado(valor_acumulado: Any, acumulou: bool) -> Optional[
                           .replace('.', '')
                           .replace(',', '.')
                           .strip())
-            return float(valor_limpo) if valor_limpo else 0.0
-        return float(valor_acumulado)
+            resultado = float(valor_limpo) if valor_limpo else 0.0
+        else:
+            # Handle scientific notation (like 5.5E7)
+            resultado = float(valor_acumulado)
+        
+        logger.debug(f"Accumulated value processed: {resultado} (from field: {field_used})")
+        return resultado
+        
     except (ValueError, TypeError) as e:
-        logger.warning(f"Error processing accumulated value '{valor_acumulado}': {e}")
-        return None
-
-def processar_data(data_str: str) -> Optional[str]:
-    """Process date string to PostgreSQL format"""
-    if not data_str:
-        return None
-        
-    try:
-        # Handle dd/mm/yyyy format
-        if len(data_str) == 10 and '/' in data_str:
-            parts = data_str.split('/')
-            if len(parts) == 3:
-                day, month, year = parts
-                return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
-        
-        # Try to parse other common formats
-        for fmt in ['%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y']:
-            try:
-                parsed_date = datetime.strptime(data_str, fmt)
-                return parsed_date.strftime('%Y-%m-%d')
-            except ValueError:
-                continue
-        
-        logger.warning(f"Unexpected date format: {data_str}")
-        return None
-        
-    except Exception as e:
-        logger.error(f"Error processing date '{data_str}': {e}")
+        logger.warning(f"Error processing accumulated value '{valor_acumulado}' from field '{field_used}': {e}")
         return None
 
 def fazer_requisicao_api(url: str, max_tentativas: int = MAX_RETRIES) -> Optional[Dict[Any, Any]]:
@@ -182,7 +178,9 @@ def extrair_dados_concurso(dados: Dict[Any, Any], nome_loteria: str) -> Optional
             return None
         
         acumulou = dados.get('acumulou', False)
-        valor_acumulado = processar_valor_acumulado(dados.get('valorAcumulado'), acumulou)
+        
+        # FIXED: Pass the entire API response to get the correct field
+        valor_acumulado = processar_valor_acumulado(dados, acumulou)
         
         # Extract winners from first prize tier
         ganhadores_faixa1 = 0
@@ -193,7 +191,7 @@ def extrair_dados_concurso(dados: Dict[Any, Any], nome_loteria: str) -> Optional
         # Month of luck (only for Dia de Sorte)
         mes_sorte = dados.get('mesSorte') if nome_loteria == 'diadesorte' else None
         
-        return {
+        resultado = {
             'concurso': concurso,
             'data_sorteio': data_formatada,
             'dezenas': dezenas_str,
@@ -202,6 +200,12 @@ def extrair_dados_concurso(dados: Dict[Any, Any], nome_loteria: str) -> Optional
             'mes_sorte': mes_sorte,
             'valor_acumulado': valor_acumulado
         }
+        
+        # Debug log for accumulated values
+        if valor_acumulado is not None:
+            logger.debug(f"Contest {concurso}: accumulated={acumulou}, value={valor_acumulado}")
+        
+        return resultado
         
     except Exception as e:
         logger.error(f"Error extracting contest data: {e}")
