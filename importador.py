@@ -92,71 +92,46 @@ def get_ultimo_concurso(conn, loteria: str) -> int:
         return resultado if resultado else 0
 
 def processar_valor_acumulado(dados_api: Dict[Any, Any], acumulou: bool) -> Optional[float]:
-    """Process accumulated value from API response with correct field mapping"""
+    """Process accumulated value from API response - SIMPLIFIED VERSION"""
     if not acumulou:
         return 0.0
     
-    # Try different possible field names from the API
+    # Try the most common field names in order of preference
     possible_fields = [
-        'valorEstimadoProximoConcurso',  # Primary field for next contest estimate
-        'valorAcumuladoProximoConcurso', # Alternative accumulated value
-        'valorAcumuladoConcurso_0_5',    # Another possible field
-        'valorAcumulado',                # Original field name (fallback)
+        'valorEstimadoProximoConcurso',
+        'valorAcumuladoProximoConcurso', 
+        'valorAcumulado'
     ]
     
-    valor_acumulado = None
-    field_used = None
-    
     for field in possible_fields:
-        valor_acumulado = dados_api.get(field)
-        if valor_acumulado is not None:
-            field_used = field
-            break
+        valor = dados_api.get(field)
+        if valor is not None:
+            try:
+                # Handle string values with currency formatting
+                if isinstance(valor, str):
+                    # Remove R$, dots (thousands separator) and replace comma with dot
+                    valor_limpo = valor.replace('R$', '').replace('.', '').replace(',', '.').strip()
+                    if valor_limpo:
+                        return float(valor_limpo)
+                # Handle numeric values (including scientific notation)
+                else:
+                    return float(valor)
+            except (ValueError, TypeError):
+                continue
     
-    if valor_acumulado is None:
-        logger.warning("No accumulated value field found in API response")
-        return None
-    
-    try:
-        if isinstance(valor_acumulado, str):
-            # Clean currency formatting
-            valor_limpo = (valor_acumulado
-                          .replace('R$', '')
-                          .replace('.', '')
-                          .replace(',', '.')
-                          .strip())
-            resultado = float(valor_limpo) if valor_limpo else 0.0
-        else:
-            # Handle scientific notation (like 5.5E7)
-            resultado = float(valor_acumulado)
-        
-        logger.debug(f"Accumulated value processed: {resultado} (from field: {field_used})")
-        return resultado
-        
-    except (ValueError, TypeError) as e:
-        logger.warning(f"Error processing accumulated value '{valor_acumulado}' from field '{field_used}': {e}")
-        return None
+    # If no valid value found, return None to indicate missing data
+    return None
 
 def processar_data(data_str: str) -> Optional[str]:
-    """Process date string to PostgreSQL format"""
+    """Process date string to PostgreSQL format - SIMPLIFIED VERSION"""
     if not data_str:
         return None
         
     try:
-        # Handle dd/mm/yyyy format
-        if len(data_str) == 10 and '/' in data_str:
-            parts = data_str.split('/')
-            if len(parts) == 3:
-                day, month, year = parts
-                return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
-        
-        # Try to parse other common formats
-        for fmt in ['%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y']:
-            try:
-                parsed_date = datetime.strptime(data_str, fmt)
-                return parsed_date.strftime('%Y-%m-%d')
-            except ValueError:
-                continue
+        # Handle the most common format: dd/mm/yyyy
+        if len(data_str) == 10 and data_str.count('/') == 2:
+            day, month, year = data_str.split('/')
+            return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
         
         logger.warning(f"Unexpected date format: {data_str}")
         return None
@@ -169,7 +144,6 @@ def fazer_requisicao_api(url: str, max_tentativas: int = MAX_RETRIES) -> Optiona
     """Make API request with retry logic"""
     for tentativa in range(max_tentativas):
         try:
-            logger.debug(f"API request to: {url} (attempt {tentativa + 1})")
             response = requests.get(url, timeout=REQUEST_TIMEOUT)
             response.raise_for_status()
             return response.json()
@@ -178,49 +152,45 @@ def fazer_requisicao_api(url: str, max_tentativas: int = MAX_RETRIES) -> Optiona
             if tentativa == max_tentativas - 1:
                 logger.error(f"All API request attempts failed for: {url}")
                 return None
+            time.sleep(1)  # Wait before retry
     return None
 
 def extrair_dados_concurso(dados: Dict[Any, Any], nome_loteria: str) -> Optional[Dict[str, Any]]:
-    """Extract and validate contest data"""
+    """Extract and validate contest data - SIMPLIFIED VERSION"""
     try:
-        # Validate required fields
+        # Get required fields
         dezenas_lista = dados.get('dezenas')
-        if not dezenas_lista:
-            logger.warning("Missing 'dezenas' in contest data")
-            return None
-        
         data_str = dados.get('data')
-        if not data_str:
-            logger.warning("Missing 'data' in contest data")
-            return None
-        
         concurso = dados.get('concurso')
-        if not concurso:
-            logger.warning("Missing 'concurso' in contest data")
+        
+        # Skip if any required field is missing
+        if not dezenas_lista or not data_str or not concurso:
+            logger.warning(f"Missing required fields for contest {concurso}")
             return None
         
-        # Process data
+        # Process data - keep it simple like the old version
         dezenas_str = " ".join(sorted(map(str, dezenas_lista)))
         data_formatada = processar_data(data_str)
         
         if not data_formatada:
             return None
         
+        # Get optional fields with defaults
         acumulou = dados.get('acumulou', False)
         
-        # FIXED: Pass the entire API response to get the correct field
-        valor_acumulado = processar_valor_acumulado(dados, acumulou)
-        
-        # Extract winners from first prize tier
+        # Get winners from first prize tier
         ganhadores_faixa1 = 0
         premiacoes = dados.get('premiacoes', [])
         if premiacoes and len(premiacoes) > 0:
             ganhadores_faixa1 = premiacoes[0].get('ganhadores', 0)
         
+        # Get accumulated value
+        valor_acumulado = processar_valor_acumulado(dados, acumulou)
+        
         # Month of luck (only for Dia de Sorte)
         mes_sorte = dados.get('mesSorte') if nome_loteria == 'diadesorte' else None
         
-        resultado = {
+        return {
             'concurso': concurso,
             'data_sorteio': data_formatada,
             'dezenas': dezenas_str,
@@ -229,12 +199,6 @@ def extrair_dados_concurso(dados: Dict[Any, Any], nome_loteria: str) -> Optional
             'mes_sorte': mes_sorte,
             'valor_acumulado': valor_acumulado
         }
-        
-        # Debug log for accumulated values
-        if acumulou and valor_acumulado:
-            logger.debug(f"Contest {concurso}: accumulated={acumulou}, value={valor_acumulado}")
-        
-        return resultado
         
     except Exception as e:
         logger.error(f"Error extracting contest data: {e}")
@@ -276,78 +240,8 @@ def inserir_resultado(conn, nome_loteria: str, dados_processados: Dict[str, Any]
         logger.error(f"Error inserting result: {e}")
         return False
 
-def buscar_concursos_acumulados_sem_valor(conn, nome_loteria: str):
-    """Get contests marked as accumulated but without accumulated value"""
-    with conn.cursor() as cur:
-        cur.execute("""
-            SELECT concurso 
-            FROM resultados_sorteados 
-            WHERE tipo_loteria = %s 
-            AND acumulou = true 
-            AND (valor_acumulado IS NULL OR valor_acumulado = 0)
-            ORDER BY concurso DESC
-            LIMIT 50
-        """, (nome_loteria,))
-        return [row[0] for row in cur.fetchall()]
-
-def atualizar_valores_acumulados_loteria(conn, nome_loteria: str, url_base: str):
-    """Update accumulated values for a specific lottery"""
-    concursos_pendentes = buscar_concursos_acumulados_sem_valor(conn, nome_loteria)
-    
-    if not concursos_pendentes:
-        logger.debug(f"No accumulated values to update for {nome_loteria}")
-        return 0
-    
-    logger.info(f"📊 Found {len(concursos_pendentes)} {nome_loteria} contests with missing accumulated values")
-    
-    atualizados = 0
-    
-    for concurso_num in concursos_pendentes:
-        try:
-            url_concurso = f"{url_base}/{concurso_num}"
-            dados_concurso = fazer_requisicao_api(url_concurso)
-            
-            if not dados_concurso:
-                continue
-            
-            acumulou = dados_concurso.get('acumulou', False)
-            if acumulou:
-                valor = processar_valor_acumulado(dados_concurso, acumulou)
-                
-                if valor is not None and valor > 0:
-                    with conn.cursor() as cur:
-                        cur.execute("""
-                            UPDATE resultados_sorteados 
-                            SET valor_acumulado = %s, data_importacao = CURRENT_TIMESTAMP
-                            WHERE tipo_loteria = %s AND concurso = %s
-                        """, (valor, nome_loteria, concurso_num))
-                    
-                    logger.debug(f"Updated {nome_loteria} contest {concurso_num}: {valor}")
-                    atualizados += 1
-            else:
-                # Contest is no longer accumulated, update accordingly
-                with conn.cursor() as cur:
-                    cur.execute("""
-                        UPDATE resultados_sorteados 
-                        SET acumulou = false, valor_acumulado = 0, data_importacao = CURRENT_TIMESTAMP
-                        WHERE tipo_loteria = %s AND concurso = %s
-                    """, (nome_loteria, concurso_num))
-                atualizados += 1
-            
-            # Small delay to avoid API limits
-            time.sleep(0.2)
-            
-        except Exception as e:
-            logger.warning(f"Error updating accumulated value for {nome_loteria} contest {concurso_num}: {e}")
-            continue
-    
-    if atualizados > 0:
-        logger.info(f"✅ Updated {atualizados} accumulated values for {nome_loteria}")
-    
-    return atualizados
-
 def processar_loteria(conn, nome_loteria: str, url_base: str):
-    """Process a specific lottery"""
+    """Process a specific lottery - SIMPLIFIED VERSION"""
     logger.info(f"--- Processing Lottery: {nome_loteria.upper()} ---")
     
     ultimo_concurso_db = get_ultimo_concurso(conn, nome_loteria)
@@ -369,118 +263,92 @@ def processar_loteria(conn, nome_loteria: str, url_base: str):
     logger.info(f"Latest contest in API: {ultimo_concurso_api}")
     
     # Import new results if any
-    novos_registros = 0
     if ultimo_concurso_api > ultimo_concurso_db:
         logger.info(f"New results found! Importing from {ultimo_concurso_db + 1} to {ultimo_concurso_api}...")
         
+        novos_registros = 0
         erros = 0
         
         for concurso_num in range(ultimo_concurso_db + 1, ultimo_concurso_api + 1):
-            url_concurso = f"{url_base}/{concurso_num}"
-            dados_concurso = fazer_requisicao_api(url_concurso)
-            
-            if not dados_concurso:
-                logger.warning(f"Failed to get data for contest {concurso_num}")
+            try:
+                url_concurso = f"{url_base}/{concurso_num}"
+                dados_concurso = fazer_requisicao_api(url_concurso)
+                
+                if not dados_concurso:
+                    logger.warning(f"Failed to get data for contest {concurso_num}")
+                    erros += 1
+                    continue
+                
+                dados_processados = extrair_dados_concurso(dados_concurso, nome_loteria)
+                
+                if not dados_processados:
+                    logger.warning(f"Failed to process data for contest {concurso_num}")
+                    erros += 1
+                    continue
+                
+                if inserir_resultado(conn, nome_loteria, dados_processados):
+                    novos_registros += 1
+                    # Debug log for important contests
+                    if dados_processados['acumulou']:
+                        logger.debug(f"Contest {concurso_num}: accumulated={dados_processados['acumulou']}, value={dados_processados['valor_acumulado']}")
+                else:
+                    erros += 1
+                    
+            except Exception as e:
+                logger.error(f"Error processing contest {concurso_num}: {e}")
                 erros += 1
                 continue
-            
-            dados_processados = extrair_dados_concurso(dados_concurso, nome_loteria)
-            
-            if not dados_processados:
-                logger.warning(f"Failed to process data for contest {concurso_num}")
-                erros += 1
-                continue
-            
-            if inserir_resultado(conn, nome_loteria, dados_processados):
-                novos_registros += 1
-            else:
-                erros += 1
         
-        if novos_registros > 0:
-            logger.info(f"✅ Imported {novos_registros} new results for {nome_loteria}")
-        if erros > 0:
-            logger.warning(f"⚠️  Errors occurred in {erros} contests.")
+        # Commit after processing all contests
+        try:
+            conn.commit()
+            logger.info(f"✅ Successfully imported {novos_registros} new results for {nome_loteria}")
+            if erros > 0:
+                logger.warning(f"⚠️  {erros} errors occurred during import")
+        except Exception as e:
+            logger.error(f"Error committing changes: {e}")
+            conn.rollback()
     else:
         logger.info("No new results to import.")
-    
-    # Update missing accumulated values for existing contests
-    valores_atualizados = atualizar_valores_acumulados_loteria(conn, nome_loteria, url_base)
-    
-    # Commit all changes
-    try:
-        conn.commit()
-        
-        # Log summary
-        if novos_registros > 0 or valores_atualizados > 0:
-            logger.info(f"📋 {nome_loteria.upper()} Summary: {novos_registros} new contests, {valores_atualizados} values updated")
-        
-        # Verify last record was inserted correctly
-        if novos_registros > 0:
-            verificar_ultimo_registro(conn, nome_loteria)
-        
-    except Exception as e:
-        logger.error(f"Error committing changes: {e}")
-        conn.rollback()
-
-def verificar_ultimo_registro(conn, nome_loteria: str):
-    """Verify the last record was inserted correctly"""
-    with conn.cursor() as cur:
-        cur.execute("""
-            SELECT concurso, acumulou, valor_acumulado, ganhadores 
-            FROM resultados_sorteados 
-            WHERE tipo_loteria = %s 
-            ORDER BY concurso DESC 
-            LIMIT 1
-        """, (nome_loteria,))
-        
-        ultimo_registro = cur.fetchone()
-        if ultimo_registro:
-            logger.debug(f"Last record in DB: contest={ultimo_registro[0]}, "
-                        f"accumulated={ultimo_registro[1]}, "
-                        f"value={ultimo_registro[2]}, "
-                        f"winners={ultimo_registro[3]}")
 
 def importar_resultados():
     """Main function to import lottery results"""
     try:
+        logger.info("🚀 Starting lottery results import...")
+        
         with get_db_connection() as conn:
             criar_tabela_se_nao_existir(conn)
-            
-            total_novos = 0
-            total_atualizados = 0
             
             for nome_loteria, url_base in LOTERIAS_API.items():
                 try:
                     processar_loteria(conn, nome_loteria, url_base)
+                    logger.info(f"Completed processing {nome_loteria}")
                 except Exception as e:
                     logger.error(f"Error processing {nome_loteria}: {e}")
                     # Continue with other lotteries
                     continue
             
-            # Final summary
             logger.info("🎉 IMPORT COMPLETED!")
             
-            # Show summary of accumulated values status
+            # Show final summary
             with conn.cursor() as cur:
                 cur.execute("""
-                    SELECT tipo_loteria, 
-                           COUNT(CASE WHEN acumulou = true THEN 1 END) as total_acumulados,
-                           COUNT(CASE WHEN acumulou = true AND valor_acumulado > 0 THEN 1 END) as com_valores
+                    SELECT tipo_loteria, COUNT(*) as total_contests,
+                           MAX(concurso) as latest_contest,
+                           COUNT(CASE WHEN acumulou = true THEN 1 END) as accumulated_contests
                     FROM resultados_sorteados 
                     GROUP BY tipo_loteria
                     ORDER BY tipo_loteria
                 """)
                 
-                logger.info("📊 Accumulated values summary:")
+                logger.info("📊 Database summary:")
                 for row in cur.fetchall():
-                    loteria, total_acum, com_valores = row
-                    logger.info(f"   {loteria}: {com_valores}/{total_acum} accumulated contests have values")
+                    loteria, total, latest, accumulated = row
+                    logger.info(f"   {loteria}: {total} contests (latest: {latest}, accumulated: {accumulated})")
                     
     except Exception as e:
         logger.error(f"Unexpected error: {e}")
         raise
 
 if __name__ == "__main__":
-    logger.info("🚀 Starting lottery results import...")
     importar_resultados()
-    logger.info("✅ Import process completed.")
