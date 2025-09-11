@@ -437,8 +437,8 @@ def get_ultimos_resultados():
                 "dezenas": row[2],
                 "ganhadores": row[3],
                 "acumulou": row[4],
-                "mes_sorte": row[5],
-                "valor_acumulado": row[6]
+                "mes_sorte": row[5]
+                #"valor_acumulado": row[6]
             })
             
         cur.close()
