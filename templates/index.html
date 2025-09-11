@@ -151,6 +151,17 @@
             <section id="ultimos-resultados" class="footer-section">
                 <h2>Últimos Resultados</h2>
                 <p>Confira os últimos 5 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
+                <br>
+                <div class="controle-item">
+                    <label for="loteria-select">Loteria:</label>
+                    <select id="loteria-select" class="seletor-custom" onchange="mudarLoteria(this.value)">
+                        <option value="megasena">Mega-Sena</option>
+                        <option value="quina">Quina</option>
+                        <option value="lotofacil">Lotofácil</option>
+                        <option value="diadesorte">Dia de Sorte</option>
+                    </select>
+                </div>
+                <br>
                 <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
                 <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
                     <div class="spinner"></div>
