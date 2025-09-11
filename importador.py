@@ -129,11 +129,39 @@ def processar_valor_acumulado(dados_api: Dict[Any, Any], acumulou: bool) -> Opti
             # Handle scientific notation (like 5.5E7)
             resultado = float(valor_acumulado)
         
-        logger.debug(f"Accumulated value processed: {resultado} (from field: {field_used})")
+        logger.info(f"Accumulated value processed: {resultado} (from field: {field_used})")
         return resultado
         
     except (ValueError, TypeError) as e:
         logger.warning(f"Error processing accumulated value '{valor_acumulado}' from field '{field_used}': {e}")
+        return None
+
+def processar_data(data_str: str) -> Optional[str]:
+    """Process date string to PostgreSQL format"""
+    if not data_str:
+        return None
+        
+    try:
+        # Handle dd/mm/yyyy format
+        if len(data_str) == 10 and '/' in data_str:
+            parts = data_str.split('/')
+            if len(parts) == 3:
+                day, month, year = parts
+                return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+        
+        # Try to parse other common formats
+        for fmt in ['%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y']:
+            try:
+                parsed_date = datetime.strptime(data_str, fmt)
+                return parsed_date.strftime('%Y-%m-%d')
+            except ValueError:
+                continue
+        
+        logger.warning(f"Unexpected date format: {data_str}")
+        return None
+        
+    except Exception as e:
+        logger.error(f"Error processing date '{data_str}': {e}")
         return None
 
 def fazer_requisicao_api(url: str, max_tentativas: int = MAX_RETRIES) -> Optional[Dict[Any, Any]]:
@@ -202,8 +230,8 @@ def extrair_dados_concurso(dados: Dict[Any, Any], nome_loteria: str) -> Optional
         }
         
         # Debug log for accumulated values
-        if valor_acumulado is not None:
-            logger.debug(f"Contest {concurso}: accumulated={acumulou}, value={valor_acumulado}")
+        if acumulou:
+            logger.info(f"Contest {concurso}: ACCUMULATED = {acumulou}, VALUE = {valor_acumulado}")
         
         return resultado
         
