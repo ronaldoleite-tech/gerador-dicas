@@ -451,3 +451,8 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     debug_mode = os.environ.get('RENDER') is None
     app.run(host='0.0.0.0', port=port, debug=debug_mode)
+
+    # Adicione esta nova rota ao seu código:
+@app.route('/ads.txt')
+def ads():
+    return send_from_directory('.', 'ads.txt')
