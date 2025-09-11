@@ -1,5 +1,3 @@
-# --- CÓDIGO COMPLETO E FINAL para backend.py ---
-
 # -*- coding: utf-8 -*-
 import psycopg2
 import os
@@ -368,45 +366,6 @@ def submit_feedback():
         conn.commit()
         cur.close()
         return jsonify({"success": True, "message": "Feedback recebido!"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    finally:
-        if conn: conn.close()
-
-@app.route('/get-stats')
-def get_stats():
-    loteria = request.args.get('loteria', 'megasena', type=str)
-    conn = None
-    try:
-        config = LOTTERY_CONFIG[loteria]
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute("SELECT MAX(concurso) FROM resultados_sorteados WHERE tipo_loteria = %s;", (loteria,))
-        ultimo_concurso = cur.fetchone()[0] or 0
-        cur.execute("""
-            SELECT numero::integer, COUNT(*) FROM (
-                SELECT unnest(string_to_array(dezenas, ' ')) as numero FROM resultados_sorteados WHERE tipo_loteria = %s
-            ) as numeros_individuais GROUP BY numero ORDER BY numero::integer ASC;
-        """, (loteria,))
-        frequencia_numeros = [{"numero": n, "frequencia": f} for n, f in cur.fetchall()]
-        cur.execute("SELECT dezenas FROM resultados_sorteados WHERE tipo_loteria = %s;", (loteria,))
-        todos_sorteios = cur.fetchall()
-        cur.close()
-        contagem_primos = Counter()
-        contagem_pares = Counter()
-        for sorteio_tuple in todos_sorteios:
-            numeros = [int(n) for n in sorteio_tuple[0].split()]
-            if len(numeros) == config['num_bolas_sorteadas']:
-                primos_no_sorteio = sum(1 for n in numeros if is_prime(n))
-                pares_no_sorteio = sum(1 for n in numeros if n % 2 == 0)
-                contagem_primos.update([primos_no_sorteio])
-                contagem_pares.update([pares_no_sorteio])
-        return jsonify({
-            "ultimo_concurso": ultimo_concurso,
-            "frequencia": frequencia_numeros,
-            "stats_primos": dict(contagem_primos),
-            "stats_pares": dict(contagem_pares)
-        })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
