@@ -422,7 +422,7 @@ def get_ultimos_resultados():
             FROM resultados_sorteados 
             WHERE tipo_loteria = %s 
             ORDER BY concurso DESC 
-            LIMIT 20;
+            LIMIT 5;
         """, (loteria,))
         
         resultados = []
