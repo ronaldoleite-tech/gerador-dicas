@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import psycopg2
+from flask import Flask, send_from_directory
 import os
 from flask import Flask, jsonify, request, render_template # <-- render_template foi adicionado
 import random
