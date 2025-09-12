@@ -347,7 +347,7 @@ async function carregarUltimosResultados(loteria) {
                 <div class="resultado-item">
                     <div class="resultado-header">
                         <span class="resultado-concurso">Concurso ${res.concurso}</span>
-                        <span class="resultado-data">${dataFormatada}</span> // Usa a data formatada
+                        <span class="resultado-data">${dataFormatada}</span>
                     </div>
                     <div class="resultado-dezenas">${res.dezenas}</div>
                     ${mesDaSorteHtml}
