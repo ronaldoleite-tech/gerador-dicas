@@ -349,51 +349,7 @@ def gerar_jogos_junto_e_misturado(loteria, count, dezenas, numeros_ancora=[]):
     finally:
         if conn: conn.close()
 
-# Modificação em get_games para incluir a nova estratégia
-@app.route('/get-games/<int:count>')
-def get_games(count):
-    loteria = request.args.get('loteria', 'megasena', type=str)
-    estrategia = request.args.get('estrategia', 'geral', type=str)
-    dezenas = request.args.get('dezenas', type=int)
-    if dezenas is None:
-        dezenas = LOTTERY_CONFIG[loteria]['default_dezenas']
-    ancora_str = request.args.get('ancora', '', type=str)
-    numeros_ancora = validar_e_sanitizar_ancora(ancora_str, loteria)
-    
-    if dezenas < len(numeros_ancora):
-        dezenas = len(numeros_ancora)
-    try:
-        if estrategia == 'aleatorio':
-            jogos = gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
-        elif estrategia == 'juntoemisturado': # Nova estratégia aqui
-            jogos = gerar_jogos_junto_e_misturado(loteria, count, dezenas, numeros_ancora)
-        else:
-            jogos = gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora, estrategia)
-        return jsonify(jogos)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
-# Nova rota para obter frequência dos últimos 100 concursos
-@app.route('/get-stats-recentes')
-def get_stats_recentes():
-    loteria = request.args.get('loteria', 'megasena', type=str)
-    conn = None
-    try:
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute("""
-            SELECT numero::integer, COUNT(*) FROM (
-                SELECT unnest(string_to_array(dezenas, ' ')) as numero FROM resultados_sorteados 
-                WHERE tipo_loteria = %s ORDER BY concurso DESC LIMIT %s
-            ) as numeros_individuais GROUP BY numero ORDER BY numero::integer ASC;
-        """, (loteria, CONCURSOS_RECENTES))
-        frequencia_numeros_recentes = [{"numero": n, "frequencia": f} for n, f in cur.fetchall()]
-        cur.close()
-        return jsonify({"frequencia_recente": frequencia_numeros_recentes})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    finally:
-        if conn: conn.close()
 
 
 
@@ -444,6 +400,8 @@ def get_sorte_analisada_premium_game():
         print(f"ERRO em /get-sorte-analisada-premium-game: {e}")
         return jsonify({"error": str(e)}), 500
         
+
+# Modificação em get_games para incluir a nova estratégia
 @app.route('/get-games/<int:count>')
 def get_games(count):
     loteria = request.args.get('loteria', 'megasena', type=str)
@@ -459,11 +417,15 @@ def get_games(count):
     try:
         if estrategia == 'aleatorio':
             jogos = gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
+        elif estrategia == 'juntoemisturado': # Nova estratégia aqui
+            jogos = gerar_jogos_junto_e_misturado(loteria, count, dezenas, numeros_ancora)
         else:
             jogos = gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora, estrategia)
         return jsonify(jogos)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
 
 @app.route('/submit-feedback', methods=['POST'])
 def submit_feedback():
@@ -519,6 +481,28 @@ def get_stats():
             "stats_primos": dict(contagem_primos),
             "stats_pares": dict(contagem_pares)
         })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if conn: conn.close()
+
+# Nova rota para obter frequência dos últimos 100 concursos
+@app.route('/get-stats-recentes')
+def get_stats_recentes():
+    loteria = request.args.get('loteria', 'megasena', type=str)
+    conn = None
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT numero::integer, COUNT(*) FROM (
+                SELECT unnest(string_to_array(dezenas, ' ')) as numero FROM resultados_sorteados 
+                WHERE tipo_loteria = %s ORDER BY concurso DESC LIMIT %s
+            ) as numeros_individuais GROUP BY numero ORDER BY numero::integer ASC;
+        """, (loteria, CONCURSOS_RECENTES))
+        frequencia_numeros_recentes = [{"numero": n, "frequencia": f} for n, f in cur.fetchall()]
+        cur.close()
+        return jsonify({"frequencia_recente": frequencia_numeros_recentes})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
