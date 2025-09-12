@@ -39,7 +39,7 @@ function copiarNumeros(buttonEl) {
     });
 }
 
-fetch("/static/rodape/footer.html")
+fetch("/static/partials/footer.html")
     .then(response => response.text())
     .then(data => {
         document.getElementById("footer").innerHTML = data;
