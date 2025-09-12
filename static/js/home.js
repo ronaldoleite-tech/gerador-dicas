@@ -294,14 +294,14 @@ async function submitFeedback(choice) {
 async function carregarUltimosResultados(loteria) {
     const container = document.getElementById('lista-ultimos-resultados');
     container.innerHTML = '<div class="spinner"></div>';
-    
+
     try {
         const response = await fetch(`/get-ultimos-resultados?loteria=${loteria}`);
         if (!response.ok) {
             throw new Error('Falha ao carregar os resultados.');
         }
         const resultados = await response.json();
-        
+
         if (resultados.error) {
             throw new Error(resultados.error);
         }
@@ -310,13 +310,13 @@ async function carregarUltimosResultados(loteria) {
             container.innerHTML = '<p>Nenhum resultado encontrado para esta loteria.</p>';
             return;
         }
-        
+
         let html = '';
         resultados.forEach(res => {
             let statusHtml = '';
             if (res.acumulou) {
-                let valorHtml = res.valor_acumulado 
-                    ? `<div class="valor-acumulado">Prêmio estimado: R$ ${res.valor_acumulado.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>` 
+                let valorHtml = res.valor_acumulado
+                    ? `<div class="valor-acumulado">Prêmio estimado: R$ ${res.valor_acumulado.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>`
                     : '';
                 statusHtml = `<span class="status-acumulou">ACUMULOU</span>${valorHtml}`;
             } else {
@@ -330,11 +330,24 @@ async function carregarUltimosResultados(loteria) {
                     mesDaSorteHtml = `<div class="resultado-mes">Mês da Sorte: <strong>${res.mes_sorte}</strong></div>`;
             }
 
+            // --- INÍCIO DA MODIFICAÇÃO PARA FORMATAR A DATA ---
+            let dataFormatada = '';
+            if (res.data) {
+                const partesData = res.data.split('/'); // Divide a string "MM/DD/YYYY"
+                if (partesData.length === 3) {
+                    // Reorganiza para "DD/MM/YYYY"
+                    dataFormatada = `${partesData[1]}/${partesData[0]}/${partesData[2]}`;
+                } else {
+                    dataFormatada = res.data; // Mantém o original se não conseguir formatar
+                }
+            }
+            // --- FIM DA MODIFICAÇÃO ---
+
             html += `
                 <div class="resultado-item">
                     <div class="resultado-header">
                         <span class="resultado-concurso">Concurso ${res.concurso}</span>
-                        <span class="resultado-data">${res.data}</span>
+                        <span class="resultado-data">${dataFormatada}</span> // Usa a data formatada
                     </div>
                     <div class="resultado-dezenas">${res.dezenas}</div>
                     ${mesDaSorteHtml}
