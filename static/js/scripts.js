@@ -39,7 +39,15 @@ function copiarNumeros(buttonEl) {
     });
 }
 
-
+// Função para rodapé
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("/footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer").innerHTML = data;
+        })
+        .catch(err => console.error("Erro ao carregar rodapé:", err));
+});
 
 
 // ======================================
