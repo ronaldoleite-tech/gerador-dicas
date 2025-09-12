@@ -284,6 +284,119 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
     finally:
         if conn: conn.close()
 
+
+# --- FUNÇÕES PARA A ESTRATÉGIA JUNTO E MISTURADO ---
+def gerar_jogos_junto_e_misturado(loteria, count, dezenas, numeros_ancora=[]):
+    conn = None
+    try:
+        config = LOTTERY_CONFIG[loteria]
+        dezenas_a_gerar = dezenas - len(numeros_ancora)
+        if dezenas_a_gerar <= 0:
+            return [" ".join(f"{num:02}" for num in sorted(list(numeros_ancora)))]
+        
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        # 1. Frequência Geral (todos os sorteios)
+        cur.execute("SELECT dezenas FROM resultados_sorteados WHERE tipo_loteria = %s;", (loteria,))
+        resultados_geral = cur.fetchall()
+        
+        # 2. Frequência dos Últimos 100 Sorteios
+        cur.execute("SELECT dezenas FROM resultados_sorteados WHERE tipo_loteria = %s ORDER BY concurso DESC LIMIT %s;", (loteria, CONCURSOS_RECENTES))
+        resultados_recentes = cur.fetchall()
+        cur.close()
+
+        if not resultados_geral or not resultados_recentes:
+            raise ValueError(f"Dados históricos insuficientes para a estratégia 'Junto e Misturado' em {loteria}.")
+
+        # Calcula frequências
+        todos_numeros_geral = [int(n) for linha in resultados_geral for n in linha[0].split() if int(n) not in numeros_ancora]
+        frequencia_geral = Counter(todos_numeros_geral)
+        
+        todos_numeros_recentes = [int(n) for linha in resultados_recentes for n in linha[0].split() if int(n) not in numeros_ancora]
+        frequencia_recentes = Counter(todos_numeros_recentes)
+
+        # Combina as frequências (ex: somando pesos)
+        frequencia_combinada = Counter()
+        for num in range(config['min_num'], config['max_num'] + 1):
+            if num not in numeros_ancora:
+                peso_geral = frequencia_geral.get(num, 0)
+                peso_recente = frequencia_recentes.get(num, 0)
+                # Você pode ajustar a forma de combinar os pesos aqui.
+                # Ex: somar, dar mais peso para o recente, etc.
+                # Aqui, vamos somar e dar um pequeno bônus para números recentes.
+                frequencia_combinada[num] = peso_geral + (peso_recente * 1.5) # Bônus para recentes
+
+        numeros_possiveis = list(frequencia_combinada.keys())
+        pesos_combinados = list(frequencia_combinada.values())
+
+        if not numeros_possiveis or sum(pesos_combinados) == 0:
+            # Fallback para aleatório se não houver dados ou pesos
+            return gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
+
+        jogos_gerados = set()
+        while len(jogos_gerados) < count:
+            numeros_novos = set()
+            while len(numeros_novos) < dezenas_a_gerar:
+                numero_sorteado = random.choices(numeros_possiveis, weights=pesos_combinados, k=1)[0]
+                numeros_novos.add(numero_sorteado)
+            
+            jogo_completo = frozenset(numeros_novos.union(set(numeros_ancora)))
+            if len(jogo_completo) == dezenas: # Garante que o número total de dezenas é o desejado
+                jogos_gerados.add(jogo_completo)
+
+        return [" ".join(f"{num:02}" for num in sorted(list(jogo))) for jogo in jogos_gerados]
+    finally:
+        if conn: conn.close()
+
+# Modificação em get_games para incluir a nova estratégia
+@app.route('/get-games/<int:count>')
+def get_games(count):
+    loteria = request.args.get('loteria', 'megasena', type=str)
+    estrategia = request.args.get('estrategia', 'geral', type=str)
+    dezenas = request.args.get('dezenas', type=int)
+    if dezenas is None:
+        dezenas = LOTTERY_CONFIG[loteria]['default_dezenas']
+    ancora_str = request.args.get('ancora', '', type=str)
+    numeros_ancora = validar_e_sanitizar_ancora(ancora_str, loteria)
+    
+    if dezenas < len(numeros_ancora):
+        dezenas = len(numeros_ancora)
+    try:
+        if estrategia == 'aleatorio':
+            jogos = gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
+        elif estrategia == 'juntoemisturado': # Nova estratégia aqui
+            jogos = gerar_jogos_junto_e_misturado(loteria, count, dezenas, numeros_ancora)
+        else:
+            jogos = gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora, estrategia)
+        return jsonify(jogos)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Nova rota para obter frequência dos últimos 100 concursos
+@app.route('/get-stats-recentes')
+def get_stats_recentes():
+    loteria = request.args.get('loteria', 'megasena', type=str)
+    conn = None
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT numero::integer, COUNT(*) FROM (
+                SELECT unnest(string_to_array(dezenas, ' ')) as numero FROM resultados_sorteados 
+                WHERE tipo_loteria = %s ORDER BY concurso DESC LIMIT %s
+            ) as numeros_individuais GROUP BY numero ORDER BY numero::integer ASC;
+        """, (loteria, CONCURSOS_RECENTES))
+        frequencia_numeros_recentes = [{"numero": n, "frequencia": f} for n, f in cur.fetchall()]
+        cur.close()
+        return jsonify({"frequencia_recente": frequencia_numeros_recentes})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if conn: conn.close()
+
+
+
 def gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora=[]):
     config = LOTTERY_CONFIG[loteria]
     dezenas_a_gerar = dezenas - len(numeros_ancora)

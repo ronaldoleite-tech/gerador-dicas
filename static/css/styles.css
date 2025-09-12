@@ -147,7 +147,7 @@ h1 {
 .footer-links a {
     color: var(--cor-texto);
     text-decoration: none;
-    font-size: 3.5rem;
+    font-size: 2rem;
     transition: color .2s, transform .2s;
 }
 

@@ -74,6 +74,7 @@
                     <input type="text" id="numeros-ancora" class="seletor-custom" placeholder="Ex: 7" 
                            style="width: 80px;" maxlength="2" pattern="\d*">
                 </div>
+                <!-- ... dentro da section class="secao-controles" ... -->
                 <div class="controle-item">
                     <label for="estrategia-select">Estratégia:</label>
                     <select id="estrategia-select" class="seletor-custom" onchange="handleEstrategiaChange()">
@@ -82,10 +83,12 @@
                         <option value="mistas">Dezenas Mistas</option>
                         <option value="frias">Dezenas Frias</option>
                         <option value="aleatorio">Aleatório (Surpresinha)</option>
+                        <option value="juntoemisturado">Junto e Misturado 🔄</option> <!-- Nova Estratégia -->
                         <option value="montecarlo">Simulação de Monte Carlo</option>
                         <option value="sorteanalisadapremium">Sorte Analisada 🎯</option>
                     </select>
                 </div>
+            <!-- ... -->
             </section>
             
             <button id="botao-gerar-principal" class="botao-gerar" onclick="gerarPalpites()" style="padding: 1rem 2rem; font-size: 1.1rem;">
@@ -176,12 +179,26 @@
                 <div class="grupo-botoes" style="margin-bottom: 2rem;">
                     <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
                 </div>
+
+
+
+                <!-- ... dentro da section id="estatisticas" ... -->
                 <div id="area-estatisticas" style="display: none;">
-                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas</h3><canvas id="grafico-mais-sorteados"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas</h3><canvas id="grafico-menos-sorteados"></canvas></div>
+                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Geral)</h3><canvas id="grafico-mais-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Geral)</h3><canvas id="grafico-menos-sorteados"></canvas></div>
+                    
+                    <!-- NOVOS GRÁFICOS AQUI -->
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-mais-sorteados-recentes"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-menos-sorteados-recentes"></canvas></div>
+                    <!-- FIM DOS NOVOS GRÁFICOS -->
+
                     <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
                     <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
                 </div>
+            <!-- ... -->
+
+
+                
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>     
          
