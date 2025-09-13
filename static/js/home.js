@@ -432,11 +432,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
      
 });
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const seletorStats = document.getElementById('loteria-select-stats');
     if (seletorStats) {
         seletorStats.value = loteriaAtualStats; // Define o valor inicial
+        seletorStats.addEventListener('change', (e) => {
+            mudarLoteriaStats(e.target.value);
+        });
     }
-}); 
-
-
+});
