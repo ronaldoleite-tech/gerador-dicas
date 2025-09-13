@@ -99,16 +99,3 @@ function copiarLink(url, event) { // Adicionado 'event' para pegar o botão
         alert('Link copiado: ' + url);
     });
 }
-
-const contadorArtigos = document.getElementById('contador-artigos');
-    if (contadorArtigos) {
-        contadorArtigos.textContent = `Mostrando ${artigosVisiveis} de ${totalArtigos} artigos`;
-        document.querySelector('.carregar-mais')?.addEventListener('click', carregarMaisArtigos);
-
-        // Garante que os 5 primeiros artigos estejam visíveis na carga inicial
-        document.querySelectorAll('.artigo-blog').forEach((artigo, index) => {
-            if (index < artigosVisiveis) {
-                artigo.classList.add('visivel');
-            }
-        });
-}

@@ -82,12 +82,11 @@
                         <option value="mistas">Dezenas Mistas</option>
                         <option value="frias">Dezenas Frias</option>
                         <option value="aleatorio">Aleatório (Surpresinha)</option>
-                        <option value="juntoemisturado">Junto e Misturado 🔄</option>
+                        <option value="juntoemisturado">Junto e Misturado 🔄</option> <!-- Nova Estratégia -->
                         <option value="montecarlo">Simulação de Monte Carlo</option>
                         <option value="sorteanalisadapremium">Sorte Analisada 🎯</option>
                     </select>
                 </div>
-            <!-- ... -->
             </section>
             
             <button id="botao-gerar-principal" class="botao-gerar" onclick="gerarPalpites()" style="padding: 1rem 2rem; font-size: 1.1rem;">
@@ -100,9 +99,9 @@
         <nav class="nav-interna">
             <a href="#sobre">Sobre</a>
             <a href="#sobre-filtros">Métodos</a>
-            <a href="#estatisticas">Estatísticas</a>
             <a href="/blog">Blog Sorte Analisada</a> 
             <a href="#ultimos-resultados">Últimos Resultados</a>
+            <a href="#estatisticas">Estatísticas</a>
             <a href="#opiniao">Sua opinião</a>
             <a href="#jogorresponsavel">Jogo Responsável</a>
             <a href="#contato">Contato</a>
@@ -129,10 +128,10 @@
                 <h3>Com a Estratégia: Aleatório (Surpresinha)</h3>
                 <p>A geração é 100% aleatória. Cada número, dentro do universo da loteria escolhida, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
                 <h3>Com o seu Número da Sorte (Jogo Âncora)</h3>
-                <p>Todo mundo tem um número especial! Use-o para "ancorar" o seu jogo. Ao inseri-lo, nosso sistema o mantém fixo e gera as dezenas restantes de forma inteligente para completar seu palpite. É a maneira perfeita de combinar sua intuição com a análise do nosso sistema.</p>
-                <h3>Com a Estratégia: Simulação de Monte Carlo</h3>
                 <h3>Com a Estratégia: Junto e Misturado 🔄</h3>
                 <p>Esta estratégia é para quem não quer deixar nada de fora! Ela combina o melhor da análise de longo prazo com a dinâmica dos sorteios mais recentes. Nosso sistema calcula a frequência de cada dezena considerando **todo o histórico** de resultados da loteria e também foca nos **últimos 100 concursos**. Ao "misturar" esses dois universos, a estratégia "Junto e Misturado" gera um palpite que reflete tanto a consistência histórica quanto as tendências mais quentes do momento, oferecendo uma sugestão equilibrada e completa.</p>
+                <p>Todo mundo tem um número especial! Use-o para "ancorar" o seu jogo. Ao inseri-lo, nosso sistema o mantém fixo e gera as dezenas restantes de forma inteligente para completar seu palpite. É a maneira perfeita de combinar sua intuição com a análise do nosso sistema.</p>
+                <h3>Com a Estratégia: Simulação de Monte Carlo</h3>
                 <p>Imagine realizar milhares de sorteios em segundos para ver quais números se destacam. É isso que a Simulação de Monte Carlo faz. Usando processamento computacional, ela analisa probabilidades em larga escala para gerar um palpite único e sofisticado, ideal para quem busca uma sugestão diferenciada e com análise profunda.</p>
                 <h3>Com a Estratégia: Sorte Analisada 🎯 </h3>
                 <p>Nossa estratégia mais avançada. Ela não olha apenas para os números mais sorteados, mas para o "DNA de um bilhete vencedor". Analisamos o equilíbrio entre dezenas pares e ímpares, a soma total dos números e sua distribuição pelo volante em todo o histórico de resultados. Com base nesse perfil, geramos centenas de jogos candidatos, filtramos todos que já foram sorteados, e pontuamos os restantes para encontrar o palpite único que seja estatisticamente forte e estruturalmente balanceado, oferecendo uma sugestão inédita e inteligente.</p>
@@ -141,32 +140,6 @@
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
 
-            <section id="estatisticas" class="footer-section">
-            <h2>Estatísticas dos Sorteios</h2>
-            <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
-            <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
-
-            <!-- ADICIONE ESTE SELETOR -->
-            <div class="controle-item" style="margin-bottom: 2rem;">
-                    <label for="loteria-select-stats">Loteria para Estatísticas:</label> 
-                    <select id="loteria-select-stats" class="seletor-custom" onchange="mudarLoteriaStats(this.value)"> 
-                        <option value="megasena">Mega-Sena</option>
-                        <option value="quina">Quina</option>
-                        <option value="lotofacil">Lotofácil</option>
-                        <option value="diadesorte">Dia de Sorte</option>
-                    </select>
-                </div>
-
-                <div class="grupo-botoes" style="margin-bottom: 2rem;">
-                    <button class="botao-gerar" onclick="exibirEstatisticas()">Carregar Estatísticas</button>
-                </div>
-                
-                <div id="area-estatisticas" style="display: none;">
-                    <!-- ... conteúdo dos gráficos ... -->
-                </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>
-         
             <section id="link" class="footer-section">
                 <h2>Conheça o Blog Sorte Analisada</h2>
                 <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; text-align: center;">
@@ -198,6 +171,24 @@
                 </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
             </section>
+
+            <section id="estatisticas" class="footer-section">
+               <h2>Estatísticas dos Sorteios</h2>
+               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
+               <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
+                <div class="grupo-botoes" style="margin-bottom: 2rem;">
+                    <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
+                </div>
+                <div id="area-estatisticas" style="display: none;">
+                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Geral)</h3><canvas id="grafico-mais-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Geral)</h3><canvas id="grafico-menos-sorteados"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-mais-sorteados-recentes"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-menos-sorteados-recentes"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
+                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
+                </div>
+                <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>     
          
             <section id="opiniao" class="footer-section">
                 <h2>Sua opinião é muito importante</h2>
