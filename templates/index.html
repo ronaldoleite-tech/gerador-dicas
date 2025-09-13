@@ -142,24 +142,30 @@
             </section>
 
             <section id="estatisticas" class="footer-section">
-               <h2>Estatísticas dos Sorteios</h2>
-               <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
-               <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
-                <div class="grupo-botoes" style="margin-bottom: 2rem;">
-                    <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
-                </div>
-                <div id="area-estatisticas" style="display: none;">
-                    <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Geral)</h3><canvas id="grafico-mais-sorteados"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Geral)</h3><canvas id="grafico-menos-sorteados"></canvas></div>
-                    
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-mais-sorteados-recentes"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-menos-sorteados-recentes"></canvas></div>
+            <h2>Estatísticas dos Sorteios</h2>
+            <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
+            <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
 
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
-                    <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
+            <!-- ADICIONE ESTE SELETOR -->
+            <div class="controle-item" style="margin-bottom: 2rem;">
+                    <label for="loteria-select-stats">Loteria para Estatísticas:</label> 
+                    <select id="loteria-select-stats" class="seletor-custom" onchange="mudarLoteriaStats(this.value)"> 
+                        <option value="megasena">Mega-Sena</option>
+                        <option value="quina">Quina</option>
+                        <option value="lotofacil">Lotofácil</option>
+                        <option value="diadesorte">Dia de Sorte</option>
+                    </select>
+                </div>
+
+                <div class="grupo-botoes" style="margin-bottom: 2rem;">
+                    <button class="botao-gerar" onclick="exibirEstatisticas()">Carregar Estatísticas</button>
+                </div>
+                
+                <div id="area-estatisticas" style="display: none;">
+                    <!-- ... conteúdo dos gráficos ... -->
                 </div>
                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            </section>     
+            </section>
          
             <section id="link" class="footer-section">
                 <h2>Conheça o Blog Sorte Analisada</h2>

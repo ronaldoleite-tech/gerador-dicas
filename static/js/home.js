@@ -17,7 +17,7 @@ let loteriaAtualStats = 'megasena';
 
 function mudarLoteria(novaLoteria) {
     loteriaAtual = novaLoteria;
-    loteriaAtualStats = novaLoteria; // JÁ EXISTE, MAS REFORÇANDO A LÓGICA
+    loteriaAtualStats = novaLoteria;
 
     document.getElementById('loteria-select').value = novaLoteria;
 
@@ -26,15 +26,17 @@ function mudarLoteria(novaLoteria) {
     displayLoteria.textContent = config.nome;
     displayLoteria.style.opacity = 1;
 
+    // Sincronizar o seletor de resultados
     const seletorResultados = document.getElementById('loteria-select-resultados');
     if (seletorResultados) {
         seletorResultados.value = novaLoteria;
     }
+    
+    // Sincronizar o seletor de estatísticas (se existir)
     const seletorStats = document.getElementById('loteria-select-stats');
     if (seletorStats) {
-        seletorStats.value = novaLoteria; // Garante que o seletor de estatísticas reflita a loteria principal
+        seletorStats.value = novaLoteria;
     }
-
 
     document.getElementById('nome-loteria-resultados').textContent = config.nome;
     
@@ -44,16 +46,17 @@ function mudarLoteria(novaLoteria) {
     
     document.getElementById('area-resultados').innerHTML = '';
     
-    // Oculta a área de estatísticas e mostra o botão novamente quando a loteria principal muda
+    // Resetar a área de estatísticas quando a loteria muda
     const areaStats = document.getElementById('area-estatisticas');
     if (areaStats) {
         areaStats.style.display = 'none';
-        const botaoStats = document.querySelector('#estatisticas .botao-gerar');
-        if (botaoStats) {
-            botaoStats.style.display = 'block';
-            botaoStats.disabled = false;
-            botaoStats.innerHTML = 'Estatísticas';
-        }
+    }
+    
+    const botaoStats = document.querySelector('#estatisticas .botao-gerar');
+    if (botaoStats) {
+        botaoStats.style.display = 'block';
+        botaoStats.disabled = false;
+        botaoStats.innerHTML = 'Carregar Estatísticas';
     }
     
     carregarUltimosResultados(novaLoteria);
@@ -68,9 +71,29 @@ function mudarLoteriaResultados(novaLoteria) {
 
 function mudarLoteriaStats(novaLoteria) {
     loteriaAtualStats = novaLoteria;
-    exibirEstatisticas(); 
+    
+    // Resetar a área de estatísticas e mostrar o botão novamente
+    const areaStats = document.getElementById('area-estatisticas');
+    const botaoStats = document.querySelector('#estatisticas .botao-gerar');
+    
+    if (areaStats) {
+        areaStats.style.display = 'none';
+        areaStats.innerHTML = `
+            <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Geral)</h3><canvas id="grafico-mais-sorteados"></canvas></div>
+            <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Geral)</h3><canvas id="grafico-menos-sorteados"></canvas></div>
+            <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-mais-sorteados-recentes"></canvas></div>
+            <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-menos-sorteados-recentes"></canvas></div>
+            <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
+            <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
+        `;
+    }
+    
+    if (botaoStats) {
+        botaoStats.style.display = 'block';
+        botaoStats.disabled = false;
+        botaoStats.innerHTML = 'Carregar Estatísticas';
+    }
 }
-
 
 function atualizarOpcoesDezenas() {
     const select = document.getElementById('dezenas-select');
@@ -432,11 +455,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
      
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const seletorStats = document.getElementById('loteria-select-stats');
-    if (seletorStats) {
-        seletorStats.value = loteriaAtualStats; // Define o valor inicial
+ddocument.addEventListener('DOMContentLoaded', (event) => {
+    const seletorPrincipal = document.getElementById('loteria-select');
+    if (seletorPrincipal) {
+        loteriaAtual = seletorPrincipal.value; 
+        loteriaAtualStats = loteriaAtual; // Garantir que começam iguais
+        
+        // Sincronizar o seletor de estatísticas com o principal
+        const seletorStats = document.getElementById('loteria-select-stats');
+        if (seletorStats) {
+            seletorStats.value = loteriaAtual;
+        }
+        
+        mudarLoteria(loteriaAtual); 
+
+        // Atribui eventos aos seletores
+        seletorPrincipal.addEventListener('change', () => mudarLoteria(seletorPrincipal.value));
+        
+        const seletorResultados = document.getElementById('loteria-select-resultados');
+        if (seletorResultados) {
+            seletorResultados.addEventListener('change', () => mudarLoteriaResultados(seletorResultados.value));
+        }
+        
+        const seletorStats = document.getElementById('loteria-select-stats');
+        if (seletorStats) {
+            seletorStats.addEventListener('change', () => mudarLoteriaStats(seletorStats.value));
+        }
+        
+        document.getElementById('estrategia-select')?.addEventListener('change', handleEstrategiaChange);
+        document.getElementById('botao-gerar-principal')?.addEventListener('click', gerarPalpites);
+        document.querySelector('#estatisticas .botao-gerar')?.addEventListener('click', exibirEstatisticas);
     }
-}); 
-
-
+});

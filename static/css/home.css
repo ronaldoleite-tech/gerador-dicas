@@ -307,3 +307,30 @@
     font-weight: bold;
     font-size: 1.1rem;
 }
+
+/* Estilos para a seção de estatísticas */
+#estatisticas .controle-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+#estatisticas .controle-item label {
+    font-weight: bold;
+    color: var(--cor-dourado);
+}
+
+#estatisticas .seletor-custom {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--cor-dourado);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.grupo-botoes {
+    text-align: center;
+    margin: 1.5rem 0;
+}
