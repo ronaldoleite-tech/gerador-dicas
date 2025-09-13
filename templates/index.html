@@ -274,32 +274,6 @@
             </section>
         </div>
 
-        
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const ctx = document.getElementById("grafico-mais-sorteados");
-            console.log("Canvas encontrado:", ctx);
-
-            if (ctx) {
-                new Chart(ctx.getContext("2d"), {
-                    type: "bar",
-                    data: {
-                        labels: ["01","02","03","04","05"],
-                        datasets: [{
-                            label: "Teste",
-                            data: [10, 5, 8, 12, 7],
-                            backgroundColor: "rgba(54, 162, 235, 0.6)"
-                        }]
-                    }
-                });
-            }
-        });
-    </script>
-
-
-
-
         <div id="footer"></div>
         
     </div>
