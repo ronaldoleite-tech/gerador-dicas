@@ -111,7 +111,7 @@ h1 {
 .nav-interna a {
     color: var(--cor-dourado);
     text-decoration: none;
-    font-size: .9rem;
+    font-size: 1.1rem;
     font-weight: 500;
     transition: color .2s;
 }
@@ -165,7 +165,7 @@ h1 {
 }
 
 .copyright {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     color: rgba(255, 255, 255, .5);
     margin-top: 1rem;
 }
@@ -382,7 +382,7 @@ h1 {
     }
 
     .nav-interna a {
-        font-size: .8rem;
+        font-size: 1.1rem;
     }
 
     .artigo-blog h3 {
