@@ -412,6 +412,31 @@ async function carregarUltimosResultados(loteria) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    // --- HOME ---
+    const seletorPrincipal = document.getElementById('loteria-select');
+    if (seletorPrincipal) {
+        loteriaAtual = seletorPrincipal.value; 
+        mudarLoteria(loteriaAtual); 
 
+        // Atribui eventos aos seletores
+        seletorPrincipal.addEventListener('change', () => mudarLoteria(seletorPrincipal.value));
+        const seletorResultados = document.getElementById('loteria-select-resultados');
+        if (seletorResultados) {
+            seletorResultados.addEventListener('change', () => mudarLoteriaResultados(seletorResultados.value));
+        }
+        document.getElementById('estrategia-select')?.addEventListener('change', handleEstrategiaChange);
+        document.getElementById('botao-gerar-principal')?.addEventListener('click', gerarPalpites);
+        document.querySelector('#estatisticas .botao-gerar')?.addEventListener('click', exibirEstatisticas);
+    }
+     
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const seletorStats = document.getElementById('loteria-select-stats');
+    if (seletorStats) {
+        seletorStats.value = loteriaAtualStats; // Define o valor inicial
+    }
+}); 
 
 
