@@ -360,6 +360,507 @@ h1 {
 
 
 
+
+/* ==============================
+           SEÇÃO HOME
+        ============================== */
+
+/* Loteria Display */
+.loteria-display {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--cor-loteria-display);
+    margin-top: 0.5rem;
+    height: 1.8rem;
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+}
+
+/* Botões */
+.botao-gerar {
+    background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover));
+    color: #000;
+    border: none;
+    padding: .8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+    text-decoration: none;
+}
+
+.botao-gerar:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 215, 0, .4);
+}
+
+.botao-gerar:disabled {
+    cursor: not-allowed;
+    opacity: .6;
+}
+
+.botao-copiar {
+    background: none;
+    border: none;
+    color: var(--cor-texto);
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-left: 15px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.botao-copiar:hover {
+    color: var(--cor-dourado);
+    transform: scale(1.1);
+}
+
+.botao-copiar .fa-check {
+    color: var(--cor-sucesso);
+}
+
+/* Resultados e Jogos */
+#area-resultados {
+    min-height: 100px;
+}
+
+.jogo {
+    background-color: rgba(0, 0, 0, .2);
+    padding: 1rem;
+    margin: .7rem auto;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 4px solid var(--cor-dourado);
+    flex-wrap: wrap;
+    gap: 5px 10px;
+}
+
+.numeros-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+}
+
+.numero {
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
+/* Spinner (Trevo Girando) */
+.spinner {
+    width: 50px;
+    height: 50px;
+    background-image: url('/static/images/trevodourado.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: spin 1.5s linear infinite;
+    margin: 2rem auto;
+    border: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Resultados Loterias */
+.resultado-item {
+    background: rgba(0, 0, 0, 0.25);
+    border-left: 4px solid var(--cor-loteria-display);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.resultado-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.resultado-concurso {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.resultado-data {
+    font-size: 0.9rem;
+    color: var(--cor-texto);
+}
+
+.resultado-dezenas {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 0.8rem;
+    color: var(--cor-dourado);
+}
+
+.resultado-status {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.status-acumulou {
+    color: #FFB74D;
+}
+
+.status-ganhador {
+    color: #81C784;
+}
+
+.resultado-mes {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--cor-texto);
+    margin-top: -0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.resultado-mes strong {
+    color: var(--cor-dourado);
+}
+
+.valor-acumulado {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #ffd700;
+    /* dourado */
+}
+
+/* Outros Elementos */
+.instrucao-aposta {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #bbdefb;
+    border-left: 3px solid var(--cor-loteria-display);
+}
+
+.secao-controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 2.5rem 0;
+}
+
+.controle-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controle-item img {
+    height: 24px;
+    vertical-align: middle;
+}
+
+.seletor-custom {
+    background-color: rgba(0, 0, 0, .3);
+    color: var(--cor-dourado);
+    padding: 8px 12px;
+    border: 1px solid var(--cor-dourado);
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#contato a {
+    word-break: break-all;
+}
+
+#feedback-area .botao-feedback {
+    background: none;
+    border: 2px solid var(--cor-dourado);
+    color: var(--cor-dourado);
+    padding: 8px 16px;
+    margin: 0 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#feedback-area .botao-feedback:hover {
+    background: var(--cor-dourado);
+    color: black;
+}
+
+#feedback-message {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+/* Card Loteria (Estilo Corrigido) */
+.lottery-card {
+    max-width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow: var(--sombra-caixa);
+    text-align: center;
+    border-left: 4px solid var(--cor-loteria-display);
+    color: var(--cor-texto);
+}
+
+.lottery-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.lottery-card .card-header h3 {
+    font-size: 1.4rem;
+    color: var(--cor-dourado);
+    margin: 0;
+}
+
+.lottery-card .card-header span {
+    font-size: 0.95rem;
+    color: var(--cor-texto);
+}
+
+.lottery-card .card-body {
+    padding: 10px 0;
+}
+
+.lottery-card .dezenas {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--cor-dourado);
+    letter-spacing: 2px;
+    margin: 15px 0;
+    line-height: 1.4;
+}
+
+.lottery-card .card-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--cor-divisoria-ouro);
+}
+
+.lottery-card .card-footer p {
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+.lottery-card .status-acumulou {
+    color: #FFB74D;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+
+/* ==============================
+           SEÇÃO BLOG
+        ============================== */
+
+/* Melhorias para os artigos */
+.artigo-blog {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform .2s ease-in-out, box-shadow .2s ease-in-out;
+    display: none;
+    /* Inicialmente ocultos */
+}
+
+.artigo-blog.visivel {
+    display: block;
+    /* Mostra apenas os artigos visíveis */
+}
+
+.artigo-blog:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.artigo-blog-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.artigo-blog h3 {
+    color: var(--cor-dourado);
+    margin-bottom: 0;
+    flex-grow: 1;
+    text-align: left;
+    cursor: pointer;
+    transition: color .2s;
+    font-size: 1.3rem;
+}
+
+.artigo-blog h3:hover {
+    color: var(--cor-dourado-hover);
+}
+
+.artigo-blog p {
+    font-size: .95rem;
+    line-height: 1.7;
+    text-align: justify;
+    margin-bottom: 1rem;
+}
+
+.artigo-blog ul {
+    text-align: left;
+    padding-left: 20px;
+    margin: 0.5rem 0;
+}
+
+.artigo-blog li {
+    margin-bottom: 0.5rem;
+}
+
+/* Novas regras para transição de altura */
+.artigo-conteudo {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease-in-out;
+    margin-top: 1rem;
+}
+
+.artigo-expandido {
+    max-height: 1500px;
+    display: block;
+}
+
+.artigo-resumo {
+    color: #bbdefb;
+    font-style: italic;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    text-align: left !important;
+}
+
+.artigo-expandido .artigo-resumo {
+    display: none;
+}
+
+.artigo-blog .fa-chevron-down,
+.artigo-blog .fa-chevron-up {
+    font-size: 1.1rem;
+    margin-left: 10px;
+    color: var(--cor-dourado);
+}
+
+/* Estilos para Compartilhamento */
+.share-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.share-btn.whatsapp {
+    background: var(--cor-whatsapp);
+}
+
+.share-btn.facebook {
+    background: var(--cor-facebook);
+}
+
+.share-btn.twitter {
+    background: var(--cor-twitter);
+}
+
+.share-btn.threads {
+    background: var(--cor-threads);
+}
+
+.share-btn.instagram {
+    background: var(--cor-instagram);
+}
+
+.share-btn.tiktok {
+    background: var(--cor-tiktok);
+}
+
+.share-btn.copy-link {
+    background: #6c757d;
+}
+
+/* Estilos para Paginação */
+.carregar-mais-container {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.carregar-mais {
+    background: linear-gradient(135deg, var(--cor-dourado), var(--cor-dourado-hover));
+    color: #000;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.carregar-mais:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+}
+
+.carregar-mais:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
 /* ==============================
            RESPONSIVO
         ============================== */
