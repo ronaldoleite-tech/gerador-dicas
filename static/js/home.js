@@ -230,7 +230,7 @@ async function gerarPalpites() {
 
 
 // ... (dentro da função exibirEstatisticas(), logo no início) ...
-sync function exibirEstatisticas() {
+async function exibirEstatisticas() {
     // Usar loteriaAtualStats aqui!
     const botao = document.querySelector('#estatisticas .botao-gerar');
     if (isRequestInProgress || botao.disabled) return;
