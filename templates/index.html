@@ -146,6 +146,17 @@
                <p>Veja a frequência dos números sorteados e descubra quais dezenas saem mais. A análise é baseada em todos os concursos armazenados em nosso banco de dados.</p>
                
                <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
+
+               <div class="controle-item">
+                    <label for="loteria-select-resultados">Loteria:</label> <!-- ID da label ajustado -->
+                    <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)"> <!-- NOVO ID e NOVA FUNÇÃO onchange -->
+                        <option value="megasena">Mega-Sena</option>
+                        <option value="quina">Quina</option>
+                        <option value="lotofacil">Lotofácil</option>
+                        <option value="diadesorte">Dia de Sorte</option>
+                    </select>
+                </div>
+
                 <div class="grupo-botoes" style="margin-bottom: 2rem;">
                     <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
                 </div>

@@ -52,6 +52,14 @@ fetch("/static/partials/footer.html")
 //             INICIALIZAÇÃO
 // ======================================
 
+document.addEventListener('DOMContentLoaded', () => {
+    const seletorStats = document.getElementById('loteria-select-stats');
+    if (seletorStats) {
+        seletorStats.value = loteriaAtualStats; // Define o valor inicial
+    }
+});
+
+
 document.addEventListener('DOMContentLoaded', (event) => {
     // --- HOME ---
     const seletorPrincipal = document.getElementById('loteria-select');
