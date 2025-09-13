@@ -633,10 +633,34 @@
         <div id="footer"></div>
         
     </div>
-    
-    <script src="static/js/scripts.js"></script>
-    <script src="static/js/blog.js"></script>
-    
+
+    <!-- Scripts com defer (carregam sem bloquear a renderização) -->
+        <script defer src="/static/js/scripts.js"></script>
+        <script defer src="/static/js/blog.js"></script>
+
+        <script>
+            function loadChartJS() {
+            return new Promise(function(resolve) {
+                var script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                script.onload = resolve;
+                document.head.appendChild(script);
+            });
+            }
+
+            // Carregar apenas quando necessário (estatísticas)
+            document.addEventListener('DOMContentLoaded', function() {
+            var statsButton = document.querySelector('#estatisticas .botao-gerar');
+            if (statsButton) {
+                statsButton.addEventListener('click', function() {
+                loadChartJS().then(function() {
+                    // Sua função para exibir estatísticas
+                    exibirEstatisticas();
+                });
+                });
+            }
+            });
+        </script> 
     
 </body>
 </html>
