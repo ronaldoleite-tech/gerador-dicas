@@ -68,7 +68,7 @@ function mudarLoteriaResultados(novaLoteria) {
 
 function mudarLoteriaStats(novaLoteria) {
     loteriaAtualStats = novaLoteria;
-    exibirEstatisticas(); 
+    exibirEstatisticas();
 }
 
 
@@ -230,89 +230,22 @@ async function gerarPalpites() {
 }
 
 
-// ... (dentro da função exibirEstatisticas(), logo no início) ...
 async function exibirEstatisticas() {
-    // Usar loteriaAtualStats aqui!
-    const botao = document.querySelector('#estatisticas .botao-gerar');
-    if (isRequestInProgress || botao.disabled) return;
-    
     const areaStats = document.getElementById('area-estatisticas');
     isRequestInProgress = true;
-    botao.disabled = true;
-    botao.innerHTML = '<div class="spinner" style="width: 25px; height: 25px; margin: 0 auto;"></div>';
-    
+
     try {
-        // As requisições devem usar loteriaAtualStats
-        const [responseGeral, responseRecente] = await Promise.all([
-            fetch(`/get-stats?loteria=${loteriaAtualStats}`), // <-- Alterado aqui
-            fetch(`/get-stats-recentes?loteria=${loteriaAtualStats}`) // <-- Alterado aqui
-        ]);
+        const response = await fetch(`/api/estatisticas?loteria=${loteriaAtualStats}`);
+        if (!response.ok) throw new Error("Erro ao carregar estatísticas");
 
-        if (!responseGeral.ok) throw new Error('Falha ao buscar dados gerais do servidor.');
-        if (!responseRecente.ok) throw new Error('Falha ao buscar dados recentes do servidor.');
-
-        const dataGeral = await responseGeral.json();
-        const dataRecente = await responseRecente.json();
-
-        if (dataGeral.error || !dataGeral.frequencia || !dataGeral.stats_primos || !dataGeral.stats_pares) 
-            throw new Error(dataGeral.error || 'Os dados gerais recebidos são inválidos.');
-        if (dataRecente.error || !dataRecente.frequencia_recente) 
-            throw new Error(dataRecente.error || 'Os dados recentes recebidos são inválidos.');
-
-        const nomeLoteria = lotteryConfig[loteriaAtualStats].nome; // <-- Alterado aqui
-        document.getElementById('ultimo-concurso-info').innerHTML = `Análise da ${nomeLoteria} baseada até o concurso ${dataGeral.ultimo_concurso}`;
+        const data = await response.json();
         areaStats.style.display = 'block';
 
-        // Destruir gráficos existentes
-        [graficoMaisSorteados, graficoMenosSorteados, graficoPrimos, graficoParesImpares,
-         graficoMaisSorteadosRecentes, graficoMenosSorteadosRecentes].forEach(g => { if(g) g.destroy(); });
-
-        const corTexto = '#FFFDE7', corGrid = 'rgba(255, 255, 255, 0.2)';
-        
-        const chartOptions = { 
-            scales: { 
-                y: { ticks: { color: corTexto }, grid: { color: corGrid } }, 
-                x: { ticks: { color: corTexto }, grid: { color: 'transparent' } } 
-            }, 
-            plugins: { 
-                legend: { 
-                    labels: { color: corTexto },
-                    onClick: null
-                } 
-            } 
-        };
-
-        // Gráficos Gerais (existentes)
-        const maisSorteados = [...dataGeral.frequencia].sort((a, b) => b.frequencia - a.frequencia).slice(0, 10);
-        graficoMaisSorteados = new Chart(document.getElementById('grafico-mais-sorteados').getContext('2d'), { type: 'bar', data: { labels: maisSorteados.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado', data: maisSorteados.map(i => i.frequencia), backgroundColor: '#FFD700' }] }, options: chartOptions });
-        
-        const menosSorteados = [...dataGeral.frequencia].sort((a, b) => a.frequencia - b.frequencia).slice(0, 10);
-        graficoMenosSorteados = new Chart(document.getElementById('grafico-menos-sorteados').getContext('2d'), { type: 'bar', data: { labels: menosSorteados.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado', data: menosSorteados.map(i => i.frequencia), backgroundColor: '#90CAF9' }] }, options: chartOptions });
-        
-        const labelsPrimos = Object.keys(dataGeral.stats_primos).sort((a,b) => parseInt(a)-parseInt(b)).map(k => `${k} Primos`);
-        const dataPrimos = Object.keys(dataGeral.stats_primos).sort((a,b) => parseInt(a)-parseInt(b)).map(k => dataGeral.stats_primos[k]);
-        graficoPrimos = new Chart(document.getElementById('grafico-primos').getContext('2d'), { type: 'bar', data: { labels: labelsPrimos, datasets: [{ label: 'Sorteios', data: dataPrimos, backgroundColor: '#81C784' }] }, options: chartOptions });
-        
-        const numBolas = lotteryConfig[loteriaAtualStats].num_bolas; // <-- Alterado aqui
-        const labelsPares = Object.keys(dataGeral.stats_pares).sort((a,b) => parseInt(a)-parseInt(b)).map(k => `${k} Pares / ${numBolas - parseInt(k)} Ímpares`);
-        const dataPares = Object.keys(dataGeral.stats_pares).sort((a,b) => parseInt(a)-parseInt(b)).map(k => dataGeral.stats_pares[k]);
-        graficoParesImpares = new Chart(document.getElementById('grafico-pares-impares').getContext('2d'), { type: 'bar', data: { labels: labelsPares, datasets: [{ label: 'Sorteios', data: dataPares, backgroundColor: '#FF8A65' }] }, options: chartOptions });
-        
-        // NOVOS GRÁFICOS: Mais e Menos Sorteadas (Últimos 100)
-        const maisSorteadosRecentes = [...dataRecente.frequencia_recente].sort((a, b) => b.frequencia - a.frequencia).slice(0, 10);
-        graficoMaisSorteadosRecentes = new Chart(document.getElementById('grafico-mais-sorteados-recentes').getContext('2d'), { type: 'bar', data: { labels: maisSorteadosRecentes.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado (Últimos 100)', data: maisSorteadosRecentes.map(i => i.frequencia), backgroundColor: '#FFECB3' }] }, options: chartOptions });
-
-        const menosSorteadosRecentes = [...dataRecente.frequencia_recente].sort((a, b) => a.frequencia - b.frequencia).slice(0, 10);
-        graficoMenosSorteadosRecentes = new Chart(document.getElementById('grafico-menos-sorteados-recentes').getContext('2d'), { type: 'bar', data: { labels: menosSorteadosRecentes.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado (Últimos 100)', data: menosSorteadosRecentes.map(i => i.frequencia), backgroundColor: '#BBDEFB' }] }, options: chartOptions });
-
-        
-        botao.style.display = 'none';
+        atualizarGraficos(data); // aqui você já pluga nos seus gráficos
 
     } catch (error) {
         areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
         areaStats.style.display = 'block';
-        botao.innerHTML = 'Estatísticas';
-        botao.disabled = false;
     } finally {
         isRequestInProgress = false;
     }
@@ -436,9 +369,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 document.addEventListener('DOMContentLoaded', () => {
     const seletorStats = document.getElementById('loteria-select-stats');
     if (seletorStats) {
-        seletorStats.value = loteriaAtualStats; // Define o valor inicial
+        seletorStats.value = loteriaAtualStats; // valor inicial
         seletorStats.addEventListener('change', (e) => {
             mudarLoteriaStats(e.target.value);
         });
     }
+
+    // já carrega estatísticas iniciais
+    exibirEstatisticas();
 });
