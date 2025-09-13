@@ -15,10 +15,10 @@ let graficoMaisSorteadosRecentes = null, graficoMenosSorteadosRecentes = null;
 let loteriaAtualStats = 'megasena'; 
 
 
-// ... (dentro da função mudarLoteria(novaLoteria)) ...
 function mudarLoteria(novaLoteria) {
     loteriaAtual = novaLoteria;
-    loteriaAtualStats = novaLoteria; // Sincroniza a loteria das estatísticas com a principal
+    loteriaAtualStats = novaLoteria; // JÁ EXISTE, MAS REFORÇANDO A LÓGICA
+
     document.getElementById('loteria-select').value = novaLoteria;
 
     const config = lotteryConfig[loteriaAtual];
@@ -30,10 +30,11 @@ function mudarLoteria(novaLoteria) {
     if (seletorResultados) {
         seletorResultados.value = novaLoteria;
     }
-    const seletorStats = document.getElementById('loteria-select-stats'); // NOVO: Sincroniza o seletor de estatísticas
+    const seletorStats = document.getElementById('loteria-select-stats');
     if (seletorStats) {
-        seletorStats.value = novaLoteria;
+        seletorStats.value = novaLoteria; // Garante que o seletor de estatísticas reflita a loteria principal
     }
+
 
     document.getElementById('nome-loteria-resultados').textContent = config.nome;
     
