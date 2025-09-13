@@ -307,15 +307,3 @@
     font-weight: bold;
     font-size: 1.1rem;
 }
-
-#area-estatisticas canvas {
-    max-height: 300px;
-    margin-bottom: 2rem;
-}
-
-#area-estatisticas > div {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 1.5rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-}
