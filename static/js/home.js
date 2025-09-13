@@ -60,6 +60,8 @@ function mudarLoteria(novaLoteria) {
 }
 
 
+
+
 function mudarLoteriaResultados(novaLoteria) {
     const config = lotteryConfig[novaLoteria];
     document.getElementById('nome-loteria-resultados').textContent = config.nome;
@@ -232,14 +234,15 @@ async function gerarPalpites() {
 
 // ... (dentro da função exibirEstatisticas(), logo no início) ...
 async function exibirEstatisticas() {
-    // Usar loteriaAtualStats aqui!
     const botao = document.querySelector('#estatisticas .botao-gerar');
-    if (isRequestInProgress || botao.disabled) return;
-    
+    if (isRequestInProgress || (botao && botao.disabled)) return;
+
     const areaStats = document.getElementById('area-estatisticas');
     isRequestInProgress = true;
-    botao.disabled = true;
-    botao.innerHTML = '<div class="spinner" style="width: 25px; height: 25px; margin: 0 auto;"></div>';
+    if (botao) {
+        botao.disabled = true;
+        botao.innerHTML = '<div class="spinner" style="width:25px;height:25px;margin:0 auto;"></div>';
+    }
     
     try {
         // As requisições devem usar loteriaAtualStats
@@ -305,14 +308,15 @@ async function exibirEstatisticas() {
         const menosSorteadosRecentes = [...dataRecente.frequencia_recente].sort((a, b) => a.frequencia - b.frequencia).slice(0, 10);
         graficoMenosSorteadosRecentes = new Chart(document.getElementById('grafico-menos-sorteados-recentes').getContext('2d'), { type: 'bar', data: { labels: menosSorteadosRecentes.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado (Últimos 100)', data: menosSorteadosRecentes.map(i => i.frequencia), backgroundColor: '#BBDEFB' }] }, options: chartOptions });
 
-        
         botao.style.display = 'none';
 
-    } catch (error) {
+     } catch (error) {
         areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
         areaStats.style.display = 'block';
-        botao.innerHTML = 'Estatísticas';
-        botao.disabled = false;
+        if (botao) {
+            botao.innerHTML = 'Estatísticas';
+            botao.disabled = false;
+        }
     } finally {
         isRequestInProgress = false;
     }
@@ -416,8 +420,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // --- HOME ---
     const seletorPrincipal = document.getElementById('loteria-select');
     if (seletorPrincipal) {
-        loteriaAtual = seletorPrincipal.value; 
-        mudarLoteria(loteriaAtual); 
+        loteriaAtual = seletorPrincipal.value;
+        mudarLoteria(loteriaAtual);
 
         // Atribui eventos aos seletores
         seletorPrincipal.addEventListener('change', () => mudarLoteria(seletorPrincipal.value));
@@ -427,16 +431,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
         document.getElementById('estrategia-select')?.addEventListener('change', handleEstrategiaChange);
         document.getElementById('botao-gerar-principal')?.addEventListener('click', gerarPalpites);
-        document.querySelector('#estatisticas .botao-gerar')?.addEventListener('click', exibirEstatisticas);
     }
-     
+
+    // NOVO: Chamar exibirEstatisticas na carga da página para a loteria padrão
+    exibirEstatisticas(); // Vai usar loteriaAtualStats, que deve estar sincronizada
 });
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const seletorStats = document.getElementById('loteria-select-stats');
     if (seletorStats) {
-        seletorStats.value = loteriaAtualStats; // Define o valor inicial
+        // Garante que o seletor de stats reflita a loteria atual quando a página carrega
+        seletorStats.value = loteriaAtual; // Use loteriaAtual aqui, pois ela é definida primeiro
+        // NÃO CHAME exibirEstatisticas aqui novamente, pois já foi chamado acima
     }
-}); 
+});
 
 
