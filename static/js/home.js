@@ -235,7 +235,7 @@ async function exibirEstatisticas() {
             throw new Error(dataRecente.error || 'Os dados recentes recebidos são inválidos.');
 
         const nomeLoteria = lotteryConfig[loteriaAtual].nome;
-        document.getElementById('ultimo-concurso-info').innerHTML = `Análise da ${nomeLoteria} baseada até o concurso ${dataGeral.ultimo_concurso}`;
+        document.getElementById('ultimo-concurso-info').innerHTML = `Análise da ${nomeLoteria}: até o concurso ${dataGeral.ultimo_concurso}`;
         areaStats.style.display = 'block';
 
         // Destruir gráficos existentes
