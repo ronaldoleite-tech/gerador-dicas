@@ -99,3 +99,4 @@ function copiarLink(url, event) { // Adicionado 'event' para pegar o botão
         alert('Link copiado: ' + url);
     });
 }
+

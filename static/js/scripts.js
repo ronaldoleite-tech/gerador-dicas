@@ -88,4 +88,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.querySelectorAll('.share-btn.copy-link').forEach(btn => {
         btn.addEventListener('click', (e) => copiarLink(btn.dataset.url, e));
     });
+ 
 });

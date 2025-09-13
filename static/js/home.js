@@ -385,3 +385,5 @@ async function carregarUltimosResultados(loteria) {
         container.innerHTML = `<p style="color: #ff8a80;">Não foi possível carregar os resultados. Tente novamente mais tarde.</p>`;
     }
 }
+
+

@@ -4,12 +4,21 @@
     <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
+
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-PPB7LRV5SJ');
+        window.addEventListener('load', function() {
+        setTimeout(function() {
+            var script = document.createElement('script');
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
+            script.async = true;
+            document.head.appendChild(script);
+            
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-PPB7LRV5SJ');
+        }, 3000);
+        });
     </script>
      
     <script>
@@ -247,8 +256,33 @@
         
     </div>
         
-        <script src="static/js/scripts.js"></script>
-        <script src="static/js/home.js"></script>
+        <!-- Scripts com defer (carregam sem bloquear a renderização) -->
+        <script defer src="/static/js/scripts.js"></script>
+        <script defer src="/static/js/home.js"></script>
+
+        <script>
+            function loadChartJS() {
+            return new Promise(function(resolve) {
+                var script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                script.onload = resolve;
+                document.head.appendChild(script);
+            });
+            }
+
+            // Carregar apenas quando necessário (estatísticas)
+            document.addEventListener('DOMContentLoaded', function() {
+            var statsButton = document.querySelector('#estatisticas .botao-gerar');
+            if (statsButton) {
+                statsButton.addEventListener('click', function() {
+                loadChartJS().then(function() {
+                    // Sua função para exibir estatísticas
+                    exibirEstatisticas();
+                });
+                });
+            }
+            });
+        </script>
         
 </body>
 </html>
