@@ -141,7 +141,7 @@ function renderizarJogos(jogosArray, areaResultados) {
 
     const instrucao = document.createElement('p');
     instrucao.className = 'instrucao-aposta';
-    instrucao.textContent = '* Importante: O Sorte Analisada é um gerador de números: com análises estatísticas e números aleatórios. É uma plataforma independente, destinada exclusivamente ao entretenimento, As sugestões geradas não garantem ganhos e não aumentam a probabilidade de acerto. Jogue de forma consciente e responsável. O acesso ao site é gratuíto. Não comercializamos produtos Lotéricos! Caso queira concorrer com os números gerados no site, você precisa registrar em uma aposta oficial, em qualquer agência lotérica ou no site de apostas da Caixa Economica Federal®, por sua conta e riscos. Boa sorte!';
+    instrucao.textContent = 'Caso queira concorrer com os números gerados no site, você precisa registra-lo em uma aposta oficial, em qualquer agência lotérica ou no site de apostas da Caixa Econômica Federal®, por sua conta e riscos. Boa sorte!';
     areaResultados.appendChild(instrucao);
 }
 
