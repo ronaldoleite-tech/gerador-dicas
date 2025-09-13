@@ -297,9 +297,6 @@ async function exibirEstatisticas() {
 }
 
 
-
-
-
 async function submitFeedback(choice) {
     const feedbackArea = document.getElementById('feedback-area');
     const messageEl = document.getElementById('feedback-message');
