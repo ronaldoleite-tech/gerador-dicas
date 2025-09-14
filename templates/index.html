@@ -45,6 +45,53 @@
         <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
         <link rel="stylesheet" href="static/css/styles.css">
         
+        <style>
+            /* PROTEÇÃO CONTRA ANÚNCIOS - CORREÇÃO DE LAYOUT */
+            body {
+                margin: 0 auto !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: flex-start !important;
+            }
+            
+            .container {
+                margin: 0 auto !important;
+                position: relative !important;
+                left: 0 !important;
+                transform: none !important;
+                max-width: 800px !important;
+                width: 95% !important;
+                float: none !important;
+                clear: both !important;
+            }
+            
+            /* Reset forçado para elementos afetados por anúncios */
+            .container > * {
+                position: relative !important;
+                float: none !important;
+                clear: both !important;
+            }
+            
+            /* Garantir centralização em todos os dispositivos */
+            @media (min-width: 768px) {
+                .container {
+                    margin-left: auto !important;
+                    margin-right: auto !important;
+                }
+            }
+            
+            /* Proteção adicional contra elementos flutuantes */
+            ins.adsbygoogle, iframe, .ad-container {
+                max-width: 100% !important;
+                position: relative !important;
+                float: none !important;
+                margin: 0 auto !important;
+            }
+        </style>
+
     </head>
     <body onload="mudarLoteria('megasena')">
 
@@ -112,9 +159,10 @@
                     </div>
                 </section>
 
-                 <h4>Palpites para:</h4>
-                 <H5 id="loteria-selecionada" class="loteria-display"></H5>
-                 <br>
+                <div style="display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; margin: 1.5rem 0;">
+                    <span style="font-size: 1.3rem; color: #bbdefb; font-weight: 400;">Palpites para:</span>
+                    <h5 id="loteria-selecionada" class="loteria-display" style="margin: 0; font-size: 1.6rem; color: var(--cor-loteria-display);"></h5>
+                </div>
 
                 <button id="botao-gerar-principal" class="botao-gerar" onclick="gerarPalpites()" style="padding: 1rem 2rem; font-size: 1.1rem;">
                     Clique para gerar os Palpites
@@ -311,6 +359,57 @@
                 }
                 });
             </script>
-            
+
+            <script>
+                // CORREÇÃO DE LAYOUT - PROTEGE CONTRA ANÚNCIOS
+                function corrigirLayoutForcado() {
+                    // Redefine o container principal
+                    const container = document.querySelector('.container');
+                    if (container) {
+                        container.style.marginLeft = 'auto';
+                        container.style.marginRight = 'auto';
+                        container.style.float = 'none';
+                        container.style.position = 'relative';
+                        container.style.left = '0';
+                        container.style.transform = 'none';
+                    }
+                    
+                    // Redefine o body
+                    document.body.style.marginLeft = '0';
+                    document.body.style.marginRight = '0';
+                    document.body.style.overflowX = 'hidden';
+                    
+                    // Remove qualquer deslocamento lateral
+                    document.documentElement.style.overflowX = 'hidden';
+                    
+                    // Corrige anúncios problemáticos
+                    document.querySelectorAll('ins, iframe, [class*="ad"], [id*="ad"]').forEach(el => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.left > window.innerWidth || rect.right < 0) {
+                            el.style.display = 'none';
+                        }
+                    });
+                }
+                
+                // Executa quando a página carrega
+                document.addEventListener('DOMContentLoaded', function() {
+                    corrigirLayoutForcado();
+                    
+                    // Executa várias vezes para garantir
+                    setTimeout(corrigirLayoutForcado, 100);
+                    setTimeout(corrigirLayoutForcado, 500);
+                    setTimeout(corrigirLayoutForcado, 1000);
+                    
+                    // Monitora continuamente
+                    setInterval(corrigirLayoutForcado, 2000);
+                    
+                    // Corrige no redimensionamento
+                    window.addEventListener('resize', corrigirLayoutForcado);
+                });
+                
+                // Também executa quando a janela termina de carregar completamente
+                window.addEventListener('load', corrigirLayoutForcado);
+            </script>
+
     </body>
 </html>
