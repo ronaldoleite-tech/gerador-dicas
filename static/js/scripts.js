@@ -671,7 +671,7 @@ function compartilharInstagram() {
     const mensagem = "Para compartilhar no Instagram:\n\n1. Abra o Instagram\n2. Crie uma nova publicação ou story\n3. Marque @sorteanalisadaoficial\n4. Use a hashtag #SorteAnalisada";
     
     if (confirm(mensagem + "\n\nDeseja abrir o Instagram?")) {
-        window.open('https://www.instagram.com/sorteanalisadaoficial/', '_blank');
+        window.open('https://www.instagram.com/', '_blank');
     }
 }
 
