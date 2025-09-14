@@ -51,8 +51,16 @@
         <div class="container">
 
             <main>
+                <header id="gerador"> 
+                    <img src="/static/images/logotipo.webp" type="image/webp" alt="Logotipo Sorte Analisada" class="imagem-ouro" width="128" height="131" loading="lazy">
+                    <h1>Sorte Analisada</h1>
+                    <br>  
+                    <p class="subtitulo">Acredite na sua sorte!</p>
+                    <br> 
+                </header>
+
                 <nav class="nav-interna">
-                    <a href="#gerador">Gerar Palpites</a>
+                    <a href="#loteria-select">Gerar Palpites</a>
                     <a href="#estatisticas">Estatisticas</a>
                     <a href="#sobre-filtros">Métodos</a>
                     <a href="#sobre">Sobre</a>
@@ -64,16 +72,6 @@
                     <a href="#termos">Termos</a>
                     <a href="/blog">Blog Sorte Analisada</a> 
                 </nav>
-
-                <header id="gerador">
-                    <br>  
-                    <img src="/static/images/logotipo.webp" type="image/webp" alt="Logotipo Sorte Analisada" class="imagem-ouro" width="128" height="131" loading="lazy">
-                    <h1>Sorte Analisada</h1>
-                    <br>  
-                    <p class="subtitulo">Acredite na sua sorte!</p>
-                    <p id="loteria-selecionada" class="loteria-display"></p>
-                    <br> 
-                </header>
                 
                 <section class="secao-controles">
                     <div class="controle-item">
@@ -113,16 +111,20 @@
                         </select>
                     </div>
                 </section>
-                
+
                 <button id="botao-gerar-principal" class="botao-gerar" onclick="gerarPalpites()" style="padding: 1rem 2rem; font-size: 1.1rem;">
                     Clique para gerar os Palpites
                 </button>
+                 
+                 <br><br>
+                 <p>Palpites para:</p>
+                 <p id="loteria-selecionada" class="loteria-display"></p>
 
                 <section id="area-resultados" aria-live="polite" aria-atomic="true" style="margin-top:1.5rem;"></section>
-                    <br>
-
-                <section id="estatisticas">
-                <p class="subtitulo">Estatísticas dos Sorteios</p>
+                
+            </main>
+                <section id="estatisticas" class="footer-section">
+                <h2>Estatísticas dos Sorteios</h2>
                 <p>Veja a frequência dos números sorteados da Loteria selecionada acima e descubra quais dezenas saem mais.</p>
                 <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
                     <div class="grupo-botoes" style="margin-bottom: 2rem;">
@@ -138,7 +140,6 @@
                     </div>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>     
-            </main>
 
                 <section id="sobre-filtros" class="footer-section">
                     <h2>Entenda Nossos Métodos</h2>
