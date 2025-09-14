@@ -6,8 +6,9 @@ let isRequestInProgress = false;
 
 // Função para copiar números genérica
 function copiarNumeros(buttonEl) {
-    const jogoContainer = buttonEl.closest('.jogo'); // Pode ser usado no home para os jogos gerados
-    if (!jogoContainer) { // Adicionado para lidar com o caso do blog ou outras áreas sem .jogo
+    const jogoContainer = buttonEl.closest('.jogo');
+    
+    if (!jogoContainer) {
         const textoParaCopiar = buttonEl.getAttribute('data-copy-text');
         if (textoParaCopiar) {
             navigator.clipboard.writeText(textoParaCopiar).then(() => {
@@ -16,7 +17,7 @@ function copiarNumeros(buttonEl) {
                 buttonEl.style.background = 'var(--cor-sucesso)';
                 setTimeout(() => {
                     buttonEl.innerHTML = originalText;
-                    buttonEl.style.background = ''; // Reseta o background, se aplicável
+                    buttonEl.style.removeProperty('background');
                 }, 2000);
             }).catch(err => {
                 console.error('Falha ao copiar:', err);
@@ -39,14 +40,15 @@ function copiarNumeros(buttonEl) {
     });
 }
 
-fetch("/static/partials/footer.html")
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("footer").innerHTML = data;
-    })
-    .catch(err => console.error("Erro ao carregar rodapé:", err));
-
-
+// Carregar footer
+if (document.getElementById("footer")) {
+    fetch("/static/partials/footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer").innerHTML = data;
+        })
+        .catch(err => console.error("Erro ao carregar rodapé:", err));
+}
 
 // ======================================
 //             SEÇÃO HOME
@@ -59,32 +61,45 @@ const lotteryConfig = {
     'lotofacil':  {nome: 'Lotofácil', min_dezenas: 15, max_dezenas: 20, num_bolas: 15, universo: 25},
     'diadesorte': {nome: 'Dia de Sorte', min_dezenas: 7, max_dezenas: 15, num_bolas: 7, universo: 31}
 };
-let graficoMaisSorteados = null, graficoMenosSorteados = null, graficoPrimos = null, graficoParesImpares = null;
-let graficoMaisSorteadosRecentes = null, graficoMenosSorteadosRecentes = null; // NOVOS GRÁFICOS
 
+let graficoMaisSorteados = null, graficoMenosSorteados = null, graficoPrimos = null, graficoParesImpares = null;
+let graficoMaisSorteadosRecentes = null, graficoMenosSorteadosRecentes = null;
+let carregandoResultados = false;
 
 function mudarLoteria(novaLoteria) {
     loteriaAtual = novaLoteria;
-    document.getElementById('loteria-select').value = novaLoteria; // Garante que o seletor principal está sempre certo
     const config = lotteryConfig[loteriaAtual];
     const displayLoteria = document.getElementById('loteria-selecionada');
-    displayLoteria.textContent = config.nome;
-    displayLoteria.style.opacity = 1;
+    
+    if (displayLoteria) {
+        displayLoteria.textContent = config.nome;
+        displayLoteria.style.opacity = 1;
+    }
 
-    // Sincroniza o seletor de resultados com o seletor principal
     const seletorResultados = document.getElementById('loteria-select-resultados');
     if (seletorResultados) {
         seletorResultados.value = novaLoteria;
     }
 
-    document.getElementById('nome-loteria-resultados').textContent = config.nome;
+    const nomeLoteriaResultados = document.getElementById('nome-loteria-resultados');
+    if (nomeLoteriaResultados) {
+        nomeLoteriaResultados.textContent = config.nome;
+    }
     
     atualizarOpcoesDezenas();
     atualizarOpcoesQuantidade();
     handleEstrategiaChange();
     
-    document.getElementById('area-resultados').innerHTML = '';
-    document.getElementById('area-estatisticas').style.display = 'none';
+    const areaResultados = document.getElementById('area-resultados');
+    if (areaResultados) {
+        areaResultados.innerHTML = '';
+    }
+    
+    const areaStats = document.getElementById('area-estatisticas');
+    if (areaStats) {
+        areaStats.style.display = 'none';
+    }
+    
     const botaoStats = document.querySelector('#estatisticas .botao-gerar');
     if (botaoStats) {
         botaoStats.style.display = 'block';
@@ -97,13 +112,17 @@ function mudarLoteria(novaLoteria) {
 
 function mudarLoteriaResultados(novaLoteria) {
     const config = lotteryConfig[novaLoteria];
-    document.getElementById('nome-loteria-resultados').textContent = config.nome;
+    const nomeLoteriaResultados = document.getElementById('nome-loteria-resultados');
+    if (nomeLoteriaResultados) {
+        nomeLoteriaResultados.textContent = config.nome;
+    }
     carregarUltimosResultados(novaLoteria);
 }
 
-
 function atualizarOpcoesDezenas() {
     const select = document.getElementById('dezenas-select');
+    if (!select) return;
+    
     const config = lotteryConfig[loteriaAtual];
     select.innerHTML = '';
     for (let i = config.min_dezenas; i <= config.max_dezenas; i++) {
@@ -116,6 +135,8 @@ function atualizarOpcoesDezenas() {
 
 function atualizarOpcoesQuantidade() {
     const select = document.getElementById('quantidade-select');
+    if (!select) return;
+    
     select.innerHTML = '';
     for (let i = 1; i <= 10; i++) {
         const option = document.createElement('option');
@@ -126,10 +147,14 @@ function atualizarOpcoesQuantidade() {
 }
 
 function handleEstrategiaChange() {
-    const estrategia = document.getElementById('estrategia-select').value;
+    const estrategiaSelect = document.getElementById('estrategia-select');
     const dezenasSelect = document.getElementById('dezenas-select');
     const quantidadeSelect = document.getElementById('quantidade-select');
     const ancoraInput = document.getElementById('numeros-ancora');
+    
+    if (!estrategiaSelect || !dezenasSelect || !quantidadeSelect || !ancoraInput) return;
+    
+    const estrategia = estrategiaSelect.value;
     const config = lotteryConfig[loteriaAtual];
 
     if (estrategia === 'montecarlo' || estrategia === 'sorteanalisadapremium') {
@@ -139,7 +164,7 @@ function handleEstrategiaChange() {
         quantidadeSelect.disabled = true;
         ancoraInput.value = '';
         ancoraInput.disabled = true;
-    } else { // 'geral', 'quentes', 'mistas', 'frias', 'aleatorio', 'juntoemisturado'
+    } else {
         dezenasSelect.disabled = false;
         quantidadeSelect.disabled = false;
         ancoraInput.disabled = false;
@@ -148,11 +173,17 @@ function handleEstrategiaChange() {
 
 function setGeradorEstado(desabilitar) {
     isRequestInProgress = desabilitar;
-    document.getElementById('botao-gerar-principal').disabled = desabilitar;
-    document.querySelectorAll('.seletor-custom, #numeros-ancora').forEach(el => el.disabled = desabilitar);
+    const botaoGerar = document.getElementById('botao-gerar-principal');
+    if (botaoGerar) botaoGerar.disabled = desabilitar;
+    
+    document.querySelectorAll('.seletor-custom, #numeros-ancora').forEach(el => {
+        if (el) el.disabled = desabilitar;
+    });
 }
 
 function renderizarJogos(jogosArray, areaResultados) {
+    if (!areaResultados) return;
+    
     areaResultados.innerHTML = '<h2>Boa sorte!</h2>';
     const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -199,10 +230,17 @@ async function gerarPalpites() {
     if (isRequestInProgress) return;
     
     const areaResultados = document.getElementById('area-resultados');
-    const estrategia = document.getElementById('estrategia-select').value;
-    const dezenas = document.getElementById('dezenas-select').value;
-    const quantidade = document.getElementById('quantidade-select').value;
-    const numerosAncora = document.getElementById('numeros-ancora').value;
+    const estrategiaSelect = document.getElementById('estrategia-select');
+    const dezenasSelect = document.getElementById('dezenas-select');
+    const quantidadeSelect = document.getElementById('quantidade-select');
+    const ancoraInput = document.getElementById('numeros-ancora');
+    
+    if (!areaResultados || !estrategiaSelect || !dezenasSelect || !quantidadeSelect || !ancoraInput) return;
+    
+    const estrategia = estrategiaSelect.value;
+    const dezenas = dezenasSelect.value;
+    const quantidade = quantidadeSelect.value;
+    const numerosAncora = ancoraInput.value;
     
     setGeradorEstado(true);
     areaResultados.innerHTML = '<div class="spinner"></div>';
@@ -234,23 +272,25 @@ async function gerarPalpites() {
         console.error('Detalhes do erro:', error);
         areaResultados.innerHTML = `<p style="color: #ff8a80;">Falha na conexão. Por favor, tente novamente em alguns segundos.</p>`;
     } finally {
-            if (estrategia === 'montecarlo' || estrategia === 'sorteanalisadapremium') {
+        if (estrategia === 'montecarlo' || estrategia === 'sorteanalisadapremium') {
             let cooldownTime = estrategia === 'sorteanalisadapremium' ? 20 : 10;
             let countdown = cooldownTime;
             const botao = document.getElementById('botao-gerar-principal');
-            botao.innerHTML = `Aguarde ${countdown}s...`;
-            
-            const interval = setInterval(() => {
-                countdown--;
-                if (countdown > 0) {
-                    botao.innerHTML = `Aguarde ${countdown}s...`;
-                } else {
-                    clearInterval(interval);
-                    botao.innerHTML = 'Gerar Palpites';
-                    setGeradorEstado(false);
-                    handleEstrategiaChange();
-                }
-            }, 1000);
+            if (botao) {
+                botao.innerHTML = `Aguarde ${countdown}s...`;
+                
+                const interval = setInterval(() => {
+                    countdown--;
+                    if (countdown > 0) {
+                        botao.innerHTML = `Aguarde ${countdown}s...`;
+                    } else {
+                        clearInterval(interval);
+                        botao.innerHTML = 'Gerar Palpites';
+                        setGeradorEstado(false);
+                        handleEstrategiaChange();
+                    }
+                }, 1000);
+            }
         } else {
             setGeradorEstado(false);
             handleEstrategiaChange();
@@ -260,17 +300,17 @@ async function gerarPalpites() {
 
 async function exibirEstatisticas() {
     const botao = document.querySelector('#estatisticas .botao-gerar');
-    if (isRequestInProgress || botao.disabled) return;
+    if (isRequestInProgress || !botao || botao.disabled) return;
     
     const areaStats = document.getElementById('area-estatisticas');
     isRequestInProgress = true;
     botao.disabled = true;
-    botao.innerHTML = '<div class="spinner" style="width: 25px; height: 25px; margin: 0 auto;"></div>';
+    botao.innerHTML = '<div class="spinner" style="width: 25px; height: 25px; margin: 0 auto;"></div> Carregando...';
     
     try {
         const [responseGeral, responseRecente] = await Promise.all([
             fetch(`/get-stats?loteria=${loteriaAtual}`),
-            fetch(`/get-stats-recentes?loteria=${loteriaAtual}`) // Nova requisição para dados recentes
+            fetch(`/get-stats-recentes?loteria=${loteriaAtual}`)
         ]);
 
         if (!responseGeral.ok) throw new Error('Falha ao buscar dados gerais do servidor.');
@@ -285,12 +325,20 @@ async function exibirEstatisticas() {
             throw new Error(dataRecente.error || 'Os dados recentes recebidos são inválidos.');
 
         const nomeLoteria = lotteryConfig[loteriaAtual].nome;
-        document.getElementById('ultimo-concurso-info').innerHTML = `Análise da ${nomeLoteria}: até o concurso ${dataGeral.ultimo_concurso}`;
-        areaStats.style.display = 'block';
+        const ultimoConcursoInfo = document.getElementById('ultimo-concurso-info');
+        if (ultimoConcursoInfo) {
+            ultimoConcursoInfo.innerHTML = `Análise da ${nomeLoteria}: até o concurso ${dataGeral.ultimo_concurso}`;
+        }
+        
+        if (areaStats) {
+            areaStats.style.display = 'block';
+        }
 
         // Destruir gráficos existentes
         [graficoMaisSorteados, graficoMenosSorteados, graficoPrimos, graficoParesImpares,
-         graficoMaisSorteadosRecentes, graficoMenosSorteadosRecentes].forEach(g => { if(g) g.destroy(); });
+         graficoMaisSorteadosRecentes, graficoMenosSorteadosRecentes].forEach(g => { 
+             if(g) g.destroy(); 
+         });
 
         const corTexto = '#FFFDE7', corGrid = 'rgba(255, 255, 255, 0.2)';
         
@@ -307,37 +355,127 @@ async function exibirEstatisticas() {
             } 
         };
 
-        // Gráficos Gerais (existentes)
+        // Gráficos Gerais
         const maisSorteados = [...dataGeral.frequencia].sort((a, b) => b.frequencia - a.frequencia).slice(0, 10);
-        graficoMaisSorteados = new Chart(document.getElementById('grafico-mais-sorteados').getContext('2d'), { type: 'bar', data: { labels: maisSorteados.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado', data: maisSorteados.map(i => i.frequencia), backgroundColor: '#FFD700' }] }, options: chartOptions });
+        const ctxMaisSorteados = document.getElementById('grafico-mais-sorteados');
+        if (ctxMaisSorteados) {
+            graficoMaisSorteados = new Chart(ctxMaisSorteados.getContext('2d'), { 
+                type: 'bar', 
+                data: { 
+                    labels: maisSorteados.map(i => `Nº ${i.numero}`), 
+                    datasets: [{ 
+                        label: 'Vezes Sorteado', 
+                        data: maisSorteados.map(i => i.frequencia), 
+                        backgroundColor: '#FFD700' 
+                    }] 
+                }, 
+                options: chartOptions 
+            });
+        }
         
         const menosSorteados = [...dataGeral.frequencia].sort((a, b) => a.frequencia - b.frequencia).slice(0, 10);
-        graficoMenosSorteados = new Chart(document.getElementById('grafico-menos-sorteados').getContext('2d'), { type: 'bar', data: { labels: menosSorteados.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado', data: menosSorteados.map(i => i.frequencia), backgroundColor: '#90CAF9' }] }, options: chartOptions });
+        const ctxMenosSorteados = document.getElementById('grafico-menos-sorteados');
+        if (ctxMenosSorteados) {
+            graficoMenosSorteados = new Chart(ctxMenosSorteados.getContext('2d'), { 
+                type: 'bar', 
+                data: { 
+                    labels: menosSorteados.map(i => `Nº ${i.numero}`), 
+                    datasets: [{ 
+                        label: 'Vezes Sorteado', 
+                        data: menosSorteados.map(i => i.frequencia), 
+                        backgroundColor: '#90CAF9' 
+                    }] 
+                }, 
+                options: chartOptions 
+            });
+        }
         
         const labelsPrimos = Object.keys(dataGeral.stats_primos).sort((a,b) => parseInt(a)-parseInt(b)).map(k => `${k} Primos`);
         const dataPrimos = Object.keys(dataGeral.stats_primos).sort((a,b) => parseInt(a)-parseInt(b)).map(k => dataGeral.stats_primos[k]);
-        graficoPrimos = new Chart(document.getElementById('grafico-primos').getContext('2d'), { type: 'bar', data: { labels: labelsPrimos, datasets: [{ label: 'Sorteios', data: dataPrimos, backgroundColor: '#81C784' }] }, options: chartOptions });
+        const ctxPrimos = document.getElementById('grafico-primos');
+        if (ctxPrimos) {
+            graficoPrimos = new Chart(ctxPrimos.getContext('2d'), { 
+                type: 'bar', 
+                data: { 
+                    labels: labelsPrimos, 
+                    datasets: [{ 
+                        label: 'Sorteios', 
+                        data: dataPrimos, 
+                        backgroundColor: '#81C784' 
+                    }] 
+                }, 
+                options: chartOptions 
+            });
+        }
         
         const numBolas = lotteryConfig[loteriaAtual].num_bolas;
         const labelsPares = Object.keys(dataGeral.stats_pares).sort((a,b) => parseInt(a)-parseInt(b)).map(k => `${k} Pares / ${numBolas - parseInt(k)} Ímpares`);
         const dataPares = Object.keys(dataGeral.stats_pares).sort((a,b) => parseInt(a)-parseInt(b)).map(k => dataGeral.stats_pares[k]);
-        graficoParesImpares = new Chart(document.getElementById('grafico-pares-impares').getContext('2d'), { type: 'bar', data: { labels: labelsPares, datasets: [{ label: 'Sorteios', data: dataPares, backgroundColor: '#FF8A65' }] }, options: chartOptions });
+        const ctxPares = document.getElementById('grafico-pares-impares');
+        if (ctxPares) {
+            graficoParesImpares = new Chart(ctxPares.getContext('2d'), { 
+                type: 'bar', 
+                data: { 
+                    labels: labelsPares, 
+                    datasets: [{ 
+                        label: 'Sorteios', 
+                        data: dataPares, 
+                        backgroundColor: '#FF8A65' 
+                    }] 
+                }, 
+                options: chartOptions 
+            });
+        }
         
-        // NOVOS GRÁFICOS: Mais e Menos Sorteadas (Últimos 100)
+        // Gráficos Recentes
         const maisSorteadosRecentes = [...dataRecente.frequencia_recente].sort((a, b) => b.frequencia - a.frequencia).slice(0, 10);
-        graficoMaisSorteadosRecentes = new Chart(document.getElementById('grafico-mais-sorteados-recentes').getContext('2d'), { type: 'bar', data: { labels: maisSorteadosRecentes.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado (Últimos 100)', data: maisSorteadosRecentes.map(i => i.frequencia), backgroundColor: '#FFECB3' }] }, options: chartOptions });
+        const ctxMaisSorteadosRecentes = document.getElementById('grafico-mais-sorteados-recentes');
+        if (ctxMaisSorteadosRecentes) {
+            graficoMaisSorteadosRecentes = new Chart(ctxMaisSorteadosRecentes.getContext('2d'), { 
+                type: 'bar', 
+                data: { 
+                    labels: maisSorteadosRecentes.map(i => `Nº ${i.numero}`), 
+                    datasets: [{ 
+                        label: 'Vezes Sorteado (Últimos 100)', 
+                        data: maisSorteadosRecentes.map(i => i.frequencia), 
+                        backgroundColor: '#FFECB3' 
+                    }] 
+                }, 
+                options: chartOptions 
+            });
+        }
 
         const menosSorteadosRecentes = [...dataRecente.frequencia_recente].sort((a, b) => a.frequencia - b.frequencia).slice(0, 10);
-        graficoMenosSorteadosRecentes = new Chart(document.getElementById('grafico-menos-sorteados-recentes').getContext('2d'), { type: 'bar', data: { labels: menosSorteadosRecentes.map(i => `Nº ${i.numero}`), datasets: [{ label: 'Vezes Sorteado (Últimos 100)', data: menosSorteadosRecentes.map(i => i.frequencia), backgroundColor: '#BBDEFB' }] }, options: chartOptions });
-
+        const ctxMenosSorteadosRecentes = document.getElementById('grafico-menos-sorteados-recentes');
+        if (ctxMenosSorteadosRecentes) {
+            graficoMenosSorteadosRecentes = new Chart(ctxMenosSorteadosRecentes.getContext('2d'), { 
+                type: 'bar', 
+                data: { 
+                    labels: menosSorteadosRecentes.map(i => `Nº ${i.numero}`), 
+                    datasets: [{ 
+                        label: 'Vezes Sorteado (Últimos 100)', 
+                        data: menosSorteadosRecentes.map(i => i.frequencia), 
+                        backgroundColor: '#BBDEFB' 
+                    }] 
+                }, 
+                options: chartOptions 
+            });
+        }
         
-        botao.style.display = 'none';
+        if (botao) {
+            botao.style.display = 'none';
+        }
 
     } catch (error) {
-        areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
-        areaStats.style.display = 'block';
-        botao.innerHTML = 'Estatísticas';
-        botao.disabled = false;
+        console.error('Erro ao carregar estatísticas:', error);
+        if (areaStats) {
+            areaStats.innerHTML = `<p style="color: #ff8a80;">${error.message}</p>`;
+            areaStats.style.display = 'block';
+        }
+        if (botao) {
+            botao.innerHTML = 'Estatísticas';
+            botao.disabled = false;
+        }
     } finally {
         isRequestInProgress = false;
     }
@@ -346,6 +484,9 @@ async function exibirEstatisticas() {
 async function submitFeedback(choice) {
     const feedbackArea = document.getElementById('feedback-area');
     const messageEl = document.getElementById('feedback-message');
+    
+    if (!feedbackArea || !messageEl) return;
+    
     try {
         const response = await fetch('/submit-feedback', {
             method: 'POST',
@@ -364,7 +505,15 @@ async function submitFeedback(choice) {
 }
 
 async function carregarUltimosResultados(loteria) {
+    if (carregandoResultados) return;
+    carregandoResultados = true;
+    
     const container = document.getElementById('lista-ultimos-resultados');
+    if (!container) {
+        carregandoResultados = false;
+        return;
+    }
+    
     container.innerHTML = '<div class="spinner"></div>';
 
     try {
@@ -396,24 +545,20 @@ async function carregarUltimosResultados(loteria) {
                 statusHtml = `<span class="status-ganhador">${res.ganhadores} ${ganhadorLabel}</span>`;
             }
 
-
             let mesDaSorteHtml = '';
             if (loteria === 'diadesorte' && res.mes_sorte) {
-                    mesDaSorteHtml = `<div class="resultado-mes">Mês da Sorte: <strong>${res.mes_sorte}</strong></div>`;
+                mesDaSorteHtml = `<div class="resultado-mes">Mês da Sorte: <strong>${res.mes_sorte}</strong></div>`;
             }
 
-            // --- INÍCIO DA MODIFICAÇÃO PARA FORMATAR A DATA ---
             let dataFormatada = '';
             if (res.data) {
-                const partesData = res.data.split('/'); // Divide a string "MM/DD/YYYY"
+                const partesData = res.data.split('/');
                 if (partesData.length === 3) {
-                    // Reorganiza para "DD/MM/YYYY"
                     dataFormatada = `${partesData[1]}/${partesData[0]}/${partesData[2]}`;
                 } else {
-                    dataFormatada = res.data; // Mantém o original se não conseguir formatar
+                    dataFormatada = res.data;
                 }
             }
-            // --- FIM DA MODIFICAÇÃO ---
 
             html += `
                 <div class="resultado-item">
@@ -433,6 +578,8 @@ async function carregarUltimosResultados(loteria) {
     } catch (error) {
         console.error('Erro ao carregar últimos resultados:', error);
         container.innerHTML = `<p style="color: #ff8a80;">Não foi possível carregar os resultados. Tente novamente mais tarde.</p>`;
+    } finally {
+        carregandoResultados = false;
     }
 } 
 
@@ -441,7 +588,7 @@ async function carregarUltimosResultados(loteria) {
 // ======================================
 
 let artigosVisiveis = 5;
-const totalArtigos = 9; // Pode ser dinamicamente obtido se os artigos forem carregados via API
+const totalArtigos = 9;
 
 function carregarMaisArtigos() {
     const artigos = document.querySelectorAll('.artigo-blog:not(.visivel)');
@@ -452,18 +599,21 @@ function carregarMaisArtigos() {
         artigosVisiveis++;
     }
     
-    // Atualiza contador
-    document.getElementById('contador-artigos').textContent = 
-        `Mostrando ${artigosVisiveis} de ${totalArtigos} artigos`;
-    
-    // Esconde o botão se não há mais artigos
-    if (artigosVisiveis >= totalArtigos) {
-        document.querySelector('.carregar-mais').style.display = 'none';
-        document.querySelector('.carregar-mais-container p').innerHTML = 
-            '<span style="color: var(--cor-sucesso);">✓ Todos os artigos carregados!</span>';
+    const contadorArtigos = document.getElementById('contador-artigos');
+    if (contadorArtigos) {
+        contadorArtigos.textContent = `Mostrando ${artigosVisiveis} de ${totalArtigos} artigos`;
     }
     
-    // Scroll suave para o primeiro novo artigo
+    const carregarMaisBtn = document.querySelector('.carregar-mais');
+    const carregarMaisContainer = document.querySelector('.carregar-mais-container p');
+    
+    if (artigosVisiveis >= totalArtigos) {
+        if (carregarMaisBtn) carregarMaisBtn.style.display = 'none';
+        if (carregarMaisContainer) {
+            carregarMaisContainer.innerHTML = '<span style="color: var(--cor-sucesso);">✓ Todos os artigos carregados!</span>';
+        }
+    }
+    
     if (artigos.length > 0) {
         artigos[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -471,20 +621,26 @@ function carregarMaisArtigos() {
 
 function toggleArtigo(artigoId) {
     const conteudo = document.getElementById(artigoId);
+    if (!conteudo) return;
+    
     const artigoPai = conteudo.closest('.artigo-blog');
     const resumo = artigoPai.querySelector('.artigo-resumo');
     const icone = artigoPai.querySelector('.fa-chevron-down, .fa-chevron-up');
 
     if (conteudo.classList.contains('artigo-expandido')) {
         conteudo.classList.remove('artigo-expandido');
-        resumo.style.display = 'block';
-        icone.classList.remove('fa-chevron-up');
-        icone.classList.add('fa-chevron-down');
+        if (resumo) resumo.style.display = 'block';
+        if (icone) {
+            icone.classList.remove('fa-chevron-up');
+            icone.classList.add('fa-chevron-down');
+        }
     } else {
         conteudo.classList.add('artigo-expandido');
-        resumo.style.display = 'none';
-        icone.classList.remove('fa-chevron-down');
-        icone.classList.add('fa-chevron-up');
+        if (resumo) resumo.style.display = 'none';
+        if (icone) {
+            icone.classList.remove('fa-chevron-down');
+            icone.classList.add('fa-chevron-up');
+        }
     }
 }
 
@@ -509,35 +665,42 @@ function compartilharThreads(texto, url) {
 }
 
 function compartilharInstagram() {
-    // Instagram não permite compartilhamento direto via URL para posts.
-    // O mais próximo seria direcionar para o perfil ou para o site.
-    window.open('https://www.instagram.com/sorteanalisadaoficial/', '_blank'); // Exemplo: ir para o perfil
+    window.open('https://www.instagram.com/sorteanalisadaoficial/', '_blank');
 }
 
 function compartilharTikTok() {
-    // TikTok também não permite compartilhamento direto via URL para vídeos.
-    // O mais próximo seria direcionar para o perfil ou para a página de upload.
-    window.open('https://www.tiktok.com/upload', '_blank'); // Exemplo: ir para a página de upload
+    window.open('https://www.tiktok.com/upload', '_blank');
 }
 
-function copiarLink(url, event) { // Adicionado 'event' para pegar o botão
+function copiarLink(url, event) {
     navigator.clipboard.writeText(url).then(() => {
         const btn = event.target.closest('.share-btn');
-        if (btn) { // Garante que o botão existe
+        if (btn) {
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-check"></i> Copiado!';
             btn.style.background = 'var(--cor-sucesso)';
             
             setTimeout(() => {
                 btn.innerHTML = originalText;
-                btn.style.background = '#6c757d'; // Volta à cor original do "Copiar Link"
+                btn.style.background = '#6c757d';
             }, 2000);
         }
-    }).catch(() => {
-        alert('Link copiado: ' + url);
+    }).catch((err) => {
+        console.error('Falha ao copiar:', err);
+        // Fallback para navegadores mais antigos
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert('Link copiado!');
+        } catch (fallbackErr) {
+            alert('Falha ao copiar. Por favor, copie manualmente: ' + url);
+        }
+        document.body.removeChild(textArea);
     });
 }
-
 
 // ======================================
 //             INICIALIZAÇÃO
@@ -550,24 +713,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
         loteriaAtual = seletorPrincipal.value; 
         mudarLoteria(loteriaAtual); 
 
-        // Atribui eventos aos seletores
         seletorPrincipal.addEventListener('change', () => mudarLoteria(seletorPrincipal.value));
+        
         const seletorResultados = document.getElementById('loteria-select-resultados');
         if (seletorResultados) {
             seletorResultados.addEventListener('change', () => mudarLoteriaResultados(seletorResultados.value));
         }
-        document.getElementById('estrategia-select')?.addEventListener('change', handleEstrategiaChange);
-        document.getElementById('botao-gerar-principal')?.addEventListener('click', gerarPalpites);
-        document.querySelector('#estatisticas .botao-gerar')?.addEventListener('click', exibirEstatisticas);
+        
+        const estrategiaSelect = document.getElementById('estrategia-select');
+        if (estrategiaSelect) {
+            estrategiaSelect.addEventListener('change', handleEstrategiaChange);
+        }
+        
+        const botaoGerar = document.getElementById('botao-gerar-principal');
+        if (botaoGerar) {
+            botaoGerar.addEventListener('click', gerarPalpites);
+        }
+        
+        const botaoStats = document.querySelector('#estatisticas .botao-gerar');
+        if (botaoStats) {
+            botaoStats.addEventListener('click', exibirEstatisticas);
+        }
     }
     
     // --- BLOG ---
     const contadorArtigos = document.getElementById('contador-artigos');
     if (contadorArtigos) {
         contadorArtigos.textContent = `Mostrando ${artigosVisiveis} de ${totalArtigos} artigos`;
-        document.querySelector('.carregar-mais')?.addEventListener('click', carregarMaisArtigos);
+        
+        const carregarMaisBtn = document.querySelector('.carregar-mais');
+        if (carregarMaisBtn) {
+            carregarMaisBtn.addEventListener('click', carregarMaisArtigos);
+        }
 
-        // Garante que os 5 primeiros artigos estejam visíveis na carga inicial
+        // Garante que os 5 primeiros artigos estejam visíveis
         document.querySelectorAll('.artigo-blog').forEach((artigo, index) => {
             if (index < artigosVisiveis) {
                 artigo.classList.add('visivel');
@@ -575,9 +754,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    // Adiciona listener para todos os botões de copiar globais (se não forem parte de .jogo)
+    // Adiciona listener para botões de copiar link
     document.querySelectorAll('.share-btn.copy-link').forEach(btn => {
-        btn.addEventListener('click', (e) => copiarLink(btn.dataset.url, e));
+        btn.addEventListener('click', (e) => {
+            if (btn.dataset.url) {
+                copiarLink(btn.dataset.url, e);
+            }
+        });
     });
- 
 });
