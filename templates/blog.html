@@ -185,6 +185,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- ESTILOS DE PROTEÇÃO CONTRA ANÚNCIOS -->
+    <style>
+        /* Proteção contra anúncios que quebram o layout */
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        
+        .container {
+            margin: 0 auto !important;
+            position: relative !important;
+            left: 0 !important;
+            transform: none !important;
+            max-width: 800px !important;
+            width: 95% !important;
+        }
+        
+        /* Reset forçado para elementos afetados por anúncios */
+        .container > * {
+            position: relative !important;
+            float: none !important;
+            clear: both !important;
+        }
+        
+        /* Garantir centralização em todos os dispositivos */
+        @media (min-width: 768px) {
+            .container {
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+        }
+    </style>
+
     <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
     <link rel="stylesheet" href="static/css/styles.css">
     
@@ -658,7 +693,29 @@
                 });
             }
             });
-        </script> 
+        </script>
+        
+        <!-- Scripts de correção de layout -->
+        <script>
+            // Corrige layout afetado por anúncios
+            function corrigirLayout() {
+                const container = document.querySelector('.container');
+                if (container) {
+                    container.style.marginLeft = 'auto';
+                    container.style.marginRight = 'auto';
+                    container.style.float = 'none';
+                }
+                document.body.style.marginLeft = '0';
+                document.body.style.marginRight = '0';
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                corrigirLayout();
+                setInterval(corrigirLayout, 1000);
+                setTimeout(() => setInterval(corrigirLayout, 1000), 5000);
+                window.addEventListener('resize', corrigirLayout);
+            });
+        </script>
     
 </body>
 </html>
