@@ -644,7 +644,8 @@ function toggleArtigo(artigoId) {
     }
 }
 
-// ============== FUNÇÕES DE COMPARTILHAMENTO ============== 
+// ============== FUNÇÕES DE COMPARTILHAMENTO ==============
+ 
 function compartilharWhatsApp(titulo, url) {
     const texto = encodeURIComponent(`${titulo} - ${url}`);
     window.open(`https://wa.me/?text=${texto}`, '_blank');
@@ -665,11 +666,54 @@ function compartilharThreads(texto, url) {
 }
 
 function compartilharInstagram() {
-    window.open('https://www.instagram.com/sorteanalisadaoficial/', '_blank');
+    // Instagram não permite compartilhamento direto de links externos
+    // A melhor abordagem é direcionar para o perfil ou pedir para o usuário compartilhar manualmente
+    const mensagem = "Para compartilhar no Instagram:\n\n1. Abra o Instagram\n2. Crie uma nova publicação ou story\n3. Marque @sorteanalisadaoficial\n4. Use a hashtag #SorteAnalisada";
+    
+    if (confirm(mensagem + "\n\nDeseja abrir o Instagram?")) {
+        window.open('https://www.instagram.com/sorteanalisadaoficial/', '_blank');
+    }
 }
 
 function compartilharTikTok() {
-    window.open('https://www.tiktok.com/upload', '_blank');
+    // TikTok também não permite compartilhamento direto de links
+    // A melhor abordagem é direcionar para criar um vídeo ou compartilhar manualmente
+    const mensagem = "Para compartilhar no TikTok:\n\n1. Abra o TikTok\n2. Crie um vídeo mencionando a Sorte Analisada\n3. Use a hashtag #SorteAnalisada\n4. Marque @sorteanalisada";
+    
+    if (confirm(mensagem + "\n\nDeseja abrir o TikTok?")) {
+        window.open('https://www.tiktok.com/', '_blank');
+    }
+}
+
+// Versão alternativa mais amigável para Instagram e TikTok:
+function compartilharInstagramAmigavel(titulo, url) {
+    const texto = encodeURIComponent(`Confira isso: ${titulo} - ${url}\n\n@sorteanalisadaoficial #SorteAnalisada`);
+    
+    // Tenta abrir no app mobile se disponível, senão vai para o perfil
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        window.open(`instagram://library?AssetPath=${encodeURIComponent(url)}&Caption=${texto}`, '_blank');
+        // Fallback: abre o perfil após um breve delay
+        setTimeout(() => {
+            window.open('https://www.instagram.com/sorteanalisadaoficial/', '_blank');
+        }, 500);
+    } else {
+        window.open('https://www.instagram.com/sorteanalisadaoficial/', '_blank');
+    }
+}
+
+function compartilharTikTokAmigavel(titulo, url) {
+    const texto = encodeURIComponent(`${titulo} - ${url} #SorteAnalisada`);
+    
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Tenta abrir com deep link (pode não funcionar em todos os dispositivos)
+        window.open(`tiktok://share?text=${texto}`, '_blank');
+        // Fallback
+        setTimeout(() => {
+            window.open('https://www.tiktok.com/', '_blank');
+        }, 500);
+    } else {
+        window.open('https://www.tiktok.com/', '_blank');
+    }
 }
 
 function copiarLink(url, event) {
