@@ -62,12 +62,12 @@
                 <nav class="nav-interna">
                     <a href="#loteria-select">Gerar Palpites</a>
                     <a href="#estatisticas">Estatisticas</a>
-                    <a href="#sobre-filtros">Métodos</a>
-                    <a href="#sobre">Sobre</a>
                     <a href="#ultimos-resultados">Últimos Resultados</a>
-                    <a href="#opiniao">Sua opinião</a>
+                    <a href="#sobre-filtros">Métodos</a>
                     <a href="#jogorresponsavel">Jogo Responsável</a>
+                    <a href="#opiniao">Sua opinião</a>
                     <a href="#contato">Contato</a>
+                    <a href="#sobre">Sobre</a>
                     <a href="#politica">Privacidade</a>
                     <a href="#termos">Termos</a>
                     <a href="/blog">Blog Sorte Analisada</a> 
@@ -139,7 +139,27 @@
                         <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
                     </div>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>     
+                </section>
+                
+                <section id="ultimos-resultados" class="footer-section">
+                    <h2>Últimos Resultados</h2>
+                    <p>Confira os últimos 5 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
+                    <br>
+                    <div class="controle-item">
+                        <label for="loteria-select-resultados">Loteria:</label> <!-- ID da label ajustado -->
+                        <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)"> <!-- NOVO ID e NOVA FUNÇÃO onchange -->
+                            <option value="megasena">Mega-Sena</option>
+                            <option value="quina">Quina</option>
+                            <option value="lotofacil">Lotofácil</option>
+                            <option value="diadesorte">Dia de Sorte</option>
+                        </select>
+                    </div>
+                    <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
+                    <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
+                        <div class="spinner"></div>
+                    </div>
+                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+                </section>
 
                 <section id="sobre-filtros" class="footer-section">
                     <h2>Entenda Nossos Métodos</h2>
@@ -163,29 +183,9 @@
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
-                <section id="sobre" class="footer-section">
-                    <h2>Nossa Missão é Analisar a Sorte</h2>
-                    <p>O Sorte Analisada é seu parceiro inteligente para criar palpites criativos para as loterias: Mega-Sena, Quina, Lotofácil e Dia de Sorte. Nascemos da paixão por números para oferecer uma ferramenta que vai além da "surpresinha", usando estatísticas e algoritmos para gerar sugestões com lógica. Lembre-se, somos uma plataforma independente, destinada exclusivamente ao entretenimento. As sugestões geradas no sistema não garantem ganhos e não aumentam a probabilidade de acerto. Jogue de forma consciente e responsável. O acesso ao site é gratuito. <br><br>Boa sorte!</p>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
-
-                <section id="ultimos-resultados" class="footer-section">
-                    <h2>Últimos Resultados</h2>
-                    <p>Confira os últimos 5 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
-                    <br>
-                    <div class="controle-item">
-                        <label for="loteria-select-resultados">Loteria:</label> <!-- ID da label ajustado -->
-                        <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)"> <!-- NOVO ID e NOVA FUNÇÃO onchange -->
-                            <option value="megasena">Mega-Sena</option>
-                            <option value="quina">Quina</option>
-                            <option value="lotofacil">Lotofácil</option>
-                            <option value="diadesorte">Dia de Sorte</option>
-                        </select>
-                    </div>
-                    <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
-                    <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
-                        <div class="spinner"></div>
-                    </div>
+                <section id="jogorresponsavel" class="footer-section">
+                    <h2>Nosso Compromisso com o Jogo Responsável</h2>
+                    <p>Apostar deve ser uma fonte de <strong>diversão</strong>, não uma necessidade. E ela é destinada somente a maiores de <strong>18 anos</strong>. Encare como lazer, defina limites claros de gastos e entenda que as probabilidades de ganho são remotas. A maior vitória é jogar com <strong>consciência e controle</strong>. Se o jogo deixar de ser divertido, não hesite em procurar ajuda.</p>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
@@ -228,32 +228,59 @@
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
-                <section id="jogorresponsavel" class="footer-section">
-                    <h2>Nosso Compromisso com o Jogo Responsável</h2>
-                    <p>Apostar deve ser uma fonte de <strong>diversão</strong>, não uma necessidade. E ela é destinada somente a maiores de <strong>18 anos</strong>. Encare como lazer, defina limites claros de gastos e entenda que as probabilidades de ganho são remotas. A maior vitória é jogar com <strong>consciência e controle</strong>. Se o jogo deixar de ser divertido, não hesite em procurar ajuda.</p>
+                <section id="sobre" class="footer-section">
+                    <h2>Nossa Missão é Analisar a Sorte</h2>
+                    <p>O Sorte Analisada é seu parceiro inteligente para criar palpites criativos para as loterias: Mega-Sena, Quina, Lotofácil e Dia de Sorte. Nascemos da paixão por números para oferecer uma ferramenta que vai além da "surpresinha", usando estatísticas e algoritmos para gerar sugestões com lógica. Lembre-se, somos uma plataforma independente, destinada exclusivamente ao entretenimento. As sugestões geradas no sistema não garantem ganhos e não aumentam a probabilidade de acerto. Jogue de forma consciente e responsável. O acesso ao site é gratuito. <br><br>Boa sorte!</p>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
-            <section id="politica" class="footer-section">
-                    <h2>Política de Privacidade</h2>
-                    <p><strong>Última atualização:</strong> 22 de Agosto de 2025<br><br>
-                    A sua privacidade é importante para nós. É política do site <strong>www.sorteanalisada.com.br</strong> respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site.<br><br>
-                    <strong>1. Coleta de Dados</strong><br>
-                    Nós não coletamos informações de identificação pessoal dos nossos usuários, como nome, e-mail, endereço ou número de telefone. O uso da nossa ferramenta de geração de palpites é completamente anônimo.<br><br>
-                    <strong>2. Cookies e Dados de Navegação</strong><br>
-                    Podemos coletar dados não pessoais para fins de análise e melhoria do serviço através de ferramentas como o Google Analytics. O site também pode utilizar cookies para melhorar a experiência do usuario. Você pode desativar os cookies nas configurações do seu navegador.<br><br>
-                    <strong>3. Dados da Pesquisa de Satisfação</strong><br>
-                    Na seção "Apoie o Projeto", oferecemos uma pesquisa opcional de "Sim/Não". A resposta é registrada de forma anônima em nosso banco de dados com o único propósito de avaliar a satisfação geral dos usuários.<br><br>
-                    O uso continuado de nosso site será considerado como aceitação de nossas práticas em torno de privacidade. Se você tiver alguma dúvida, entre em contato conosco.</p>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
+                <section id="politica" class="footer-section">
+                        <h2>Política de Privacidade</h2>
+                        <p><strong>Última atualização:</strong> 22 de Agosto de 2025<br><br>
+                        A sua privacidade é importante para nós. É política do site <strong>www.sorteanalisada.com.br</strong> respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site.<br><br>
+                        <strong>1. Coleta de Dados</strong><br>
+                        Nós não coletamos informações de identificação pessoal dos nossos usuários, como nome, e-mail, endereço ou número de telefone. O uso da nossa ferramenta de geração de palpites é completamente anônimo.<br><br>
+                        <strong>2. Cookies e Dados de Navegação</strong><br>
+                        Podemos coletar dados não pessoais para fins de análise e melhoria do serviço através de ferramentas como o Google Analytics. O site também pode utilizar cookies para melhorar a experiência do usuario. Você pode desativar os cookies nas configurações do seu navegador.<br><br>
+                        <strong>3. Dados da Pesquisa de Satisfação</strong><br>
+                        Na seção "Apoie o Projeto", oferecemos uma pesquisa opcional de "Sim/Não". A resposta é registrada de forma anônima em nosso banco de dados com o único propósito de avaliar a satisfação geral dos usuários.<br><br>
+                        O uso continuado de nosso site será considerado como aceitação de nossas práticas em torno de privacidade. Se você tiver alguma dúvida, entre em contato conosco.</p>
+                        <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+                    </section>
 
                 <section id="termos" class="footer-section">
                     <h2>Termo de Uso</h2>
                     <p>O site <strong>Sorte Analisada</strong> é uma ferramenta gratuíta de entretenimento destinada a maiores de 18 anos. Geramos sugestões de números para jogos de loteria com base em algoritmos, dados históricos e também números aleatórios. <strong>Não oferecemos nenhuma garantia de prêmios ou acertos. Os resultados das loterias são imprevisíveis e dependem exclusivamente da sorte.</strong> Este site não comercializa produtos Lotéricos e não possui qualquer vínculo com a Caixa Econômica Federal® ou qualquer outra entidade lotérica. Jogue com responsabilidade e por sua conta e riscos.</p>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
+
+                 <!-- Compartilhamento geral -->
+                 <div class="share-container">
+                        Curtiu o Sorte Analisada! Compartilhe: 
+                        <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharThreads(window.location.href)" class="share-btn threads">
+                            <i class="fa-brands fa-threads"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharInstagram(window.location.href)" class="share-btn instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharTikTok(window.location.href)" class="share-btn tiktok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="copiarLink(window.location.href)" class="share-btn copy-link">
+                           <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
             
+                <!-- footer esta na pasta statics/partials -->
                 <div id="footer"></div> 
             
         </div> 

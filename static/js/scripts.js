@@ -678,7 +678,7 @@ function compartilharInstagram() {
 function compartilharTikTok() {
     // TikTok também não permite compartilhamento direto de links
     // A melhor abordagem é direcionar para criar um vídeo ou compartilhar manualmente
-    const mensagem = "Para compartilhar no TikTok:\n\n1. Abra o TikTok\n2. Crie um vídeo mencionando a Sorte Analisada\n3. Use a hashtag #SorteAnalisada\n4. Marque @sorteanalisada";
+    const mensagem = "Para compartilhar no TikTok:\n\n1. Abra o TikTok\n2. Crie um vídeo mencionando a Sorte Analisada\n3. Use a hashtag #SorteAnalisada\n4. Marque @sorte_analisada";
     
     if (confirm(mensagem + "\n\nDeseja abrir o TikTok?")) {
         window.open('https://www.tiktok.com/', '_blank');
