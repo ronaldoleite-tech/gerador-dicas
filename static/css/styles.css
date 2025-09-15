@@ -176,6 +176,9 @@ h1 {
 #termos h2::before,
 #politica h2::before,
 #contato h2::before,
+#opiniao h2::before,
+#jogorresponsavel h2::before,
+#link h2::before,
 #sobre h2::before { /* Adicionado #sobre para o index.html */
     content: none;
     margin-right: 0;

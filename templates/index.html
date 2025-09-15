@@ -188,26 +188,6 @@
                     </div>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
-                
-                <section id="ultimos-resultados" class="footer-section">
-                    <h2>Últimos Resultados</h2>
-                    <p>Confira os últimos 5 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
-                    <br>
-                    <div class="controle-item">
-                        <label for="loteria-select-resultados">Loteria:</label> <!-- ID da label ajustado -->
-                        <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)"> <!-- NOVO ID e NOVA FUNÇÃO onchange -->
-                            <option value="megasena">Mega-Sena</option>
-                            <option value="quina">Quina</option>
-                            <option value="lotofacil">Lotofácil</option>
-                            <option value="diadesorte">Dia de Sorte</option>
-                        </select>
-                    </div>
-                    <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
-                    <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
-                        <div class="spinner"></div>
-                    </div>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
 
                 <section id="sobre-filtros" class="footer-section">
                     <h2>Entenda Nossos Métodos</h2>
@@ -228,6 +208,26 @@
                     <p>Imagine realizar milhares de sorteios em segundos para ver quais números se destacam. É isso que a Simulação de Monte Carlo faz. Usando processamento computacional, ela analisa probabilidades em larga escala para gerar um palpite único e sofisticado, ideal para quem busca uma sugestão diferenciada e com análise profunda.</p>
                     <h3>Com a Estratégia: Sorte Analisada 🎯 </h3>
                     <p>Nossa estratégia mais avançada. Ela não olha apenas para os números mais sorteados, mas para o "DNA de um bilhete vencedor". Analisamos o equilíbrio entre dezenas pares e ímpares, a soma total dos números e sua distribuição pelo volante em todo o histórico de resultados. Com base nesse perfil, geramos centenas de jogos candidatos, filtramos todos que já foram sorteados, e pontuamos os restantes para encontrar o palpite único que seja estatisticamente forte e estruturalmente balanceado, oferecendo uma sugestão inédita e inteligente.</p>
+                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+                </section>
+
+                <section id="ultimos-resultados" class="footer-section">
+                    <h2>Últimos Resultados</h2>
+                    <p>Confira os últimos 5 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
+                    <br>
+                    <div class="controle-item">
+                        <label for="loteria-select-resultados">Loteria:</label> <!-- ID da label ajustado -->
+                        <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)"> <!-- NOVO ID e NOVA FUNÇÃO onchange -->
+                            <option value="megasena">Mega-Sena</option>
+                            <option value="quina">Quina</option>
+                            <option value="lotofacil">Lotofácil</option>
+                            <option value="diadesorte">Dia de Sorte</option>
+                        </select>
+                    </div>
+                    <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
+                    <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
+                        <div class="spinner"></div>
+                    </div>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
