@@ -549,12 +549,31 @@ async function carregarUltimosResultados(loteria) {
             if (loteria === 'diadesorte' && res.mes_sorte) {
                 mesDaSorteHtml = `<div class="resultado-mes">Mês da Sorte: <strong>${res.mes_sorte}</strong></div>`;
             }
-
+            
             let dataFormatada = '';
             if (res.data) {
-                const partesData = res.data.split('/');
-                if (partesData.length === 3) {
-                    dataFormatada = `${partesData[1]}/${partesData[0]}/${partesData[2]}`;
+                // Se a data já está no formato DD/MM/YYYY, mantém assim
+                if (res.data.includes('/')) {
+                    const partesData = res.data.split('/');
+                    if (partesData.length === 3) {
+                        const primeiro = parseInt(partesData[0]);
+                        const segundo = parseInt(partesData[1]);
+                        
+                        // Se o primeiro número é maior que 12, definitivamente é DD/MM/YYYY
+                        if (primeiro > 12) {
+                            dataFormatada = res.data; // Já está correto
+                        } 
+                        // Se o segundo número é maior que 12, é MM/DD/YYYY, precisa inverter
+                        else if (segundo > 12) {
+                            dataFormatada = `${partesData[1]}/${partesData[0]}/${partesData[2]}`;
+                        }
+                        // Se ambos são <= 12, assume que já está em DD/MM/YYYY
+                        else {
+                            dataFormatada = res.data;
+                        }
+                    } else {
+                        dataFormatada = res.data;
+                    }
                 } else {
                     dataFormatada = res.data;
                 }
