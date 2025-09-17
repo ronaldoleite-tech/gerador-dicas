@@ -711,41 +711,58 @@
             });
             }
 
-            // Carregar apenas quando necessário (estatísticas)
-            document.addEventListener('DOMContentLoaded', function() {
-            var statsButton = document.querySelector('#estatisticas .botao-gerar');
-            if (statsButton) {
-                statsButton.addEventListener('click', function() {
-                loadChartJS().then(function() {
-                    // Sua função para exibir estatísticas
-                    exibirEstatisticas();
-                });
-                });
-            }
-            });
         </script>
-        
-        <!-- Scripts de correção de layout -->
+
         <script>
-            // Corrige layout afetado por anúncios
-            function corrigirLayout() {
-                const container = document.querySelector('.container');
-                if (container) {
-                    container.style.marginLeft = 'auto';
-                    container.style.marginRight = 'auto';
-                    container.style.float = 'none';
+                // CORREÇÃO DE LAYOUT - PROTEGE CONTRA ANÚNCIOS
+                function corrigirLayoutForcado() {
+                    // Redefine o container principal
+                    const container = document.querySelector('.container');
+                    if (container) {
+                        container.style.marginLeft = 'auto';
+                        container.style.marginRight = 'auto';
+                        container.style.float = 'none';
+                        container.style.position = 'relative';
+                        container.style.left = '0';
+                        container.style.transform = 'none';
+                    }
+                    
+                    // Redefine o body
+                    document.body.style.marginLeft = '0';
+                    document.body.style.marginRight = '0';
+                    document.body.style.overflowX = 'hidden';
+                    
+                    // Remove qualquer deslocamento lateral
+                    document.documentElement.style.overflowX = 'hidden';
+                    
+                    // Corrige anúncios problemáticos
+                    document.querySelectorAll('ins, iframe, [class*="ad"], [id*="ad"]').forEach(el => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.left > window.innerWidth || rect.right < 0) {
+                            el.style.display = 'none';
+                        }
+                    });
                 }
-                document.body.style.marginLeft = '0';
-                document.body.style.marginRight = '0';
-            }
-            
-            document.addEventListener('DOMContentLoaded', function() {
-                corrigirLayout();
-                setInterval(corrigirLayout, 1000);
-                setTimeout(() => setInterval(corrigirLayout, 1000), 5000);
-                window.addEventListener('resize', corrigirLayout);
-            });
-        </script>
+                
+                // Executa quando a página carrega
+                document.addEventListener('DOMContentLoaded', function() {
+                    corrigirLayoutForcado();
+                    
+                    // Executa várias vezes para garantir
+                    setTimeout(corrigirLayoutForcado, 100);
+                    setTimeout(corrigirLayoutForcado, 500);
+                    setTimeout(corrigirLayoutForcado, 1000);
+                    
+                    // Monitora continuamente
+                    setInterval(corrigirLayoutForcado, 2000);
+                    
+                    // Corrige no redimensionamento
+                    window.addEventListener('resize', corrigirLayoutForcado);
+                });
+                
+                // Também executa quando a janela termina de carregar completamente
+                window.addEventListener('load', corrigirLayoutForcado);
+            </script>
     
 </body>
 </html>
