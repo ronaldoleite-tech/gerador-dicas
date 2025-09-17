@@ -1109,3 +1109,27 @@ h1 {
         margin-top: 1rem;
     }
 }
+
+/* ==============================
+           ANÚNCIOS - ESPAÇO RESERVADO
+        ============================== */
+
+/* Para anúncios do Google (classe genérica) */
+.adsbygoogle {
+    display: block !important;
+    width: 300px !important;
+    height: 250px !important;
+    margin: 20px auto !important;
+    background: var(--cor-caixa) !important;
+    border: 1px solid var(--cor-divisoria-ouro) !important;
+    border-radius: 8px !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .adsbygoogle {
+        width: 100% !important;
+        height: 100px !important;
+        margin: 10px auto !important;
+    }
+}
