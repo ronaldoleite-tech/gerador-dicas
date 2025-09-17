@@ -728,9 +728,6 @@
         
     </div>
 
-    <!-- Overlay de proteção (será ativado apenas se necessário) -->
-    <div id="protector-overlay"></div>
-
     <!-- Scripts com defer (carregam sem bloquear a renderização) -->
         <script defer src="/static/js/scripts.min.js"></script>
 
@@ -749,113 +746,113 @@
         </script>
 
         <script>
-        // CORREÇÃO DE LAYOUT - PROTEGE CONTRA ANÚNCIOS (VERSÃO MELHORADA)
-        function corrigirLayoutForcado() {
-            // Redefine o container principal
-            const container = document.querySelector('.container');
-            if (container) {
-                container.style.marginLeft = 'auto';
-                container.style.marginRight = 'auto';
-                container.style.float = 'none';
-                container.style.position = 'relative';
-                container.style.left = '0';
-                container.style.transform = 'none';
-                container.style.width = '95%';
-                container.style.maxWidth = '800px';
-            }
-            
-            // Redefine o body
-            document.body.style.marginLeft = '0';
-            document.body.style.marginRight = '0';
-            document.body.style.overflowX = 'hidden';
-            document.body.style.width = '100%';
-            
-            // Remove qualquer deslocamento lateral
-            document.documentElement.style.overflowX = 'hidden';
-            document.documentElement.style.width = '100%';
-            document.documentElement.style.position = 'relative';
-            document.documentElement.style.left = '0';
-            
-            // Corrige anúncios problemáticos
-            document.querySelectorAll('ins, iframe, [class*="ad"], [id*="ad"]').forEach(el => {
-                const rect = el.getBoundingClientRect();
-                // Esconde anúncios que estão fora da tela (posicionados incorretamente)
-                if (rect.left > window.innerWidth || rect.right < 0 || rect.width > window.innerWidth) {
-                    el.style.display = 'none';
+            // CORREÇÃO DE LAYOUT - PROTEGE CONTRA ANÚNCIOS (VERSÃO MELHORADA)
+            function corrigirLayoutForcado() {
+                // Redefine o container principal
+                const container = document.querySelector('.container');
+                if (container) {
+                    container.style.marginLeft = 'auto';
+                    container.style.marginRight = 'auto';
+                    container.style.float = 'none';
+                    container.style.position = 'relative';
+                    container.style.left = '0';
+                    container.style.transform = 'none';
+                    container.style.width = '95%';
+                    container.style.maxWidth = '800px';
                 }
                 
-                // Limita a largura máxima dos anúncios
-                if (rect.width > 800) {
-                    el.style.maxWidth = '100%';
-                    el.style.width = '100%';
-                }
-            });
-            
-            // Verifica se há deslocamento lateral e corrige
-            if (window.scrollX !== 0) {
-                window.scrollTo(0, window.scrollY);
-            }
-        }
-        
-        // Função para detectar e corrigir anúncios flutuantes
-        function corrigirAnunciosFlutuantes() {
-            const elementos = document.querySelectorAll('body > *:not(.container):not(script):not(style)');
-            elementos.forEach(el => {
-                const style = window.getComputedStyle(el);
-                if (style.position === 'fixed' || style.position === 'absolute') {
+                // Redefine o body
+                document.body.style.marginLeft = '0';
+                document.body.style.marginRight = '0';
+                document.body.style.overflowX = 'hidden';
+                document.body.style.width = '100%';
+                
+                // Remove qualquer deslocamento lateral
+                document.documentElement.style.overflowX = 'hidden';
+                document.documentElement.style.width = '100%';
+                document.documentElement.style.position = 'relative';
+                document.documentElement.style.left = '0';
+                
+                // Corrige anúncios problemáticos
+                document.querySelectorAll('ins, iframe, [class*="ad"], [id*="ad"]').forEach(el => {
                     const rect = el.getBoundingClientRect();
-                    // Se o elemento está fora da área principal
-                    if (rect.left < 0 || rect.right > window.innerWidth) {
+                    // Esconde anúncios que estão fora da tela (posicionados incorretamente)
+                    if (rect.left > window.innerWidth || rect.right < 0 || rect.width > window.innerWidth) {
                         el.style.display = 'none';
                     }
+                    
+                    // Limita a largura máxima dos anúncios
+                    if (rect.width > 800) {
+                        el.style.maxWidth = '100%';
+                        el.style.width = '100%';
+                    }
+                });
+                
+                // Verifica se há deslocamento lateral e corrige
+                if (window.scrollX !== 0) {
+                    window.scrollTo(0, window.scrollY);
                 }
+            }
+            
+            // Função para detectar e corrigir anúncios flutuantes
+            function corrigirAnunciosFlutuantes() {
+                const elementos = document.querySelectorAll('body > *:not(.container):not(script):not(style)');
+                elementos.forEach(el => {
+                    const style = window.getComputedStyle(el);
+                    if (style.position === 'fixed' || style.position === 'absolute') {
+                        const rect = el.getBoundingClientRect();
+                        // Se o elemento está fora da área principal
+                        if (rect.left < 0 || rect.right > window.innerWidth) {
+                            el.style.display = 'none';
+                        }
+                    }
+                });
+            }
+            
+            // Executa quando a página carrega
+            document.addEventListener('DOMContentLoaded', function() {
+                corrigirLayoutForcado();
+                corrigirAnunciosFlutuantes();
+                
+                // Executa várias vezes para garantir
+                setTimeout(() => {
+                    corrigirLayoutForcado();
+                    corrigirAnunciosFlutuantes();
+                }, 100);
+                
+                setTimeout(() => {
+                    corrigirLayoutForcado();
+                    corrigirAnunciosFlutuantes();
+                }, 500);
+                
+                setTimeout(() => {
+                    corrigirLayoutForcado();
+                    corrigirAnunciosFlutuantes();
+                }, 1000);
+                
+                // Monitora continuamente (com intervalo maior para performance)
+                setInterval(() => {
+                    corrigirLayoutForcado();
+                    corrigirAnunciosFlutuantes();
+                }, 3000);
+                
+                // Corrige no redimensionamento
+                window.addEventListener('resize', () => {
+                    corrigirLayoutForcado();
+                    corrigirAnunciosFlutuantes();
+                });
+                
+                // Corrige no scroll (para anúncios que aparecem durante a rolagem)
+                window.addEventListener('scroll', () => {
+                    corrigirAnunciosFlutuantes();
+                });
             });
-        }
-        
-        // Executa quando a página carrega
-        document.addEventListener('DOMContentLoaded', function() {
-            corrigirLayoutForcado();
-            corrigirAnunciosFlutuantes();
             
-            // Executa várias vezes para garantir
-            setTimeout(() => {
-                corrigirLayoutForcado();
-                corrigirAnunciosFlutuantes();
-            }, 100);
-            
-            setTimeout(() => {
-                corrigirLayoutForcado();
-                corrigirAnunciosFlutuantes();
-            }, 500);
-            
-            setTimeout(() => {
-                corrigirLayoutForcado();
-                corrigirAnunciosFlutuantes();
-            }, 1000);
-            
-            // Monitora continuamente (com intervalo maior para performance)
-            setInterval(() => {
-                corrigirLayoutForcado();
-                corrigirAnunciosFlutuantes();
-            }, 3000);
-            
-            // Corrige no redimensionamento
-            window.addEventListener('resize', () => {
+            // Também executa quando a janela termina de carregar completamente
+            window.addEventListener('load', () => {
                 corrigirLayoutForcado();
                 corrigirAnunciosFlutuantes();
             });
-            
-            // Corrige no scroll (para anúncios que aparecem durante a rolagem)
-            window.addEventListener('scroll', () => {
-                corrigirAnunciosFlutuantes();
-            });
-        });
-        
-        // Também executa quando a janela termina de carregar completamente
-        window.addEventListener('load', () => {
-            corrigirLayoutForcado();
-            corrigirAnunciosFlutuantes();
-        });
-    </script>
+        </script>
 </body>
 </html>
