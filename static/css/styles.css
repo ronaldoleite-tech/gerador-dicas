@@ -510,7 +510,7 @@ h1 {
     padding: 1rem;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    font-size: 1.0rem;
+    font-size: 1.2rem;
     line-height: 1.6;
     color: #bbdefb;
     border-left: 3px solid var(--cor-loteria-display);
@@ -630,7 +630,7 @@ h1 {
 .lottery-card .status-acumulou {
     color: #FFB74D;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 
@@ -903,8 +903,6 @@ h1 {
     .footer-section p {
         text-align: left !important;
     }
-
-    /* O seletor #informativo .botao-gerar não existe nos HTMLs fornecidos. Removido. */
 
     h1 {
         font-size: 1.5rem;
