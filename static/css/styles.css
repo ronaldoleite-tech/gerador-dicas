@@ -111,7 +111,7 @@ h1 {
 .nav-interna a {
     color: var(--cor-dourado);
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     transition: color .2s;
 }
@@ -843,7 +843,7 @@ h1 {
     }
 
     .nav-interna a {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .artigo-blog h3 {
@@ -1033,7 +1033,7 @@ h1 {
 }
 
 .copyright {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     line-height: 2;
     color: #e3f2fd; /* Azul muito claro para texto */
     padding-top: 1rem;
@@ -1073,7 +1073,7 @@ h1 {
     }
 
     .copyright {
-        font-size: 0.9rem;
+        font-size: 1.2rem;
         line-height: 1.8;
         margin-top: 1.5rem;
     }
@@ -1104,7 +1104,7 @@ h1 {
     }
 
     .copyright {
-        font-size: 0.85rem;
+        font-size: 1.2rem;
         line-height: 1.6;
         margin-top: 1rem;
     }
