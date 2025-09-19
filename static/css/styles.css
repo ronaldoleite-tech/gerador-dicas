@@ -155,7 +155,7 @@ h1 {
 }
 
 .footer-section p {
-    font-size: .95rem;
+    font-size: 1.2rem;
     line-height: 1.7;
     text-align: justify;
 }
@@ -196,7 +196,7 @@ h1 {
     display: block;
     text-align: right;
     margin-top: 1rem;
-    font-size: .85rem;
+    font-size: .95rem;
     color: var(--cor-dourado);
     text-decoration: none;
     transition: color .2s;
@@ -290,7 +290,7 @@ h1 {
     text-decoration: none;
     display: inline-block;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -318,7 +318,7 @@ h1 {
 }
 
 .destaque-gerador p {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     line-height: 1.6;
     margin-bottom: 1.5rem;
 }
@@ -345,7 +345,7 @@ h1 {
     color: #000;
     border: none;
     padding: .8rem 1.5rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     border-radius: 40px;
     cursor: pointer;
@@ -454,13 +454,13 @@ h1 {
 }
 
 .resultado-concurso {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: white;
 }
 
 .resultado-data {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--cor-texto);
 }
 
@@ -542,7 +542,7 @@ h1 {
     padding: 8px 12px;
     border: 1px solid var(--cor-dourado);
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
 }
 
@@ -679,7 +679,7 @@ h1 {
 }
 
 .artigo-blog p {
-    font-size: .95rem;
+    font-size: 1.1rem;
     line-height: 1.7;
     text-align: justify;
     margin-bottom: 1rem;
@@ -712,7 +712,7 @@ h1 {
     color: #bbdefb;
     font-style: italic;
     margin-top: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     text-align: left !important;
 }
 
@@ -798,7 +798,7 @@ h1 {
     padding: 1rem 2rem;
     border-radius: 50px;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
@@ -847,11 +847,11 @@ h1 {
     }
 
     .artigo-blog h3 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .artigo-blog p {
-        font-size: .9rem;
+        font-size: 1.1rem;
         text-align: left !important;
     }
 
@@ -880,7 +880,7 @@ h1 {
 
     .share-btn {
         padding: 6px 12px;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 
     /* Ajustes específicos para Home */
@@ -925,7 +925,7 @@ h1 {
     }
 
     .artigo-blog h3 {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     .artigo-blog-header img {
@@ -941,7 +941,7 @@ h1 {
 
     .partner-cta-button {
         padding: 10px 20px;
-        font-size: .9rem;
+        font-size: 1.1rem;
     }
 
     .share-container {
@@ -1068,7 +1068,7 @@ h1 {
     }
 
     .voltar-topo-footer {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         margin-bottom: 1rem;
     }
 
@@ -1099,7 +1099,7 @@ h1 {
     }
 
     .voltar-topo-footer {
-        font-size: 0.85rem;
+        font-size: 0.95rem;
         margin-bottom: 0.8rem;
     }
 
