@@ -196,7 +196,7 @@ h1 {
     display: block;
     text-align: right;
     margin-top: 1rem;
-    font-size: .95rem;
+    font-size: 1.1rem;
     color: var(--cor-dourado);
     text-decoration: none;
     transition: color .2s;
@@ -460,7 +460,7 @@ h1 {
 }
 
 .resultado-data {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     color: var(--cor-texto);
 }
 
@@ -473,7 +473,7 @@ h1 {
 }
 
 .resultado-status {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     font-weight: 500;
 }
 
@@ -486,7 +486,7 @@ h1 {
 }
 
 .resultado-mes {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     color: var(--cor-texto);
     margin-top: -0.5rem;
@@ -510,7 +510,7 @@ h1 {
     padding: 1rem;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    font-size: 0.95rem;
+    font-size: 1.0rem;
     line-height: 1.6;
     color: #bbdefb;
     border-left: 3px solid var(--cor-loteria-display);
@@ -599,7 +599,7 @@ h1 {
 }
 
 .lottery-card .card-header span {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     color: var(--cor-texto);
 }
 
@@ -624,7 +624,7 @@ h1 {
 
 .lottery-card .card-footer p {
     margin: 8px 0;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .lottery-card .status-acumulou {
@@ -712,7 +712,7 @@ h1 {
     color: #bbdefb;
     font-style: italic;
     margin-top: 0.5rem;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     text-align: left !important;
 }
 
@@ -722,7 +722,7 @@ h1 {
 
 .artigo-blog .fa-chevron-down,
 .artigo-blog .fa-chevron-up {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin-left: 10px;
     color: var(--cor-dourado);
 }
@@ -746,7 +746,7 @@ h1 {
     padding: 8px 16px;
     border-radius: 25px;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 500;
     transition: all 0.3s ease;
     color: white;
@@ -851,7 +851,7 @@ h1 {
     }
 
     .artigo-blog p {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         text-align: left !important;
     }
 
@@ -862,16 +862,16 @@ h1 {
     }
 
     .partner-title {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .partner-text {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     .cta-gerador {
         padding: 0.8rem 1.5rem;
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     .share-container {
@@ -880,7 +880,7 @@ h1 {
 
     .share-btn {
         padding: 6px 12px;
-        font-size: 0.9rem;
+        font-size: 1.2rem;
     }
 
     /* Ajustes específicos para Home */
@@ -912,7 +912,7 @@ h1 {
     }
 
     .subtitulo {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .container {
@@ -941,7 +941,7 @@ h1 {
 
     .partner-cta-button {
         padding: 10px 20px;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .share-container {
@@ -1020,7 +1020,7 @@ h1 {
     display: block;
     text-align: center;
     margin-bottom: 1.5rem;
-    font-size: 0.95rem;
+    font-size: 1.0rem;
     color: #64b5f6; /* Azul médio */
     text-decoration: none;
     transition: color .2s, transform .2s;
@@ -1068,7 +1068,7 @@ h1 {
     }
 
     .voltar-topo-footer {
-        font-size: 0.95rem;
+        font-size: 1.0rem;
         margin-bottom: 1rem;
     }
 
@@ -1085,7 +1085,7 @@ h1 {
     }
 
     .footer-social-title {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         margin-bottom: 1rem;
     }
 
@@ -1099,7 +1099,7 @@ h1 {
     }
 
     .voltar-topo-footer {
-        font-size: 0.95rem;
+        font-size: 1.0rem;
         margin-bottom: 0.8rem;
     }
 
