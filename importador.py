@@ -275,8 +275,16 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
             logger.warning(f"Campo 'data' ausente para o concurso {concurso}. Pulando registro.")
             return None
         
-        # Processa as dezenas e a data
-        dezenas_str = " ".join(sorted(map(str, dezenas_lista)))
+        # CORREÇÃO: Manter a ordem original para Dupla Sena, ordenar para outras loterias
+        if nome_loteria == 'duplasena':
+            # Para Dupla Sena: manter a ordem original do sorteio
+            dezenas_str = " ".join(map(str, dezenas_lista))
+            logger.info(f"📋 Dupla Sena - Mantendo ordem original: {dezenas_str}")
+        else:
+            # Para outras loterias: ordenar numericamente (comportamento anterior)
+            dezenas_str = " ".join(sorted(map(str, dezenas_lista), key=int))
+            logger.info(f"📋 {nome_loteria} - Dezenas ordenadas: {dezenas_str}")
+        
         data_sorteio = processar_data(data_str)
         
         if not data_sorteio:
@@ -305,6 +313,10 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
             'mes_sorte': mes_sorte,
             'valor_acumulado': valor_acumulado
         }
+        
+    except Exception as e:
+        logger.error(f"❌ Erro ao extrair dados do concurso {dados_api.get('concurso', 'N/A')}: {e}. Dados brutos: {dados_api}")
+        return None
         
     except Exception as e:
         logger.error(f"❌ Erro ao extrair dados do concurso {dados_api.get('concurso', 'N/A')}: {e}. Dados brutos: {dados_api}")
