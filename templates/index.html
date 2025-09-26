@@ -43,7 +43,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
         <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
-        <link rel="stylesheet" href="static/css/styles.min.css">
+        <link rel="stylesheet" href="static/css/styles.css">
         
     </head>
     <body onload="mudarLoteria('megasena')">
@@ -55,7 +55,7 @@
                     <img src="/static/images/logotipo.webp" type="image/webp" alt="Logotipo Sorte Analisada" class="imagem-ouro" width="128" height="131" loading="lazy" fetchpriority="high">
                     <h1>Sorte Analisada</h1>
                     <br>  
-                    <p class="subtitulo">Acredite na sua sorte!</p>
+                    <p class="subtitulo">Gerador de números para as Loterias</p>
                     <br> 
                 </header>
 
@@ -70,7 +70,8 @@
                     <a href="#jogorresponsavel">Jogo Responsável</a>
                     <a href="#politica">Privacidade</a>
                     <a href="#termos">Termos</a>
-                    <a href="/blog">Blog Sorte Analisada</a> 
+                    <a href="/blog">Blog</a>
+                    <a href="/simulador">Simulador</a> 
                 </nav>
                 
                 <section class="secao-controles">
@@ -81,6 +82,8 @@
                             <option value="quina">Quina</option>
                             <option value="lotofacil">Lotofácil</option>
                             <option value="diadesorte">Dia de Sorte</option>
+                            <option value="duplasena">Dupla Sena</option>
+                            <option value="lotomania">Lotomania</option>
                         </select>
                     </div>
                     <div class="controle-item">
@@ -100,14 +103,13 @@
                     <div class="controle-item">
                         <label for="estrategia-select">Estratégia:</label>
                         <select id="estrategia-select" class="seletor-custom" onchange="handleEstrategiaChange()">
-                            <option value="geral">Frequência Geral</option>
-                            <option value="quentes">Dezenas Quentes</option>
                             <option value="mistas">Dezenas Mistas</option>
+                            <option value="quentes">Dezenas Quentes</option>
                             <option value="frias">Dezenas Frias</option>
+                            <option value="geral">Frequência Geral</option>
                             <option value="juntoemisturado">Juntos e Misturados</option>
                             <option value="aleatorio">Aleatório (Surpresinha)</option>
-                            <option value="montecarlo">Simulação Monte Carlo</option>
-                            <option value="sorteanalisadapremium">Sorte Analisada 🎯</option>
+                            <option value="montecarlo">Simulação Monte Carlo 🎯</option>
                         </select>
                     </div>
                 </section>
@@ -144,23 +146,21 @@
 
                 <section id="sobre-filtros" class="footer-section">
                     <h2>Entenda Nossos Métodos</h2>
+                    <h3>Com a Estratégia: Dezenas Mistas, Quentes e Frias</h3>
+                    <p>Esta estratégia foca apenas nos resultados mais recentes (últimos 100 concursos). Você pode escolher entre:<br>
+                    <strong>&bull; Dezenas "Mistas":</strong> O equilíbrio perfeito. O sistema seleciona metade das dezenas do grupo das "Quentes" e a outra metade do grupo das "Frias". Ideal para quem busca uma sugestão balanceada, combinando tendências com números "atrasados".<br>
+                    <strong>&bull; Dezenas "Quentes":</strong> O sistema prioriza os números que estão saindo com alta frequência recentemente. A ideia é "seguir a tendência recente" e ter uma sugestão do que está em alta.<br>
+                    <strong>&bull; Dezenas "Frias":</strong> O sistema dá preferência aos números que não são sorteados há muito tempo. A sugestão aqui é que eles estão "atrasados" e uma hora terão que sair.</p>
                     <h3>Com a Estratégia: Frequência Geral</h3>
                     <p>Nosso sistema analisa todo o histórico de resultados da loteria selecionada. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, sendo priorizados na seleção para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm uma tendência histórica a aparecer.</p>
-                    <h3>Com a Estratégia: Dezenas Quentes, Mistas e Frias</h3>
-                    <p>Esta estratégia foca apenas nos resultados mais recentes (últimos 100 concursos). Você pode escolher entre:<br>
-                    <strong>&bull; Dezenas "Quentes":</strong> O sistema prioriza os números que estão saindo com alta frequência recentemente. A ideia é "seguir a tendência recente" e ter uma sugestão do que está em alta.<br>
-                    <strong>&bull; Dezenas "Mistas":</strong> O equilíbrio perfeito. O sistema seleciona metade das dezenas do grupo das "Quentes" e a outra metade do grupo das "Frias". Ideal para quem busca uma sugestão balanceada, combinando tendências com números "atrasados".<br>
-                    <strong>&bull; Dezenas "Frias":</strong> O sistema dá preferência aos números que não são sorteados há muito tempo. A sugestão aqui é que eles estão "atrasados" e uma hora terão que sair.</p>
                     <h3>Com a Estratégia: Junto e Misturado</h3>
                     <p>Esta estratégia é para quem não quer deixar nada de fora! Ela combina o melhor da análise de longo prazo com a dinâmica dos sorteios mais recentes. Nosso sistema calcula a frequência de cada dezena considerando **todo o histórico** de resultados da loteria e também foca nos **últimos 100 concursos**. Ao "misturar" esses dois universos, a estratégia "Junto e Misturado" gera um palpite que reflete tanto a consistência histórica quanto as tendências mais quentes do momento, oferecendo uma sugestão equilibrada e completa.</p>
                     <h3>Com a Estratégia: Aleatório (Surpresinha)</h3>
                     <p>A geração é 100% aleatória. Cada número, dentro do universo da loteria escolhida, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
                     <h3>Com o seu Número da Sorte (Jogo Âncora)</h3>
                     <p>Todo mundo tem um número especial! Use-o para "ancorar" o seu jogo. Ao inseri-lo, nosso sistema o mantém fixo e gera as dezenas restantes de forma inteligente para completar seu palpite. É a maneira perfeita de combinar sua intuição com a análise do nosso sistema.</p>
-                    <h3>Com a Estratégia: Simulação Monte Carlo</h3>
+                    <h3>Com a Estratégia: Simulação Monte Carlo 🎯</h3>
                     <p>Imagine realizar milhares de sorteios em segundos para ver quais números se destacam. É isso que a Simulação Monte Carlo faz. Usando processamento computacional, ela analisa probabilidades em larga escala para gerar um palpite único e sofisticado, ideal para quem busca uma sugestão diferenciada e com análise profunda.</p>
-                    <h3>Com a Estratégia: Sorte Analisada 🎯 </h3>
-                    <p>Nossa estratégia mais avançada. Ela não olha apenas para os números mais sorteados, mas para o "DNA de um bilhete vencedor". Analisamos o equilíbrio entre dezenas pares e ímpares, a soma total dos números e sua distribuição pelo volante em todo o histórico de resultados. Com base nesse perfil, geramos centenas de jogos candidatos, filtramos todos que já foram sorteados, e pontuamos os restantes para encontrar o palpite único que seja estatisticamente forte e estruturalmente balanceado, oferecendo uma sugestão inédita e inteligente.</p>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
@@ -175,6 +175,8 @@
                             <option value="quina">Quina</option>
                             <option value="lotofacil">Lotofácil</option>
                             <option value="diadesorte">Dia de Sorte</option>
+                            <option value="duplasena">Dupla Sena</option>
+                            <option value="lotomania">Lotomania</option>
                         </select>
                     </div>
                     <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
@@ -185,7 +187,7 @@
                 </section>
 
                 <section id="link" class="footer-section">
-                    <h2>Conheça o Blog Sorte Analisada</h2>
+                    <h2>Conheça o nosso Blog</h2>
                     <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; text-align: center;">
                         <h3 style="color: var(--cor-dourado); margin-bottom: 0.5rem;">📚 Blog Sorte Analisada</h3>
                         <p style="font-size: 1rem; line-height: 1.5; margin-bottom: 1rem;">Descubra curiosidades fascinantes sobre loterias, desde a matemática por trás dos números até histórias incríveis de ganhadores.</p>
@@ -230,9 +232,60 @@
                 </section>
 
                 <section id="jogorresponsavel" class="footer-section">
-                    <h2>Nosso Compromisso com o Jogo Responsável</h2>
-                    <p>Apostar deve ser uma fonte de <strong>diversão</strong>, não uma necessidade. E ela é destinada somente a maiores de <strong>18 anos</strong>. Encare como lazer, defina limites claros de gastos e entenda que as probabilidades de ganho são remotas. A maior vitória é jogar com <strong>consciência e controle</strong>. Se o jogo deixar de ser divertido, não hesite em procurar ajuda.</p>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+                    <h2>🛡️ Jogo Responsável - Nossa Prioridade</h2>
+                    
+                    <div style="background: rgba(255,193,7,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid #ffc107;">
+                        <h3>⚠️ IMPORTANTE: Apenas para maiores de 18 anos</h3>
+                        <p>Este site é destinado exclusivamente a pessoas <strong>maiores de 18 anos</strong>. Se você é menor de idade, não deve utilizar nossos serviços.</p>
+                    </div>
+
+                    <h3>🎯 Apostar com Consciência</h3>
+                    <p>Loterias devem ser uma fonte de <strong>diversão e entretenimento</strong>, nunca uma necessidade ou solução para problemas financeiros. Estabeleça limites claros de gastos e respeite-os sempre.</p>
+
+                    <h3>📊 Entenda as Probabilidades</h3>
+                    <p>As chances de ganhar em loterias são <strong>extremamente baixas</strong>. Por exemplo, na Mega-Sena, a probabilidade de acertar as 6 dezenas é de 1 em mais de 50 milhões. Jogue apenas o que pode perder sem comprometer seu orçamento.</p>
+
+                    <h3>🚨 Sinais de Alerta - Quando Parar</h3>
+                    <p>Procure ajuda imediatamente se você:</p>
+                    <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <li>Gasta mais do que pode pagar com apostas</li>
+                        <li>Mente sobre quanto gasta em jogos</li>
+                        <li>Sente necessidade de apostar valores cada vez maiores</li>
+                        <li>Fica ansioso ou irritado quando não pode jogar</li>
+                        <li>Usa apostas como escape para problemas</li>
+                        <li>Negligencia responsabilidades por causa do jogo</li>
+                    </ul>
+
+                    <h3>🆘 Onde Buscar Ajuda</h3>
+                    <div style="background: rgba(220,53,69,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <p><strong>📞 CVV - Centro de Valorização da Vida</strong><br>
+                        Telefone: <a href="tel:188" style="color: #ffc107;">188</a> (24h, gratuito)<br>
+                        Site: <a href="https://www.cvv.org.br" target="_blank" style="color: #ffc107;">www.cvv.org.br</a></p>
+                        
+                        <p><strong>🏥 AMBULIM - Hospital das Clínicas (SP)</strong><br>
+                        Programa de Transtornos do Impulso<br>
+                        Telefone: <a href="tel:1126617805" style="color: #ffc107;">(11) 2661-7805</a></p>
+                        
+                        <p><strong>🌐 Jogadores Anônimos</strong><br>
+                        Site: <a href="https://www.jogadoresanonimos.org.br" target="_blank" style="color: #ffc107;">www.jogadoresanonimos.org.br</a></p>
+                    </div>
+
+                    <h3>🎮 Dicas Para Jogar de Forma Responsável</h3>
+                    <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <li><strong>Defina um orçamento</strong> mensal para apostas e nunca ultrapasse</li>
+                        <li><strong>Nunca aposte dinheiro</strong> destinado a contas essenciais</li>
+                        <li><strong>Não persiga prejuízos</strong> apostando mais para "recuperar"</li>
+                        <li><strong>Faça pausas regulares</strong> - não aposte todos os sorteios</li>
+                        <li><strong>Veja como entretenimento</strong>, não como investimento</li>
+                        <li><strong>Compartilhe seus hábitos</strong> com familiares ou amigos</li>
+                    </ul>
+
+                    <div style="background: rgba(40,167,69,0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                        <h3>✅ Lembre-se:</h3>
+                        <p>A <strong>maior vitória é jogar com consciência e controle</strong>. Se o jogo deixar de ser divertido, é hora de parar e buscar ajuda. Sua saúde mental e financeira vale mais que qualquer prêmio.</p>
+                    </div>
+
+                    <a href="#" class="voltar-topo">Voltar ao Topo ↑</a>
                 </section>
 
                 <section id="politica" class="footer-section">
@@ -287,7 +340,7 @@
         </div> 
             
             <!-- Scripts com defer (carregam sem bloquear a renderização) -->
-            <script defer src="/static/js/scripts.min.js"></script>
+            <script defer src="/static/js/scripts.js"></script>
 
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
