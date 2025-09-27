@@ -14,6 +14,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sorte Analisada - Palpites Inteligentes para Loterias">
     <meta name="twitter:description" content="Transforme dados históricos em estratégias vencedoras. Simulador gratuito e análise estatística avançada.">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="canonical" href="https://sorteanalisada.com.br/landing">
     <link rel="icon" href="/static/images/logotipo.png" type="image/png">
     
@@ -107,7 +111,7 @@
         }
 
         .logo img {
-            width: 80px;
+            width: 88px;
             height: auto;
             filter: brightness(0) saturate(100%);
         }
@@ -384,19 +388,166 @@
             color: var(--primary-gold);
         }
 
-        /* Responsive */
+        /* === RESPONSIVIDADE MOBILE === */
         @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero {
+                min-height: 80vh;
+                padding: 40px 0;
+            }
+            
             .hero-content {
-                padding: 20px;
+                padding: 20px 0;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 15px;
+            }
+            
+            .logo img {
+                width: 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+                margin-bottom: 20px;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 30px;
+                line-height: 1.5;
+            }
+            
+            .cta-button {
+                padding: 16px 30px;
+                font-size: 1.1rem;
+                gap: 10px;
+            }
+            
+            .features {
+                padding: 60px 0;
+            }
+            
+            .features h2 {
+                font-size: 2rem;
+            }
+            
+            .features-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 40px;
+                padding: 0 10px;
             }
             
             .features-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 25px;
+                margin-top: 40px;
+            }
+            
+            .feature-card {
+                padding: 30px 20px;
+                margin: 0 10px;
+            }
+            
+            .feature-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .stats {
+                padding: 60px 0;
             }
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 0 10px;
+            }
+            
+            .stat-item {
+                padding: 25px 15px;
+            }
+            
+            .stat-number {
+                font-size: 2.2rem;
+            }
+            
+            .stat-label {
+                font-size: 1rem;
+            }
+            
+            .social-proof {
+                padding: 60px 0;
+            }
+            
+            .testimonial {
+                font-size: 1.1rem;
+                padding: 0 15px;
+            }
+            
+            .final-cta {
+                padding: 60px 0;
+            }
+            
+            .final-cta h2 {
+                font-size: 2rem;
+            }
+            
+            .final-cta p {
+                font-size: 1.1rem;
+                padding: 0 15px;
+            }
+            
+            .urgency-text {
+                margin: 20px 15px;
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            /* Esconder elementos flutuantes em mobile */
+            .floating-element {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .feature-card {
+                margin: 0 5px;
+                padding: 25px 15px;
             }
         }
 
@@ -427,6 +578,27 @@
             left: 5%;
             animation-delay: 4s;
         }
+
+        /* Otimizações de performance mobile */
+        @media (max-width: 768px) {
+            .hero::before {
+                animation: none; /* Remove animação pesada em mobile */
+            }
+            
+            .cta-button {
+                animation: none; /* Remove animação do botão */
+            }
+            
+            /* Melhora a experiência touch */
+            .feature-card, .stat-item {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            /* Previne zoom em inputs */
+            input, select, textarea {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -443,10 +615,11 @@
                     <img src="/static/images/logotipo.webp" alt="Logotipo Sorte Analisada" loading="lazy">
                 </div>
                 <h1>Sorte Analisada</h1>
-                <p class="hero-subtitle">Pare de Apostar no Escuro!</p>
+                <p class="hero-subtitle">Transforme Dados de Loterias em Conhecimento!</p>
                 <p class="hero-description">
-                    Transforme dados históricos em estratégias inteligentes. Use análise estatística avançada 
-                    para gerar palpites inteligentes na Mega-Sena, Quina, Lotofácil e Dia de Sorte.
+                    Ferramenta avançada de análise estatística para entusiastas de loterias. 
+                    Simule jogos, analise padrões históricos e explore diferentes estratégias 
+                    de forma 100% gratuita e educativa.
                 </p>
                 <a href="/" class="cta-button">
                     <i class="fas fa-rocket"></i>
@@ -459,9 +632,9 @@
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2>Por Que Escolher o Sorte Analisada?</h2>
+            <h2>Ferramentas de Análise Estatística para Loterias</h2>
             <p class="features-subtitle">
-                Descubra as ferramentas que fazem a diferença na sua estratégia de apostas
+                Recursos avançados para estudar padrões e probabilidades das loterias brasileiras
             </p>
             
             <div class="features-grid">
@@ -469,54 +642,54 @@
                     <div class="feature-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Análise Inteligente</h3>
-                    <p>Algoritmos avançados analisam padrões históricos, números quentes e frios, 
-                    distribuição de pares/ímpares e muito mais.</p>
+                    <h3>Análise Estatística</h3>
+                    <p>Estude padrões históricos, frequência de números, distribuição de pares/ímpares 
+                    e outras métricas para análise educativa.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-dice"></i>
                     </div>
-                    <h3>6 Estratégias Diferentes</h3>
-                    <p>Dezenas Mistas, Quentes, Frias, Monte Carlo e outras estratégias 
-                    baseadas em análise estatística profunda.</p>
+                    <h3>Múltiplas Abordagens</h3>
+                    <p>Explore diferentes métodos de análise: números frequentes, ausentes, 
+                    Monte Carlo e outras estratégias estatísticas.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>100% Gratuito</h3>
-                    <p>Acesso completo a todas as funcionalidades sem custo algum. 
-                    Gere quantos palpites quiser, quando quiser.</p>
-                </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-chart-bar"></i>
                     </div>
-                    <h3>Simulador Avançado</h3>
-                    <p>Teste seus números contra todos os concursos históricos. 
-                    Veja quantos acertos você teria no passado.</p>
+                    <h3>Simulação Realista</h3>
+                    <p>Teste hipóteses contra dados históricos reais. Entenda como diferentes 
+                    abordagens performaram no passado.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-cog"></i>
-                    </div>
-                    <h3>Sistema de Fechamento</h3>
-                    <p>Selecione seus números favoritos e receba até 20 jogos otimizados 
-                    para maximizar suas estratégias.</p>
-                </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Jogo Responsável</h3>
-                    <p>Promovemos apostas conscientes com informações claras sobre 
-                    probabilidades e limites financeiros.</p>
+                    <h3>Jogo Consciente</h3>
+                    <p>Plataforma educativa que promove o entendimento sobre probabilidades 
+                    e a importância do jogo responsável.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>Gerador Inteligente</h3>
+                    <p>6 estratégias diferentes para gerar números: análise de frequência, Monte Carlo, 
+                    números quentes/frios e métodos aleatórios com base estatística.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Blog Educativo</h3>
+                    <p>Artigos sobre probabilidade, estatística e curiosidades das loterias. 
+                    Aprenda enquanto se diverte com conteúdo educativo de qualidade.</p>
                 </div>
             </div>
         </div>
@@ -529,15 +702,15 @@
             <div class="stats-grid">
                 <div class="stat-item">
                     <div class="stat-number">6</div>
-                    <div class="stat-label">Loterias Cobertas</div>
+                    <div class="stat-label">Loterias Analisadas</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">1000+</div>
-                    <div class="stat-label">Concursos Analisados</div>
+                    <div class="stat-label">Concursos Estudos</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">100%</div>
-                    <div class="stat-label">Gratuito</div>
+                    <div class="stat-label">Educativo</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">24/7</div>
@@ -552,34 +725,55 @@
         <div class="container">
             <h2>O Que Nossos Usuários Dizem</h2>
             <div class="testimonial">
-                "Nunca pensei que matemática pudesse ser tão útil nas loterias. 
-                Os palpites são muito mais estratégicos do que eu fazia antes!"
-            </div>
-            <div class="testimonial-author">- Usuário verificado do Sorte Analisada</div>
+            "Excelente ferramenta para entender melhor as probabilidades das loterias. 
+            A análise estatística ajuda a ter uma visão mais educada sobre os jogos."
+        </div>
+        <div class="testimonial-author">- Usuário do Sorte Analisada</div>
         </div>
     </section>
 
     <!-- Final CTA -->
     <section class="final-cta">
         <div class="container">
-            <h2>Sua Estratégia Vencedora Começa Aqui</h2>
+            <h2>Comece Sua Análise Hoje</h2>
             <p>
-                Junte-se a milhares de pessoas que já descobriram o poder da análise estatística. 
-                Seus próximos palpites podem ser os mais inteligentes que você já fez.
+                Ferramenta completa para estudar probabilidades e padrões das loterias. 
+                Totalmente gratuita e focada no aspecto educativo.
             </p>
-            
+
             <div class="urgency-text">
-                ⚡ Plataforma 100% gratuita e sem limitações ⚡
+                📊 Plataforma 100% educativa e sem custos 📊
             </div>
-            
+
             <a href="/" class="cta-button">
-                <i class="fas fa-play"></i>
-                Começar Agora - É Grátis!
+                <i class="fas fa-chart-line"></i>
+                Explorar Ferramentas
             </a>
-            
-            <p style="margin-top: 30px; color: var(--text-gray); font-size: 0.9rem;">
-                ⚠️ Lembre-se: Jogue com responsabilidade. Loterias são jogos de azar para maiores de 18 anos.
+            <br><br>
+            <p style="margin-top: 30px; color: var(--text-gray); font-size: 0.9rem; line-height: 1.4;">
+                ⚠️ Loterias são jogos de azar para maiores de 18 anos. 
+                Esta é uma ferramenta educativa que não garante resultados. 
+                Jogue com responsabilidade e dentro de seus limites.
             </p>
+
+            <footer style="
+                background: rgba(0, 0, 0, 0.3);
+                border-top: 1px solid var(--primary-gold);
+                padding: 2rem 0;
+                text-align: center;
+                margin-top: 3rem;
+            ">
+                <div style="max-width: 500px; margin: 0 auto;">
+                    <p style="color: var(--text-gray); font-size: 0.9rem; line-height: 1.5;">
+                        <strong style="color: var(--primary-gold);">Sorte Analisada</strong> : 
+                        gerador de números, curiosidades e estatísticas para as Loterias brasileiras.
+                    </p>
+                    <a href="https://sorteanalisada.com.br" 
+                    style="color: var(--primary-gold); text-decoration: none; font-weight: 600;">
+                        🔗 Acesse o Sorte Analisada
+                    </a>
+                </div>
+            </footer>
         </div>
     </section>
 
@@ -635,7 +829,7 @@
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const subtitle = document.querySelector('.hero-subtitle');
-                typeWriter(subtitle, 'Pare de Apostar no Escuro!', 80);
+                typeWriter(subtitle, 'Transforme Dados de Loterias em Conhecimento!', 80);
             }, 1500);
         });
     </script>
