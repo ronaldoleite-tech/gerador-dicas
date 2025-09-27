@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorte Analisada - Gerador Inteligente de Palpites para Loterias | Análise Estatística Grátis</title>
+    <meta name="description" content="🎯 Gere palpites inteligentes para Mega-Sena, Quina, Lotofácil e Dia de Sorte com análise estatística. Simulador gratuito, 6 estratégias diferentes e sistema de fechamento. Transforme dados em estratégia!">
+    <meta name="keywords" content="palpites loteria, mega-sena, quina, lotofácil, dia de sorte, análise estatística, simulador loteria, números quentes frios, fechamento loteria, estratégia apostas">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Sorte Analisada - Gerador Inteligente de Palpites para Loterias">
+    <meta property="og:description" content="Pare de apostar no escuro! Use análise estatística para gerar palpites inteligentes. 100% gratuito com simulador e 6 estratégias diferentes.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sorteanalisada.com.br/landing">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sorte Analisada - Palpites Inteligentes para Loterias">
+    <meta name="twitter:description" content="Transforme dados históricos em estratégias vencedoras. Simulador gratuito e análise estatística avançada.">
+    <link rel="canonical" href="https://sorteanalisada.com.br/landing">
+    <link rel="icon" href="/static/images/logotipo.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gold: #FFD700;
+            --gold-hover: #FFC107;
+            --dark-blue: #0A1628;
+            --light-blue: #1E3A8A;
+            --accent-blue: #3B82F6;
+            --text-light: #E3F2FD;
+            --text-gray: #94A3B8;
+            --success-green: #10B981;
+            --gradient-primary: linear-gradient(135deg, #0A1628 0%, #1E3A8A 50%, #3B82F6 100%);
+            --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--gradient-primary);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23FFD700" opacity="0.3"><animate attributeName="opacity" dur="2s" values="0.3;1;0.3" repeatCount="indefinite"/></circle><circle cx="80" cy="30" r="1.5" fill="%23FFD700" opacity="0.4"><animate attributeName="opacity" dur="3s" values="0.4;1;0.4" repeatCount="indefinite"/></circle><circle cx="30" cy="70" r="1" fill="%23FFD700" opacity="0.5"><animate attributeName="opacity" dur="2.5s" values="0.5;1;0.5" repeatCount="indefinite"/></circle><circle cx="70" cy="80" r="1.8" fill="%23FFD700" opacity="0.3"><animate attributeName="opacity" dur="4s" values="0.3;1;0.3" repeatCount="indefinite"/></circle></svg>') repeat;
+            animation: float 20s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+
+        .hero-content {
+            z-index: 1;
+            position: relative;
+            max-width: 800px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 80px;
+            height: auto;
+            filter: brightness(0) saturate(100%);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5); }
+            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3); }
+        }
+
+        .logo i {
+            font-size: 3rem;
+            color: var(--dark-blue);
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInDown 1s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--gradient-gold);
+            color: var(--dark-blue);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            animation: bounce 2s infinite 2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-gold);
+        }
+
+        .features-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--dark-blue);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-gold);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            padding: 80px 0;
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .testimonial {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .testimonial-author {
+            color: var(--primary-gold);
+            font-weight: 600;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: 100px 0;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-gold);
+        }
+
+        .final-cta p {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .urgency-text {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--primary-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            font-weight: 600;
+            color: var(--primary-gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Floating elements */
+        .floating-element {
+            position: fixed;
+            font-size: 2rem;
+            color: var(--primary-gold);
+            opacity: 0.3;
+            pointer-events: none;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Elements -->
+    <div class="floating-element">🎯</div>
+    <div class="floating-element">📊</div>
+    <div class="floating-element">🍀</div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="logo">
+                    <img src="/static/images/logotipo.webp" alt="Logotipo Sorte Analisada" loading="lazy">
+                </div>
+                <h1>Sorte Analisada</h1>
+                <p class="hero-subtitle">Pare de Apostar no Escuro!</p>
+                <p class="hero-description">
+                    Transforme dados históricos em estratégias inteligentes. Use análise estatística avançada 
+                    para gerar palpites inteligentes na Mega-Sena, Quina, Lotofácil e Dia de Sorte.
+                </p>
+                <a href="/" class="cta-button">
+                    <i class="fas fa-rocket"></i>
+                    Gerar Meus Palpites Agora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Por Que Escolher o Sorte Analisada?</h2>
+            <p class="features-subtitle">
+                Descubra as ferramentas que fazem a diferença na sua estratégia de apostas
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Análise Inteligente</h3>
+                    <p>Algoritmos avançados analisam padrões históricos, números quentes e frios, 
+                    distribuição de pares/ímpares e muito mais.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dice"></i>
+                    </div>
+                    <h3>6 Estratégias Diferentes</h3>
+                    <p>Dezenas Mistas, Quentes, Frias, Monte Carlo e outras estratégias 
+                    baseadas em análise estatística profunda.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>100% Gratuito</h3>
+                    <p>Acesso completo a todas as funcionalidades sem custo algum. 
+                    Gere quantos palpites quiser, quando quiser.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Simulador Avançado</h3>
+                    <p>Teste seus números contra todos os concursos históricos. 
+                    Veja quantos acertos você teria no passado.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3>Sistema de Fechamento</h3>
+                    <p>Selecione seus números favoritos e receba até 20 jogos otimizados 
+                    para maximizar suas chances.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Jogo Responsável</h3>
+                    <p>Promovemos apostas conscientes com informações claras sobre 
+                    probabilidades e limites financeiros.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <h2>Números que Impressionam</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Loterias Cobertas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Concursos Analisados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Gratuito</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Disponível</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <h2>O Que Nossos Usuários Dizem</h2>
+            <div class="testimonial">
+                "Nunca pensei que matemática pudesse ser tão útil nas loterias. 
+                Os palpites são muito mais estratégicos do que eu fazia antes!"
+            </div>
+            <div class="testimonial-author">- Usuário verificado do Sorte Analisada</div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Sua Estratégia Vencedora Começa Aqui</h2>
+            <p>
+                Junte-se a milhares de pessoas que já descobriram o poder da análise estatística. 
+                Seus próximos palpites podem ser os mais inteligentes que você já fez.
+            </p>
+            
+            <div class="urgency-text">
+                ⚡ Plataforma 100% gratuita e sem limitações ⚡
+            </div>
+            
+            <a href="/" class="cta-button">
+                <i class="fas fa-play"></i>
+                Começar Agora - É Grátis!
+            </a>
+            
+            <p style="margin-top: 30px; color: var(--text-gray); font-size: 0.9rem;">
+                ⚠️ Lembre-se: Jogue com responsabilidade. Loterias são jogos de azar para maiores de 18 anos.
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling para links âncora
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de entrada dos elementos ao fazer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplicar animação aos cards de features
+        document.querySelectorAll('.feature-card, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Efeito de digitação no título
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(timer);
+                }
+            }, speed);
+        }
+
+        // Aplicar efeito após carregamento da página
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const subtitle = document.querySelector('.hero-subtitle');
+                typeWriter(subtitle, 'Pare de Apostar no Escuro!', 80);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
