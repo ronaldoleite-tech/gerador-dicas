@@ -40,7 +40,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         
         <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
-        <link rel="stylesheet" href="static/css/styles.min.css">
+        <link rel="stylesheet" href="static/css/styles.css">
 
         <style>
             /* Variáveis de Tema */
@@ -629,9 +629,9 @@
 
             <nav class="nav-interna">
                 <a href="/">Sorte Analisada</a>
-                <a href="#simulador">Simulador</a>
-                <a href="#fechamento">Fechamento</a>
                 <a href="/blog">Blog</a>
+                <a href="#simulador">Simulador</a>
+                <a href="#fechamento">Fechamento</a>  
             </nav>
 
             <!-- Seção Simulador -->
@@ -725,12 +725,11 @@
 
             <div class="destaque-gerador">
                 <h2>🎯 Gere Seus Palpites Inteligentes!</h2>
-                <p>Não perca tempo! Use o gerador de palpites do <strong>Sorte Analisada</strong>. <br>Com análises estatísticas para Mega-Sena, Quina, Lotofácil e Dia de Sorte. Transforme suas apostas com estratégias baseadas em dados!</p>
+                <p>Não perca tempo! Use o gerador de palpites do <strong>Sorte Analisada</strong>. <br>Com análises estatísticas para a Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania. Transforme suas apostas com estratégias baseadas em dados!</p>
                 <a href="/" class="cta-gerador">
                     <i class="fa-solid fa-dice"></i> Sorte Analisada<br> Gere o seu Palpite Agora
                 </a>
             </div>
-
 
             <!-- Seção Explicação das Funcionalidades -->
             <section id="explicacao-funcionalidades" class="secao">
@@ -790,7 +789,7 @@
 
                 <!-- Por que 20 Jogos? -->
                 <div style="background: rgba(156, 39, 176, 0.1); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid #9C27B0;">
-                    <h3 style="color: #9C27B0; margin-bottom: 1rem;">❓ Por que Limitamos a 20 Jogos?</h3>
+                    <h3 style="color: #ecec0b; margin-bottom: 1rem;">❓ Por que Limitamos a 20 Jogos?</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                         <div style="text-align: center;">
                             <div style="font-size: 1.5rem; color: #FFD700;">💰</div>
@@ -817,7 +816,7 @@
 
                 <!-- Dicas de Uso -->
                 <div style="background: rgba(255, 193, 7, 0.1); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid #FFC107;">
-                    <h3 style="color: #FFC107; margin-bottom: 1rem;">💡 Dicas para Melhor Utilização</h3>
+                    <h3 style="color: #f8bb03; margin-bottom: 1rem;">💡 Dicas para Melhor Utilização</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
                         <div>
                             <strong style="color: #FFC107;">Para o Simulador:</strong>
@@ -871,13 +870,51 @@
                         </p>
                     </div>
                 </div>
-                <a href="#" class="voltar-topo">Voltar ao Topo ↑</a>
             </section>
+            
+            <section id="contato" style="margin-top: 2rem; padding: 2rem; background: rgba(0,0,0,0.15); border-radius: 12px; border-top: 1px solid var(--cor-divisoria-ouro);">
+                <h2>Contato</h2>
+                <p style="text-align: center;">Tem uma sugestão de tema ou quer colaborar com o nosso blog? Entre em contato conosco!</p>
+                <p style="font-size: 1.1rem; font-weight: bold; margin-top: 1rem; text-align: center;">
+                    <a href="mailto:ronaldoleite@sorteanalisada.com.br" title="Contato" style="color: var(--cor-dourado); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                        <i class="fa-solid fa-envelope"> Sorte Analisada</i>
+                    </a>
+                </p>
+            </section>
+
+            <!-- Compartilhamento geral --> 
+         <div class="share-container">
+                        Curtiu o Simulador e o Fechamento! Compartilhe: 
+                        <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharThreads(window.location.href)" class="share-btn threads">
+                            <i class="fa-brands fa-threads"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharInstagram(window.location.href)" class="share-btn instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharTikTok(window.location.href)" class="share-btn tiktok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="copiarLink(window.location.href)" class="share-btn copy-link">
+                           <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+                    <a href="#" class="voltar-topo">Voltar ao Topo ↑</a>
 
             <!-- footer esta na pasta statics/partials -->
             <div id="footer"></div>
             
         </div>
+
+        <script defer src="/static/js/scripts.min.js"></script>
 
         <script>
             // Configurações das loterias
@@ -1028,10 +1065,13 @@
                 atualizarContador(tipo);
                 atualizarBotoes(tipo);
                 
-                // Esconder resultados
-                document.getElementById(`resultado-${tipo}`).style.display = 'none';
+                // Esconder resultados - CORREÇÃO: IDs corretos
+                if (tipo === 'simulador') {
+                    document.getElementById('resultado-simulacao').style.display = 'none';
+                } else {
+                    document.getElementById('resultado-fechamento').style.display = 'none';
+                }
             }
-
             async function executarSimulacao() {
                 const loading = document.getElementById('loading-simulador');
                 const resultado = document.getElementById('resultado-simulacao');
