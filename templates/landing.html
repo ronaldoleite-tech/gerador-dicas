@@ -111,7 +111,7 @@
         }
 
         .logo img {
-            width: 60px;
+            width: 55px;
             height: auto;
             filter: brightness(0) saturate(100%);
         }
@@ -598,8 +598,75 @@
             input, select, textarea {
                 font-size: 16px;
             }
+
+            .faq-pergunta {
+                font-weight: bold;   /* negrito */
+                font-size: inherit;  /* usa o mesmo tamanho do texto normal */
+                margin: 0;           /* remove espaçamento extra dos headings */
+                display: block;      /* garante que se comporte como <p> */
+            }
+
         }
     </style>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Sorte Analisada",
+    "url": "https://sorteanalisada.com.br/",
+    "alternateName": "Gerador de Palpites e Estatísticas para Loterias",
+    "description": "O Sorte Analisada é uma ferramenta inteligente que gera palpites para Mega-Sena, Quina, Lotofácil, Lotomania, Dupla Sena e Dia de Sorte, combinando análise estatística com simulação.",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sorte Analisada",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://sorteanalisada.com.br/static/images/logo.png"
+        }
+    },
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://sorteanalisada.com.br/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+        "@type": "Question",
+        "name": "Como gerar palpites para a Mega-Sena grátis?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Você pode usar nosso gerador de palpites da Mega-Sena e receber combinações baseadas em estatísticas de sorteios anteriores."
+        }
+        },
+        {
+        "@type": "Question",
+        "name": "O simulador da Lotofácil realmente funciona?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. O simulador da Lotofácil utiliza dados reais de concursos anteriores para mostrar a frequência dos números e sugerir combinações mais consistentes."
+        }
+        },
+        {
+        "@type": "Question",
+        "name": "Posso usar o Sorte Analisada para a Quina?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Com certeza. Temos análises estatísticas da Quina e simuladores que mostram os números mais sorteados e padrões detectados nos concursos passados."
+        }
+        }
+    ]
+    }
+    </script>
+
+
 </head>
 <body>
     <!-- Floating Elements -->
@@ -612,9 +679,9 @@
         <div class="container">
             <div class="hero-content">
                 <div class="logo">
-                    <img src="/static/images/logo.webp" alt="Logo Sorte Analisada" loading="lazy">
+                    <img src="/static/images/logo.webp" alt="Sorte Analisada - Gerador de palpites inteligentes para loterias" loading="lazy">
                 </div>
-                <h1>Sorte Analisada</h1>
+                <h1>Sorte Analisada - Análise Estatística e Palpites Inteligentes para Loterias</h1>
                 <p class="hero-subtitle">Transforme Dados de Loterias em Conhecimento!</p>
                 <p class="hero-description">
                     Ferramenta avançada de análise estatística para entusiastas de loterias. 
@@ -723,14 +790,23 @@
     <!-- Social Proof -->
     <section class="social-proof">
         <div class="container">
-            <h2>O Que Nossos Usuários Dizem</h2>
+            <h2>Perguntas Frequentes</h2>
+            <br>
             <div class="testimonial">
-            "Excelente ferramenta para entender melhor as probabilidades das loterias. 
-            A análise estatística ajuda a ter uma visão mais educada sobre os jogos."
-        </div>
-        <div class="testimonial-author">- Usuário do Sorte Analisada</div>
+                <h3 class="faq-pergunta">Como gerar palpites para a Mega-Sena grátis?</h3>
+                <p>Você pode usar nosso gerador de palpites da Mega-Sena grátis e receber combinações baseadas em estatísticas de sorteios anteriores.</p>
+                <br>
+
+                <h3 class="faq-pergunta">O simulador da Lotofácil realmente funciona?</h3>
+                <p>Sim. O simulador da Lotofácil utiliza dados reais de concursos anteriores para mostrar a frequência dos números e sugerir combinações mais consistentes.</p>
+                <br>
+
+                <h3 class="faq-pergunta">Posso usar o Sorte Analisada para a Quina?</h3>
+                <p>Com certeza. Temos análises estatísticas da Quina e simuladores que mostram os números mais sorteados e padrões detectados nos concursos passados.</p>
+            </div>
         </div>
     </section>
+
 
     <!-- Final CTA -->
     <section class="final-cta">
@@ -765,15 +841,14 @@
             ">
                 <div style="max-width: 500px; margin: 0 auto;">
                     <p style="color: var(--text-gray); font-size: 1.2rem; line-height: 1.5;">
-                        <strong style="color: var(--primary-gold);">Sorte Analisada</strong>
-                        <br> 
-                        Gerador de números, curiosidades e estatísticas para as Loterias.
-                        <br><br>
+                        <a href="/" style="color: var(--cor-dourado); text-decoration: none;">Sorte Analisada: gerador de números, curiosidades e estatísticas para as Loterias.</a>
+                    <br>
                         <a href="https://sorteanalisada.com.br" 
                            style="color: var(--primary-gold); text-decoration: none; font-weight: 600;">
-                        🔗 Acesse o Sorte Analisada
+                        🔗 Acesse o site: https://sorteanalisada.com.br
                     </a>
                     <br><br>
+
                     <a href="/#sobre" style="color: var(--cor-dourado); text-decoration: none;">Sobre</a>
                     <br>
                     <a href="/#jogorresponsavel" style="color: var(--cor-dourado); text-decoration: none;">Jogo Responsável</a>
