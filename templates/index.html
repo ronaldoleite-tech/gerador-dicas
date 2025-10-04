@@ -71,8 +71,7 @@
         <!-- Tema e classificação -->
         <meta name="theme-color" content="#0d47a1">
         <meta name="rating" content="general">
-        <meta name="age-rating" content="18+">
-
+        
         <!-- Autor -->
         <meta name="author" content="Sorte Analisada">
 
@@ -167,10 +166,8 @@
         <link rel="stylesheet" href="static/css/styles.min.css">
         
     </head>
-    <body onload="mudarLoteria('megasena')">
-
+        
         <div class="container">
-
             <main>
                 <header id="gerador"> 
                     <img src="/static/images/logotipo.webp" alt="Sorte Analisada - Gerador de Números para Loterias" class="imagem-ouro" width="128" height="131" loading="eager" fetchpriority="high">
@@ -247,7 +244,8 @@
                  
                 <section id="area-resultados" aria-live="polite" aria-atomic="true" style="margin-top:1.5rem;"></section>
                 
-            </main>
+            
+
                 <section id="estatisticas" class="footer-section">
                 <h2>Estatísticas dos Sorteios</h2>
                 <p>Veja a frequência dos números sorteados da Loteria selecionada acima e descubra quais dezenas saem mais.</p>
@@ -320,12 +318,16 @@
                         <h3 style="color: var(--cor-dourado); margin-bottom: 0.5rem;">📚 Blog Sorte Analisada</h3>
                         <p style="font-size: 1rem; line-height: 1.5; margin-bottom: 1rem;">Descubra curiosidades fascinantes sobre loterias, desde a matemática por trás dos números até histórias incríveis de ganhadores.</p>
                         <p style="font-size: 0.9rem; color: #bbdefb;">Estratégias, probabilidades e entretenimento em um só lugar!</p>
-                        <a href="/blog" title="Artigos sobre loterias e probabilidade">Blog de Loterias</a> style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;"><i class="fa-solid fa-dice"></i> Explorar Blog Sorte Analisada</a>
+                         <a href="/blog" title="Artigos sobre loterias e probabilidade" style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;">
+                            <i class="fa-solid fa-dice"></i> Explorar Blog Sorte Analisada
+                        </a>
                         <br>
                         <h3 style="color: var(--cor-dourado); margin-bottom: 0.5rem;">⚡ Analisador de Loterias</h3>
                         <p style="font-size: 1rem; line-height: 1.5; margin-bottom: 1rem;">Analise e organize seus jogos da Mega-Sena, Quina, Lotofácil e outras loterias. Veja o desempenho dos seus números ao longo do tempo!</p>
                         <p style="font-size: 0.9rem; color: #bbdefb;">Fechamento inteligente + análise histórica = estratégia completa!</p>
-                        <a href="/simulador" title="Analise seus números nos sorteios passados">Analisador de Resultados Históricos</a> style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;"><i class="fa-solid fa-dice"></i> Experimentar o Simulador</a>
+                        <a href="/simulador" title="Analise seus números nos sorteios passados" style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;">
+                        <i class="fa-solid fa-dice"></i> Experimentar o Simulador
+                        </a>
                     </div>
 
                         <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
@@ -406,6 +408,7 @@
                     </div>
                 </section>
 
+
                  <!-- Compartilhamento geral -->
                  <div class="share-container">
                         Compartilhe o Sorte Analisada: 
@@ -432,7 +435,8 @@
                         </a>
                  </div>
                  <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-            
+            </main>
+
                 <!-- footer esta na pasta statics/partials -->
                 <div id="footer"></div> 
             
@@ -440,8 +444,6 @@
             
                 <!-- Scripts com defer (carregam sem bloquear a renderização) -->
                 <script defer src="/static/js/scripts.min.js"></script>
-
-                <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
                 <script>
@@ -476,5 +478,10 @@
                 });
                 </script>
 
+                 <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        mudarLoteria('megasena');
+                    });
+                </script>
     </body>
 </html>
