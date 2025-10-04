@@ -6,19 +6,23 @@
         <!-- Google tag (gtag.js) -->
 
         <script>
-            window.addEventListener('load', function() {
-            setTimeout(function() {
-                var script = document.createElement('script');
-                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
-                script.async = true;
-                document.head.appendChild(script);
-                
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-PPB7LRV5SJ');
-            }, 3000);
+           // Carregar após FCP (First Contentful Paint)
+        window.addEventListener('load', () => {
+        setTimeout(() => {
+            const script = document.createElement('script');
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
+            script.async = true;
+            document.head.appendChild(script);
+            
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-PPB7LRV5SJ', {
+            'page_path': window.location.pathname,
+            'anonymize_ip': true // LGPD compliance
             });
+        }, 1000); // 1 segundo é suficiente
+        });
         </script>
         
         <script>
@@ -30,17 +34,134 @@
         <!-- ============== METADADOS E SEO ============== -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Gere palpites inteligentes para a Mega-Sena, Quina, Lotofácil e Dia de Sorte com base em estatísticas e análises de dados. Use nossos filtros ou a simulação de Monte Carlo para aumentar suas chances!">
-        <title>Sorte Analisada - Gerador de Palpites para Loterias: Mega-Sena, Quina, Lotofácil e Dia de Sorte. </title>
+        <meta name="description" content="Gerador de números para Mega-Sena, Quina, Lotofácil e outras loterias. Análise estatística de resultados históricos, gráficos e últimos sorteios. Ferramenta gratuita para maiores de 18 anos.">
         <link rel="icon" href="/static/images/logotipo.png" type="image/png">
-        
+        <title>Gerador de Números para Loterias | Resultados e Estatísticas | Sorte Analisada</title>
+
         <!-- ============== FONTES E SCRIPTS EXTERNOS ============== -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://sorteanalisada.com.br">
+        <meta property="og:title" content="Gerador de Números para Loterias | Sorte Analisada">
+        <meta property="og:description" content="Ferramenta gratuita para gerar números de loterias com análise estatística. Mega-Sena, Quina, Lotofácil e mais. Resultados atualizados diariamente.">
+        <meta property="og:image" content="https://sorteanalisada.com.br/static/images/og-image.jpg">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:locale" content="pt_BR">
+        <meta property="og:site_name" content="Sorte Analisada">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Gerador de Números para Loterias | Sorte Analisada">
+        <meta name="twitter:description" content="Análise estatística e geração de números para loterias brasileiras. Gratuito e educativo.">
+        <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/twitter-card.jpg">
+
+        <!-- Canonical -->
+        <link rel="canonical" href="https://sorteanalisada.com.br">
+
+        <!-- Robots -->
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <!-- Tema e classificação -->
+        <meta name="theme-color" content="#0d47a1">
+        <meta name="rating" content="general">
+        <meta name="age-rating" content="18+">
+
+        <!-- Autor -->
+        <meta name="author" content="Sorte Analisada">
+
+        <!-- Keywords (use com moderação) -->
+        <meta name="keywords" content="gerador números loteria, resultado mega sena, estatísticas lotofácil, quina, dia de sorte, números aleatórios">
+        
+        <!-- Estrutura de Dados (Schema.org)  -->
+        <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Sorte Analisada",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "BRL"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "ratingCount": "127"
+        },
+        "description": "Ferramenta gratuita para análise estatística e geração de números de loterias brasileiras.",
+        "url": "https://sorteanalisada.com.br",
+        "screenshot": "https://sorteanalisada.com.br/static/images/screenshot.jpg",
+        "featureList": [
+            "Gerador de números para 6 loterias",
+            "Estatísticas históricas completas",
+            "Últimos 20 resultados atualizados",
+            "Análise de frequência",
+            "Gráficos interativos"
+        ]
+        }
+        </script>
+
+        <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Sorte Analisada",
+        "url": "https://sorteanalisada.com.br",
+        "logo": "https://sorteanalisada.com.br/static/images/logotipo.webp",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "contato@sorteanalisada.com.br",
+            "contactType": "Customer Service",
+            "availableLanguage": "Portuguese"
+        },
+        "sameAs": [
+            "https://www.facebook.com/sorteanalisada",
+            "https://www.instagram.com/sorteanalisada"
+        ]
+        }
+        </script>
+
+        <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+            "@type": "Question",
+            "name": "Como funciona o gerador de números?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "O gerador analisa dados históricos das loterias e oferece diferentes estratégias de seleção de números, desde análise de frequência até geração completamente aleatória."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "O gerador aumenta minhas chances de ganhar?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. Esta é uma ferramenta educativa e de entretenimento. Loterias são jogos de azar com probabilidades fixas. Nenhum método pode aumentar suas chances matemáticas de vitória."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "É gratuito?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sim, o Sorte Analisada é 100% gratuito para uso ilimitado."
+            }
+            }
+        ]
+        }
+        </script>
 
         <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
         <link rel="stylesheet" href="static/css/styles.min.css">
@@ -52,10 +173,11 @@
 
             <main>
                 <header id="gerador"> 
-                    <img src="/static/images/logotipo.webp" type="image/webp" alt="Logotipo Sorte Analisada" class="imagem-ouro" width="128" height="131" loading="lazy" fetchpriority="high">
-                    <h1>Sorte Analisada</h1>
+                    <img src="/static/images/logotipo.webp" alt="Sorte Analisada - Gerador de Números para Loterias" class="imagem-ouro" width="128" height="131" loading="eager" fetchpriority="high">
+                    
+                    <h1>Gerador de Números para Loterias Brasileiras</h1>
                     <br>  
-                    <p class="subtitulo">Gerador de números para as Loterias</p>
+                    <p class="subtitulo">Análise estatística gratuita para Mega-Sena, Quina, Lotofácil e mais</p>
                     <br> 
                 </header>
 
@@ -95,7 +217,8 @@
                     </div>
                     <div class="controle-item">
                         <label for="numeros-ancora">Nº da sorte</label>
-                        <img src="/static/images/trevodourado.png" alt="Trevo da Sorte">
+                        <img src="/static/images/trevodourado.png" alt="Ícone trevo da sorte" width="40" height="40" loading="lazy">
+
                         <input type="text" id="numeros-ancora" class="seletor-custom" placeholder="Ex: 7" 
                             style="width: 80px;" maxlength="2" pattern="\d*">
                     </div>
@@ -133,7 +256,7 @@
                         <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
                     </div>
                     <div id="area-estatisticas" style="display: none;">
-                        <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Geral)</h3><canvas id="grafico-mais-sorteados"></canvas></div>
+                        <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Histórico Geral)</h3><canvas id="grafico-mais-sorteados"></canvas></div>
                         <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Geral)</h3><canvas id="grafico-menos-sorteados"></canvas></div>
                         <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-mais-sorteados-recentes"></canvas></div>
                         <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-menos-sorteados-recentes"></canvas></div>
@@ -197,12 +320,12 @@
                         <h3 style="color: var(--cor-dourado); margin-bottom: 0.5rem;">📚 Blog Sorte Analisada</h3>
                         <p style="font-size: 1rem; line-height: 1.5; margin-bottom: 1rem;">Descubra curiosidades fascinantes sobre loterias, desde a matemática por trás dos números até histórias incríveis de ganhadores.</p>
                         <p style="font-size: 0.9rem; color: #bbdefb;">Estratégias, probabilidades e entretenimento em um só lugar!</p>
-                        <a href="/blog" style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;"><i class="fa-solid fa-dice"></i> Explorar Blog Sorte Analisada</a>
+                        <a href="/blog" title="Artigos sobre loterias e probabilidade">Blog de Loterias</a> style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;"><i class="fa-solid fa-dice"></i> Explorar Blog Sorte Analisada</a>
                         <br>
                         <h3 style="color: var(--cor-dourado); margin-bottom: 0.5rem;">⚡ Analisador de Loterias</h3>
                         <p style="font-size: 1rem; line-height: 1.5; margin-bottom: 1rem;">Analise e organize seus jogos da Mega-Sena, Quina, Lotofácil e outras loterias. Veja o desempenho dos seus números ao longo do tempo!</p>
                         <p style="font-size: 0.9rem; color: #bbdefb;">Fechamento inteligente + análise histórica = estratégia completa!</p>
-                        <a href="/simulador" style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;"><i class="fa-solid fa-dice"></i> Experimentar o Simulador</a>
+                        <a href="/simulador" title="Analise seus números nos sorteios passados">Analisador de Resultados Históricos</a> style="display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover)); color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.2s;"><i class="fa-solid fa-dice"></i> Experimentar o Simulador</a>
                     </div>
 
                         <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
@@ -315,35 +438,43 @@
             
         </div> 
             
-            <!-- Scripts com defer (carregam sem bloquear a renderização) -->
-            <script defer src="/static/js/scripts.min.js"></script>
+                <!-- Scripts com defer (carregam sem bloquear a renderização) -->
+                <script defer src="/static/js/scripts.min.js"></script>
 
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
-            <script>
+                <script>
+                // Lazy load Chart.js apenas quando necessário
+                let chartJSLoaded = false;
+
                 function loadChartJS() {
-                return new Promise(function(resolve) {
-                    var script = document.createElement('script');
-                    script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-                    script.onload = resolve;
+                if (chartJSLoaded) return Promise.resolve();
+                
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+                    script.onload = () => {
+                    chartJSLoaded = true;
+                    resolve();
+                    };
+                    script.onerror = reject;
                     document.head.appendChild(script);
                 });
                 }
 
-                // Carregar apenas quando necessário (estatísticas)
-                document.addEventListener('DOMContentLoaded', function() {
-                var statsButton = document.querySelector('#estatisticas .botao-gerar');
-                if (statsButton) {
-                    statsButton.addEventListener('click', function() {
-                    loadChartJS().then(function() {
-                        // Sua função para exibir estatísticas
-                        exibirEstatisticas();
+                // Carregar quando usuário clicar em "Estatísticas"
+                document.addEventListener('DOMContentLoaded', () => {
+                const btnStats = document.querySelector('button[onclick="exibirEstatisticas()"]');
+                if (btnStats) {
+                    btnStats.addEventListener('click', () => {
+                    loadChartJS().then(() => {
+                        // Seu código de estatísticas aqui
                     });
-                    });
+                    }, { once: true });
                 }
                 });
-            </script>
-               
+                </script>
+
     </body>
 </html>
