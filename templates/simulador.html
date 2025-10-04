@@ -5,10 +5,31 @@
         <!-- ============== METADADOS E SEO ============== -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Simule seus jogos nas loterias: Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania. Veja quantos acertos você teria nos últimos concursos!">
-        <meta name="keywords" content="simulador loterias, mega-sena, quina, lotofácil, fechamento loterias">
+        <meta name="description" content="Analise retrospectivamente seus números da loteria em todos os sorteios históricos e organize suas apostas. Ferramenta gratuita para Mega-Sena, Quina, Lotofácil e mais.">
+        <meta name="keywords" content="analisador loterias, organizador apostas, mega-sena, quina, lotofácil, análise histórica loteria, resultados loteria">
 
         <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://sorteanalisada.com.br/simulador">
+        <meta property="og:title" content="Analisador e Organizador de Loterias - Sorte Analisada">
+        <meta property="og:description" content="Analise seus números em sorteios históricos e organize suas apostas em Mega-Sena, Quina, Lotofácil e mais. Ferramenta gratuita de análise retrospectiva.">
+        <meta property="og:image" content="https://sorteanalisada.com.br/static/images/logotipo.jpg">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:locale" content="pt_BR">
+        <meta property="og:site_name" content="Sorte Analisada">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://sorteanalisada.com.br/simulador">
+        <meta name="twitter:title" content="Analisador e Organizador de Loterias - Sorte Analisada">
+        <meta name="twitter:description" content="Analise seus números em sorteios históricos e organize suas apostas em Mega-Sena, Quina, Lotofácil e mais.">
+        <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/twitter-card.jpg">
+
+        <!-- Canonical -->
+        <link rel="canonical" href="https://sorteanalisada.com.br/simulador">
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ"></script>
@@ -24,12 +45,12 @@
         {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Simulador de Loterias - Sorte Analisada",
-        "description": "Simule seus jogos nas principais loterias brasileiras"
+        "name": "Analisador de Loterias - Sorte Analisada",
+        "description": "Analise seus jogos nas principais loterias brasileiras"
         }
         </script>
         
-        <title>Simulador de Loterias - Sorte Analisada</title>
+        <title>Analisador e Organizador de Loterias | Sorte Analisada</title>
         <link rel="icon" href="/static/images/logotipo.png" type="image/png">
         
         <!-- Fontes e Scripts Externos -->
@@ -623,285 +644,283 @@
         <div class="container">
             <header>
                 <img src="/static/images/logotipo.webp" alt="Logotipo Sorte Analisada" class="imagem-ouro" width="128" height="131" loading="lazy">
-                <h1>Simulador Sorte Analisada</h1>
-                <p class="subtitulo">Teste seus números com base nos resultados históricos!</p>
+                <h1>Analisador - Sorte Analisada</h1>
+                <p class="subtitulo">Descubra quantos acertos seus números teriam tido nos sorteios passados!</p>
             </header>
 
-            <nav class="nav-interna">
-                <a href="/">Principal</a>
-                <a href="#simulador">Simulador</a>
-                <a href="#fechamento">Fechamento</a>
-                <a href="/blog#artigos">Artigos</a> 
-            </nav>
+                <nav class="nav-interna">
+                    <a href="/">Principal</a>
+                    <a href="#analisador">Analisador</a>
+                    <a href="#organizador">Organizador</a>
+                    <a href="/blog">Blog</a> 
+                </nav>
 
-            <!-- Seção Simulador -->
-            <section id="simulador" class="secao">
-                <h2>Simulador de Loterias</h2>
-                <p>Selecione sua loteria, escolha seus números e descubra quantos acertos você teria nos resultados anteriores!</p>
+                <!-- Seção Analisador -->
+                <section id="analisador" class="secao">
+                    <h2>Analisador de Resultados Históricos</h2>
+                    <p>Selecione sua loteria, escolha seus números e veja quantos acertos teriam ocorrido nos resultados anteriores!</p>
 
-                <div class="secao-controles">
-                    <div class="controle-item">
-                        <label for="loteria-simulador">Loteria:</label>
-                        <select id="loteria-simulador" class="seletor-custom">
-                            <option value="megasena">Mega-Sena</option>
-                            <option value="quina">Quina</option>
-                            <option value="lotofacil">Lotofácil</option>
-                            <option value="diadesorte">Dia de Sorte</option>
-                            <option value="duplasena">Dupla Sena</option>
-                            <option value="lotomania">Lotomania</option>
-                        </select>
+                    <div class="secao-controles">
+                        <div class="controle-item">
+                            <label for="loteria-simulador">Loteria:</label>
+                            <select id="loteria-simulador" class="seletor-custom">
+                                <option value="megasena">Mega-Sena</option>
+                                <option value="quina">Quina</option>
+                                <option value="lotofacil">Lotofácil</option>
+                                <option value="diadesorte">Dia de Sorte</option>
+                                <option value="duplasena">Dupla Sena</option>
+                                <option value="lotomania">Lotomania</option>
+                            </select>
+                        </div>
                     </div>
+
+                    <div class="contador-dezenas" id="contador-simulador">
+                        Selecione seus números: 0 de 6 escolhidos
+                    </div>
+
+                    <div id="grid-numeros-simulador" class="numero-grid">
+                        <!-- Números serão gerados dinamicamente -->
+                    </div>
+
+                    <div style="margin: 2rem 0;">
+                        <button id="btn-simular" class="botao-simular" disabled>
+                            <i class="fas fa-chart-bar"></i>
+                            Analisar Histórico
+                        </button>
+                        <button id="btn-limpar-simulador" class="botao-gerar">
+                            <i class="fas fa-eraser"></i>
+                            Limpar Seleção
+                        </button>
+                    </div>
+
+                    <div class="loading" id="loading-simulador">
+                        <div class="spinner"></div>
+                    </div>
+
+                    <div id="resultado-simulacao" style="display: none;"></div>
+                </section>
+
+                <!-- Seção Organizador -->
+                <section id="organizador" class="secao">
+                    <h2>Organizador de Jogos</h2>
+                    <p>Organize seus números favoritos em até 10 jogos diferentes para facilitar suas apostas!</p>
+
+                    <div class="secao-controles">
+                        <div class="controle-item">
+                            <label for="loteria-fechamento">Loteria:</label>
+                            <select id="loteria-fechamento" class="seletor-custom">
+                                <option value="megasena">Mega-Sena</option>
+                                <option value="quina">Quina</option>
+                                <option value="lotofacil">Lotofácil</option>
+                                <option value="diadesorte">Dia de Sorte</option>
+                                <option value="duplasena">Dupla Sena</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="contador-dezenas" id="contador-fechamento">
+                        Selecione seus números favoritos: 0 escolhidos
+                    </div>
+
+                    <div id="grid-numeros-fechamento" class="numero-grid">
+                        <!-- Números serão gerados dinamicamente -->
+                    </div>
+
+                    <div style="margin: 2rem 0;">
+                        <button id="btn-gerar-fechamento" class="botao-gerar-fechamento" disabled>
+                            <i class="fas fa-layer-group"></i>
+                            Organizar em 10 Jogos
+                        </button>
+                        <button id="btn-limpar-fechamento" class="botao-gerar">
+                            <i class="fas fa-eraser"></i>
+                            Limpar Seleção
+                        </button>
+                    </div>
+
+                    <div class="loading" id="loading-fechamento">
+                        <div class="spinner"></div>
+                    </div>
+
+                    <div id="resultado-fechamento" style="display: none;"></div>
+                </section>
+
+                <div class="destaque-gerador">
+                    <h2>🎲 Gere Suas Combinações!</h2>
+                    <p>Use o gerador de números do <strong>Sorte Analisada</strong> para criar combinações baseadas em dados históricos da Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania.</p>
+                    <a href="/" class="cta-gerador">
+                        <i class="fa-solid fa-dice"></i> Sorte Analisada<br> Gerar Números Agora
+                    </a>
                 </div>
 
-                <div class="contador-dezenas" id="contador-simulador">
-                    Selecione seus números: 0 de 6 escolhidos
-                </div>
+                <!-- Seção Explicação das Funcionalidades -->
+                <section id="explicacao-funcionalidades" class="secao">
+                    <h2>🎯 Como Funcionam Nossas Ferramentas</h2>
+                    <p>Entenda o que cada ferramenta faz:</p>
 
-                <div id="grid-numeros-simulador" class="numero-grid">
-                    <!-- Números serão gerados dinamicamente -->
-                </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                        
+                        <!-- Analisador -->
+                        <div class="card-resumo" style="border-top-color: #2196F3;">
+                            <h4 style="color: #2196F3; margin-bottom: 1rem;">📊 Analisador de Resultados</h4>
+                            <p style="text-align: left; font-size: 0.95rem; line-height: 1.4;">
+                                <strong>O que faz:</strong> Compara seus números com todos os sorteios históricos da loteria escolhida.<br><br>
+                                <strong>Como funciona:</strong> Verifica quantos números da sua seleção coincidiram com cada resultado passado.<br><br>
+                                <strong>Utilidade:</strong> Satisfaz a curiosidade sobre o desempenho retrospectivo de números específicos. Não prevê resultados futuros.
+                            </p>
+                        </div>
 
-                <div style="margin: 2rem 0;">
-                    <button id="btn-simular" class="botao-simular" disabled>
-                        <i class="fas fa-play"></i>
-                        Simular em Todos os Concursos
-                    </button>
-                    <button id="btn-limpar-simulador" class="botao-gerar">
-                        <i class="fas fa-eraser"></i>
-                        Limpar Seleção
-                    </button>
-                </div>
+                        <!-- Organizador -->
+                        <div class="card-resumo" style="border-top-color: #4CAF50;">
+                            <h4 style="color: #4CAF50; margin-bottom: 1rem;">🔢 Organizador de Jogos</h4>
+                            <p style="text-align: left; font-size: 0.95rem; line-height: 1.4;">
+                                <strong>O que faz:</strong> Distribui seus números favoritos em até 10 jogos diferentes.<br><br>
+                                <strong>Como funciona:</strong> Cria combinações variadas usando os números que você selecionou.<br><br>
+                                <strong>Utilidade:</strong> Facilita a organização de múltiplas apostas. Não aumenta probabilidade de vitória.
+                            </p>
+                        </div>
+                    </div>
 
-                <div class="loading" id="loading-simulador">
-                    <div class="spinner"></div>
-                </div>
+                    <!-- Como funciona o Organizador -->
+                    <div style="background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid var(--cor-dourado);">
+                        <h3 style="color: var(--cor-dourado); margin-bottom: 1rem;">⚙️ Funcionamento do Organizador</h3>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="padding: 1rem; background: rgba(33, 150, 243, 0.1); border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎲</div>
+                                <strong style="color: #2196F3;">Distribuição Variada</strong><br>
+                                <small>Cria jogos diferentes entre si</small>
+                            </div>
+                            <div style="padding: 1rem; background: rgba(76, 175, 80, 0.1); border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
+                                <strong style="color: #4CAF50;">Cobertura Equilibrada</strong><br>
+                                <small>Tenta usar todos os números escolhidos</small>
+                            </div>
+                            <div style="padding: 1rem; background: rgba(255, 152, 0, 0.1); border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📋</div>
+                                <strong style="color: #FF9800;">Organização Prática</strong><br>
+                                <small>Facilita preenchimento de volantes</small>
+                            </div>
+                        </div>
 
-                <div id="resultado-simulacao" style="display: none;"></div>
+                        <p style="font-size: 0.9rem; margin: 0; opacity: 0.9;">
+                            <strong>Exemplo:</strong> Se você selecionar 15 números para Mega-Sena, o sistema gerará 10 jogos de 6 números cada, 
+                            distribuindo suas escolhas entre eles. Isso não altera as probabilidades matemáticas de vitória.
+                        </p>
+                    </div>
+
+                    <!-- Por que 10 Jogos? -->
+                    <div style="background: rgba(156, 39, 176, 0.1); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid #9C27B0;">
+                        <h3 style="color: #ecec0b; margin-bottom: 1rem;">❓ Por que Limitamos a 10 Jogos?</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #FFD700;">💰</div>
+                                <strong>Controle de Gastos</strong><br>
+                                <small>Limita investimento por rodada</small>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #FFD700;">⚡</div>
+                                <strong>Performance</strong><br>
+                                <small>Processamento rápido</small>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #FFD700;">📱</div>
+                                <strong>Praticidade</strong><br>
+                                <small>Fácil visualização mobile</small>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #FFD700;">🎯</div>
+                                <strong>Foco</strong><br>
+                                <small>Evita excesso de combinações</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dicas de Uso -->
+                    <div style="background: rgba(255, 193, 7, 0.1); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid #FFC107;">
+                        <h3 style="color: #f8bb03; margin-bottom: 1rem;">💡 Dicas de Uso</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                            <div>
+                                <strong style="color: #FFC107;">Analisador:</strong>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                                    <li>Compare diferentes conjuntos de números</li>
+                                    <li>Veja padrões de frequência histórica</li>
+                                    <li>Use como referência estatística</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <strong style="color: #FFC107;">Organizador:</strong>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                                    <li>Selecione 8-15 números de preferência</li>
+                                    <li>Varie entre números baixos e altos</li>
+                                    <li>Use para facilitar múltiplas apostas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Disclaimer de Transparência -->
+                    <div style="background: rgba(244, 67, 54, 0.1); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid #f44336;">
+                        <h3 style="color: #f44336; margin-bottom: 1rem;">⚠️ Informação Importante</h3>
+                        <div style="line-height: 1.6;">
+                            <p style="margin-bottom: 1rem;">
+                                <strong>Estas são ferramentas de organização e análise histórica.</strong> 
+                                Loterias são jogos de azar com probabilidades fixas e sorteios completamente aleatórios.
+                            </p>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; font-size: 0.9rem;">
+                                <div>
+                                    <strong style="color: #4CAF50;">✓ O que essas ferramentas fazem:</strong>
+                                    <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                                        <li>Organizam números para facilitar apostas</li>
+                                        <li>Mostram dados históricos retrospectivos</li>
+                                        <li>Auxiliam na gestão de múltiplos jogos</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #f44336;">✗ O que NÃO fazem:</strong>
+                                    <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                                        <li>Aumentar chances de vitória</li>
+                                        <li>Prever números futuros</li>
+                                        <li>Garantir qualquer tipo de retorno</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <p style="margin: 1rem 0 0 0; font-size: 0.9rem; font-weight: bold;">
+                                Jogue com responsabilidade. Estabeleça limites de gastos. Loterias são entretenimento, não investimento.
+                            </p>
+                        </div>
+                    </div>
             </section>
 
-            <!-- Seção Sistema de Fechamento -->
-            <section id="fechamento" class="secao">
-                <h2>Fechamento de Loterias</h2>
-                <p>Selecione seus números favoritos e nosso sistema gerará até 20 jogos otimizados para cobrir suas escolhas!</p>
-
-                <div class="secao-controles">
-                    <div class="controle-item">
-                        <label for="loteria-fechamento">Loteria:</label>
-                        <select id="loteria-fechamento" class="seletor-custom">
-                            <option value="megasena">Mega-Sena</option>
-                            <option value="quina">Quina</option>
-                            <option value="lotofacil">Lotofácil</option>
-                            <option value="diadesorte">Dia de Sorte</option>
-                            <option value="duplasena">Dupla Sena</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="contador-dezenas" id="contador-fechamento">
-                    Selecione seus números favoritos: 0 escolhidos
-                </div>
-
-                <div id="grid-numeros-fechamento" class="numero-grid">
-                    <!-- Números serão gerados dinamicamente -->
-                </div>
-
-                <div style="margin: 2rem 0;">
-                    <button id="btn-gerar-fechamento" class="botao-gerar-fechamento" disabled>
-                        <i class="fas fa-magic"></i>
-                        Gerar Fechamento (até 20 jogos)
-                    </button>
-                    <button id="btn-limpar-fechamento" class="botao-gerar">
-                        <i class="fas fa-eraser"></i>
-                        Limpar Seleção
-                    </button>
-                </div>
-
-                <div class="loading" id="loading-fechamento">
-                    <div class="spinner"></div>
-                </div>
-
-                <div id="resultado-fechamento" style="display: none;"></div>
-            </section>
-
-            <div class="destaque-gerador">
-                <h2>🎯 Gere Seus Palpites Inteligentes!</h2>
-                <p>Não perca tempo! Use o gerador de palpites do <strong>Sorte Analisada</strong>. <br>Com análises estatísticas para a Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania. Transforme suas apostas com estratégias baseadas em dados!</p>
-                <a href="/" class="cta-gerador">
-                    <i class="fa-solid fa-dice"></i> Sorte Analisada<br> Gere o seu Palpite Agora
+            <!-- Compartilhamento --> 
+            <div class="share-container">
+                Compartilhe estas ferramentas: 
+                <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="compartilharThreads(window.location.href)" class="share-btn threads">
+                    <i class="fa-brands fa-threads"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="compartilharInstagram(window.location.href)" class="share-btn instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="compartilharTikTok(window.location.href)" class="share-btn tiktok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="copiarLink(window.location.href)" class="share-btn copy-link">
+                <i class="fa-solid fa-link"></i>
                 </a>
             </div>
+            <a href="#" class="voltar-topo">Voltar ao Topo ↑</a>
 
-            <!-- Seção Explicação das Funcionalidades -->
-            <section id="explicacao-funcionalidades" class="secao">
-                <h2>🎯 Como Funcionam Nossas Ferramentas</h2>
-                <p>Entenda a metodologia por trás do simulador e do sistema de fechamento:</p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
-                    
-                    <!-- Simulador de Loterias -->
-                    <div class="card-resumo" style="border-top-color: #2196F3;">
-                        <h4 style="color: #2196F3; margin-bottom: 1rem;">📊 Simulador de Loterias</h4>
-                        <p style="text-align: left; font-size: 0.95rem; line-height: 1.4;">
-                            <strong>O que faz:</strong> Testa seus números contra todos os concursos históricos da loteria escolhida.<br><br>
-                            <strong>Como funciona:</strong> Compara sua seleção com cada resultado já sorteado e calcula quantos acertos você teria em cada concurso.<br><br>
-                            <strong>Benefício:</strong> Identifica padrões históricos e ajuda a entender a performance dos seus números favoritos ao longo do tempo.
-                        </p>
-                    </div>
-
-                    <!-- Sistema de Fechamento -->
-                    <div class="card-resumo" style="border-top-color: #4CAF50;">
-                        <h4 style="color: #4CAF50; margin-bottom: 1rem;">🔢 Sistema de Fechamento</h4>
-                        <p style="text-align: left; font-size: 0.95rem; line-height: 1.4;">
-                            <strong>O que faz:</strong> Gera até 20 jogos otimizados a partir dos seus números favoritos.<br><br>
-                            <strong>Como funciona:</strong> Distribui seus números escolhidos em diferentes combinações, garantindo cobertura máxima.<br><br>
-                            <strong>Benefício:</strong> Organiza metodologicamente seus números preferidos, criando múltiplas combinações a partir de uma única seleção.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Metodologia do Fechamento -->
-                <div style="background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid var(--cor-dourado);">
-                    <h3 style="color: var(--cor-dourado); margin-bottom: 1rem;">⚙️ Metodologia do Sistema de Fechamento</h3>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                        <div style="padding: 1rem; background: rgba(33, 150, 243, 0.1); border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎲</div>
-                            <strong style="color: #2196F3;">Combinação Aleatória</strong><br>
-                            <small>Gera jogos únicos sem repetição</small>
-                        </div>
-                        <div style="padding: 1rem; background: rgba(76, 175, 80, 0.1); border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
-                            <strong style="color: #4CAF50;">Distribuição Equilibrada</strong><br>
-                            <small>Espalha números uniformemente</small>
-                        </div>
-                        <div style="padding: 1rem; background: rgba(255, 152, 0, 0.1); border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔄</div>
-                            <strong style="color: #FF9800;">Otimização de Cobertura</strong><br>
-                            <small>Maximiza a abrangência dos números</small>
-                        </div>
-                    </div>
-
-                    <p style="font-size: 0.9rem; margin: 0; opacity: 0.9;">
-                        <strong>Exemplo prático:</strong> Se você selecionar 15 números, o sistema gerará 20 combinações diferentes de 6 números (para Mega-Sena), 
-                        garantindo que cada número apareça em múltiplos jogos de forma estratégica.
-                    </p>
-                </div>
-
-                <!-- Por que 20 Jogos? -->
-                <div style="background: rgba(156, 39, 176, 0.1); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid #9C27B0;">
-                    <h3 style="color: #ecec0b; margin-bottom: 1rem;">❓ Por que Limitamos a 20 Jogos?</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 1.5rem; color: #FFD700;">💰</div>
-                            <strong>Controle Financeiro</strong><br>
-                            <small>Evita gastos excessivos</small>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 1.5rem; color: #FFD700;">⚡</div>
-                            <strong>Performance</strong><br>
-                            <small>Processamento rápido</small>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 1.5rem; color: #FFD700;">🎯</div>
-                            <strong>Foco Estratégico</strong><br>
-                            <small>Qualidade sobre quantidade</small>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 1.5rem; color: #FFD700;">📱</div>
-                            <strong>Experiência Mobile</strong><br>
-                            <small>Visualização otimizada</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dicas de Uso -->
-                <div style="background: rgba(255, 193, 7, 0.1); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid #FFC107;">
-                    <h3 style="color: #f8bb03; margin-bottom: 1rem;">💡 Dicas para Melhor Utilização</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
-                        <div>
-                            <strong style="color: #FFC107;">Para o Simulador:</strong>
-                            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
-                                <li>Teste diferentes combinações</li>
-                                <li>Analise a frequência de acertos</li>
-                                <li>Compare números "quentes" e "frios"</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong style="color: #FFC107;">Para o Fechamento:</strong>
-                            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
-                                <li>Selecione 8-15 números favoritos</li>
-                                <li>Misture números altos e baixos</li>
-                                <li>Inclua números pessoais significativos</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Disclaimer de Transparência -->
-                <div style="background: rgba(244, 67, 54, 0.1); padding: 1.5rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid #f44336;">
-                    <h3 style="color: #f44336; margin-bottom: 1rem;">⚠️ Transparência e Responsabilidade</h3>
-                    <div style="line-height: 1.6;">
-                        <p style="margin-bottom: 1rem;">
-                            <strong>Estas ferramentas têm propósito educacional e de entretenimento.</strong> 
-                            As loterias são jogos de azar baseados em probabilidades aleatórias.
-                        </p>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; font-size: 0.9rem;">
-                            <div>
-                                <strong style="color: #f44336;">✓ O que nossas ferramentas fazem:</strong>
-                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
-                                    <li>Análise estatística histórica</li>
-                                    <li>Organização metodológica</li>
-                                    <li>Simulação educativa</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: #f44336;">✗ O que não prometemos:</strong>
-                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
-                                    <li>Garantia de ganhos</li>
-                                    <li>Fórmulas mágicas</li>
-                                    <li>Previsões infalíveis</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <p style="margin: 1rem 0 0 0; font-size: 0.9rem; font-style: italic;">
-                            Jogue sempre com responsabilidade, estabeleça limites financeiros e lembre-se que o objetivo principal é o entretenimento.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Compartilhamento geral --> 
-         <div class="share-container">
-                        Curtiu o Simulador e o Fechamento! Compartilhe: 
-                        <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook">
-                            <i class="fa-brands fa-facebook"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter">
-                            <i class="fa-brands fa-x-twitter"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharThreads(window.location.href)" class="share-btn threads">
-                            <i class="fa-brands fa-threads"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharInstagram(window.location.href)" class="share-btn instagram">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharTikTok(window.location.href)" class="share-btn tiktok">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="copiarLink(window.location.href)" class="share-btn copy-link">
-                           <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                    <a href="#" class="voltar-topo">Voltar ao Topo ↑</a>
-
-            <!-- footer esta na pasta statics/partials -->
             <div id="footer"></div>
-            
         </div>
 
         <script defer src="/static/js/scripts.min.js"></script>
@@ -1163,10 +1182,10 @@
             function exibirResultadoSimulacao(simulacao, numerosEscolhidos, resultados) {
                 const resultado = document.getElementById('resultado-simulacao');
                 
-                // Ordenar por maior número de acertos e pegar os 10 primeiros
+                // Ordenar por maior número de acertos e pegar os 5 primeiros
                 const maioresAcertos = simulacao.acertos
                     .sort((a, b) => b.acertos - a.acertos)
-                    .slice(0, 10);
+                    .slice(0, 5);
                 
                 let html = `
                     <div class="resultado-simulacao">
@@ -1218,7 +1237,7 @@
                             </tbody>
                         </table>
 
-                        <h4 style="color: var(--cor-dourado); margin-top: 2rem;">Top 10 Maiores Acertos</h4>
+                        <h4 style="color: var(--cor-dourado); margin-top: 2rem;">Top 5 Maiores Acertos</h4>
                         <table class="tabela-resultados">
                             <thead>
                                 <tr>
@@ -1286,79 +1305,120 @@
                 }
             }
 
-                        function gerarJogosFechamento(numerosEscolhidos, config) {
+            function gerarJogosFechamento(numerosEscolhidos, config) {
                 const jogos = [];
-                const maxJogos = 20;
+                const maxJogos = 10;
                 const numerosPorJogo = config.num_bolas_sorteadas;
                 
                 if (numerosEscolhidos.length < numerosPorJogo) {
-                    console.warn("Número de dezenas escolhidas é menor que o necessário para um jogo. Não é possível gerar fechamento.");
+                    console.warn("Número de dezenas escolhidas é menor que o necessário para um jogo.");
                     return [];
                 }
 
-                // Se o número de dezenas escolhidas for igual ao número de bolas por jogo, o jogo é único
+                // Caso especial: se escolheu exatamente o necessário para um jogo
                 if (numerosEscolhidos.length === numerosPorJogo) {
                     return [numerosEscolhidos.sort((a, b) => a - b)];
                 }
 
-                const jogosSet = new Set(); // Para evitar jogos duplicados
-
-                // Estratégia: Tentar formar jogos garantindo que os números apareçam de forma equilibrada,
-                // e combinando aleatoriamente para gerar diversidade.
-                let tentativasGeracao = 0;
-                const MAX_TENTATIVAS_INTERNAS = 1000; // Limite de tentativas para cada jogo
-
-                while (jogos.length < maxJogos && tentativasGeracao < MAX_TENTATIVAS_INTERNAS * 2) {
-                    tentativasGeracao++;
-                    let jogoCandidato = [];
-                    let numerosRestantesParaEscolher = [...numerosEscolhidos];
-
-                    // Tentar pegar os números de forma a "espalhar" a escolha
-                    // Misturar os números restantes para evitar padrões
-                    for (let i = numerosRestantesParaEscolher.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [numerosRestantesParaEscolher[i], numerosRestantesParaEscolher[j]] = [numerosRestantesParaEscolher[j], numerosRestantesParaEscolher[i]];
-                    }
-
-                    // Preencher o jogo com números únicos do pool selecionado
-                    while (jogoCandidato.length < numerosPorJogo && numerosRestantesParaEscolher.length > 0) {
-                        jogoCandidato.push(numerosRestantesParaEscolher.shift());
-                    }
+                // === ALGORITMO OTIMIZADO DE FECHAMENTO ===
+                
+                // 1. Rastrear frequência de uso de cada número
+                const frequenciaUso = {};
+                numerosEscolhidos.forEach(n => frequenciaUso[n] = 0);
+                
+                const jogosSet = new Set(); // Evitar duplicatas
+                
+                // 2. Primeira rodada: garantir que todos os números apareçam pelo menos uma vez
+                const numerosRestantes = [...numerosEscolhidos];
+                
+                while (numerosRestantes.length >= numerosPorJogo && jogos.length < maxJogos) {
+                    // Ordenar por menor frequência para priorizar números menos usados
+                    numerosRestantes.sort((a, b) => frequenciaUso[a] - frequenciaUso[b]);
                     
-                    // Ordenar o jogo para padronização e evitar duplicatas por ordem
-                    jogoCandidato.sort((a, b) => a - b);
-                    const jogoString = jogoCandidato.join(',');
-
-                    // Adicionar se não for duplicado e tiver o tamanho correto
-                    if (!jogosSet.has(jogoString) && jogoCandidato.length === numerosPorJogo) {
+                    // Pegar os menos usados
+                    const jogo = numerosRestantes.slice(0, numerosPorJogo).sort((a, b) => a - b);
+                    const jogoString = jogo.join(',');
+                    
+                    if (!jogosSet.has(jogoString)) {
                         jogosSet.add(jogoString);
-                        jogos.push(jogoCandidato);
+                        jogos.push(jogo);
+                        jogo.forEach(n => frequenciaUso[n]++);
+                        
+                        // Remover apenas o primeiro número usado para criar variação
+                        numerosRestantes.shift();
+                    } else {
+                        break;
                     }
                 }
                 
-                // Se ainda não atingiu maxJogos, podemos tentar gerar mais algumas combinações simples
-                // Esta parte é mais para garantir que tenhamos a quantidade máxima se possível,
-                // mesmo que a "inteligência" inicial não tenha sido suficiente.
-                while (jogos.length < maxJogos && tentativasGeracao < MAX_TENTATIVAS_INTERNAS * 5) { // Aumenta as tentativas gerais
-                    tentativasGeracao++;
-                    let tempNumeros = [...numerosEscolhidos];
-                    let jogoCandidato = [];
-
-                    // Shuffle e slice para pegar uma combinação aleatória
-                    for (let i = tempNumeros.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [tempNumeros[i], tempNumeros[j]] = [tempNumeros[j], tempNumeros[i]];
+                // 3. Segunda rodada: gerar jogos balanceados priorizando combinações
+                let tentativas = 0;
+                const maxTentativas = 1000;
+                
+                while (jogos.length < maxJogos && tentativas < maxTentativas) {
+                    tentativas++;
+                    
+                    // Dividir números em menos usados e mais usados
+                    const ordenadosPorFrequencia = [...numerosEscolhidos]
+                        .sort((a, b) => frequenciaUso[a] - frequenciaUso[b]);
+                    
+                    const menosUsados = ordenadosPorFrequencia.slice(0, Math.ceil(ordenadosPorFrequencia.length / 2));
+                    const maisUsados = ordenadosPorFrequencia.slice(Math.ceil(ordenadosPorFrequencia.length / 2));
+                    
+                    // Criar jogo equilibrado: metade de cada grupo
+                    const metadeJogo = Math.floor(numerosPorJogo / 2);
+                    const jogo = [];
+                    
+                    // Adicionar números menos usados
+                    const menosUsadosShuffled = [...menosUsados].sort(() => Math.random() - 0.5);
+                    jogo.push(...menosUsadosShuffled.slice(0, metadeJogo));
+                    
+                    // Completar com números mais usados ou menos usados se necessário
+                    const restante = numerosPorJogo - jogo.length;
+                    const maisUsadosShuffled = [...maisUsados].sort(() => Math.random() - 0.5);
+                    
+                    for (let i = 0; i < maisUsadosShuffled.length && jogo.length < numerosPorJogo; i++) {
+                        if (!jogo.includes(maisUsadosShuffled[i])) {
+                            jogo.push(maisUsadosShuffled[i]);
+                        }
                     }
-                    jogoCandidato = tempNumeros.slice(0, numerosPorJogo);
-                    jogoCandidato.sort((a, b) => a - b);
-                    const jogoString = jogoCandidato.join(',');
-
-                    if (!jogosSet.has(jogoString) && jogoCandidato.length === numerosPorJogo) {
+                    
+                    // Se ainda faltam números, preencher com qualquer um disponível
+                    if (jogo.length < numerosPorJogo) {
+                        for (const num of numerosEscolhidos) {
+                            if (!jogo.includes(num)) {
+                                jogo.push(num);
+                                if (jogo.length === numerosPorJogo) break;
+                            }
+                        }
+                    }
+                    
+                    jogo.sort((a, b) => a - b);
+                    const jogoString = jogo.join(',');
+                    
+                    if (!jogosSet.has(jogoString) && jogo.length === numerosPorJogo) {
                         jogosSet.add(jogoString);
-                        jogos.push(jogoCandidato);
+                        jogos.push(jogo);
+                        jogo.forEach(n => frequenciaUso[n]++);
                     }
                 }
-
+                
+                // 4. Terceira rodada: completar com jogos totalmente aleatórios se necessário
+                tentativas = 0;
+                while (jogos.length < maxJogos && tentativas < maxTentativas) {
+                    tentativas++;
+                    
+                    const numerosShuffled = [...numerosEscolhidos].sort(() => Math.random() - 0.5);
+                    const jogo = numerosShuffled.slice(0, numerosPorJogo).sort((a, b) => a - b);
+                    const jogoString = jogo.join(',');
+                    
+                    if (!jogosSet.has(jogoString)) {
+                        jogosSet.add(jogoString);
+                        jogos.push(jogo);
+                        jogo.forEach(n => frequenciaUso[n]++);
+                    }
+                }
+                
                 return jogos;
             }
 
@@ -1367,7 +1427,7 @@
                 
                 let html = `
                     <div class="fechamento-resultado">
-                        <h3><i class="fas fa-magic"></i> Sistema de Fechamento</h3>
+                        <h3><i class="fas fa-magic"></i> Sistema de Organização</h3>
                         <p><strong>Seus números escolhidos:</strong> ${numerosEscolhidos.map(n => String(n).padStart(2, '0')).join(', ')}</p>
                         <p><strong>Jogos gerados:</strong> ${jogos.length}</p>
                         
@@ -1389,7 +1449,7 @@
                         <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 4px solid var(--cor-aviso);">
                             <h4 style="color: var(--cor-aviso); margin-bottom: 0.5rem;">💡 Dica Importante</h4>
                             <p style="margin: 0; font-size: 1rem;">
-                                Este é um fechamento básico que distribui seus números escolhidos entre os jogos gerados. 
+                                Este é um organizador que distribui seus números escolhidos entre os jogos gerados e gera 10 jogos. 
                                 Para um fechamento matemático mais avançado, considere usar ferramentas especializadas.
                             </p>
                         </div>
@@ -1416,7 +1476,6 @@
                 })
                 .catch(err => console.log('Footer não encontrado'));
     
-
         </script>
     </body>
 </html>
