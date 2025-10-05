@@ -6,29 +6,29 @@
         <!-- Google tag (gtag.js) -->
 
         <script>
-           // Carregar após FCP (First Contentful Paint)
-        window.addEventListener('load', () => {
-        setTimeout(() => {
-            const script = document.createElement('script');
-            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
-            script.async = true;
-            document.head.appendChild(script);
-            
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-PPB7LRV5SJ', {
-            'page_path': window.location.pathname,
-            'anonymize_ip': true // LGPD compliance
+            // Carregar após FCP (First Contentful Paint)
+            window.addEventListener('load', () => {
+            setTimeout(() => {
+                const script = document.createElement('script');
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
+                script.async = true;
+                document.head.appendChild(script);
+                
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-PPB7LRV5SJ', {
+                'page_path': window.location.pathname,
+                'anonymize_ip': true // LGPD compliance
+                });
+            }, 1000); // 1 segundo é suficiente
             });
-        }, 1000); // 1 segundo é suficiente
-        });
-        </script>
-        
-        <script>
-        gtag('event', 'ads_conversion_PAGE_VIEW_1', {
-        // <event_parameters>
-        });
+            </script>
+            
+            <script>
+            gtag('event', 'ads_conversion_PAGE_VIEW_1', {
+            // <event_parameters>
+            });
         </script>
 
         <!-- ============== METADADOS E SEO ============== -->
@@ -36,7 +36,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Gerador de números para Mega-Sena, Quina, Lotofácil e outras loterias. Análise estatística de resultados históricos, gráficos e últimos sorteios. Ferramenta gratuita para maiores de 18 anos.">
         <link rel="icon" href="/static/images/logotipo.png" type="image/png">
-        <title>Gerador de Números para Loterias | Resultados e Estatísticas | Sorte Analisada</title>
 
         <!-- ============== FONTES E SCRIPTS EXTERNOS ============== -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"crossorigin="anonymous"></script>
@@ -77,63 +76,65 @@
 
         <!-- Keywords (use com moderação) -->
         <meta name="keywords" content="gerador números loteria, resultado mega sena, estatísticas lotofácil, quina, dia de sorte, números aleatórios">
-        
-        <!-- Estrutura de Dados (Schema.org)  -->
-        <script type="application/ld+json">
-        {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Sorte Analisada",
-        "applicationCategory": "UtilityApplication",
-        "operatingSystem": "Web",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "BRL"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.5",
-            "ratingCount": "127"
-        },
-        "description": "Ferramenta gratuita para análise estatística e geração de números de loterias brasileiras.",
-        "url": "https://sorteanalisada.com.br",
-        "screenshot": "https://sorteanalisada.com.br/static/images/screenshot.jpg",
-        "featureList": [
-            "Gerador de números para 6 loterias",
-            "Estatísticas históricas completas",
-            "Últimos 20 resultados atualizados",
-            "Análise de frequência",
-            "Gráficos interativos"
-        ]
-        }
-        </script>
 
-        <script type="application/ld+json">
-        {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Sorte Analisada",
-        "url": "https://sorteanalisada.com.br",
-        "logo": "https://sorteanalisada.com.br/static/images/logotipo.webp",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "contato@sorteanalisada.com.br",
-            "contactType": "Customer Service",
-            "availableLanguage": "Portuguese"
-        },
-        "sameAs": [
-            "https://www.facebook.com/sorteanalisada",
-            "https://www.instagram.com/sorteanalisada"
-        ]
-        }
-        </script>
+        <title>Gerador de Números para Loterias | Resultados e Estatísticas | Sorte Analisada</title>
+            
+            <!-- Estrutura de Dados (Schema.org)  -->
+            <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Sorte Analisada",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Web",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "BRL"
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.5",
+                "ratingCount": "127"
+            },
+            "description": "Ferramenta gratuita para análise estatística e geração de números de loterias brasileiras.",
+            "url": "https://sorteanalisada.com.br",
+            "screenshot": "https://sorteanalisada.com.br/static/images/screenshot.jpg",
+            "featureList": [
+                "Gerador de números para 6 loterias",
+                "Estatísticas históricas completas",
+                "Últimos 20 resultados atualizados",
+                "Análise de frequência",
+                "Gráficos interativos"
+            ]
+            }
+            </script>
 
-        <script type="application/ld+json">
-        {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
+            <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Sorte Analisada",
+            "url": "https://sorteanalisada.com.br",
+            "logo": "https://sorteanalisada.com.br/static/images/logotipo.webp",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "contato@sorteanalisada.com.br",
+                "contactType": "Customer Service",
+                "availableLanguage": "Portuguese"
+            },
+            "sameAs": [
+                "https://www.facebook.com/sorteanalisada",
+                "https://www.instagram.com/sorteanalisada"
+            ]
+            }
+            </script>
+
+            <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
             {
             "@type": "Question",
             "name": "Como funciona o gerador de números?",
@@ -158,40 +159,92 @@
                 "text": "Sim, o Sorte Analisada é 100% gratuito para uso ilimitado."
             }
             }
-        ]
-        }
-        </script>
+            ]
+            }
+            </script>
+
+            <script type="application/ld+json" id="schema-dataset">
+            {
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "name": "Estatísticas de Loterias Brasileiras Sorte Analisada",
+            "description": "Conjunto de dados históricos e análises de frequência para Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania. Inclui dezenas mais sorteadas, menos sorteadas, frequência recente, números primos, e distribuição de pares/ímpares.",
+            "url": "https://sorteanalisada.com.br/#estatisticas",
+            "creator": {
+                "@type": "Organization",
+                "name": "Sorte Analisada",
+                "url": "https://sorteanalisada.com.br"
+            },
+            "keywords": [
+                "estatísticas loteria", "frequência mega sena", "números quentes", 
+                "números frios", "análise lotofácil", "dados quina", "probabilidades loterias"
+            ],
+            "dateModified": "{{ current_date }}",
+            "isAccessibleForFree": true,
+            "license": "https://creativecommons.org/licenses/by/4.0/"
+            }
+            </script>
+
+            <script type="application/ld+json" id="schema-collectionpage">
+            {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Últimos Resultados de Loterias - Sorte Analisada",
+            "description": "Confira os 20 últimos resultados de Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania. Mantenha-se atualizado com os sorteios mais recentes.",
+            "url": "https://sorteanalisada.com.br/#ultimos-resultados",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://sorteanalisada.com.br/#ultimos-resultados"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Sorte Analisada",
+                "url": "https://sorteanalisada.com.br",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https://sorteanalisada.com.br/static/images/logotipo.webp"
+                }
+            },
+            "dateModified": "{{ current_date }}"
+            }
+            </script>
 
         <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
         <link rel="stylesheet" href="static/css/styles.min.css">
         
     </head>
     <body>
-        <div class="container">
-            <main>
-                <header id="gerador"> 
-                    <img src="/static/images/logotipo.webp" alt="Sorte Analisada - Gerador de Números para Loterias" class="imagem-ouro" width="128" height="131" loading="eager" fetchpriority="high">
-                    
-                    <h1>Gerador de Números para Loterias Brasileiras</h1>
-                    <br>  
-                    <p class="subtitulo">Análise estatística gratuita para Mega-Sena, Quina, Lotofácil e mais</p>
-                    <br> 
-                </header>
+        <div class="container"> 
+           
+            <header id="gerador"> 
+                <picture>
+                    <a href="/" title="Voltar para a página inicial Sorte Analisada">
+                    <source srcset="/static/images/logotipo.webp">
+                    <img src="/static/images/logotipo.png" alt="Sorte Analisada - Gerador de Números para Loterias" class="imagem-ouro" width="128" height="131" loading="eager" fetchpriority="high">
+                    </a>
+                </picture>
 
-                <nav class="nav-interna">
-                    <a href="#loteria-select">Gerar Palpites</a>
-                    <a href="#estatisticas">Estatisticas</a>
-                    <a href="#sobre-filtros">Métodos</a>
-                    <a href="#ultimos-resultados">Últimos Resultados</a>
-                    <a href="/simulador">Analisador</a>
-                    <a href="/blog">Blog</a>
-                    <a href="#sobre">Sobre</a>
-                    <a href="#jogorresponsavel">Jogo Responsável</a>
-                    <a href="#contato">Contato</a>
-                    <a href="https://ronaldoleite-tech.github.io/sorteanalisada-policies/privacy.html">Política de Privacidade</a>
-                    <a href="https://ronaldoleite-tech.github.io/sorteanalisada-policies/terms.html">Termos de Uso</a>   
-                </nav>
-                
+                <h1>Gerador de Números para Loterias Brasileiras</h1>
+                <br>  
+                <p class="subtitulo">Análise estatística gratuita para Mega-Sena, Quina, Lotofácil e mais</p>
+                <br> 
+            </header>
+        
+            <nav class="nav-interna">
+                <a href="#loteria-select">Gerar Palpites</a>
+                <a href="#estatisticas">Estatisticas</a>
+                <a href="#sobre-filtros">Métodos</a>
+                <a href="#ultimos-resultados">Últimos Resultados</a>
+                <a href="/simulador">Analisador</a>
+                <a href="/blog">Blog</a>
+                <a href="#sobre">Sobre</a>
+                <a href="#jogorresponsavel">Jogo Responsável</a>
+                <a href="#contato">Contato</a>
+                <a href="https://ronaldoleite-tech.github.io/sorteanalisada-policies/privacy.html">Política de Privacidade</a>
+                <a href="https://ronaldoleite-tech.github.io/sorteanalisada-policies/terms.html">Termos de Uso</a>   
+            </nav>
+
+            <main>   
                 <section class="secao-controles">
                     <div class="controle-item">
                         <label for="loteria-select">Loteria:</label>
@@ -234,12 +287,12 @@
                 </section>
 
                 <div style="display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; margin: 1.5rem 0;">
-                    <span style="font-size: 1.3rem; color: #bbdefb; font-weight: 400;">Palpites para:</span>
+                    <span style="font-size: 1.3rem; color: #bbdefb; font-weight: 400;">Dezenas para:</span>
                     <h5 id="loteria-selecionada" class="loteria-display" style="margin: 0; font-size: 1.6rem; color: var(--cor-loteria-display);"></h5>
                 </div>
 
                 <button id="botao-gerar-principal" class="botao-gerar" onclick="gerarPalpites()" style="padding: 1rem 2rem; font-size: 1.1rem;">
-                    Clique para gerar os Palpites
+                    Clique para gerar as Dezenas
                 </button>
                  
                 <section id="area-resultados" aria-live="polite" aria-atomic="true" style="margin-top:1.5rem;"></section>
@@ -248,7 +301,7 @@
 
                 <section id="estatisticas" class="footer-section">
                 <h2>Estatísticas dos Sorteios</h2>
-                <p>Veja a frequência dos números sorteados da Loteria selecionada acima e descubra quais dezenas saem mais.</p>
+                <p>Clique e veja a frequência dos números sorteados da Loteria selecionada acima e descubra quais dezenas saem mais.</p>
                 <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
                     <div class="grupo-botoes" style="margin-bottom: 2rem;">
                         <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
@@ -435,10 +488,17 @@
                         </a>
                  </div>
                  <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+
+            </main>
+
+                <!-- footer esta na pasta statics/partials -->
+                <div id="footer"></div>
+        </div>  
             
             
                 <!-- Scripts com defer (carregam sem bloquear a renderização) -->
                 <script defer src="/static/js/scripts.min.js"></script>
+
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
                 <script>
@@ -478,13 +538,6 @@
                         mudarLoteria('megasena');
                     });
                 </script>
-
-            </main>
-
-                <!-- footer esta na pasta statics/partials -->
-                <div id="footer"></div> 
-            
-        </div>
 
     </body>
 </html>

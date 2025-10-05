@@ -406,6 +406,9 @@ def gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora=[])
 def index():
     return render_template('index.html')
 
+    today = date.today().isoformat() # Ex: "2024-07-25"
+    return render_template('index.html', current_date=today)
+
 @app.route('/blog')
 def blog():
     return render_template('blog.html')

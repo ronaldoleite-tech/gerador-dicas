@@ -643,7 +643,13 @@
     <body>
         <div class="container">
             <header>
-                <img src="/static/images/logotipo.webp" alt="Logotipo Sorte Analisada" class="imagem-ouro" width="128" height="131" loading="lazy">
+                <picture>
+                    <a href="/" title="Voltar para a página inicial Sorte Analisada">
+                    <source srcset="/static/images/logotipo.webp">
+                    <img src="/static/images/logotipo.png" alt="Sorte Analisada - Gerador de Números para Loterias" class="imagem-ouro" width="128" height="131" loading="eager" fetchpriority="high">
+                    </a>
+                </picture>
+
                 <h1>Analisador - Sorte Analisada</h1>
                 <p class="subtitulo">Descubra quantos acertos seus números teriam tido nos sorteios passados!</p>
             </header>
@@ -654,7 +660,7 @@
                     <a href="#organizador">Organizador</a>
                     <a href="/blog">Blog</a> 
                 </nav>
-
+            <main>
                 <!-- Seção Analisador -->
                 <section id="analisador" class="secao">
                     <h2>Analisador de Resultados Históricos</h2>
@@ -748,7 +754,7 @@
                     <h2>🎲 Gere Suas Combinações!</h2>
                     <p>Use o gerador de números do <strong>Sorte Analisada</strong> para criar combinações baseadas em dados históricos da Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania.</p>
                     <a href="/" class="cta-gerador">
-                        <i class="fa-solid fa-dice"></i> Sorte Analisada<br> Gerar Números Agora
+                        <i class="fa-solid fa-dice"></i> Sorte Analisada<br> Gere suas Dezenas Agora
                     </a>
                 </div>
 
@@ -850,7 +856,7 @@
                             <div>
                                 <strong style="color: #FFC107;">Organizador:</strong>
                                 <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
-                                    <li>Selecione 8-15 números de preferência</li>
+                                    <li>Selecione até 15 números favoritos ou até 18 números para Lotofácil</li>
                                     <li>Varie entre números baixos e altos</li>
                                     <li>Use para facilitar múltiplas apostas</li>
                                 </ul>
@@ -886,596 +892,596 @@
                                 </div>
                             </div>
                             
-                            <p style="margin: 1rem 0 0 0; font-size: 0.9rem; font-weight: bold;">
-                                Jogue com responsabilidade. Estabeleça limites de gastos. Loterias são entretenimento, não investimento.
-                            </p>
-                        </div>
+                                    <p style="margin: 1rem 0 0 0; font-size: 0.9rem; font-weight: bold;">
+                                        Jogue com responsabilidade. Estabeleça limites de gastos. Loterias são entretenimento, não investimento.
+                                    </p>
+                                </div>
+                            </div>
+                    </section>
+
+                    <!-- Compartilhamento --> 
+                    <div class="share-container">
+                        Compartilhe estas ferramentas: 
+                        <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharThreads(window.location.href)" class="share-btn threads">
+                            <i class="fa-brands fa-threads"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharInstagram(window.location.href)" class="share-btn instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="compartilharTikTok(window.location.href)" class="share-btn tiktok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="copiarLink(window.location.href)" class="share-btn copy-link">
+                        <i class="fa-solid fa-link"></i>
+                        </a>
                     </div>
-            </section>
-
-            <!-- Compartilhamento --> 
-            <div class="share-container">
-                Compartilhe estas ferramentas: 
-                <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </a>
-                <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook">
-                    <i class="fa-brands fa-facebook"></i>
-                </a>
-                <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter">
-                    <i class="fa-brands fa-x-twitter"></i>
-                </a>
-                <a href="javascript:void(0)" onclick="compartilharThreads(window.location.href)" class="share-btn threads">
-                    <i class="fa-brands fa-threads"></i>
-                </a>
-                <a href="javascript:void(0)" onclick="compartilharInstagram(window.location.href)" class="share-btn instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="javascript:void(0)" onclick="compartilharTikTok(window.location.href)" class="share-btn tiktok">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-                <a href="javascript:void(0)" onclick="copiarLink(window.location.href)" class="share-btn copy-link">
-                <i class="fa-solid fa-link"></i>
-                </a>
-            </div>
-            <a href="#" class="voltar-topo">Voltar ao Topo ↑</a>
-
-            <div id="footer"></div>
+                    <a href="#" class="voltar-topo">Voltar ao Topo ↑</a>
+            </main>
+                    <div id="footer"></div>
         </div>
 
-        <script defer src="/static/js/scripts.min.js"></script>
+                    <script defer src="/static/js/scripts.min.js"></script>
 
-        <script>
-            // Configurações das loterias
-            const LOTTERY_CONFIG = {
-                'megasena': { min_num: 1, max_num: 60, num_bolas_sorteadas: 6, min_dezenas: 6, max_dezenas: 15 },
-                'quina': { min_num: 1, max_num: 80, num_bolas_sorteadas: 5, min_dezenas: 5, max_dezenas: 15 },
-                'lotofacil': { min_num: 1, max_num: 25, num_bolas_sorteadas: 15, min_dezenas: 15, max_dezenas: 18 },
-                'diadesorte': { min_num: 1, max_num: 31, num_bolas_sorteadas: 7, min_dezenas: 7, max_dezenas: 15 },
-                'duplasena': { min_num: 1, max_num: 50, num_bolas_sorteadas: 6, min_dezenas: 6, max_dezenas: 15 },
-                'lotomania': { min_num: 1, max_num: 100, num_bolas_sorteadas: 20, min_dezenas: 50, max_dezenas: 50 }
-            };
+            <script>
+                    // Configurações das loterias
+                    const LOTTERY_CONFIG = {
+                        'megasena': { min_num: 1, max_num: 60, num_bolas_sorteadas: 6, min_dezenas: 6, max_dezenas: 15 },
+                        'quina': { min_num: 1, max_num: 80, num_bolas_sorteadas: 5, min_dezenas: 5, max_dezenas: 15 },
+                        'lotofacil': { min_num: 1, max_num: 25, num_bolas_sorteadas: 15, min_dezenas: 15, max_dezenas: 18 },
+                        'diadesorte': { min_num: 1, max_num: 31, num_bolas_sorteadas: 7, min_dezenas: 7, max_dezenas: 15 },
+                        'duplasena': { min_num: 1, max_num: 50, num_bolas_sorteadas: 6, min_dezenas: 6, max_dezenas: 15 },
+                        'lotomania': { min_num: 1, max_num: 100, num_bolas_sorteadas: 20, min_dezenas: 50, max_dezenas: 50 }
+                    };
 
-            // Estado da aplicação
-            let numerosSelecionadosSimulador = new Set();
-            let numerosSelecionadosFechamento = new Set();
-            let loteriaAtualSimulador = 'megasena';
-            let loteriaAtualFechamento = 'megasena';
+                    // Estado da aplicação
+                    let numerosSelecionadosSimulador = new Set();
+                    let numerosSelecionadosFechamento = new Set();
+                    let loteriaAtualSimulador = 'megasena';
+                    let loteriaAtualFechamento = 'megasena';
 
-            // Inicialização
-            document.addEventListener('DOMContentLoaded', function() {
-                inicializarSimulador();
-                inicializarFechamento();
-                adicionarEventListeners();
-            });
+                    // Inicialização
+                    document.addEventListener('DOMContentLoaded', function() {
+                        inicializarSimulador();
+                        inicializarFechamento();
+                        adicionarEventListeners();
+                    });
 
-            function inicializarSimulador() {
-                const loteria = document.getElementById('loteria-simulador').value;
-                loteriaAtualSimulador = loteria;
-                gerarGridNumeros('simulador', loteria);
-                atualizarContador('simulador');
-            }
+                    function inicializarSimulador() {
+                        const loteria = document.getElementById('loteria-simulador').value;
+                        loteriaAtualSimulador = loteria;
+                        gerarGridNumeros('simulador', loteria);
+                        atualizarContador('simulador');
+                    }
 
-            function inicializarFechamento() {
-                const loteria = document.getElementById('loteria-fechamento').value;
-                loteriaAtualFechamento = loteria;
-                gerarGridNumeros('fechamento', loteria);
-                atualizarContador('fechamento');
-            }
+                    function inicializarFechamento() {
+                        const loteria = document.getElementById('loteria-fechamento').value;
+                        loteriaAtualFechamento = loteria;
+                        gerarGridNumeros('fechamento', loteria);
+                        atualizarContador('fechamento');
+                    }
 
-            function adicionarEventListeners() {
-                // Simulador
-                document.getElementById('loteria-simulador').addEventListener('change', function() {
-                    numerosSelecionadosSimulador.clear();
+                    function adicionarEventListeners() {
+                        // Simulador
+                        document.getElementById('loteria-simulador').addEventListener('change', function() {
+                            numerosSelecionadosSimulador.clear();
+                            inicializarSimulador();
+                        });
+
+                        document.getElementById('btn-simular').addEventListener('click', executarSimulacao);
+                        document.getElementById('btn-limpar-simulador').addEventListener('click', function() {
+                            limparSelecao('simulador');
+                        });
+
+                        // Fechamento
+                        document.getElementById('loteria-fechamento').addEventListener('change', function() {
+                            numerosSelecionadosFechamento.clear();
+                            inicializarFechamento();
+                        });
+
+                        document.getElementById('btn-gerar-fechamento').addEventListener('click', gerarFechamento);
+                        document.getElementById('btn-limpar-fechamento').addEventListener('click', function() {
+                            limparSelecao('fechamento');
+                        });
+                    }
+
+                    function gerarGridNumeros(tipo, loteria) {
+                        const config = LOTTERY_CONFIG[loteria];
+                        const grid = document.getElementById(`grid-numeros-${tipo}`);
+                        const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
+                        
+                        grid.innerHTML = '';
+
+                        for (let i = config.min_num; i <= config.max_num; i++) {
+                            const button = document.createElement('button');
+                            button.className = 'numero-botao';
+                            button.textContent = String(i).padStart(2, '0');
+                            button.dataset.numero = i;
+                            
+                            if (numeros.has(i)) {
+                                button.classList.add('selecionado');
+                            }
+
+                            button.addEventListener('click', function() {
+                                toggleNumero(tipo, i);
+                            });
+
+                            grid.appendChild(button);
+                        }
+                    }
+
+                    function toggleNumero(tipo, numero) {
+                        const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
+                        const loteria = tipo === 'simulador' ? loteriaAtualSimulador : loteriaAtualFechamento;
+                        const config = LOTTERY_CONFIG[loteria];
+                        const button = document.querySelector(`#grid-numeros-${tipo} [data-numero="${numero}"]`);
+
+                        if (numeros.has(numero)) {
+                            numeros.delete(numero);
+                            button.classList.remove('selecionado');
+                        } else {
+                            // Para o simulador, limitar ao número exato de dezenas
+                            if (tipo === 'simulador' && numeros.size >= config.num_bolas_sorteadas) {
+                                return;
+                            }
+                            // Para fechamento, permitir mais números
+                            if (tipo === 'fechamento' && numeros.size >= config.max_dezenas) {
+                                return;
+                            }
+                            numeros.add(numero);
+                            button.classList.add('selecionado');
+                        }
+
+                        atualizarContador(tipo);
+                        atualizarBotoes(tipo);
+                    }
+
+                    function atualizarContador(tipo) {
+                        const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
+                        const loteria = tipo === 'simulador' ? loteriaAtualSimulador : loteriaAtualFechamento;
+                        const config = LOTTERY_CONFIG[loteria];
+                        const contador = document.getElementById(`contador-${tipo}`);
+
+                        if (tipo === 'simulador') {
+                            contador.textContent = `Selecione seus números: ${numeros.size} de ${config.num_bolas_sorteadas} escolhidos`;
+                        } else {
+                            const min = config.num_bolas_sorteadas + 1;
+                            contador.textContent = `Selecione seus números favoritos: ${numeros.size} escolhidos (mínimo ${min} para fechamento)`;
+                        }
+                    }
+
+                    function atualizarBotoes(tipo) {
+                        const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
+                        const loteria = tipo === 'simulador' ? loteriaAtualSimulador : loteriaAtualFechamento;
+                        const config = LOTTERY_CONFIG[loteria];
+                        const botao = document.getElementById(tipo === 'simulador' ? 'btn-simular' : 'btn-gerar-fechamento');
+
+                        if (tipo === 'simulador') {
+                            botao.disabled = numeros.size !== config.num_bolas_sorteadas;
+                        } else {
+                            botao.disabled = numeros.size <= config.num_bolas_sorteadas;
+                        }
+                    }
+
+                    function limparSelecao(tipo) {
+                        const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
+                        const loteria = tipo === 'simulador' ? loteriaAtualSimulador : loteriaAtualFechamento;
+                        
+                        numeros.clear();
+                        gerarGridNumeros(tipo, loteria);
+                        atualizarContador(tipo);
+                        atualizarBotoes(tipo);
+                        
+                        // Esconder resultados - CORREÇÃO: IDs corretos
+                        if (tipo === 'simulador') {
+                            document.getElementById('resultado-simulacao').style.display = 'none';
+                        } else {
+                            document.getElementById('resultado-fechamento').style.display = 'none';
+                        }
+                    }
+                    async function executarSimulacao() {
+                        const loading = document.getElementById('loading-simulador');
+                        const resultado = document.getElementById('resultado-simulacao');
+                        
+                        loading.style.display = 'flex';
+                        resultado.style.display = 'none';
+
+                        try {
+                            // Buscar TODOS os resultados (sem limite de 20)
+                            const response = await fetch(`/get-todos-resultados?loteria=${loteriaAtualSimulador}`);
+                            const resultados = await response.json();
+
+                            if (resultados.error) {
+                                throw new Error(resultados.error);
+                            }
+
+                            // Executar simulação com todos os concursos
+                            const numerosEscolhidos = Array.from(numerosSelecionadosSimulador);
+                            const simulacao = simularJogos(numerosEscolhidos, resultados, loteriaAtualSimulador);
+                            
+                            exibirResultadoSimulacao(simulacao, numerosEscolhidos, resultados);
+                            
+                        } catch (error) {
+                            console.error('Erro na simulação:', error);
+                            resultado.innerHTML = `
+                                <div class="resultado-simulacao" style="border-left-color: var(--cor-erro);">
+                                    <h3 style="color: var(--cor-erro);">Erro na Simulação</h3>
+                                    <p>Não foi possível executar a simulação. Tente novamente.</p>
+                                </div>
+                            `;
+                            resultado.style.display = 'block';
+                        } finally {
+                            loading.style.display = 'none';
+                        }
+                    }
+
+                    function simularJogos(numerosEscolhidos, resultados, loteria) { // Adicione 'loteria' como parâmetro
+                        const acertosPorConcurso = [];
+                        let totalAcertosGeral = 0; // Somatório de acertos para a média
+                        let melhorAcertoGeral = 0; // Melhor acerto em qualquer concurso/sorteio
+                        const distribuicaoAcertos = {}; // Para a tabela de distribuição
+
+                        resultados.forEach(concurso => {
+                            let acertosNoConcurso = 0;
+                            let numerosAcertadosNoConcurso = [];
+                            let numerosSorteadosDisplay = concurso.dezenas; // Para exibir no TOP 10
+
+                            if (loteria === 'duplasena') {
+                                // Para Dupla Sena, as dezenas são 12 (6 do 1º sorteio, 6 do 2º)
+                                const dezenasPrimeiroSorteio = concurso.dezenas.split(' ').slice(0, 6).map(n => parseInt(n));
+                                const dezenasSegundoSorteio = concurso.dezenas.split(' ').slice(6, 12).map(n => parseInt(n));
+
+                                const acertos1Sorteio = numerosEscolhidos.filter(n => dezenasPrimeiroSorteio.includes(n));
+                                const acertos2Sorteio = numerosEscolhidos.filter(n => dezenasSegundoSorteio.includes(n));
+
+                                // Considera o melhor acerto entre os dois sorteios para o resultado individual do concurso
+                                if (acertos1Sorteio.length >= acertos2Sorteio.length) {
+                                    acertosNoConcurso = acertos1Sorteio.length;
+                                    numerosAcertadosNoConcurso = acertos1Sorteio;
+                                    numerosSorteadosDisplay = dezenasPrimeiroSorteio.map(n => String(n).padStart(2, '0')).join(' ');
+                                } else {
+                                    acertosNoConcurso = acertos2Sorteio.length;
+                                    numerosAcertadosNoConcurso = acertos2Sorteio;
+                                    numerosSorteadosDisplay = dezenasSegundoSorteio.map(n => String(n).padStart(2, '0')).join(' ');
+                                }
+
+                            } else {
+                                const numerossorteados = concurso.dezenas.split(' ').map(n => parseInt(n));
+                                numerosAcertadosNoConcurso = numerosEscolhidos.filter(n => numerossorteados.includes(n));
+                                acertosNoConcurso = numerosAcertadosNoConcurso.length;
+                            }
+                            
+                            acertosPorConcurso.push({
+                                concurso: concurso.concurso,
+                                data: concurso.data,
+                                numerossorteados: numerosSorteadosDisplay, // Pode ser o 1º sorteio para Dupla Sena
+                                acertos: acertosNoConcurso,
+                                numerosAcertados: numerosAcertadosNoConcurso.map(n => String(n).padStart(2, '0')).join(', ')
+                            });
+
+                            totalAcertosGeral += acertosNoConcurso;
+                            melhorAcertoGeral = Math.max(melhorAcertoGeral, acertosNoConcurso);
+                            distribuicaoAcertos[acertosNoConcurso] = (distribuicaoAcertos[acertosNoConcurso] || 0) + 1;
+                        });
+
+                            // Ordenar acertosPorConcurso do maior para o menor antes de retornar
+                            acertosPorConcurso.sort((a, b) => b.acertos - a.acertos);
+
+                            return {
+                                acertos: acertosPorConcurso,
+                                totalAcertos: totalAcertosGeral,
+                                melhorAcerto: melhorAcertoGeral,
+                                mediaAcertos: (totalAcertosGeral / resultados.length).toFixed(2),
+                                distribuicaoAcertos,
+                                totalConcursos: resultados.length
+                            };
+                        }
+
+                function exibirResultadoSimulacao(simulacao, numerosEscolhidos, resultados) {
+                    const resultado = document.getElementById('resultado-simulacao');
+                    
+                    // Ordenar por maior número de acertos e pegar os 5 primeiros
+                    const maioresAcertos = simulacao.acertos
+                        .sort((a, b) => b.acertos - a.acertos)
+                        .slice(0, 5);
+                    
+                    let html = `
+                        <div class="resultado-simulacao">
+                            <h3><i class="fas fa-chart-line"></i> Resultado da Simulação</h3>
+                            <p><strong>Seus números:</strong> ${numerosEscolhidos.map(n => String(n).padStart(2, '0')).join(', ')}</p>
+                            
+                            <div class="resumo-simulacao">
+                                <div class="card-resumo">
+                                    <h4>Total de Acertos</h4>
+                                    <span class="numero-destaque">${simulacao.totalAcertos}</span>
+                                    <p>em ${simulacao.totalConcursos} concursos</p>
+                                </div>
+                                <div class="card-resumo">
+                                    <h4>Melhor Resultado</h4>
+                                    <span class="numero-destaque">${simulacao.melhorAcerto}</span>
+                                    <p>acertos em um concurso</p>
+                                </div>
+                                <div class="card-resumo">
+                                    <h4>Média de Acertos</h4>
+                                    <span class="numero-destaque">${simulacao.mediaAcertos}</span>
+                                    <p>por concurso</p>
+                                </div>
+                            </div>
+
+                            <h4 style="color: var(--cor-dourado); margin-top: 2rem;">Distribuição de Acertos</h4>
+                            <table class="tabela-resultados">
+                                <thead>
+                                    <tr>
+                                        <th>Acertos</th>
+                                        <th>Frequência</th>
+                                        <th>Porcentagem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+                    const maxAcertos = Math.max(...Object.keys(simulacao.distribuicaoAcertos).map(k => parseInt(k)));
+                    for (let i = maxAcertos; i >= 0; i--) {
+                        const freq = simulacao.distribuicaoAcertos[i] || 0;
+                        const perc = ((freq / simulacao.totalConcursos) * 100).toFixed(1);
+                        html += `
+                            <tr>
+                                <td>${i}</td>
+                                <td>${freq}</td>
+                                <td>${perc}%</td>
+                            </tr>`;
+                    }
+
+                        html += `
+                                    </tbody>
+                                </table>
+
+                                <h4 style="color: var(--cor-dourado); margin-top: 2rem;">Top 5 Maiores Acertos</h4>
+                                <table class="tabela-resultados">
+                                    <thead>
+                                        <tr>
+                                            <th>Posição</th>
+                                            <th>Concurso</th>
+                                            <th>Data</th>
+                                            <th>Números Sorteados</th>
+                                            <th>Acertos</th>
+                                            <th>Números Acertados</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+
+                        maioresAcertos.forEach((item, index) => {
+                            const corLinha = item.acertos >= 4 ? 'style="background-color: rgba(76, 175, 80, 0.2);"' : 
+                                        item.acertos >= 3 ? 'style="background-color: rgba(255, 193, 7, 0.2);"' : '';
+                            html += `
+                                <tr ${corLinha}>
+                                    <td><strong>${index + 1}º</strong></td>
+                                    <td>${item.concurso}</td>
+                                    <td>${item.data}</td>
+                                    <td>${item.numerossorteados}</td>
+                                    <td><strong>${item.acertos}</strong></td>
+                                    <td>${item.numerosAcertados || '-'}</td>
+                                </tr>`;
+                        });
+
+                        html += `
+                                    </tbody>
+                                </table>
+                            </div>
+                        `;
+
+                        resultado.innerHTML = html;
+                        resultado.style.display = 'block';
+                    }
+
+                async function gerarFechamento() {
+                    const loading = document.getElementById('loading-fechamento');
+                    const resultado = document.getElementById('resultado-fechamento');
+                    
+                    loading.style.display = 'flex';
+                    resultado.style.display = 'none';
+
+                    try {
+                        const numerosEscolhidos = Array.from(numerosSelecionadosFechamento);
+                        const config = LOTTERY_CONFIG[loteriaAtualFechamento];
+                        
+                        // Gerar jogos de fechamento
+                        const jogos = gerarJogosFechamento(numerosEscolhidos, config);
+                        
+                        exibirResultadoFechamento(jogos, numerosEscolhidos);
+                        
+                    } catch (error) {
+                        console.error('Erro no fechamento:', error);
+                        resultado.innerHTML = `
+                            <div class="fechamento-resultado" style="border-left-color: var(--cor-erro);">
+                                <h3 style="color: var(--cor-erro);">Erro no Fechamento</h3>
+                                <p>Não foi possível gerar o fechamento. Tente novamente.</p>
+                            </div>
+                        `;
+                        resultado.style.display = 'block';
+                    } finally {
+                        loading.style.display = 'none';
+                    }
+                }
+
+                function gerarJogosFechamento(numerosEscolhidos, config) {
+                    const jogos = [];
+                    const maxJogos = 10;
+                    const numerosPorJogo = config.num_bolas_sorteadas;
+                    
+                    if (numerosEscolhidos.length < numerosPorJogo) {
+                        console.warn("Número de dezenas escolhidas é menor que o necessário para um jogo.");
+                        return [];
+                    }
+
+                    // Caso especial: se escolheu exatamente o necessário para um jogo
+                    if (numerosEscolhidos.length === numerosPorJogo) {
+                        return [numerosEscolhidos.sort((a, b) => a - b)];
+                    }
+
+                    // === ALGORITMO OTIMIZADO DE FECHAMENTO ===
+                    
+                    // 1. Rastrear frequência de uso de cada número
+                    const frequenciaUso = {};
+                    numerosEscolhidos.forEach(n => frequenciaUso[n] = 0);
+                    
+                    const jogosSet = new Set(); // Evitar duplicatas
+                    
+                    // 2. Primeira rodada: garantir que todos os números apareçam pelo menos uma vez
+                    const numerosRestantes = [...numerosEscolhidos];
+                    
+                    while (numerosRestantes.length >= numerosPorJogo && jogos.length < maxJogos) {
+                        // Ordenar por menor frequência para priorizar números menos usados
+                        numerosRestantes.sort((a, b) => frequenciaUso[a] - frequenciaUso[b]);
+                        
+                        // Pegar os menos usados
+                        const jogo = numerosRestantes.slice(0, numerosPorJogo).sort((a, b) => a - b);
+                        const jogoString = jogo.join(',');
+                        
+                        if (!jogosSet.has(jogoString)) {
+                            jogosSet.add(jogoString);
+                            jogos.push(jogo);
+                            jogo.forEach(n => frequenciaUso[n]++);
+                            
+                            // Remover apenas o primeiro número usado para criar variação
+                            numerosRestantes.shift();
+                        } else {
+                            break;
+                        }
+                    }
+                    
+                    // 3. Segunda rodada: gerar jogos balanceados priorizando combinações
+                    let tentativas = 0;
+                    const maxTentativas = 1000;
+                    
+                    while (jogos.length < maxJogos && tentativas < maxTentativas) {
+                        tentativas++;
+                        
+                        // Dividir números em menos usados e mais usados
+                        const ordenadosPorFrequencia = [...numerosEscolhidos]
+                            .sort((a, b) => frequenciaUso[a] - frequenciaUso[b]);
+                        
+                        const menosUsados = ordenadosPorFrequencia.slice(0, Math.ceil(ordenadosPorFrequencia.length / 2));
+                        const maisUsados = ordenadosPorFrequencia.slice(Math.ceil(ordenadosPorFrequencia.length / 2));
+                        
+                        // Criar jogo equilibrado: metade de cada grupo
+                        const metadeJogo = Math.floor(numerosPorJogo / 2);
+                        const jogo = [];
+                        
+                        // Adicionar números menos usados
+                        const menosUsadosShuffled = [...menosUsados].sort(() => Math.random() - 0.5);
+                        jogo.push(...menosUsadosShuffled.slice(0, metadeJogo));
+                        
+                        // Completar com números mais usados ou menos usados se necessário
+                        const restante = numerosPorJogo - jogo.length;
+                        const maisUsadosShuffled = [...maisUsados].sort(() => Math.random() - 0.5);
+                        
+                        for (let i = 0; i < maisUsadosShuffled.length && jogo.length < numerosPorJogo; i++) {
+                            if (!jogo.includes(maisUsadosShuffled[i])) {
+                                jogo.push(maisUsadosShuffled[i]);
+                            }
+                        }
+                        
+                        // Se ainda faltam números, preencher com qualquer um disponível
+                        if (jogo.length < numerosPorJogo) {
+                            for (const num of numerosEscolhidos) {
+                                if (!jogo.includes(num)) {
+                                    jogo.push(num);
+                                    if (jogo.length === numerosPorJogo) break;
+                                }
+                            }
+                        }
+                        
+                        jogo.sort((a, b) => a - b);
+                        const jogoString = jogo.join(',');
+                        
+                        if (!jogosSet.has(jogoString) && jogo.length === numerosPorJogo) {
+                            jogosSet.add(jogoString);
+                            jogos.push(jogo);
+                            jogo.forEach(n => frequenciaUso[n]++);
+                        }
+                    }
+                
+                    // 4. Terceira rodada: completar com jogos totalmente aleatórios se necessário
+                    tentativas = 0;
+                    while (jogos.length < maxJogos && tentativas < maxTentativas) {
+                        tentativas++;
+                        
+                        const numerosShuffled = [...numerosEscolhidos].sort(() => Math.random() - 0.5);
+                        const jogo = numerosShuffled.slice(0, numerosPorJogo).sort((a, b) => a - b);
+                        const jogoString = jogo.join(',');
+                        
+                        if (!jogosSet.has(jogoString)) {
+                            jogosSet.add(jogoString);
+                            jogos.push(jogo);
+                            jogo.forEach(n => frequenciaUso[n]++);
+                        }
+                    }
+                
+                    return jogos;
+                }
+
+                function exibirResultadoFechamento(jogos, numerosEscolhidos) {
+                    const resultado = document.getElementById('resultado-fechamento');
+                    
+                    let html = `
+                        <div class="fechamento-resultado">
+                            <h3><i class="fas fa-magic"></i> Sistema de Organização</h3>
+                            <p><strong>Seus números escolhidos:</strong> ${numerosEscolhidos.map(n => String(n).padStart(2, '0')).join(', ')}</p>
+                            <p><strong>Jogos gerados:</strong> ${jogos.length}</p>
+                            
+                            <div style="margin-top: 2rem;">
+                    `;
+
+                    jogos.forEach((jogo, index) => {
+                        html += `
+                            <div class="jogo-fechamento">
+                                <strong>Jogo ${index + 1}:</strong>
+                                ${jogo.map(n => `<span class="numero-jogo">${String(n).padStart(2, '0')}</span>`).join('')}
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                            </div>
+                            
+                            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 4px solid var(--cor-aviso);">
+                                <h4 style="color: var(--cor-aviso); margin-bottom: 0.5rem;">💡 Dica Importante</h4>
+                                <p style="margin: 0; font-size: 1rem;">
+                                    Este é um organizador que distribui seus números escolhidos entre os jogos gerados e gera 10 jogos. 
+                                    Para um fechamento matemático mais avançado, considere usar ferramentas especializadas.
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    
+
+                    resultado.innerHTML = html;
+                    resultado.style.display = 'block';
+                }
+                    
+                // Inicializar quando a página carregar
+                window.addEventListener('load', function() {
                     inicializarSimulador();
-                });
-
-                document.getElementById('btn-simular').addEventListener('click', executarSimulacao);
-                document.getElementById('btn-limpar-simulador').addEventListener('click', function() {
-                    limparSelecao('simulador');
-                });
-
-                // Fechamento
-                document.getElementById('loteria-fechamento').addEventListener('change', function() {
-                    numerosSelecionadosFechamento.clear();
                     inicializarFechamento();
                 });
 
-                document.getElementById('btn-gerar-fechamento').addEventListener('click', gerarFechamento);
-                document.getElementById('btn-limpar-fechamento').addEventListener('click', function() {
-                    limparSelecao('fechamento');
-                });
-            }
-
-            function gerarGridNumeros(tipo, loteria) {
-                const config = LOTTERY_CONFIG[loteria];
-                const grid = document.getElementById(`grid-numeros-${tipo}`);
-                const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
-                
-                grid.innerHTML = '';
-
-                for (let i = config.min_num; i <= config.max_num; i++) {
-                    const button = document.createElement('button');
-                    button.className = 'numero-botao';
-                    button.textContent = String(i).padStart(2, '0');
-                    button.dataset.numero = i;
-                    
-                    if (numeros.has(i)) {
-                        button.classList.add('selecionado');
-                    }
-
-                    button.addEventListener('click', function() {
-                        toggleNumero(tipo, i);
-                    });
-
-                    grid.appendChild(button);
-                }
-            }
-
-            function toggleNumero(tipo, numero) {
-                const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
-                const loteria = tipo === 'simulador' ? loteriaAtualSimulador : loteriaAtualFechamento;
-                const config = LOTTERY_CONFIG[loteria];
-                const button = document.querySelector(`#grid-numeros-${tipo} [data-numero="${numero}"]`);
-
-                if (numeros.has(numero)) {
-                    numeros.delete(numero);
-                    button.classList.remove('selecionado');
-                } else {
-                    // Para o simulador, limitar ao número exato de dezenas
-                    if (tipo === 'simulador' && numeros.size >= config.num_bolas_sorteadas) {
-                        return;
-                    }
-                    // Para fechamento, permitir mais números
-                    if (tipo === 'fechamento' && numeros.size >= config.max_dezenas) {
-                        return;
-                    }
-                    numeros.add(numero);
-                    button.classList.add('selecionado');
-                }
-
-                atualizarContador(tipo);
-                atualizarBotoes(tipo);
-            }
-
-            function atualizarContador(tipo) {
-                const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
-                const loteria = tipo === 'simulador' ? loteriaAtualSimulador : loteriaAtualFechamento;
-                const config = LOTTERY_CONFIG[loteria];
-                const contador = document.getElementById(`contador-${tipo}`);
-
-                if (tipo === 'simulador') {
-                    contador.textContent = `Selecione seus números: ${numeros.size} de ${config.num_bolas_sorteadas} escolhidos`;
-                } else {
-                    const min = config.num_bolas_sorteadas + 1;
-                    contador.textContent = `Selecione seus números favoritos: ${numeros.size} escolhidos (mínimo ${min} para fechamento)`;
-                }
-            }
-
-            function atualizarBotoes(tipo) {
-                const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
-                const loteria = tipo === 'simulador' ? loteriaAtualSimulador : loteriaAtualFechamento;
-                const config = LOTTERY_CONFIG[loteria];
-                const botao = document.getElementById(tipo === 'simulador' ? 'btn-simular' : 'btn-gerar-fechamento');
-
-                if (tipo === 'simulador') {
-                    botao.disabled = numeros.size !== config.num_bolas_sorteadas;
-                } else {
-                    botao.disabled = numeros.size <= config.num_bolas_sorteadas;
-                }
-            }
-
-            function limparSelecao(tipo) {
-                const numeros = tipo === 'simulador' ? numerosSelecionadosSimulador : numerosSelecionadosFechamento;
-                const loteria = tipo === 'simulador' ? loteriaAtualSimulador : loteriaAtualFechamento;
-                
-                numeros.clear();
-                gerarGridNumeros(tipo, loteria);
-                atualizarContador(tipo);
-                atualizarBotoes(tipo);
-                
-                // Esconder resultados - CORREÇÃO: IDs corretos
-                if (tipo === 'simulador') {
-                    document.getElementById('resultado-simulacao').style.display = 'none';
-                } else {
-                    document.getElementById('resultado-fechamento').style.display = 'none';
-                }
-            }
-            async function executarSimulacao() {
-                const loading = document.getElementById('loading-simulador');
-                const resultado = document.getElementById('resultado-simulacao');
-                
-                loading.style.display = 'flex';
-                resultado.style.display = 'none';
-
-                try {
-                    // Buscar TODOS os resultados (sem limite de 20)
-                    const response = await fetch(`/get-todos-resultados?loteria=${loteriaAtualSimulador}`);
-                    const resultados = await response.json();
-
-                    if (resultados.error) {
-                        throw new Error(resultados.error);
-                    }
-
-                    // Executar simulação com todos os concursos
-                    const numerosEscolhidos = Array.from(numerosSelecionadosSimulador);
-                    const simulacao = simularJogos(numerosEscolhidos, resultados, loteriaAtualSimulador);
-                    
-                    exibirResultadoSimulacao(simulacao, numerosEscolhidos, resultados);
-                    
-                } catch (error) {
-                    console.error('Erro na simulação:', error);
-                    resultado.innerHTML = `
-                        <div class="resultado-simulacao" style="border-left-color: var(--cor-erro);">
-                            <h3 style="color: var(--cor-erro);">Erro na Simulação</h3>
-                            <p>Não foi possível executar a simulação. Tente novamente.</p>
-                        </div>
-                    `;
-                    resultado.style.display = 'block';
-                } finally {
-                    loading.style.display = 'none';
-                }
-            }
-
-                        function simularJogos(numerosEscolhidos, resultados, loteria) { // Adicione 'loteria' como parâmetro
-                const acertosPorConcurso = [];
-                let totalAcertosGeral = 0; // Somatório de acertos para a média
-                let melhorAcertoGeral = 0; // Melhor acerto em qualquer concurso/sorteio
-                const distribuicaoAcertos = {}; // Para a tabela de distribuição
-
-                resultados.forEach(concurso => {
-                    let acertosNoConcurso = 0;
-                    let numerosAcertadosNoConcurso = [];
-                    let numerosSorteadosDisplay = concurso.dezenas; // Para exibir no TOP 10
-
-                    if (loteria === 'duplasena') {
-                        // Para Dupla Sena, as dezenas são 12 (6 do 1º sorteio, 6 do 2º)
-                        const dezenasPrimeiroSorteio = concurso.dezenas.split(' ').slice(0, 6).map(n => parseInt(n));
-                        const dezenasSegundoSorteio = concurso.dezenas.split(' ').slice(6, 12).map(n => parseInt(n));
-
-                        const acertos1Sorteio = numerosEscolhidos.filter(n => dezenasPrimeiroSorteio.includes(n));
-                        const acertos2Sorteio = numerosEscolhidos.filter(n => dezenasSegundoSorteio.includes(n));
-
-                        // Considera o melhor acerto entre os dois sorteios para o resultado individual do concurso
-                        if (acertos1Sorteio.length >= acertos2Sorteio.length) {
-                            acertosNoConcurso = acertos1Sorteio.length;
-                            numerosAcertadosNoConcurso = acertos1Sorteio;
-                            numerosSorteadosDisplay = dezenasPrimeiroSorteio.map(n => String(n).padStart(2, '0')).join(' ');
-                        } else {
-                            acertosNoConcurso = acertos2Sorteio.length;
-                            numerosAcertadosNoConcurso = acertos2Sorteio;
-                            numerosSorteadosDisplay = dezenasSegundoSorteio.map(n => String(n).padStart(2, '0')).join(' ');
-                        }
-
-                    } else {
-                        const numerossorteados = concurso.dezenas.split(' ').map(n => parseInt(n));
-                        numerosAcertadosNoConcurso = numerosEscolhidos.filter(n => numerossorteados.includes(n));
-                        acertosNoConcurso = numerosAcertadosNoConcurso.length;
-                    }
-                    
-                    acertosPorConcurso.push({
-                        concurso: concurso.concurso,
-                        data: concurso.data,
-                        numerossorteados: numerosSorteadosDisplay, // Pode ser o 1º sorteio para Dupla Sena
-                        acertos: acertosNoConcurso,
-                        numerosAcertados: numerosAcertadosNoConcurso.map(n => String(n).padStart(2, '0')).join(', ')
-                    });
-
-                    totalAcertosGeral += acertosNoConcurso;
-                    melhorAcertoGeral = Math.max(melhorAcertoGeral, acertosNoConcurso);
-                    distribuicaoAcertos[acertosNoConcurso] = (distribuicaoAcertos[acertosNoConcurso] || 0) + 1;
-                });
-
-                // Ordenar acertosPorConcurso do maior para o menor antes de retornar
-                acertosPorConcurso.sort((a, b) => b.acertos - a.acertos);
-
-                return {
-                    acertos: acertosPorConcurso,
-                    totalAcertos: totalAcertosGeral,
-                    melhorAcerto: melhorAcertoGeral,
-                    mediaAcertos: (totalAcertosGeral / resultados.length).toFixed(2),
-                    distribuicaoAcertos,
-                    totalConcursos: resultados.length
-                };
-            }
-
-            function exibirResultadoSimulacao(simulacao, numerosEscolhidos, resultados) {
-                const resultado = document.getElementById('resultado-simulacao');
-                
-                // Ordenar por maior número de acertos e pegar os 5 primeiros
-                const maioresAcertos = simulacao.acertos
-                    .sort((a, b) => b.acertos - a.acertos)
-                    .slice(0, 5);
-                
-                let html = `
-                    <div class="resultado-simulacao">
-                        <h3><i class="fas fa-chart-line"></i> Resultado da Simulação</h3>
-                        <p><strong>Seus números:</strong> ${numerosEscolhidos.map(n => String(n).padStart(2, '0')).join(', ')}</p>
-                        
-                        <div class="resumo-simulacao">
-                            <div class="card-resumo">
-                                <h4>Total de Acertos</h4>
-                                <span class="numero-destaque">${simulacao.totalAcertos}</span>
-                                <p>em ${simulacao.totalConcursos} concursos</p>
-                            </div>
-                            <div class="card-resumo">
-                                <h4>Melhor Resultado</h4>
-                                <span class="numero-destaque">${simulacao.melhorAcerto}</span>
-                                <p>acertos em um concurso</p>
-                            </div>
-                            <div class="card-resumo">
-                                <h4>Média de Acertos</h4>
-                                <span class="numero-destaque">${simulacao.mediaAcertos}</span>
-                                <p>por concurso</p>
-                            </div>
-                        </div>
-
-                        <h4 style="color: var(--cor-dourado); margin-top: 2rem;">Distribuição de Acertos</h4>
-                        <table class="tabela-resultados">
-                            <thead>
-                                <tr>
-                                    <th>Acertos</th>
-                                    <th>Frequência</th>
-                                    <th>Porcentagem</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-
-                const maxAcertos = Math.max(...Object.keys(simulacao.distribuicaoAcertos).map(k => parseInt(k)));
-                for (let i = maxAcertos; i >= 0; i--) {
-                    const freq = simulacao.distribuicaoAcertos[i] || 0;
-                    const perc = ((freq / simulacao.totalConcursos) * 100).toFixed(1);
-                    html += `
-                        <tr>
-                            <td>${i}</td>
-                            <td>${freq}</td>
-                            <td>${perc}%</td>
-                        </tr>`;
-                }
-
-                html += `
-                            </tbody>
-                        </table>
-
-                        <h4 style="color: var(--cor-dourado); margin-top: 2rem;">Top 5 Maiores Acertos</h4>
-                        <table class="tabela-resultados">
-                            <thead>
-                                <tr>
-                                    <th>Posição</th>
-                                    <th>Concurso</th>
-                                    <th>Data</th>
-                                    <th>Números Sorteados</th>
-                                    <th>Acertos</th>
-                                    <th>Números Acertados</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-
-                maioresAcertos.forEach((item, index) => {
-                    const corLinha = item.acertos >= 4 ? 'style="background-color: rgba(76, 175, 80, 0.2);"' : 
-                                item.acertos >= 3 ? 'style="background-color: rgba(255, 193, 7, 0.2);"' : '';
-                    html += `
-                        <tr ${corLinha}>
-                            <td><strong>${index + 1}º</strong></td>
-                            <td>${item.concurso}</td>
-                            <td>${item.data}</td>
-                            <td>${item.numerossorteados}</td>
-                            <td><strong>${item.acertos}</strong></td>
-                            <td>${item.numerosAcertados || '-'}</td>
-                        </tr>`;
-                });
-
-                html += `
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-
-                resultado.innerHTML = html;
-                resultado.style.display = 'block';
-            }
-
-            async function gerarFechamento() {
-                const loading = document.getElementById('loading-fechamento');
-                const resultado = document.getElementById('resultado-fechamento');
-                
-                loading.style.display = 'flex';
-                resultado.style.display = 'none';
-
-                try {
-                    const numerosEscolhidos = Array.from(numerosSelecionadosFechamento);
-                    const config = LOTTERY_CONFIG[loteriaAtualFechamento];
-                    
-                    // Gerar jogos de fechamento
-                    const jogos = gerarJogosFechamento(numerosEscolhidos, config);
-                    
-                    exibirResultadoFechamento(jogos, numerosEscolhidos);
-                    
-                } catch (error) {
-                    console.error('Erro no fechamento:', error);
-                    resultado.innerHTML = `
-                        <div class="fechamento-resultado" style="border-left-color: var(--cor-erro);">
-                            <h3 style="color: var(--cor-erro);">Erro no Fechamento</h3>
-                            <p>Não foi possível gerar o fechamento. Tente novamente.</p>
-                        </div>
-                    `;
-                    resultado.style.display = 'block';
-                } finally {
-                    loading.style.display = 'none';
-                }
-            }
-
-            function gerarJogosFechamento(numerosEscolhidos, config) {
-                const jogos = [];
-                const maxJogos = 10;
-                const numerosPorJogo = config.num_bolas_sorteadas;
-                
-                if (numerosEscolhidos.length < numerosPorJogo) {
-                    console.warn("Número de dezenas escolhidas é menor que o necessário para um jogo.");
-                    return [];
-                }
-
-                // Caso especial: se escolheu exatamente o necessário para um jogo
-                if (numerosEscolhidos.length === numerosPorJogo) {
-                    return [numerosEscolhidos.sort((a, b) => a - b)];
-                }
-
-                // === ALGORITMO OTIMIZADO DE FECHAMENTO ===
-                
-                // 1. Rastrear frequência de uso de cada número
-                const frequenciaUso = {};
-                numerosEscolhidos.forEach(n => frequenciaUso[n] = 0);
-                
-                const jogosSet = new Set(); // Evitar duplicatas
-                
-                // 2. Primeira rodada: garantir que todos os números apareçam pelo menos uma vez
-                const numerosRestantes = [...numerosEscolhidos];
-                
-                while (numerosRestantes.length >= numerosPorJogo && jogos.length < maxJogos) {
-                    // Ordenar por menor frequência para priorizar números menos usados
-                    numerosRestantes.sort((a, b) => frequenciaUso[a] - frequenciaUso[b]);
-                    
-                    // Pegar os menos usados
-                    const jogo = numerosRestantes.slice(0, numerosPorJogo).sort((a, b) => a - b);
-                    const jogoString = jogo.join(',');
-                    
-                    if (!jogosSet.has(jogoString)) {
-                        jogosSet.add(jogoString);
-                        jogos.push(jogo);
-                        jogo.forEach(n => frequenciaUso[n]++);
-                        
-                        // Remover apenas o primeiro número usado para criar variação
-                        numerosRestantes.shift();
-                    } else {
-                        break;
-                    }
-                }
-                
-                // 3. Segunda rodada: gerar jogos balanceados priorizando combinações
-                let tentativas = 0;
-                const maxTentativas = 1000;
-                
-                while (jogos.length < maxJogos && tentativas < maxTentativas) {
-                    tentativas++;
-                    
-                    // Dividir números em menos usados e mais usados
-                    const ordenadosPorFrequencia = [...numerosEscolhidos]
-                        .sort((a, b) => frequenciaUso[a] - frequenciaUso[b]);
-                    
-                    const menosUsados = ordenadosPorFrequencia.slice(0, Math.ceil(ordenadosPorFrequencia.length / 2));
-                    const maisUsados = ordenadosPorFrequencia.slice(Math.ceil(ordenadosPorFrequencia.length / 2));
-                    
-                    // Criar jogo equilibrado: metade de cada grupo
-                    const metadeJogo = Math.floor(numerosPorJogo / 2);
-                    const jogo = [];
-                    
-                    // Adicionar números menos usados
-                    const menosUsadosShuffled = [...menosUsados].sort(() => Math.random() - 0.5);
-                    jogo.push(...menosUsadosShuffled.slice(0, metadeJogo));
-                    
-                    // Completar com números mais usados ou menos usados se necessário
-                    const restante = numerosPorJogo - jogo.length;
-                    const maisUsadosShuffled = [...maisUsados].sort(() => Math.random() - 0.5);
-                    
-                    for (let i = 0; i < maisUsadosShuffled.length && jogo.length < numerosPorJogo; i++) {
-                        if (!jogo.includes(maisUsadosShuffled[i])) {
-                            jogo.push(maisUsadosShuffled[i]);
-                        }
-                    }
-                    
-                    // Se ainda faltam números, preencher com qualquer um disponível
-                    if (jogo.length < numerosPorJogo) {
-                        for (const num of numerosEscolhidos) {
-                            if (!jogo.includes(num)) {
-                                jogo.push(num);
-                                if (jogo.length === numerosPorJogo) break;
-                            }
-                        }
-                    }
-                    
-                    jogo.sort((a, b) => a - b);
-                    const jogoString = jogo.join(',');
-                    
-                    if (!jogosSet.has(jogoString) && jogo.length === numerosPorJogo) {
-                        jogosSet.add(jogoString);
-                        jogos.push(jogo);
-                        jogo.forEach(n => frequenciaUso[n]++);
-                    }
-                }
-                
-                // 4. Terceira rodada: completar com jogos totalmente aleatórios se necessário
-                tentativas = 0;
-                while (jogos.length < maxJogos && tentativas < maxTentativas) {
-                    tentativas++;
-                    
-                    const numerosShuffled = [...numerosEscolhidos].sort(() => Math.random() - 0.5);
-                    const jogo = numerosShuffled.slice(0, numerosPorJogo).sort((a, b) => a - b);
-                    const jogoString = jogo.join(',');
-                    
-                    if (!jogosSet.has(jogoString)) {
-                        jogosSet.add(jogoString);
-                        jogos.push(jogo);
-                        jogo.forEach(n => frequenciaUso[n]++);
-                    }
-                }
-                
-                return jogos;
-            }
-
-            function exibirResultadoFechamento(jogos, numerosEscolhidos) {
-                const resultado = document.getElementById('resultado-fechamento');
-                
-                let html = `
-                    <div class="fechamento-resultado">
-                        <h3><i class="fas fa-magic"></i> Sistema de Organização</h3>
-                        <p><strong>Seus números escolhidos:</strong> ${numerosEscolhidos.map(n => String(n).padStart(2, '0')).join(', ')}</p>
-                        <p><strong>Jogos gerados:</strong> ${jogos.length}</p>
-                        
-                        <div style="margin-top: 2rem;">
-                `;
-
-                jogos.forEach((jogo, index) => {
-                    html += `
-                        <div class="jogo-fechamento">
-                            <strong>Jogo ${index + 1}:</strong>
-                            ${jogo.map(n => `<span class="numero-jogo">${String(n).padStart(2, '0')}</span>`).join('')}
-                        </div>
-                    `;
-                });
-
-                html += `
-                        </div>
-                        
-                        <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 4px solid var(--cor-aviso);">
-                            <h4 style="color: var(--cor-aviso); margin-bottom: 0.5rem;">💡 Dica Importante</h4>
-                            <p style="margin: 0; font-size: 1rem;">
-                                Este é um organizador que distribui seus números escolhidos entre os jogos gerados e gera 10 jogos. 
-                                Para um fechamento matemático mais avançado, considere usar ferramentas especializadas.
-                            </p>
-                        </div>
-                    </div>
-                `;
-                
-
-                resultado.innerHTML = html;
-                resultado.style.display = 'block';
-            }
-                
-            // Inicializar quando a página carregar
-            window.addEventListener('load', function() {
-                inicializarSimulador();
-                inicializarFechamento();
-            });
-
-           
-            // Carregar footer se não estiver sendo carregado automaticamente
-            fetch('/static/partials/footer.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('footer').innerHTML = html;
-                })
-                .catch(err => console.log('Footer não encontrado'));
-    
-        </script>
+            
+                // Carregar footer se não estiver sendo carregado automaticamente
+                fetch('/static/partials/footer.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('footer').innerHTML = html;
+                    })
+                    .catch(err => console.log('Footer não encontrado'));
+        
+            </script>
     </body>
 </html>
