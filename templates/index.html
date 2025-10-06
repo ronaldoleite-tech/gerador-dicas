@@ -296,9 +296,8 @@
                 </button>
                  
                 <section id="area-resultados" aria-live="polite" aria-atomic="true" style="margin-top:1.5rem;"></section>
-                
-            
 
+                
                 <section id="estatisticas" class="footer-section">
                 <h2>Estatísticas dos Sorteios</h2>
                 <p>Clique e veja a frequência dos números sorteados da Loteria selecionada acima e descubra quais dezenas saem mais.</p>
@@ -345,10 +344,17 @@
 
                 <section id="ultimos-resultados" class="footer-section">
                     <h2>Últimos Resultados</h2>
+
+                    <div id="ultimos-resultados-geral" style="margin-top: 1.5rem; margin-bottom: 2rem;">
+                        <h3 style="color: var(--cor-dourado); text-align: center; margin-bottom: 1rem;">Último Resultado de Cada Loteria</h3>
+                        <div class="spinner" id="spinner-ultimos-geral"></div>
+                    </div>
+                    <br>
+
                     <p>Confira os últimos 20 resultados da loteria selecionada. Ideal para conferir seus bilhetes e analisar tendências.</p>
                     <br>
                     <div class="controle-item">
-                        <label for="loteria-select-resultados">Loteria:</label> <!-- ID da label ajustado -->
+                        <label for="loteria-select-resultados">Loteria:</label>
                         <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)"> <!-- NOVO ID e NOVA FUNÇÃO onchange -->
                             <option value="megasena">Mega-Sena</option>
                             <option value="quina">Quina</option>
