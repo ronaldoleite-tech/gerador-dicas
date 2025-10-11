@@ -25,12 +25,15 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 LOTTERY_CONFIG = {
+    'maismilionaria': {'min_num': 1, 'max_num': 50,   'min_dezenas': 6,  'max_dezenas': 12, 'num_bolas_sorteadas': 6,  'default_dezenas': 6, 'num_trevos_sorteados': 2, 'min_trevo': 1, 'max_trevo': 6},
     'megasena':   {'min_num': 1, 'max_num': 60,   'min_dezenas': 6,  'max_dezenas': 20, 'num_bolas_sorteadas': 6,  'default_dezenas': 6},
     'quina':      {'min_num': 1, 'max_num': 80,   'min_dezenas': 5,  'max_dezenas': 15, 'num_bolas_sorteadas': 5,  'default_dezenas': 5},
     'lotofacil':  {'min_num': 1, 'max_num': 25,   'min_dezenas': 15, 'max_dezenas': 20, 'num_bolas_sorteadas': 15, 'default_dezenas': 15},
     'diadesorte': {'min_num': 1, 'max_num': 31,   'min_dezenas': 7,  'max_dezenas': 15, 'num_bolas_sorteadas': 7,  'default_dezenas': 7},
     'duplasena':  {'min_num': 1, 'max_num': 50,   'min_dezenas': 6,  'max_dezenas': 15, 'num_bolas_sorteadas': 6,  'default_dezenas': 6},
-    'lotomania':  {'min_num': 1, 'max_num': 100,  'min_dezenas': 50, 'max_dezenas': 50, 'num_bolas_sorteadas': 20, 'default_dezenas': 50}
+    'lotomania':  {'min_num': 1, 'max_num': 100,  'min_dezenas': 50, 'max_dezenas': 50, 'num_bolas_sorteadas': 20, 'default_dezenas': 50},
+    'timemania':  {'min_num': 1, 'max_num': 80,   'min_dezenas': 10, 'max_dezenas': 10, 'num_bolas_sorteadas': 7,  'default_dezenas': 10},
+    'supersete':  {'min_num': 0, 'max_num': 9,    'min_dezenas': 7,  'max_dezenas': 7,  'num_bolas_sorteadas': 7,  'default_dezenas': 7}
 }
 
 CONCURSOS_RECENTES = 100
@@ -404,8 +407,6 @@ def gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora=[])
 # --- Endpoints da API ---
 @app.route('/')
 def index():
-    return render_template('index.html')
-
     today = date.today().isoformat() # Ex: "2024-07-25"
     return render_template('index.html', current_date=today)
 
@@ -557,8 +558,11 @@ def get_ultimos_resultados():
     try:
         conn = get_db_connection()
         cur = conn.cursor()
+        
+        # Modificar a query para incluir trevos e time_coracao
         cur.execute("""
-            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado
+            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado,
+                   trevos, time_coracao
             FROM resultados_sorteados 
             WHERE tipo_loteria = %s 
             ORDER BY concurso DESC 
@@ -569,11 +573,8 @@ def get_ultimos_resultados():
         for row in cur.fetchall():
             data_formatada = row[1].strftime('%d/%m/%Y') if isinstance(row[1], date) else row[1]
             
-            # CORREÇÃO: Para Dupla Sena, manter a ordem original do sorteio
-            dezenas_formatadas = row[2]
-            if loteria == 'duplasena':
-                dezenas_array = row[2].split()
-                dezenas_formatadas = " ".join(f"{int(num):02d}" for num in dezenas_array)
+            # Dezenas: já formatado no importador para Super Sete, Dupla Sena
+            dezenas_formatadas = row[2] # Já deve vir formatada corretamente do DB
             
             resultados.append({
                 "concurso": row[0],
@@ -582,7 +583,9 @@ def get_ultimos_resultados():
                 "ganhadores": row[3],
                 "acumulou": row[4],
                 "mes_sorte": row[5],
-                "valor_acumulado": float(row[6]) if row[6] is not None else None
+                "valor_acumulado": float(row[6]) if row[6] is not None else None,
+                "trevos": row[7] if row[7] else None,       # Adicionado para Mais Milionária
+                "time_coracao": row[8] if row[8] else None  # Adicionado para Timemania
             })
             
         cur.close()
@@ -649,7 +652,8 @@ def get_todos_resultados():
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado
+            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado,
+                   trevos, time_coracao
             FROM resultados_sorteados 
             WHERE tipo_loteria = %s 
             ORDER BY concurso DESC;
@@ -666,7 +670,9 @@ def get_todos_resultados():
                 "ganhadores": row[3],
                 "acumulou": row[4],
                 "mes_sorte": row[5],
-                "valor_acumulado": float(row[6]) if row[6] is not None else None
+                "valor_acumulado": float(row[6]) if row[6] is not None else None,
+                "trevos": row[7] if row[7] else None,       # Adicionado
+                "time_coracao": row[8] if row[8] else None  # Adicionado
             })
             
         cur.close()
@@ -678,7 +684,11 @@ def get_todos_resultados():
     finally:
         if conn: 
             conn.close()
-           
+
+@app.route('/landing')
+def promocional():
+    return render_template('landing.html')
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     debug_mode = os.environ.get('RENDER') is None

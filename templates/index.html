@@ -30,11 +30,13 @@
             // <event_parameters>
             });
         </script>
-
+        
+        <!-- ============== Trocar em 01/01/2026 (também as outras informações da Mega da Virada) ============== -->
+        <meta name="description" content="Mega da Virada 2025: veja resultados históricos, dezenas mais sorteadas e análises exclusivas do Sorte Analisada.">
+        
         <!-- ============== METADADOS E SEO ============== -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Gerador de números para Mega-Sena, Quina, Lotofácil e outras loterias. Análise estatística de resultados históricos, gráficos e últimos sorteios. Ferramenta gratuita para maiores de 18 anos.">
         <link rel="icon" href="/static/images/logotipo.png" type="image/png">
 
         <!-- ============== FONTES E SCRIPTS EXTERNOS ============== -->
@@ -47,8 +49,8 @@
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://sorteanalisada.com.br">
-        <meta property="og:title" content="Gerador de Números para Loterias | Sorte Analisada">
-        <meta property="og:description" content="Ferramenta gratuita para gerar números de loterias com análise estatística. Mega-Sena, Quina, Lotofácil e mais. Resultados atualizados diariamente.">
+        <meta property="og:title" content="Sorte Analisada - Análise de Loterias com Estatísticas">
+        <meta property="og:description" content="Descubra análises, estatísticas e simulações das principais loterias. Veja padrões, tendências e resultados históricos com o Sorte Analisada.">
         <meta property="og:image" content="https://sorteanalisada.com.br/static/images/og-image.jpg">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
@@ -57,8 +59,8 @@
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Gerador de Números para Loterias | Sorte Analisada">
-        <meta name="twitter:description" content="Análise estatística e geração de números para loterias brasileiras. Gratuito e educativo.">
+        <meta name="twitter:title" content="Sorte Analisada - Análise e Simulação de Loterias">
+        <meta name="twitter:description" content="Gere números e analise padrões das principais loterias brasileiras com dados reais e estatísticas precisas.">
         <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/twitter-card.jpg">
 
         <!-- Canonical -->
@@ -209,8 +211,31 @@
             }
             </script>
 
+            <script type="application/ld+json" id="schema-megadavirada">
+            {
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "name": "Resultados Históricos da Mega da Virada",
+            "description": "Tabela com todos os resultados da Mega da Virada desde 2008 até 2024, incluindo análise das dezenas mais sorteadas.",
+            "url": "https://sorteanalisada.com.br/#megadavirada",
+            "creator": {
+                "@type": "Organization",
+                "name": "Sorte Analisada",
+                "url": "https://sorteanalisada.com.br"
+            },
+            "keywords": [
+                "mega da virada 2024", "resultado mega da virada", 
+                "dezenas mais sorteadas mega da virada", 
+                "estatísticas mega da virada", "histórico mega da virada"
+            ],
+            "license": "https://creativecommons.org/licenses/by/4.0/",
+            "dateModified": "2025-01-01",
+            "isAccessibleForFree": true
+            }
+            </script>
+            
         <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
-        <link rel="stylesheet" href="static/css/styles.min.css">
+        <link rel="stylesheet" href="static/css/styles.css">
         
     </head>
     <body>
@@ -235,6 +260,7 @@
                 <a href="#estatisticas">Estatisticas</a>
                 <a href="#sobre-filtros">Métodos</a>
                 <a href="#ultimos-resultados">Últimos Resultados</a>
+                <a href="#megadavirada 2025">Mega da Virada</a>
                 <a href="/simulador">Analisador</a>
                 <a href="/blog">Blog</a>
                 <a href="#sobre">Sobre</a>
@@ -345,7 +371,7 @@
                 <section id="ultimos-resultados" class="footer-section">
                     <h2>Últimos Resultados</h2>
 
-                    <p>Confira o último resultado da Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania.</p>
+                    <p>Confira o último resultado da +Milionária, Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena, Lotomania, Timemania e Super Sete.</p>
 
                     <div id="ultimos-resultados-geral" style="margin-top: 1.5rem; margin-bottom: 2rem;">
                         <h3 style="color: var(--cor-dourado); text-align: center; margin-bottom: 1rem;">Loterias</h3>
@@ -357,13 +383,16 @@
                     <br>
                     <div class="controle-item">
                         <label for="loteria-select-resultados">Loteria:</label>
-                        <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)"> <!-- NOVO ID e NOVA FUNÇÃO onchange -->
+                        <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)">
+                            <option value="maismilionaria">+Milionária</option> <!-- Adicionado -->
                             <option value="megasena">Mega-Sena</option>
                             <option value="quina">Quina</option>
                             <option value="lotofacil">Lotofácil</option>
                             <option value="diadesorte">Dia de Sorte</option>
                             <option value="duplasena">Dupla Sena</option>
                             <option value="lotomania">Lotomania</option>
+                            <option value="timemania">Timemania</option> <!-- Adicionado -->
+                            <option value="supersete">Super Sete</option> <!-- Adicionado -->
                         </select>
                     </div>
                     <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
@@ -372,6 +401,199 @@
                     </div>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
+
+
+                <section id="megadavirada" class="footer-section">
+                    <h2>Mega da Virada 2025 – Estatísticas e Números Mais Sorteados</h2>
+                    
+                    <p>
+                        <strong>Mega da Virada</strong> - Prêmio estimado em mais de <strong>R$600 Milhões!!</strong><br>Esta chegando o sorteio mais esperado do ano.  
+                        Diferente dos concursos regulares da Mega-Sena, a Mega da Virada <strong>não acumula</strong>: 
+                        se ninguém acerta as seis dezenas, o prêmio vai para quem acertar cinco, e assim por diante.
+                    </p><br>
+
+                    <p>
+                        Desde sua criação em <strong>2008</strong>, este concurso especial já distribuiu <strong>Bilhões de Reais</strong> em prêmios 
+                        e consagrou dezenas de sortudos. A seguir, você confere todos os resultados históricos da Mega da Virada, 
+                        e também um levantamento exclusivo do <strong>Sorte Analisada</strong> mostrando quais dezenas mais apareceram ao longo dos anos.
+                    </p>    
+                    <br>
+                    <p>   
+                        Milhões de brasileiros fazem suas apostas na Mega da Virada em busca de começar o ano novo com o pé direito e com o bolso cheio.
+                        Aproveite as nossas ferramentas para gerar os números para a sua aposta particular ou para colocar nos bolões com os amigos da empresa, da academia, da faculdade...
+                    </p>
+
+                    <h3>📅 Resultados Históricos da Mega da Virada</h3>
+                    <p style="color:#ccc; margin-top:0.5rem;">
+                    Dados consolidados dos concursos oficiais da Mega da Virada (2008–2024).
+                    </p>
+
+                    <div style="overflow-x:auto; margin-top: 1rem;">
+                        <table class="tabela-resultados" style="width:100%; border-collapse: collapse; text-align:center;">
+                            <thead>
+                                <tr style="background-color: rgba(255,255,255,0.1);">
+                                    <th>Concurso</th>
+                                    <th>Data Sorteio</th>
+                                    <th>1ª Dezena</th>
+                                    <th>2ª Dezena</th>
+                                    <th>3ª Dezena</th>
+                                    <th>4ª Dezena</th>
+                                    <th>5ª Dezena</th>
+                                    <th>6ª Dezena</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1035</td><td>31/12/2008</td><td>1</td><td>11</td><td>26</td><td>51</td><td>59</td><td>60</td></tr>
+                                <tr><td>1140</td><td>31/12/2009</td><td>10</td><td>27</td><td>40</td><td>46</td><td>49</td><td>58</td></tr>
+                                <tr><td>1245</td><td>31/12/2010</td><td>2</td><td>10</td><td>34</td><td>37</td><td>43</td><td>50</td></tr>
+                                <tr><td>1350</td><td>31/12/2011</td><td>3</td><td>4</td><td>29</td><td>36</td><td>45</td><td>55</td></tr>
+                                <tr><td>1455</td><td>31/12/2012</td><td>14</td><td>32</td><td>33</td><td>36</td><td>41</td><td>52</td></tr>
+                                <tr><td>1560</td><td>31/12/2013</td><td>20</td><td>30</td><td>36</td><td>38</td><td>47</td><td>53</td></tr>
+                                <tr><td>1665</td><td>31/12/2014</td><td>1</td><td>5</td><td>11</td><td>16</td><td>20</td><td>56</td></tr>
+                                <tr><td>1775</td><td>31/12/2015</td><td>2</td><td>18</td><td>31</td><td>42</td><td>51</td><td>56</td></tr>
+                                <tr><td>1890</td><td>31/12/2016</td><td>5</td><td>11</td><td>22</td><td>24</td><td>51</td><td>53</td></tr>
+                                <tr><td>2000</td><td>31/12/2017</td><td>3</td><td>6</td><td>10</td><td>17</td><td>34</td><td>37</td></tr>
+                                <tr><td>2110</td><td>31/12/2018</td><td>5</td><td>10</td><td>12</td><td>18</td><td>25</td><td>33</td></tr>
+                                <tr><td>2220</td><td>31/12/2019</td><td>3</td><td>35</td><td>38</td><td>40</td><td>57</td><td>58</td></tr>
+                                <tr><td>2330</td><td>31/12/2020</td><td>17</td><td>20</td><td>22</td><td>35</td><td>41</td><td>42</td></tr>
+                                <tr><td>2440</td><td>31/12/2021</td><td>12</td><td>15</td><td>23</td><td>32</td><td>33</td><td>46</td></tr>
+                                <tr><td>2550</td><td>31/12/2022</td><td>4</td><td>5</td><td>10</td><td>34</td><td>58</td><td>59</td></tr>
+                                <tr><td>2670</td><td>31/12/2023</td><td>21</td><td>24</td><td>33</td><td>41</td><td>48</td><td>56</td></tr>
+                                <tr><td>2810</td><td>31/12/2024</td><td>1</td><td>17</td><td>19</td><td>29</td><td>50</td><td>57</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin-top:2rem;">🔢 Dezenas Mais Sorteadas na Mega da Virada</h3>
+                    <p>Veja quantas vezes cada número já apareceu nos sorteios da Mega da Virada (2008–2024):</p>
+
+                    <div style="overflow-x:auto; margin-top: 1rem;">
+                        <table class="tabela-resultados" style="width:100%; border-collapse: collapse; text-align:center;">
+                            <thead>
+                                <tr style="background-color: rgba(255,255,255,0.1);">
+                                    <th>Nº</th>
+                                    <th>Vezes que saiu na Mega da Virada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>10</td><td>5</td></tr>
+                                <tr><td>5</td><td>4</td></tr>
+                                <tr><td>33</td><td>4</td></tr>
+                                <tr><td>17</td><td>3</td></tr>
+                                <tr><td>34</td><td>3</td></tr>
+                                <tr><td>58</td><td>3</td></tr>
+                                <tr><td>1</td><td>3</td></tr>
+                                <tr><td>3</td><td>3</td></tr>
+                                <tr><td>41</td><td>3</td></tr>
+                                <tr><td>51</td><td>3</td></tr>
+                                <tr><td>56</td><td>3</td></tr>
+                                <tr><td>36</td><td>3</td></tr>
+                                <tr><td>11</td><td>3</td></tr>
+                                <tr><td>20</td><td>3</td></tr>
+                                <tr><td>32</td><td>2</td></tr>
+                                <tr><td>4</td><td>2</td></tr>
+                                <tr><td>35</td><td>2</td></tr>
+                                <tr><td>50</td><td>2</td></tr>
+                                <tr><td>2</td><td>2</td></tr>
+                                <tr><td>12</td><td>2</td></tr>
+                                <tr><td>24</td><td>2</td></tr>
+                                <tr><td>37</td><td>2</td></tr>
+                                <tr><td>40</td><td>2</td></tr>
+                                <tr><td>42</td><td>2</td></tr>
+                                <tr><td>46</td><td>2</td></tr>
+                                <tr><td>53</td><td>2</td></tr>
+                                <tr><td>59</td><td>2</td></tr>
+                                <tr><td>18</td><td>2</td></tr>
+                                <tr><td>22</td><td>2</td></tr>
+                                <tr><td>29</td><td>2</td></tr>
+                                <tr><td>38</td><td>2</td></tr>
+                                <tr><td>57</td><td>2</td></tr>
+                                <tr><td>6</td><td>1</td></tr>
+                                <tr><td>19</td><td>1</td></tr>
+                                <tr><td>26</td><td>1</td></tr>
+                                <tr><td>45</td><td>1</td></tr>
+                                <tr><td>47</td><td>1</td></tr>
+                                <tr><td>49</td><td>1</td></tr>
+                                <tr><td>14</td><td>1</td></tr>
+                                <tr><td>15</td><td>1</td></tr>
+                                <tr><td>16</td><td>1</td></tr>
+                                <tr><td>21</td><td>1</td></tr>
+                                <tr><td>23</td><td>1</td></tr>
+                                <tr><td>25</td><td>1</td></tr>
+                                <tr><td>55</td><td>1</td></tr>
+                                <tr><td>60</td><td>1</td></tr>
+                                <tr><td>27</td><td>1</td></tr>
+                                <tr><td>30</td><td>1</td></tr>
+                                <tr><td>31</td><td>1</td></tr>
+                                <tr><td>43</td><td>1</td></tr>
+                                <tr><td>48</td><td>1</td></tr>
+                                <tr><td>52</td><td>1</td></tr>
+                                <tr><td>7</td><td>0</td></tr>
+                                <tr><td>8</td><td>0</td></tr>
+                                <tr><td>9</td><td>0</td></tr>
+                                <tr><td>13</td><td>0</td></tr>
+                                <tr><td>39</td><td>0</td></tr>
+                                <tr><td>44</td><td>0</td></tr>
+                                <tr><td>54</td><td>0</td></tr>
+                                <tr><td>28</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+  
+                    <h3 style="margin-top:2rem; color:#fff;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2099/2099058.png" width="22" style="vertical-align:middle; margin-right:8px;">
+                    Top 10 Dezenas Mais Sorteadas na Mega da Virada
+                    </h3>
+                    <canvas id="graficoMegaVirada" style="max-width:800px; margin:1rem auto; display:block;"></canvas>
+
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                    const ctx = document.getElementById("graficoMegaVirada").getContext("2d");
+                    const dados = {
+                        labels: ["10", "5", "33", "17", "34", "58", "1", "3", "41", "51"],
+                        datasets: [{
+                        label: "Vezes que saíram (2008–2024)",
+                        data: [5, 4, 4, 3, 3, 3, 3, 3, 3, 3],
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        backgroundColor: "rgba(255, 255, 255, 0.6)",
+                        borderColor: "#ffffff",
+                        hoverBackgroundColor: "rgba(255, 255, 255, 0.9)"
+                        }]
+                    };
+                    new Chart(ctx, {
+                        type: "bar",
+                        data: dados,
+                        options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                            ticks: { color: "#ffffff", font: { size: 13, weight: "bold" } },
+                            grid: { color: "rgba(255,255,255,0.15)" }
+                            },
+                            y: {
+                            beginAtZero: true,
+                            ticks: { color: "#ffffff", stepSize: 1 },
+                            grid: { color: "rgba(255,255,255,0.15)" }
+                            }
+                        }
+                        }
+                    });
+                    });
+                    </script>
+
+                    <p style="margin-top: 1.5rem; color: var(--text-gray); font-size: 0.9rem; line-height: 1.4;">
+                        ⚠️ A Mega da Virada é um concurso especial da Caixa Econômica Federal®. Este conteúdo é apenas informativo e educativo. 
+                        O Sorte Analisada não possui vínculo com a Caixa e não garante resultados. Jogue com responsabilidade.
+                    </p>
+                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+                </section>
+                
+
 
                 <section id="link" class="footer-section">
                     <h2>Conheça o nosso Blog e o Analisador</h2>
@@ -505,7 +727,7 @@
             
             
                 <!-- Scripts com defer (carregam sem bloquear a renderização) -->
-                <script defer src="/static/js/scripts.min.js"></script>
+                <script defer src="/static/js/scripts.js"></script>
 
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
