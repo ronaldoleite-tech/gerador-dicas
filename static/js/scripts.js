@@ -679,7 +679,7 @@ async function carregarUltimosResultadosGeral() {
 
     let allResultsHtml = '';
     // ... dentro da função carregarUltimosResultadosGeral()
-    const loteriasParaExibir = ["maismilionaria", "megasena", "quina", "lotofacil", "diadesorte", "duplasena", "lotomania", "timemania", "supersete"]; // MODIFICADO
+    const loteriasParaExibir = ["maismilionaria", "megasena", "quina", "lotofacil", "diadesorte", "duplasena", "lotomania", "timemania", "supersete"]; 
 // ...
 
     try {
@@ -825,18 +825,24 @@ function criarHtmlResultado(resultado, loteria) {
     `;
 }
 
-
 function criarStatusHtml(resultado) {
+    let html = '';
+    
+    // Verificar se acumulou
     if (resultado.acumulou) {
-        let html = `<span class="status-acumulou">ACUMULOU</span>`;
-        if (resultado.valor_acumulado) {
-            html += `<div class="valor-acumulado">Prêmio estimado: R$ ${resultado.valor_acumulado.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>`;
-        }
-        return html;
+        html += `<span class="status-acumulou">ACUMULOU</span>`;
+    } else {
+        // Mostrar quantidade de ganhadores
+        const labelGanhador = resultado.ganhadores > 1 ? "Ganhadores" : "Ganhador";
+        html += `<span class="status-ganhador">${resultado.ganhadores} ${labelGanhador}</span>`;
     }
     
-    const labelGanhador = resultado.ganhadores > 1 ? "Ganhadores" : "Ganhador";
-    return `<span class="status-ganhador">${resultado.ganhadores} ${labelGanhador}</span>`;
+    // Sempre mostrar o prêmio estimado para o próximo concurso (se disponível)
+    if (resultado.valor_acumulado) {
+        html += `<div class="valor-acumulado">Prêmio estimado para próximo concurso: R$ ${resultado.valor_acumulado.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>`;
+    }
+    
+    return html;
 }
 
 function criarMesHtml(resultado, loteria) {

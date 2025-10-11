@@ -117,7 +117,9 @@ def verificar_e_atualizar_estrutura_tabela(conn):
             # Colunas para verificar/adicionar
             colunas_para_adicionar = {
                 'trevos': 'VARCHAR(20)',
-                'time_coracao': 'VARCHAR(100)'
+                'time_coracao': 'VARCHAR(100)',
+                'valor_proximo_concurso': 'NUMERIC(15,2)'  # ✅ ADICIONADO
+                
             }
             
             # Adiciona colunas faltantes
@@ -170,11 +172,8 @@ def get_ultimo_concurso(conn, loteria: str) -> int:
 
 def processar_valor_acumulado(valor_acumulado_api: Any, acumulou: bool) -> Optional[float]:
     """Processa o valor acumulado vindo da API, tratando formatos e nulos."""
-    if not acumulou:
-        return 0.0 # Se não acumulou, o valor acumulado é zero para o próximo concurso
-    
     if valor_acumulado_api is None:
-        return None # Pode ser que a API não informe ou seja um erro
+        return None
     
     try:
         if isinstance(valor_acumulado_api, str):
@@ -184,7 +183,7 @@ def processar_valor_acumulado(valor_acumulado_api: Any, acumulou: bool) -> Optio
                           .replace('.', '')
                           .replace(',', '.')
                           .strip())
-            return float(valor_limpo) if valor_limpo else 0.0
+            return float(valor_limpo) if valor_limpo else None
         return float(valor_acumulado_api)
     except (ValueError, TypeError) as e:
         logger.warning(f"⚠️ Erro ao processar valor acumulado '{valor_acumulado_api}': {e}. Retornando None.")
@@ -298,7 +297,7 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
         premiacoes = dados_api.get('premiacoes', [])
         if premiacoes and len(premiacoes) > 0:
             ganhadores = premiacoes[0].get('ganhadores', 0)
-        
+
         # Mês da Sorte (apenas para Dia de Sorte)
         mes_sorte = dados_api.get('mesSorte') if nome_loteria == 'diadesorte' else None
 
@@ -308,7 +307,11 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
 
         # Time do Coração (apenas para Timemania)
         time_coracao = dados_api.get('timeCoracao') if nome_loteria == 'timemania' else None
-        
+
+        # ✅ NOVO: Valor do próximo concurso (sempre que disponível)
+        valor_proximo_concurso_api = dados_api.get('valorEstimadoProximoConcurso')
+        valor_proximo_concurso = processar_valor_acumulado(valor_proximo_concurso_api, False) if valor_proximo_concurso_api else None
+
         return {
             'concurso': concurso,
             'data_sorteio': data_sorteio,
@@ -317,8 +320,9 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
             'acumulou': acumulou,
             'mes_sorte': mes_sorte,
             'valor_acumulado': valor_acumulado,
-            'trevos': trevos_str,          # Adicionado
-            'time_coracao': time_coracao   # Adicionado
+            'trevos': trevos_str,
+            'time_coracao': time_coracao,
+            'valor_proximo_concurso': valor_proximo_concurso  # ✅ ADICIONADO
         }
         
     except Exception as e:
@@ -345,7 +349,7 @@ def inserir_ou_atualizar_resultado(conn, nome_loteria: str, dados_processados: D
             ]
             
             # Adiciona colunas extras apenas se existirem na tabela
-            colunas_extras = ['trevos', 'time_coracao']
+            colunas_extras = ['trevos', 'time_coracao', 'valor_proximo_concurso']  # ✅ ADICIONADO
             colunas_para_inserir = colunas_base.copy()
             placeholders = ['%s'] * len(colunas_base)
             

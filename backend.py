@@ -554,20 +554,21 @@ def get_stats():
 @app.route('/get-ultimos-resultados')
 def get_ultimos_resultados():
     loteria = request.args.get('loteria', 'megasena', type=str)
+    limite = request.args.get('limite', 20, type=int)  # Parâmetro opcional para limitar resultados
     conn = None
     try:
         conn = get_db_connection()
         cur = conn.cursor()
         
-        # Modificar a query para incluir trevos e time_coracao
+        # Modificar a query para incluir trevos, time_coracao e valor_proximo_concurso
         cur.execute("""
-            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado,
-                   trevos, time_coracao
+            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, 
+                   valor_acumulado, trevos, time_coracao, valor_proximo_concurso
             FROM resultados_sorteados 
             WHERE tipo_loteria = %s 
             ORDER BY concurso DESC 
-            LIMIT 20;
-        """, (loteria,))
+            LIMIT %s;
+        """, (loteria, limite))
         
         resultados = []
         for row in cur.fetchall():
@@ -576,6 +577,13 @@ def get_ultimos_resultados():
             # Dezenas: já formatado no importador para Super Sete, Dupla Sena
             dezenas_formatadas = row[2] # Já deve vir formatada corretamente do DB
             
+            # Priorizar valor_proximo_concurso, depois valor_acumulado
+            valor_premio = None
+            if row[9] is not None:  # valor_proximo_concurso (índice 9)
+                valor_premio = float(row[9])
+            elif row[6] is not None:  # valor_acumulado (índice 6)
+                valor_premio = float(row[6])
+            
             resultados.append({
                 "concurso": row[0],
                 "data": data_formatada,
@@ -583,7 +591,7 @@ def get_ultimos_resultados():
                 "ganhadores": row[3],
                 "acumulou": row[4],
                 "mes_sorte": row[5],
-                "valor_acumulado": float(row[6]) if row[6] is not None else None,
+                "valor_acumulado": valor_premio,  # Agora sempre terá valor quando disponível
                 "trevos": row[7] if row[7] else None,       # Adicionado para Mais Milionária
                 "time_coracao": row[8] if row[8] else None  # Adicionado para Timemania
             })
@@ -592,11 +600,9 @@ def get_ultimos_resultados():
         return jsonify(resultados)
         
     except Exception as e:
-        logger.error(f"❌ Erro em /get-ultimos-resultados: {e}")
         return jsonify({"error": str(e)}), 500
     finally:
-        if conn: 
-            conn.close()
+        if conn: conn.close()
 
 @app.route('/get-stats-recentes')
 def get_stats_recentes():
@@ -652,8 +658,8 @@ def get_todos_resultados():
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, valor_acumulado,
-                   trevos, time_coracao
+            SELECT concurso, data_sorteio, dezenas, ganhadores, acumulou, mes_sorte, 
+                   valor_acumulado, trevos, time_coracao, valor_proximo_concurso
             FROM resultados_sorteados 
             WHERE tipo_loteria = %s 
             ORDER BY concurso DESC;
@@ -663,6 +669,13 @@ def get_todos_resultados():
         for row in cur.fetchall():
             data_formatada = row[1].strftime('%d/%m/%Y') if isinstance(row[1], date) else row[1]
             
+            # Priorizar valor_proximo_concurso, depois valor_acumulado
+            valor_premio = None
+            if row[9] is not None:  # valor_proximo_concurso
+                valor_premio = float(row[9])
+            elif row[6] is not None:  # valor_acumulado
+                valor_premio = float(row[6])
+            
             resultados.append({
                 "concurso": row[0],
                 "data": data_formatada,
@@ -670,24 +683,18 @@ def get_todos_resultados():
                 "ganhadores": row[3],
                 "acumulou": row[4],
                 "mes_sorte": row[5],
-                "valor_acumulado": float(row[6]) if row[6] is not None else None,
-                "trevos": row[7] if row[7] else None,       # Adicionado
-                "time_coracao": row[8] if row[8] else None  # Adicionado
+                "valor_acumulado": valor_premio,
+                "trevos": row[7] if row[7] else None,
+                "time_coracao": row[8] if row[8] else None
             })
             
         cur.close()
         return jsonify(resultados)
         
     except Exception as e:
-        logger.error(f"❌ Erro em /get-todos-resultados: {e}")
         return jsonify({"error": str(e)}), 500
     finally:
-        if conn: 
-            conn.close()
-
-@app.route('/landing')
-def promocional():
-    return render_template('landing.html')
+        if conn: conn.close()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
