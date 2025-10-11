@@ -3,7 +3,7 @@ import os
 import requests
 import psycopg2
 import logging
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional, Dict, Any
 from contextlib import contextmanager
 from dotenv import load_dotenv
@@ -20,14 +20,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# APIs das loterias
+# APIs das loterias (completa)
 LOTERIAS_API = {
-    "megasena": "https://loteriascaixa-api.herokuapp.com/api/megasena",
-    "lotofacil": "https://loteriascaixa-api.herokuapp.com/api/lotofacil",
-    "quina": "https://loteriascaixa-api.herokuapp.com/api/quina",
-    "diadesorte": "https://loteriascaixa-api.herokuapp.com/api/diadesorte",
-    "duplasena": "https://loteriascaixa-api.herokuapp.com/api/duplasena",
-    "lotomania": "https://loteriascaixa-api.herokuapp.com/api/lotomania"
+    'maismilionaria': 'https://loteriascaixa-api.herokuapp.com/api/maismilionaria',
+    'megasena': 'https://loteriascaixa-api.herokuapp.com/api/megasena',
+    'lotofacil': 'https://loteriascaixa-api.herokuapp.com/api/lotofacil',
+    'quina': 'https://loteriascaixa-api.herokuapp.com/api/quina',
+    'lotomania': 'https://loteriascaixa-api.herokuapp.com/api/lotomania',
+    'timemania': 'https://loteriascaixa-api.herokuapp.com/api/timemania',
+    'duplasena': 'https://loteriascaixa-api.herokuapp.com/api/duplasena',
+    'diadesorte': 'https://loteriascaixa-api.herokuapp.com/api/diadesorte',
+    'supersete': 'https://loteriascaixa-api.herokuapp.com/api/supersete'
 }
 
 # Configuration constants
@@ -71,7 +74,7 @@ def get_db_connection_context():
 def verificar_e_atualizar_estrutura_tabela(conn):
     """Verifica e atualiza a estrutura da tabela para compatibilidade."""
     with conn.cursor() as cur:
-        # Primeiro, verifica se a tabela existe
+        # Verifica se a tabela existe
         cur.execute("""
             SELECT EXISTS (
                 SELECT FROM information_schema.tables 
@@ -93,90 +96,67 @@ def verificar_e_atualizar_estrutura_tabela(conn):
                     acumulou BOOLEAN DEFAULT FALSE,
                     mes_sorte VARCHAR(50),
                     valor_acumulado DECIMAL(18, 2),
+                    trevos VARCHAR(20),
+                    time_coracao VARCHAR(100),
                     data_importacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     UNIQUE (tipo_loteria, concurso)
                 );
             """)
+            logger.info("✅ Tabela 'resultados_sorteados' criada com sucesso.")
         else:
             logger.info("Tabela 'resultados_sorteados' existe. Verificando/adicionando colunas...")
             
-            # Verifica quais colunas existem
+            # Obtém colunas existentes
             cur.execute("""
                 SELECT column_name 
                 FROM information_schema.columns 
                 WHERE table_name = 'resultados_sorteados';
             """)
-            colunas_existentes = [row[0] for row in cur.fetchall()]
+            colunas_existentes = {row[0] for row in cur.fetchall()}
             
-            # Lista de colunas necessárias e seus tipos
-            colunas_necessarias = {
-                'data_sorteio': 'DATE',
-                'dezenas': 'VARCHAR(255) NOT NULL',
-                'ganhadores': 'INTEGER DEFAULT 0',
-                'acumulou': 'BOOLEAN DEFAULT FALSE',
-                'mes_sorte': 'VARCHAR(50)',
-                'valor_acumulado': 'DECIMAL(18, 2)',
-                'data_importacao': 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
+            # Colunas para verificar/adicionar
+            colunas_para_adicionar = {
+                'trevos': 'VARCHAR(20)',
+                'time_coracao': 'VARCHAR(100)'
             }
             
-            # Adiciona colunas que não existem
-            for coluna, tipo in colunas_necessarias.items():
+            # Adiciona colunas faltantes
+            for coluna, tipo in colunas_para_adicionar.items():
                 if coluna not in colunas_existentes:
-                    logger.info(f"Adicionando coluna '{coluna}' do tipo {tipo}...")
+                    logger.info(f"➕ Adicionando coluna '{coluna}'...")
                     try:
-                        cur.execute(f"""
-                            ALTER TABLE resultados_sorteados 
-                            ADD COLUMN {coluna} {tipo};
-                        """)
+                        cur.execute(f"ALTER TABLE resultados_sorteados ADD COLUMN {coluna} {tipo};")
+                        logger.info(f"✅ Coluna '{coluna}' adicionada com sucesso.")
                     except Exception as e:
-                        logger.warning(f"Não foi possível adicionar a coluna '{coluna}'. Pode já existir ou haver outro problema: {e}")
-            
-            # Garante que os valores padrão estejam corretos
-            if 'ganhadores' in colunas_existentes:
-                cur.execute("""
-                    UPDATE resultados_sorteados 
-                    SET ganhadores = 0 
-                    WHERE ganhadores IS NULL;
-                """)
-                cur.execute("""
-                    ALTER TABLE resultados_sorteados 
-                    ALTER COLUMN ganhadores SET DEFAULT 0;
-                """)
-            
-            if 'acumulou' in colunas_existentes:
-                cur.execute("""
-                    UPDATE resultados_sorteados 
-                    SET acumulou = FALSE 
-                    WHERE acumulou IS NULL;
-                """)
-                cur.execute("""
-                    ALTER TABLE resultados_sorteados 
-                    ALTER COLUMN acumulou SET DEFAULT FALSE;
-                """)
-            
-            # Adiciona a restrição UNIQUE se não existir
-            cur.execute("""
-                DO $$ BEGIN
-                    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'resultados_sorteados_tipo_loteria_concurso_key') THEN
-                        ALTER TABLE resultados_sorteados ADD CONSTRAINT resultados_sorteados_tipo_loteria_concurso_key UNIQUE (tipo_loteria, concurso);
-                    END IF;
-                END $$;
-            """)
+                        logger.error(f"❌ Erro ao adicionar coluna '{coluna}': {e}")
 
-        # Criar índices se não existirem (melhora performance de busca)
-        cur.execute("""
-            CREATE INDEX IF NOT EXISTS idx_tipo_concurso 
-            ON resultados_sorteados (tipo_loteria, concurso);
-        """)
-        
-        cur.execute("""
-            CREATE INDEX IF NOT EXISTS idx_data_sorteio 
-            ON resultados_sorteados (data_sorteio);
-        """)
+        # Cria índices para melhor performance
+        try:
+            cur.execute("""
+                CREATE INDEX IF NOT EXISTS idx_tipo_loteria_concurso 
+                ON resultados_sorteados(tipo_loteria, concurso);
+            """)
+            logger.info("✅ Índice verificado/criado com sucesso.")
+        except Exception as e:
+            logger.error(f"❌ Erro ao criar índice: {e}")
         
         conn.commit()
     
     logger.info("✅ Estrutura da tabela verificada e atualizada com sucesso.")
+
+def verificar_estrutura_tabela(conn):
+    """Verifica a estrutura atual da tabela"""
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT column_name, data_type, is_nullable
+            FROM information_schema.columns 
+            WHERE table_name = 'resultados_sorteados'
+            ORDER BY ordinal_position;
+        """)
+        colunas = cur.fetchall()
+        logger.info("📋 Estrutura atual da tabela:")
+        for coluna in colunas:
+            logger.info(f"   - {coluna[0]} ({coluna[1]}, nullable: {coluna[2]})")
 
 def get_ultimo_concurso(conn, loteria: str) -> int:
     """Obtém o número do último concurso para uma loteria específica no banco de dados."""
@@ -191,10 +171,10 @@ def get_ultimo_concurso(conn, loteria: str) -> int:
 def processar_valor_acumulado(valor_acumulado_api: Any, acumulou: bool) -> Optional[float]:
     """Processa o valor acumulado vindo da API, tratando formatos e nulos."""
     if not acumulou:
-        return 0.0
+        return 0.0 # Se não acumulou, o valor acumulado é zero para o próximo concurso
     
     if valor_acumulado_api is None:
-        return None
+        return None # Pode ser que a API não informe ou seja um erro
     
     try:
         if isinstance(valor_acumulado_api, str):
@@ -221,7 +201,7 @@ def processar_data(data_str: str) -> Optional[str]:
             parsed_date = datetime.strptime(data_str, '%d/%m/%Y')
             return parsed_date.strftime('%Y-%m-%d')
         
-        # Tenta outros formatos comuns
+        # Tenta outros formatos comuns caso o acima falhe
         for fmt in ['%Y-%m-%d', '%d-%m-%Y']:
             try:
                 parsed_date = datetime.strptime(data_str, fmt)
@@ -258,32 +238,50 @@ def fazer_requisicao_api(url: str, max_tentativas: int = MAX_RETRIES) -> Optiona
     return None
 
 def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Optional[Dict[str, Any]]:
-    """Extrai e valida os dados de um concurso da resposta da API."""
     try:
         concurso = dados_api.get('concurso')
         if not concurso:
             logger.warning("Campo 'concurso' ausente nos dados da API. Pulando registro.")
             return None
         
-        dezenas_lista = dados_api.get('dezenas')
-        if not dezenas_lista:
-            logger.warning(f"Campo 'dezenas' ausente para o concurso {concurso}. Pulando registro.")
-            return None
-        
+        # 🔥 CORREÇÃO: Obter data_str dos dados da API
         data_str = dados_api.get('data')
         if not data_str:
             logger.warning(f"Campo 'data' ausente para o concurso {concurso}. Pulando registro.")
             return None
         
-        # CORREÇÃO: Manter a ordem original para Dupla Sena, ordenar para outras loterias
-        if nome_loteria == 'duplasena':
-            # Para Dupla Sena: manter a ordem original do sorteio
-            dezenas_str = " ".join(map(str, dezenas_lista))
-            logger.info(f"📋 Dupla Sena - Mantendo ordem original: {dezenas_str}")
+        dezenas_lista = dados_api.get('dezenas')
+        dezenas_str = ""  # Inicializa a variável
+        
+        # Para Super Sete, 'dezenas' pode vir como string "1234567" ou lista de strings/ints. 
+        if nome_loteria == 'supersete':
+            if isinstance(dezenas_lista, list):
+                dezenas_lista = [str(d) for d in dezenas_lista]
+                dezenas_str = "".join(dezenas_lista)
+            elif isinstance(dezenas_lista, str):
+                dezenas_str = dezenas_lista
+            else:
+                logger.warning(f"Campo 'dezenas' inválido para Super Sete {concurso}. Pulando.")
+                return None
+        elif not dezenas_lista:
+            logger.warning(f"Campo 'dezenas' ausente para o concurso {concurso}. Pulando registro.")
+            return None
         else:
-            # Para outras loterias: ordenar numericamente (comportamento anterior)
-            dezenas_str = " ".join(sorted(map(str, dezenas_lista), key=int))
-            logger.info(f"📋 {nome_loteria} - Dezenas ordenadas: {dezenas_str}")
+            # CORREÇÃO: Manter a ordem original para Dupla Sena e Mais Milionária, ordenar para outras loterias
+            if nome_loteria == 'duplasena' or nome_loteria == 'maismilionaria':
+                # Para Dupla Sena e Mais Milionária: manter a ordem original do sorteio
+                if isinstance(dezenas_lista, list):
+                    dezenas_str = " ".join(map(lambda x: f"{int(x):02d}", dezenas_lista))
+                else:
+                    dezenas_str = dezenas_lista
+                logger.info(f"📋 {nome_loteria} - Mantendo ordem original: {dezenas_str}")
+            else:
+                # Para outras loterias: ordenar numericamente
+                if isinstance(dezenas_lista, list):
+                    dezenas_str = " ".join(sorted(map(lambda x: f"{int(x):02d}", dezenas_lista), key=int))
+                else:
+                    dezenas_str = dezenas_lista
+                logger.info(f"📋 {nome_loteria} - Dezenas ordenadas: {dezenas_str}")
         
         data_sorteio = processar_data(data_str)
         
@@ -303,6 +301,13 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
         
         # Mês da Sorte (apenas para Dia de Sorte)
         mes_sorte = dados_api.get('mesSorte') if nome_loteria == 'diadesorte' else None
+
+        # Trevos (apenas para Mais Milionária)
+        trevos_lista = dados_api.get('trevos')
+        trevos_str = " ".join(map(str, trevos_lista)) if nome_loteria == 'maismilionaria' and trevos_lista else None
+
+        # Time do Coração (apenas para Timemania)
+        time_coracao = dados_api.get('timeCoracao') if nome_loteria == 'timemania' else None
         
         return {
             'concurso': concurso,
@@ -311,12 +316,10 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
             'ganhadores': ganhadores,
             'acumulou': acumulou,
             'mes_sorte': mes_sorte,
-            'valor_acumulado': valor_acumulado
+            'valor_acumulado': valor_acumulado,
+            'trevos': trevos_str,          # Adicionado
+            'time_coracao': time_coracao   # Adicionado
         }
-        
-    except Exception as e:
-        logger.error(f"❌ Erro ao extrair dados do concurso {dados_api.get('concurso', 'N/A')}: {e}. Dados brutos: {dados_api}")
-        return None
         
     except Exception as e:
         logger.error(f"❌ Erro ao extrair dados do concurso {dados_api.get('concurso', 'N/A')}: {e}. Dados brutos: {dados_api}")
@@ -326,39 +329,77 @@ def inserir_ou_atualizar_resultado(conn, nome_loteria: str, dados_processados: D
     """Insere ou atualiza um resultado de concurso no banco de dados."""
     try:
         with conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO resultados_sorteados (
-                    tipo_loteria, concurso, data_sorteio, dezenas, 
-                    ganhadores, acumulou, mes_sorte, valor_acumulado
-                )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            # Primeiro, verifica quais colunas existem na tabela
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name = 'resultados_sorteados'
+                ORDER BY ordinal_position;
+            """)
+            colunas_existentes = [row[0] for row in cur.fetchall()]
+            
+            # Define as colunas base
+            colunas_base = [
+                'tipo_loteria', 'concurso', 'data_sorteio', 'dezenas', 
+                'ganhadores', 'acumulou', 'mes_sorte', 'valor_acumulado'
+            ]
+            
+            # Adiciona colunas extras apenas se existirem na tabela
+            colunas_extras = ['trevos', 'time_coracao']
+            colunas_para_inserir = colunas_base.copy()
+            placeholders = ['%s'] * len(colunas_base)
+            
+            for coluna_extra in colunas_extras:
+                if coluna_extra in colunas_existentes:
+                    colunas_para_inserir.append(coluna_extra)
+                    placeholders.append('%s')
+            
+            # Constrói a query dinamicamente
+            colunas_str = ", ".join(colunas_para_inserir)
+            placeholders_str = ", ".join(placeholders)
+            
+            # Prepara os valores na mesma ordem das colunas
+            valores = [
+                nome_loteria,
+                dados_processados['concurso'],
+                dados_processados['data_sorteio'],
+                dados_processados['dezenas'],
+                dados_processados['ganhadores'],
+                dados_processados['acumulou'],
+                dados_processados['mes_sorte'],
+                dados_processados['valor_acumulado']
+            ]
+            
+            # Adiciona valores extras apenas se as colunas existirem
+            for coluna_extra in colunas_extras:
+                if coluna_extra in colunas_existentes:
+                    valores.append(dados_processados.get(coluna_extra))
+            
+            # Constrói a parte SET do ON CONFLICT dinamicamente
+            set_clause = ", ".join([
+                f"{col} = EXCLUDED.{col}" 
+                for col in colunas_para_inserir 
+                if col not in ['tipo_loteria', 'concurso']
+            ])
+            
+            query = f"""
+                INSERT INTO resultados_sorteados ({colunas_str})
+                VALUES ({placeholders_str})
                 ON CONFLICT (tipo_loteria, concurso) DO UPDATE SET 
-                    data_sorteio = EXCLUDED.data_sorteio, 
-                    dezenas = EXCLUDED.dezenas, 
-                    ganhadores = EXCLUDED.ganhadores,
-                    acumulou = EXCLUDED.acumulou,
-                    mes_sorte = EXCLUDED.mes_sorte,
-                    valor_acumulado = EXCLUDED.valor_acumulado,
+                    {set_clause},
                     data_importacao = CURRENT_TIMESTAMP;
-                """,
-                (
-                    nome_loteria,
-                    dados_processados['concurso'],
-                    dados_processados['data_sorteio'],
-                    dados_processados['dezenas'],
-                    dados_processados['ganhadores'],
-                    dados_processados['acumulou'],
-                    dados_processados['mes_sorte'],
-                    dados_processados['valor_acumulado']
-                )
-            )
-        return True
+            """
+            
+            cur.execute(query, valores)
+            return True
+            
     except psycopg2.Error as e:
         logger.error(f"❌ Erro do PostgreSQL ao inserir/atualizar resultado do concurso {dados_processados.get('concurso')} ({nome_loteria}): {e}")
+        conn.rollback()
         return False
     except Exception as e:
         logger.error(f"❌ Erro inesperado ao inserir/atualizar resultado do concurso {dados_processados.get('concurso')} ({nome_loteria}): {e}")
+        conn.rollback()
         return False
 
 def processar_loteria(conn, nome_loteria: str, url_base: str):
@@ -435,22 +476,68 @@ def processar_loteria(conn, nome_loteria: str, url_base: str):
         conn.rollback()
 
 def verificar_ultimo_registro_importado(conn, nome_loteria: str):
-    """Verifica e exibe o último registro importado para uma loteria específica."""
+    """Verifica e exibe o último registro importado para uma loteria específica, incluindo novos campos."""
     with conn.cursor() as cur:
+        # Primeiro, obtenha a lista de todas as colunas existentes na tabela
+        cur.execute("""
+            SELECT column_name
+            FROM information_schema.columns
+            WHERE table_name = 'resultados_sorteados'
+            ORDER BY ordinal_position;
+        """)
+        todas_colunas_db = [row[0] for row in cur.fetchall()]
+
+        # Define as colunas que queremos tentar exibir, em ordem de preferência
+        colunas_desejadas = [
+            'concurso', 'data_sorteio', 'dezenas', 'ganhadores',
+            'acumulou', 'mes_sorte', 'valor_acumulado',
+            'trevos', 'time_coracao', 'data_importacao'
+        ]
+
+        # Filtra as colunas desejadas para incluir apenas as que realmente existem no DB
+        colunas_para_selecionar = [col for col in colunas_desejadas if col in todas_colunas_db]
+
+        if not colunas_para_selecionar:
+            logger.warning("Nenhuma coluna relevante encontrada na tabela 'resultados_sorteados'. Não é possível exibir o último registro.")
+            return
+
+        # Constrói a query SELECT dinamicamente
+        select_clause = ", ".join(colunas_para_selecionar)
+
         cur.execute(f"""
-            SELECT concurso, data_sorteio, ganhadores, acumulou, valor_acumulado
-            FROM resultados_sorteados 
-            WHERE tipo_loteria = %s 
-            ORDER BY concurso DESC 
+            SELECT {select_clause}
+            FROM resultados_sorteados
+            WHERE tipo_loteria = %s
+            ORDER BY concurso DESC
             LIMIT 1;
         """, (nome_loteria,))
-        
+
         ultimo_registro = cur.fetchone()
+
         if ultimo_registro:
-            logger.info(f"🔎 Último registro de {nome_loteria.upper()} no DB: "
-                       f"concurso={ultimo_registro[0]}, data_sorteio={ultimo_registro[1]}, "
-                       f"ganhadores={ultimo_registro[2]}, acumulou={ultimo_registro[3]}, "
-                       f"valor_acumulado={ultimo_registro[4]}")
+            log_msg = f"🔎 Último registro de {nome_loteria.upper()} no DB: "
+            # Mapeia os valores para os nomes das colunas correspondentes
+            detalhes_registro = {
+                col: ultimo_registro[colunas_para_selecionar.index(col)]
+                for col in colunas_para_selecionar
+            }
+
+            # Formata os detalhes para exibição
+            formatted_details = []
+            for k, v in detalhes_registro.items():
+                if v is None:
+                    formatted_details.append(f"{k}=NULL")
+                elif k == 'data_sorteio':
+                    formatted_details.append(f"{k}={v.strftime('%Y-%m-%d') if isinstance(v, date) else v}")
+                elif k == 'data_importacao':
+                    formatted_details.append(f"{k}={v.strftime('%Y-%m-%d %H:%M:%S') if isinstance(v, datetime) else v}")
+                elif k in ['valor_acumulado']:
+                    formatted_details.append(f"{k}=R${v:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')) # Formato BR
+                else:
+                    formatted_details.append(f"{k}={v}")
+
+            log_msg += ", ".join(formatted_details)
+            logger.info(log_msg)
         else:
             logger.info(f"🔎 Nenhum registro encontrado para {nome_loteria.upper()} no DB.")
 
