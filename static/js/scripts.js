@@ -837,9 +837,14 @@ function criarStatusHtml(resultado) {
         html += `<span class="status-ganhador">${resultado.ganhadores} ${labelGanhador}</span>`;
     }
     
-    // Sempre mostrar o prêmio estimado para o próximo concurso (se disponível)
+    // CORREÇÃO: Mostrar o valor do próximo concurso (agora em resultado.valor_acumulado)
     if (resultado.valor_acumulado) {
-        html += `<div class="valor-acumulado">Prêmio estimado para próximo concurso: R$ ${resultado.valor_acumulado.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>`;
+        // Formatar o valor para o padrão brasileiro
+        const valorFormatado = resultado.valor_acumulado.toLocaleString("pt-BR", { 
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+        html += `<div class="valor-acumulado">Prêmio estimado para próximo concurso: R$ ${valorFormatado}</div>`;
     }
     
     return html;
