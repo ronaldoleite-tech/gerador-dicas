@@ -282,8 +282,17 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
             return None
         
         acumulou = dados_api.get('acumulou', False)
-        valor_acumulado_api = dados_api.get('valorEstimadoProximoConcurso') or dados_api.get('valorAcumulado')
+        
+        # ✅ CORREÇÃO: Separar valor acumulado REAL do valor estimado próximo concurso
+        valor_acumulado_api = dados_api.get('valorAcumulado')
         valor_acumulado = processar_valor_acumulado(valor_acumulado_api, acumulou)
+        
+        # Valor do próximo concurso (NÃO usar fallback - manter separado)
+        valor_proximo_concurso_api = dados_api.get('valorEstimadoProximoConcurso')
+        valor_proximo_concurso = processar_valor_acumulado(valor_proximo_concurso_api, False)
+        
+        # DEBUG: Log dos valores
+        logger.info(f"💰 {nome_loteria} Concurso {concurso}: valorAcumulado={valor_acumulado_api}, valorEstimadoProximoConcurso={valor_proximo_concurso_api}")
         
         # Extrai ganhadores da primeira faixa de premiação
         ganhadores = 0
@@ -301,10 +310,6 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
         # Time do Coração (apenas para Timemania)
         time_coracao = dados_api.get('timeCoracao') if nome_loteria == 'timemania' else None
 
-        # Valor do próximo concurso (sempre que disponível)
-        valor_proximo_concurso_api = dados_api.get('valorEstimadoProximoConcurso')
-        valor_proximo_concurso = processar_valor_acumulado(valor_proximo_concurso_api, False) if valor_proximo_concurso_api else None
-
         return {
             'concurso': concurso,
             'data_sorteio': data_sorteio,
@@ -312,16 +317,16 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
             'ganhadores': ganhadores,
             'acumulou': acumulou,
             'mes_sorte': mes_sorte,
-            'valor_acumulado': valor_acumulado,
+            'valor_acumulado': valor_acumulado,           # Valor acumulado REAL
             'trevos': trevos_str,
             'time_coracao': time_coracao,
-            'valor_proximo_concurso': valor_proximo_concurso
+            'valor_proximo_concurso': valor_proximo_concurso  # Valor estimado próximo concurso
         }
         
     except Exception as e:
         logger.error(f"❌ Erro ao extrair dados do concurso {dados_api.get('concurso', 'N/A')}: {e}. Dados brutos: {dados_api}")
         return None
-
+    
 def inserir_ou_atualizar_resultado(conn, nome_loteria: str, dados_processados: Dict[str, Any]) -> bool:
     """Insere ou atualiza um resultado de concurso no banco de dados."""
     try:
