@@ -335,9 +335,8 @@ function criarElementoJogo(jogo) {
 
     // Lógica específica para Dupla Sena na área de geração de palpites
     if (loteriaAtual === "duplasena" && numerosDoJogo.length === 12) {
-        // CORREÇÃO: Manter ordem original para Dupla Sena
-        const primeiroSorteio = numerosDoJogo.slice(0, 6); // SEM .sort()
-        const segundoSorteio = numerosDoJogo.slice(6, 12); // SEM .sort()
+        const primeiroSorteio = numerosDoJogo.slice(0, 6);
+        const segundoSorteio = numerosDoJogo.slice(6, 12);
 
         const divPrimeiroSorteio = document.createElement("div");
         divPrimeiroSorteio.className = "sorteio-header";
