@@ -7,7 +7,6 @@ from datetime import datetime, date
 from typing import Optional, Dict, Any
 from contextlib import contextmanager
 from dotenv import load_dotenv
-from urllib.parse import urlparse
 
 # Carrega variáveis do .env
 load_dotenv()
@@ -20,7 +19,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# APIs das loterias (completa)
+# --- 1. CONEXÃO COM O BANCO DE DADOS ---
+def get_db_connection():
+    """Retorna uma conexão com o banco de dados PostgreSQL."""
+    try:
+        return psycopg2.connect(DATABASE_URL, connect_timeout=10)
+    except Exception as e:
+        logger.error(f"❌ Erro ao conectar ao banco de dados: {e}")
+        raise
+
+# --- 2. LÓGICA DE IMPORTAÇÃO (COM MELHORIAS E COMPATIBILIDADE) ---
+
 LOTERIAS_API = {
     'maismilionaria': 'https://loteriascaixa-api.herokuapp.com/api/maismilionaria',
     'megasena': 'https://loteriascaixa-api.herokuapp.com/api/megasena',
@@ -36,22 +45,6 @@ LOTERIAS_API = {
 # Configuration constants
 REQUEST_TIMEOUT = 30
 MAX_RETRIES = 3
-
-def get_db_connection():
-    """Retorna uma conexão com o banco de dados PostgreSQL."""
-    if not DATABASE_URL:
-        raise ValueError("❌ DATABASE_URL não está definida no .env")
-
-    # Esconde senha para debug
-    parsed = urlparse(DATABASE_URL)
-    safe_url = f"{parsed.scheme}://{parsed.username}:***@{parsed.hostname}:{parsed.port}/{parsed.path.lstrip('/')}"
-    logger.info(f"Conectando ao banco: {safe_url}")
-
-    try:
-        return psycopg2.connect(DATABASE_URL, connect_timeout=10)
-    except Exception as e:
-        logger.error(f"❌ Erro ao conectar ao banco de dados: {e}")
-        raise
 
 @contextmanager
 def get_db_connection_context():
@@ -98,6 +91,7 @@ def verificar_e_atualizar_estrutura_tabela(conn):
                     valor_acumulado DECIMAL(18, 2),
                     trevos VARCHAR(20),
                     time_coracao VARCHAR(100),
+                    valor_proximo_concurso NUMERIC(15,2),
                     data_importacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     UNIQUE (tipo_loteria, concurso)
                 );
@@ -118,8 +112,7 @@ def verificar_e_atualizar_estrutura_tabela(conn):
             colunas_para_adicionar = {
                 'trevos': 'VARCHAR(20)',
                 'time_coracao': 'VARCHAR(100)',
-                'valor_proximo_concurso': 'NUMERIC(15,2)'  # ✅ ADICIONADO
-                
+                'valor_proximo_concurso': 'NUMERIC(15,2)'
             }
             
             # Adiciona colunas faltantes
@@ -158,7 +151,7 @@ def verificar_estrutura_tabela(conn):
         colunas = cur.fetchall()
         logger.info("📋 Estrutura atual da tabela:")
         for coluna in colunas:
-            logger.info(f"   - {coluna[0]} ({coluna[1]}, nullable: {coluna[2]})")
+            logger.info(f"   - {coluna[0]} ({coluna[1]}, nullable: {coluna[2]})")    
 
 def get_ultimo_concurso(conn, loteria: str) -> int:
     """Obtém o número do último concurso para uma loteria específica no banco de dados."""
@@ -188,7 +181,7 @@ def processar_valor_acumulado(valor_acumulado_api: Any, acumulou: bool) -> Optio
     except (ValueError, TypeError) as e:
         logger.warning(f"⚠️ Erro ao processar valor acumulado '{valor_acumulado_api}': {e}. Retornando None.")
         return None
-
+    
 def processar_data(data_str: str) -> Optional[str]:
     """Converte a string de data da API para o formato 'YYYY-MM-DD' do PostgreSQL."""
     if not data_str:
@@ -243,7 +236,7 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
             logger.warning("Campo 'concurso' ausente nos dados da API. Pulando registro.")
             return None
         
-        # 🔥 CORREÇÃO: Obter data_str dos dados da API
+        # Obter data_str dos dados da API
         data_str = dados_api.get('data')
         if not data_str:
             logger.warning(f"Campo 'data' ausente para o concurso {concurso}. Pulando registro.")
@@ -308,7 +301,7 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
         # Time do Coração (apenas para Timemania)
         time_coracao = dados_api.get('timeCoracao') if nome_loteria == 'timemania' else None
 
-        # ✅ NOVO: Valor do próximo concurso (sempre que disponível)
+        # Valor do próximo concurso (sempre que disponível)
         valor_proximo_concurso_api = dados_api.get('valorEstimadoProximoConcurso')
         valor_proximo_concurso = processar_valor_acumulado(valor_proximo_concurso_api, False) if valor_proximo_concurso_api else None
 
@@ -322,7 +315,7 @@ def extrair_dados_concurso(dados_api: Dict[Any, Any], nome_loteria: str) -> Opti
             'valor_acumulado': valor_acumulado,
             'trevos': trevos_str,
             'time_coracao': time_coracao,
-            'valor_proximo_concurso': valor_proximo_concurso  # ✅ ADICIONADO
+            'valor_proximo_concurso': valor_proximo_concurso
         }
         
     except Exception as e:
@@ -349,7 +342,7 @@ def inserir_ou_atualizar_resultado(conn, nome_loteria: str, dados_processados: D
             ]
             
             # Adiciona colunas extras apenas se existirem na tabela
-            colunas_extras = ['trevos', 'time_coracao', 'valor_proximo_concurso']  # ✅ ADICIONADO
+            colunas_extras = ['trevos', 'time_coracao', 'valor_proximo_concurso']
             colunas_para_inserir = colunas_base.copy()
             placeholders = ['%s'] * len(colunas_base)
             
@@ -495,7 +488,7 @@ def verificar_ultimo_registro_importado(conn, nome_loteria: str):
         colunas_desejadas = [
             'concurso', 'data_sorteio', 'dezenas', 'ganhadores',
             'acumulou', 'mes_sorte', 'valor_acumulado',
-            'trevos', 'time_coracao', 'data_importacao'
+            'trevos', 'time_coracao', 'valor_proximo_concurso', 'data_importacao'
         ]
 
         # Filtra as colunas desejadas para incluir apenas as que realmente existem no DB
@@ -535,7 +528,7 @@ def verificar_ultimo_registro_importado(conn, nome_loteria: str):
                     formatted_details.append(f"{k}={v.strftime('%Y-%m-%d') if isinstance(v, date) else v}")
                 elif k == 'data_importacao':
                     formatted_details.append(f"{k}={v.strftime('%Y-%m-%d %H:%M:%S') if isinstance(v, datetime) else v}")
-                elif k in ['valor_acumulado']:
+                elif k in ['valor_acumulado', 'valor_proximo_concurso']:
                     formatted_details.append(f"{k}=R${v:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')) # Formato BR
                 else:
                     formatted_details.append(f"{k}={v}")
