@@ -281,13 +281,13 @@
             </header>
         
             <nav class="nav-interna">
-                <a href="#loteria-select">Gerar Palpites</a>
+                <a href="#loteria-select">Gerar Dezenas</a>
                 <a href="#estatisticas">Estatisticas</a>
-                <a href="#sobre-filtros">Métodos</a>
                 <a href="#ultimos-resultados">Últimos Resultados</a>
                 <a href="#megadavirada">Mega da Virada 2025</a>
                 <a href="/simulador">Analisador</a>
                 <a href="/blog">Blog</a>
+                <a href="#sobre-filtros">Métodos</a>
                 <a href="#sobre">Sobre</a>
                 <a href="#jogorresponsavel">Jogo Responsável</a>
                 <a href="#contato">Contato</a>
@@ -367,32 +367,6 @@
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
-                <section id="sobre-filtros" class="footer-section">
-                    <h2>Entenda Nossos Métodos</h2>
-                    <h3>Com a Estratégia: Frequência Geral</h3>
-                    <p>Nosso sistema analisa todo o histórico de resultados da loteria selecionada. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, sendo priorizados na seleção para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm uma tendência histórica a aparecer.</p>
-                    <h3>Com a Estratégia: Dezenas Mistas, Quentes e Frias</h3>
-                    <p>Esta estratégia foca apenas nos resultados mais recentes (últimos 100 concursos). Você pode escolher entre:<br>
-                    <strong>&bull; Dezenas "Mistas":</strong> O equilíbrio perfeito. O sistema seleciona metade das dezenas do grupo das "Quentes" e a outra metade do grupo das "Frias". Ideal para quem busca uma sugestão balanceada, combinando tendências com números "atrasados".<br>
-                    <strong>&bull; Dezenas "Quentes":</strong> O sistema prioriza os números que estão saindo com alta frequência recentemente. A ideia é "seguir a tendência recente" e ter uma sugestão do que está em alta.<br>
-                    <strong>&bull; Dezenas "Frias":</strong> O sistema dá preferência aos números que não são sorteados há muito tempo. A sugestão aqui é que eles estão "atrasados" e uma hora terão que sair.</p>
-                    <h3>Com a Estratégia: Junto e Misturado</h3>
-                    <p>Esta estratégia é para quem não quer deixar nada de fora! Ela combina o melhor da análise de longo prazo com a dinâmica dos sorteios mais recentes. Nosso sistema calcula a frequência de cada dezena considerando **todo o histórico** de resultados da loteria e também foca nos **últimos 100 concursos**. Ao "misturar" esses dois universos, a estratégia "Junto e Misturado" gera um palpite que reflete tanto a consistência histórica quanto as tendências mais quentes do momento, oferecendo uma sugestão equilibrada e completa.</p>
-                    <h3>Com a Estratégia: Aleatório (Surpresinha)</h3>
-                    <p>A geração é 100% aleatória. Cada número, dentro do universo da loteria escolhida, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
-                    <h3>Com o seu Número da Sorte (Jogo Âncora)</h3>
-                    <p>Todo mundo tem um número especial! Use-o para "ancorar" o seu jogo. Ao inseri-lo, nosso sistema o mantém fixo e gera as dezenas restantes de forma inteligente para completar seu palpite. É a maneira perfeita de combinar sua intuição com a análise do nosso sistema.</p>
-                    <h3>Com a Estratégia: Simulação Monte Carlo 🎯</h3>
-                    <p>Imagine realizar milhares de sorteios em segundos para ver quais números se destacam. É isso que a Simulação Monte Carlo faz. Usando processamento computacional, ela analisa probabilidades em larga escala para gerar um palpite único e sofisticado, ideal para quem busca uma sugestão diferenciada e com análise profunda.</p>
-                    
-                    <p style="margin-top: 30px; color: var(--text-gray); font-size: 0.9rem; line-height: 1.4;">
-                    ⚠️ Loterias são jogos de azar para maiores de 18 anos. 
-                    Esta é uma ferramenta de entretenimento e educativa que não garante resultados. 
-                    Jogue com responsabilidade e dentro de seus limites.
-                    </p>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
-
                 <section id="ultimos-resultados" class="footer-section">
                     <h2>Últimos Resultados</h2>
 
@@ -401,6 +375,11 @@
                     <div id="ultimos-resultados-geral" style="margin-top: 1.5rem; margin-bottom: 2rem;">
                         <h3 style="color: var(--cor-dourado); text-align: center; margin-bottom: 1rem;">Loterias</h3>
                         <div class="spinner" id="spinner-ultimos-geral"></div>
+                    </div>
+
+                    <div class="alerta-resultados" style="background-color: rgba(255, 215, 0, 0.1); text-align: left; border-left: 4px solid var(--cor-dourado); padding: 10px 15px; margin-top: 1.5rem; border-radius: 6px; font-size: 0.9rem; color: #ccc;">
+                        ⚠️ <strong>Atenção:</strong> Os resultados exibidos são obtidos de fontes públicas e podem levar algum tempo para serem atualizados. 
+                        Sempre confirme os números oficiais no site da <a href="https://loterias.caixa.gov.br/" target="_blank" rel="noopener noreferrer" style="color: var(--cor-dourado); text-decoration: underline;">Caixa Econômica Federal</a>.
                     </div>
                     <br>
 
@@ -424,6 +403,7 @@
                     <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
                         <div class="spinner"></div>
                     </div>
+
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
@@ -611,9 +591,11 @@
                     });
                     </script>
 
-                    <p style="margin-top: 1.5rem; color: var(--text-gray); font-size: 0.9rem; line-height: 1.4;">
-                        ⚠️ A Mega da Virada é um concurso especial da Caixa Econômica Federal®. Este conteúdo é apenas informativo e educativo. 
-                        O Sorte Analisada não possui vínculo com a Caixa e não garante resultados. Jogue com responsabilidade.
+                    <p style="background-color: rgba(255, 215, 0, 0.1); text-align: left; border-left: 4px solid var(--cor-dourado); padding: 10px 15px; margin-top: 1.5rem; border-radius: 6px; font-size: 0.9rem; color: #ccc;">    
+                        ⚠️ A Mega da Virada é um concurso especial promovido pela <strong>Caixa Econômica Federal®</strong>. 
+                        Este conteúdo possui caráter informativo e educativo. 
+                        O <strong>Sorte Analisada</strong> não possui vínculo com a Caixa e não garante resultados. 
+                        Jogue com responsabilidade.
                     </p>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
@@ -639,6 +621,37 @@
                     </div>
 
                         <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+                </section>
+
+                <section id="sobre-filtros" class="footer-section">
+                    <h2>Entenda Nossos Métodos de Geração de Números e Estratégias de Análise</h2>
+                    <p>Conheça as estratégias utilizadas pelo Sorte Analisada para gerar suas sugestões. Cada método combina estatística, probabilidade e diferentes abordagens de sorteio.</p>
+                    <h3>Com a Estratégia: Frequência Geral</h3>
+                    <p>Nosso sistema analisa todo o histórico de resultados da loteria selecionada. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, sendo priorizados na seleção para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm uma tendência histórica a aparecer.</p>
+                    <h3>Com a Estratégia: Dezenas Mistas, Quentes e Frias</h3>
+                    <p>Esta estratégia foca apenas nos resultados mais recentes (últimos 100 concursos). Você pode escolher entre:<br>
+                    <strong>&bull; Dezenas "Mistas":</strong> O equilíbrio perfeito. O sistema seleciona metade das dezenas do grupo das "Quentes" e a outra metade do grupo das "Frias". Ideal para quem busca uma sugestão balanceada, combinando tendências com números "atrasados".<br>
+                    <strong>&bull; Dezenas "Quentes":</strong> O sistema prioriza os números que estão saindo com alta frequência recentemente. A ideia é "seguir a tendência recente" e ter uma sugestão do que está em alta.<br>
+                    <strong>&bull; Dezenas "Frias":</strong> O sistema dá preferência aos números que não são sorteados há muito tempo. A sugestão aqui é que eles estão "atrasados" e uma hora terão que sair.</p>
+                    <h3>Com a Estratégia: Junto e Misturado</h3>
+                    <p>Esta estratégia é para quem não quer deixar nada de fora! Ela combina o melhor da análise de longo prazo com a dinâmica dos sorteios mais recentes. Nosso sistema calcula a frequência de cada dezena considerando <strong>todo o histórico</strong> de resultados da loteria e também foca nos <strong>últimos 100 concursos</strong>. Ao "misturar" esses dois universos, a estratégia "Junto e Misturado" gera um palpite que reflete tanto a consistência histórica quanto as tendências mais quentes do momento, oferecendo uma sugestão equilibrada e completa.</p>
+                    <h3>Com a Estratégia: Aleatório (Surpresinha)</h3>
+                    <p>A geração é 100% aleatória. Cada número, dentro do universo da loteria escolhida, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
+                    <h3>Com o seu Número da Sorte (Jogo Âncora)</h3>
+                    <p>Todo mundo tem um número especial! Use-o para "ancorar" o seu jogo. Ao inseri-lo, nosso sistema o mantém fixo e gera as dezenas restantes de forma inteligente para completar seu palpite. É a maneira perfeita de combinar sua intuição com a análise do nosso sistema.</p>
+                    <h3>Com a Estratégia: Simulação Monte Carlo 🎯</h3>
+                    <p>Imagine realizar milhares de sorteios em segundos para ver quais números se destacam. É isso que a Simulação Monte Carlo faz. Usando processamento computacional, ela analisa probabilidades em larga escala para gerar um palpite único e sofisticado, ideal para quem busca uma sugestão diferenciada e com análise profunda.</p>
+                    
+                    <p style="background-color: rgba(255, 215, 0, 0.1); text-align: left; border-left: 4px solid var(--cor-dourado); padding: 10px 15px; margin-top: 1.5rem; border-radius: 6px; font-size: 0.9rem; color: #ccc;">    
+                        ⚠️ Os algoritmos utilizados nas estratégias do Sorte Analisada aplicam métodos estatísticos e simulações baseadas em dados históricos, 
+                        com o objetivo de gerar combinações equilibradas e diversificadas. 
+                        É importante destacar que esses modelos <strong>não realizam previsões</strong> sobre os próximos sorteios, 
+                        mas oferecem uma <strong>abordagem analítica e educativa</strong> para compreender padrões e probabilidades das loterias.<br><br>
+                        As loterias são jogos de azar destinados apenas a maiores de 18 anos. 
+                        Esta ferramenta tem caráter educativo e de entretenimento, sem garantia de resultados. 
+                        Jogue com responsabilidade e dentro dos seus limites.
+                    </p>
+                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
                 </section>
 
                 <section id="sobre" class="footer-section">
@@ -685,7 +698,7 @@
                     <p>
                         Se em algum momento você sentir que o jogo deixou de ser saudável, 
                         procure apoio especializado. No Brasil, você pode buscar informações e ajuda no site 
-                        <a href="https://jogoresponsavel.org.br/" target="_blank" rel="noopener noreferrer">jogoresponsavel.org.br</a> 
+                        <a href="https://jogoresponsavel.org.br/" target="_blank" rel="noopener noreferrer" style="color: var(--cor-dourado); text-decoration: underline;">jogoresponsavel.org.br</a> 
                         ou em serviços de saúde especializados.
                     </p>
                     <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
@@ -693,7 +706,7 @@
 
                 <section id="contato" class="footer-section" style="margin-top: 2rem; padding: 2rem; background: rgba(0,0,0,0.15); border-radius: 12px; border-top: 1px solid var(--cor-divisoria-ouro);">
                     <h2>Contato</h2>
-                    <p style="text-align: center;">Ficou com alguma dúvida ou tem uma sugestão? Adoraríamos te ouvir! Envie-nos um e-mail:<a href="mailto:contato@sorteanalisada.com.br"> contato@sorteanalisada.com.br</a></p>
+                    <p style="text-align: center;">Ficou com alguma dúvida ou tem uma sugestão? Adoraríamos te ouvir! Envie-nos um e-mail:<a href="mailto:contato@sorteanalisada.com.br" style="color: var(--cor-dourado); text-decoration: underline;"> contato@sorteanalisada.com.br</a></p>
                     <p style="font-size: 1.1rem; font-weight: bold; margin-top: 1rem; text-align: center;">
                     <a href="mailto:contato@sorteanalisada.com.br" title="Contato" style="color: var(--cor-dourado); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
                     <i class="fa-solid fa-envelope"> Sorte Analisada</i>
@@ -793,6 +806,5 @@
                         mudarLoteria('megasena');
                     });
                 </script>
-
     </body>
 </html>
