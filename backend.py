@@ -533,6 +533,10 @@ def get_todos_resultados():
     finally:
         if conn: conn.close()
 
+@app.route('/landing')
+def promocional():
+    return render_template('landing.html')    
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     debug_mode = os.environ.get('RENDER') is None
