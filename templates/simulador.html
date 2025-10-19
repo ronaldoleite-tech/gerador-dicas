@@ -132,30 +132,7 @@
                 color: #bbdefb;
             }
 
-            /* Navegação */
-            .nav-interna {
-                padding: 1.5rem 0;
-                margin: 1rem 0;
-                border-top: 1px solid var(--cor-divisoria-ouro);
-                border-bottom: 1px solid var(--cor-divisoria-ouro);
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-
-            .nav-interna a {
-                color: var(--cor-dourado);
-                text-decoration: none;
-                font-size: 1.1rem;
-                font-weight: 500;
-                transition: color 0.2s;
-            }
-
-            .nav-interna a:hover {
-                color: var(--cor-dourado-hover);
-            }
-
+            
             /* Imagens */
             .imagem-ouro {
                 background-color: #FFF8E1;
@@ -498,20 +475,6 @@
                     font-size: 1.5rem;
                 }
 
-                /* Navegação otimizada */
-                .nav-interna {
-                    flex-direction: column;
-                    gap: 10px;
-                    padding: 1rem 0;
-                }
-
-                .nav-interna a {
-                    padding: 0.5rem;
-                    text-align: center;
-                    background: rgba(255, 255, 255, 0.05);
-                    border-radius: 6px;
-                }
-
                 /* Jogos do fechamento com scroll horizontal */
                 .jogo-fechamento {
                     overflow-x: auto;
@@ -655,11 +618,19 @@
             </header>
 
                 <nav class="nav-interna">
-                    <a href="/">Principal</a>
-                    <a href="#analisador">Analisador</a>
-                    <a href="#organizador">Organizador</a>
-                    <a href="/blog">Blog</a> 
+                    <a href="/">Principal</a>   
+                    <div class="dropdown">
+                        <a href="/simulador">Analisador</a>
+                        <div class="dropdown-content">
+                            <a href="#analisador">Analisador</a>
+                            <a href="#organizador">Organizador</a>
+                        </div>
+                    </div>
+                        <a href="/blog">Blog</a>     
+                        <a href="https://ronaldoleite-tech.github.io/sorteanalisada-policies/privacy.html">Política de Privacidade</a>
+                        <a href="https://ronaldoleite-tech.github.io/sorteanalisada-policies/terms.html">Termos de Uso</a>   
                 </nav>
+
             <main>
                 <!-- Seção Analisador -->
                 <section id="analisador" class="secao">
