@@ -246,6 +246,7 @@
 
         <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
         <link rel="stylesheet" href="static/css/styles.min.css">
+        <link rel="stylesheet" href="static/css/blog.min.css">
         
     </head>
     <body>
@@ -269,7 +270,7 @@
                         <a href="/blog">Blog</a>
                         <div class="dropdown-content">
                             <a href="#artigos">Artigos</a>
-                            <a href="#parceiros">Apoiadores</a>
+                            <a href="#destaque">Destaque</a>
                         </div>
                     </div>   
                         <a href="/simulador">Analisador</a>
@@ -278,7 +279,7 @@
                 </nav>    
 
             <main id="artigos">
-                <div class="artigo-blog visivel" onclick="toggleArtigo('artigo1')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog1.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>Jogue com Inteligência: Como Transformar Dados em Estratégia nas Loterias<i class="fa-solid fa-chevron-down"></i></h3>
@@ -317,7 +318,7 @@
                     </div>
                 </div>
 
-                <div class="artigo-blog visivel" onclick="toggleArtigo('artigo2')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog2.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar? <i class="fa-solid fa-chevron-down"></i></h3>
@@ -356,7 +357,7 @@
                     </div>
                 </div>
 
-                <div class="artigo-blog visivel" onclick="toggleArtigo('artigo3')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog3.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>Quina: Seis Chances de Transformar Sua Vida Toda Semana! <i class="fa-solid fa-chevron-down"></i></h3>
@@ -394,7 +395,7 @@
                     </div>
                 </div>
 
-                <div class="artigo-blog visivel" onclick="toggleArtigo('artigo4')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog4.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta <i class="fa-solid fa-chevron-down"></i></h3>
@@ -434,7 +435,7 @@
                     </div>
                 </div>
 
-                <div class="artigo-blog visivel" onclick="toggleArtigo('artigo5')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog5.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas <i class="fa-solid fa-chevron-down"></i></h3>
@@ -477,13 +478,13 @@
                 <!-- ============== SISTEMA DE PAGINAÇÃO ============== -->
                 <div class="carregar-mais-container">
                     <p id="contador-artigos" style="color: var(--cor-dourado); margin-bottom: 1rem; font-weight: 500;"></p>
-                    <button class="carregar-mais" onclick="carregarMaisArtigos()">
+                    <button class="carregar-mais">
                         <i class="fa-solid fa-plus"></i> Carregar Mais Artigos
                     </button>
                 </div>
 
                 <!-- ARTIGOS OCULTOS INICIALMENTE -->
-                <div class="artigo-blog" onclick="toggleArtigo('artigo6')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog6.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena <i class="fa-solid fa-chevron-down"></i></h3>
@@ -522,7 +523,7 @@
                     </div>
                 </div>
                 
-                <div class="artigo-blog" onclick="toggleArtigo('artigo7')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog7.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>Será que a IA pode ajudar a ganhar na Mega-Sena?<i class="fa-solid fa-chevron-down"></i></h3>
@@ -562,7 +563,7 @@
                     </div>
                 </div>
 
-                <div class="artigo-blog" onclick="toggleArtigo('artigo8')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog8.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3><strong>Cardano</strong>: O Gênio do Acaso que Desvendou os Dados antes das Loterias <i class="fa-solid fa-chevron-down"></i></h3>
@@ -601,7 +602,7 @@
                     </div>
                 </div>
 
-                <div class="artigo-blog" onclick="toggleArtigo('artigo9')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog9.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>O Jogo Mais Solitário da Mega-Sena<i class="fa-solid fa-chevron-down"></i></h3>
@@ -641,7 +642,7 @@
                     </div>
                 </div>
 
-                <div class="artigo-blog" onclick="toggleArtigo('artigo10')">
+                <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog10.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
                         <h3>Números Quentes vs. Frios: A Ciência Por Trás dos Palpites Vencedores<i class="fa-solid fa-chevron-down"></i></h3>
@@ -681,7 +682,7 @@
                 </div>
                 <a href="#artigos" class="voltar-topo">Voltar ao Topo ↑</a>
 
-                <div class="destaque-gerador">
+                <div id="destaque" class="destaque-gerador">
                     <h2>🎯 Gere Suas Dezenas com algoritmos!</h2>
                     <p>Não perca tempo! Use o gerador de dezenas do <strong>Sorte Analisada</strong>. <br>Com análises estatísticas para a Mega-Sena, Quina, Lotofácil e outras loterias. Transforme suas apostas com estratégias baseadas em dados!</p>
                     <a href="/" class="cta-gerador">
@@ -689,29 +690,6 @@
                     </a>
                 </div>
 
-                <section id="parceiros" style="margin-top: 3rem; padding: 2rem; background: rgba(0,0,0,0.15); border-radius: 12px; border-top: 1px solid var(--cor-divisoria-ouro);">
-                    <h2>Apoiadores que Fazem a Sorte Acontecer</h2>
-                    <p style="margin-bottom: 2rem; text-align: center; line-height: 1.8;">O Sorte Analisada cresce graças ao apoio de marcas que acreditam na nossa missão de levar entretenimento e análise de qualidade para apostadores de todo o Brasil. Agradecemos a confiança por fazerem parte desta jornada.</p>
-                    <div class="partner-ad-container">
-                        <h3 class="partner-title">SISTEMAS IDEAL, AUTOMAÇÃO COMERCIAL</h3>
-                        <img src="/static/images/Ideal.jpg" alt="Logo da Sistemas Ideal Automação Comercial" class="partner-logo">
-                        <p class="partner-text">Automação Comercial - Sistemas: SAT, ERP e PDV para os Comércios em geral.</p>
-                        <a href="https://wa.me/5511962779427" class="partner-cta-button" target="_blank">
-                            <i class="fa-brands fa-whatsapp"></i>
-                            (11) 96277-9427
-                        </a>
-                        <a href="https://linktr.ee/sistemas_ideal?fbclid=PAQ0xDSwMO5VJleHRuA2FlbQIxMQABp6bwYGcDvVxhsmmaSphrP4hglvs3Y4t4W-zZMB90tSkMbfImd7UJWwwFuyAZ_aem_FSR9c1Ytg3B8pgZkdqgkqw" class="partner-social-link" target="_blank">
-                            <i class="fa-brands fa-instagram"></i>
-                            <span>Siga-nos no Instagram</span>
-                        </a>
-                    </div>
-                    <div style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
-                        <h3 style="text-align: center; color: var(--cor-dourado);">Quer ver sua marca em destaque aqui?</h3>
-                        <p style="margin-top: 1rem; margin-bottom: 1.5rem; text-align: center;">Conecte seu negócio a uma comunidade engajada que busca por sorte e novas oportunidades. Aumente sua visibilidade e apoie um projeto em constante crescimento.</p>
-                        <a href="mailto:ronaldoleite@sorteanalisada.com.br?subject=Interesse em Parceria - Sorte Analisada" class="cta-gerador" style="text-decoration: none;">Anuncie Aqui!</a>
-                    </div>
-                </section>
-                
                 <!-- Compartilhamento geral --> 
                 <div class="share-container">
                     Curtiu o Blog! Compartilhe: 
@@ -747,19 +725,8 @@
 
             <!-- Scripts com defer (carregam sem bloquear a renderização) -->
             <script defer src="/static/js/scripts.min.js"></script>
+            <script defer src="/static/js/blog.min.js"></script>
 
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-            <script>
-                function loadChartJS() {
-                return new Promise(function(resolve) {
-                    var script = document.createElement('script');
-                    script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-                    script.onload = resolve;
-                    document.head.appendChild(script);
-                });
-                }
-            </script>
-
     </body>
 </html>
