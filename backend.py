@@ -167,6 +167,7 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
         for linha in resultados:
             dezenas_do_concurso = [int(n) for n in linha[0].split()]
             
+            # Para Dupla Sena, usar apenas primeiro sorteio
             if loteria == 'duplasena':
                 dezenas_do_concurso = dezenas_do_concurso[:config['num_bolas_sorteadas']]
             
@@ -174,33 +175,51 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
         
         frequencia = Counter(n for n in todos_os_numeros_sorteados if n not in numeros_ancora)
         
+        # Universo de números disponíveis para seleção (excluindo âncoras)
         universo_disponivel = [n for n in range(config['min_num'], config['max_num'] + 1) if n not in numeros_ancora]
         
         jogos_gerados = set()
+        tentativas_totais = 0
+        max_tentativas_totais = count * 200  # Limite de segurança
         
-        while len(jogos_gerados) < count:
+        while len(jogos_gerados) < count and tentativas_totais < max_tentativas_totais:
+            tentativas_totais += 1
             numeros_novos = set()
             
+            # ==================== Estratégia "FRIAS" ====================
             if estrategia == 'frias':
+                # Identifica números que nunca saíram
                 numeros_com_frequencia = set(frequencia.keys())
                 numeros_totalmente_frios = [n for n in universo_disponivel if n not in numeros_com_frequencia]
                 
-                if len(numeros_totalmente_frios) < dezenas_a_gerar:
+                # Se não há números totalmente frios suficientes, pega os menos frequentes
+                candidatos_frios = numeros_totalmente_frios.copy()
+                
+                if len(candidatos_frios) < dezenas_a_gerar:
+                    # Adiciona os números menos frequentes
                     frequencia_ordenada = sorted(frequencia.items(), key=lambda item: item[1])
                     for num, _ in frequencia_ordenada:
-                        if num not in numeros_totalmente_frios and num not in numeros_ancora:
-                            numeros_totalmente_frios.append(num)
-                            if len(numeros_totalmente_frios) >= dezenas_a_gerar:
+                        if num not in candidatos_frios:
+                            candidatos_frios.append(num)
+                            if len(candidatos_frios) >= dezenas_a_gerar * 3:  # Pega um pool maior
                                 break
                 
-                k_frias = min(dezenas_a_gerar, len(numeros_totalmente_frios))
-                if k_frias > 0:
-                    numeros_novos.update(random.sample(numeros_totalmente_frios, k_frias))
+                # Se ainda não tem candidatos suficientes, usa o universo todo
+                if len(candidatos_frios) < dezenas_a_gerar:
+                    candidatos_frios = universo_disponivel.copy()
                 
-                while len(numeros_novos) < dezenas_a_gerar:
+                # Seleciona aleatoriamente dos números frios
+                k_frias = min(dezenas_a_gerar, len(candidatos_frios))
+                numeros_novos = set(random.sample(candidatos_frios, k_frias))
+                
+                # Se ainda faltam números (caso extremo), completa aleatoriamente
+                tentativas_complemento = 0
+                while len(numeros_novos) < dezenas_a_gerar and tentativas_complemento < 100:
                     num_extra = random.choice(universo_disponivel)
                     numeros_novos.add(num_extra)
+                    tentativas_complemento += 1
             
+            # ==================== Estratégia "MISTAS" ====================
             elif estrategia == 'mistas':
                 numeros_quentes = list(frequencia.keys())
                 pesos_quentes = [frequencia[n] for n in numeros_quentes]
@@ -209,7 +228,7 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
                 if len(numeros_totalmente_frios) < dezenas_a_gerar:
                     frequencia_ordenada = sorted(frequencia.items(), key=lambda item: item[1])
                     for num, _ in frequencia_ordenada:
-                        if num not in numeros_totalmente_frios and num not in numeros_ancora:
+                        if num not in numeros_totalmente_frios:
                             numeros_totalmente_frios.append(num)
                             if len(numeros_totalmente_frios) >= dezenas_a_gerar:
                                 break
@@ -221,37 +240,64 @@ def gerar_jogos_com_base_na_frequencia(loteria, count, dezenas, numeros_ancora=[
                 num_a_gerar_quentes = math.ceil(dezenas_a_gerar / 2)
                 num_a_gerar_frios = math.floor(dezenas_a_gerar / 2)
 
+                # Adiciona dezenas quentes
                 if numeros_quentes:
                     dezenas_quentes_selecionadas = set()
                     k_quentes = min(num_a_gerar_quentes, len(numeros_quentes))
-                    while len(dezenas_quentes_selecionadas) < k_quentes:
+                    tentativas_quentes = 0
+                    while len(dezenas_quentes_selecionadas) < k_quentes and tentativas_quentes < 100:
                         dezena = random.choices(numeros_quentes, weights=pesos_quentes, k=1)[0]
                         dezenas_quentes_selecionadas.add(dezena)
+                        tentativas_quentes += 1
                     numeros_novos.update(dezenas_quentes_selecionadas)
 
+                # Adiciona dezenas frias
                 if numeros_frios_disponiveis:
-                    dezenas_frias_selecionadas = set(random.sample(numeros_frios_disponiveis, min(num_a_gerar_frios, len(numeros_frios_disponiveis))))
+                    k_frios = min(num_a_gerar_frios, len(numeros_frios_disponiveis))
+                    dezenas_frias_selecionadas = set(random.sample(numeros_frios_disponiveis, k_frios))
                     numeros_novos.update(dezenas_frias_selecionadas)
                 
-                while len(numeros_novos) < dezenas_a_gerar:
+                # Completa se necessário
+                tentativas_complemento = 0
+                while len(numeros_novos) < dezenas_a_gerar and tentativas_complemento < 100:
                     num_extra = random.choice(universo_disponivel)
                     numeros_novos.add(num_extra)
+                    tentativas_complemento += 1
 
+            # ==================== Estratégia "GERAL", "QUENTES" ====================
             else:
+                # Garante que todos os números no universo têm um peso
                 pesos_completos = [frequencia.get(n, 1) for n in universo_disponivel]
 
                 if dezenas_a_gerar > len(universo_disponivel):
+                    print(f"ERRO: Universo disponível ({len(universo_disponivel)}) é menor que dezenas a gerar ({dezenas_a_gerar}) para {loteria}.")
                     break
                 
-                while len(numeros_novos) < dezenas_a_gerar:
+                tentativas_geral = 0
+                while len(numeros_novos) < dezenas_a_gerar and tentativas_geral < 1000:
                     num_sorteado = random.choices(universo_disponivel, weights=pesos_completos, k=1)[0]
                     numeros_novos.add(num_sorteado)
+                    tentativas_geral += 1
 
+            # ==================== Validação do jogo ====================
             jogo_completo = frozenset(numeros_novos.union(set(numeros_ancora)))
+            
+            # Só adiciona se o jogo tiver o tamanho correto
             if len(jogo_completo) == dezenas: 
                 jogos_gerados.add(jogo_completo)
-                
-        return [" ".join(f"{num:02}" for num in sorted(list(jogo))) for jogo in jogos_gerados]
+        
+        # Converte os jogos para o formato string
+        jogos_formatados = [" ".join(f"{num:02}" for num in sorted(list(jogo))) for jogo in jogos_gerados]
+        
+        # Log se não conseguiu gerar todos os jogos
+        if len(jogos_formatados) < count:
+            print(f"AVISO: Conseguiu gerar apenas {len(jogos_formatados)} de {count} jogos solicitados para {loteria} com estratégia '{estrategia}'")
+        
+        return jogos_formatados
+        
+    except Exception as e:
+        print(f"ERRO em gerar_jogos_com_base_na_frequencia: {str(e)}")
+        return gerar_jogos_puramente_aleatorios(loteria, count, dezenas, numeros_ancora)
     finally:
         if conn: conn.close()
 
