@@ -1,0 +1,88 @@
+/* ========== SEÇÃO DE CONTROLES ========== */
+.secao-controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 2.5rem 0;
+}
+
+.controle-item { display: flex; align-items: center; gap: 8px; }
+
+.seletor-custom {
+    background-color: rgba(0, 0, 0, .3);
+    color: var(--cor-dourado);
+    padding: 8px 12px;
+    border: 1px solid var(--cor-dourado);
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    color-scheme: dark;
+}
+
+/* ========== GRID DO ORGANIZADOR ========== */
+.numero-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 10px;
+    margin: 2rem 0;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+}
+
+.numero-botao {
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.numero-botao.selecionado {
+    background: linear-gradient(145deg, #FFD700, #FFA500);
+    color: #000;
+    border-color: #FFD700;
+}
+
+/* ========== RESULTADOS (DEZENAS) ========== */
+.numeros-container, .jogo-numeros {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.numero, .numero-jogo {
+    background: linear-gradient(145deg, #FFD700, #FFA500);
+    color: #000;
+    font-weight: 700;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.jogo, .jogo-fechamento {
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--cor-dourado);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.botao-copiar, .btn-copiar-jogo {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--cor-dourado);
+    color: var(--cor-dourado);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

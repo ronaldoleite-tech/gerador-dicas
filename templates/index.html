@@ -1,15 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google site verification -->
+    <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
 
-        <!-- Google tag (gtag.js) -->
+    <!-- SEO FUNDAMENTAL -->
+    <title>Sorte Analisada - Gerador e Organizador de Loterias Inteligente</title>
+    <meta name="description" content="Gerador gratuito de números para Mega-Sena, Quina, Lotofácil e mais. Use nosso organizador para distribuir dezenas em múltiplos jogos com estratégia e estatística.">
+    <meta name="keywords" content="gerador de loteria, mega-sena, quina, lotofácil, organizador de jogos, fechamento lotérico, sorte analisada, palpites loteria">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sorteanalisada.com.br/">
 
-        <script>
-            // Carregar após FCP (First Contentful Paint)
-            window.addEventListener('load', () => {
-            setTimeout(() => {
-                const script = document.createElement('script');
+    <!-- OPEN GRAPH / FACEBOOK / WHATSAPP -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sorteanalisada.com.br/">
+    <meta property="og:title" content="Sorte Analisada - Gerador e Organizador de Loterias">
+    <meta property="og:description" content="Gere dezenas e organize seus jogos para as principais loterias brasileiras com ferramentas gratuitas e inteligentes.">
+    <meta property="og:image" content="https://sorteanalisada.com.br/static/images/logotipo.png">
+    <meta property="og:locale" content="pt_BR">
+
+    <!-- TWITTER -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://sorteanalisada.com.br/">
+    <meta name="twitter:title" content="Sorte Analisada - Ferramentas para Loterias">
+    <meta name="twitter:description" content="Gerador e organizador de jogos gratuito para Mega-Sena, Quina e muito mais.">
+    <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/logotipo.png">
+
+    <!-- ICONS -->
+    <link rel="icon" href="/static/images/logotipo.png" type="image/png">
+    <link rel="apple-touch-icon" href="/static/images/logotipo.png">
+
+    <!-- ============== SCHEMA MARKUP (JSON-LD) ============== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Sorte Analisada",
+      "url": "https://sorteanalisada.com.br",
+      "description": "Ferramenta gratuita para geração de números e organização de jogos das loterias brasileiras como Mega-Sena e Lotofácil.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Sorte Analisada"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Sorte Analisada",
+      "url": "https://sorteanalisada.com.br",
+      "logo": "https://sorteanalisada.com.br/static/images/logotipo.png",
+      "sameAs": [
+        "https://www.instagram.com/sorteanalisadaoficial",
+        "https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada"
+      ]
+    }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var script = document.createElement('script');
                 script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
                 script.async = true;
                 document.head.appendChild(script);
@@ -17,563 +81,194 @@
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', 'G-PPB7LRV5SJ', {
-                'page_path': window.location.pathname,
-                'anonymize_ip': true // LGPD compliance
-                });
-            }, 1000); // 1 segundo é suficiente
-            });
-            </script>
-            
-            <script>
-            gtag('event', 'ads_conversion_PAGE_VIEW_1', {
-            // <event_parameters>
-            });
-        </script>
+                gtag('config', 'G-PPB7LRV5SJ');
+            }, 3000);
+        });
+    </script>
+    <script>
+        function gtag(){dataLayer.push(arguments);}
+        gtag('event', 'ads_conversion_PAGE_VIEW_1', {});
+    </script>
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="static/css/home.css">
+</head>
+<body>
+    <div class="container">
+        <header id="gerador">
+            <a href="/">
+                <img src="/static/images/logotipo.png" alt="Logotipo Sorte Analisada" width="128" height="131" fetchpriority="high">
+            </a>
+            <h1>Sorte Analisada:<br>Gerador e Organizador de Loterias</h1>
+            <p class="subtitulo">Gere dezenas e organize seus números favoritos gratuitamente</p>
+        </header>
         
-        <!-- ============== METADADOS E SEO ============== -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Gerador inteligente de números para Mega-Sena, Quina, Lotofácil e mais. Estatísticas, resultados históricos e análise de probabilidades gratuita.">
-        <meta name="keywords" content="gerador de números loterias, estatísticas mega-sena, resultados mega-sena, análise mega-sena, palpites mega-sena, simulador mega-sena, números mega-sena, mega-sena, quina, lotofácil, Dia de Sorte, dupla sena, lotomania, resultados das loterias">
-        <link rel="icon" href="/static/images/logotipo.png" type="image/png">
-
-        <!-- ============== FONTES E SCRIPTS EXTERNOS ============== -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816"crossorigin="anonymous"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://sorteanalisada.com.br">
-        <meta property="og:title" content="Sorte Analisada - Análise de Loterias com Estatísticas">
-        <meta property="og:description" content="Descubra análises, estatísticas e simulações das principais loterias. Veja padrões, tendências e resultados históricos com o Sorte Analisada.">
-        <meta property="og:image" content="https://sorteanalisada.com.br/static/images/og-image.jpg">
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
-        <meta property="og:locale" content="pt_BR">
-        <meta property="og:site_name" content="Sorte Analisada">
-
-        <!-- Twitter -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:url" content="https://sorteanalisada.com.br">
-        <meta name="twitter:title" content="Sorte Analisada - Análise e Simulação de Loterias">
-        <meta name="twitter:description" content="Gere números e analise padrões das principais loterias brasileiras com dados reais e estatísticas precisas.">
-        <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/twitter-card.jpg">
-
-        <!-- Canonical -->
-        <link rel="canonical" href="https://sorteanalisada.com.br">
-
-        <!-- Robots -->
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-
-        <!-- Tema e classificação -->
-        <meta name="language" content="Portuguese">
-        <meta name="theme-color" content="#0d47a1">
-        <meta name="rating" content="general">
+        <nav class="nav-interna" aria-label="Navegação Principal">
+            <a href="#secao-gerador">Gerador de Números</a>
+            <a href="#organizador">Organizador</a>
+            <a href="/blog">Blog Sorte Analisada</a>
+            <a href="/privacy">Política de Privacidade</a>
+            <a href="/terms">Termos de Uso</a>
+        </nav>
         
-        <!-- Autor -->
-        <meta name="author" content="Sorte Analisada">
-
-        <!-- Keywords (use com moderação) -->
-        <meta name="keywords" content="gerador de números para as loteria, resultado mega sena, estatísticas lotofácil, quina, dia de sorte, números aleatórios">
-
-        <title>Sorte Analisada - Gerador de Números para as Loterias</title>
-            
-            <!-- Estrutura de Dados (Schema.org)  -->
-
-            <script type="application/ld+json">
-            {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Início",
-                "item": "https://sorteanalisada.com.br"
-                },
-                {
-                "@type": "ListItem", 
-                "position": 2,
-                "name": "Gerador de Números",
-                "item": "https://sorteanalisada.com.br/#gerador"
-                }
-            ]
-            }
-            </script>
-            
-            <script type="application/ld+json">
-            {
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "Sorte Analisada",
-            "applicationCategory": "UtilityApplication",
-            "operatingSystem": "Web",
-            "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "BRL"
-            },
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.5",
-                "ratingCount": "127"
-            },
-            "description": "Ferramenta gratuita para análise estatística e geração de números de loterias brasileiras.",
-            "url": "https://sorteanalisada.com.br",
-            "screenshot": "https://sorteanalisada.com.br/static/images/screenshot.jpg",
-            "featureList": [
-                "Gerador de números para 6 loterias",
-                "Estatísticas históricas completas",
-                "Últimos 20 resultados atualizados",
-                "Análise de frequência",
-                "Gráficos interativos"
-            ]
-            }
-            </script>
-
-            <script type="application/ld+json">
-            {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Sorte Analisada",
-            "url": "https://sorteanalisada.com.br",
-            "logo": "https://sorteanalisada.com.br/static/images/logotipo.webp",
-            "contactPoint": {
-                "@type": "ContactPoint",
-                "email": "contato@sorteanalisada.com.br",
-                "contactType": "Customer Service",
-                "availableLanguage": "Portuguese"
-            },
-            "sameAs": [
-                "https://www.facebook.com/sorteanalisada",
-                "https://www.instagram.com/sorteanalisada"
-            ]
-            }
-            </script>
-
-            <script type="application/ld+json">
-            {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-            {
-            "@type": "Question",
-            "name": "Como funciona o gerador de números?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "O gerador analisa dados históricos das loterias e oferece diferentes estratégias de seleção de números, desde análise de frequência até geração completamente aleatória."
-            }
-            },
-            {
-            "@type": "Question",
-            "name": "O gerador aumenta minhas chances de ganhar?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Não. Esta é uma ferramenta educativa e de entretenimento. Loterias são jogos de azar com probabilidades fixas. Nenhum método pode aumentar suas chances matemáticas de vitória."
-            }
-            },
-            {
-            "@type": "Question",
-            "name": "É gratuito?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Sim, o Sorte Analisada é 100% gratuito para uso ilimitado."
-            }
-            }
-            ]
-            }
-            </script>
-
-            <script type="application/ld+json" id="schema-dataset">
-            {
-            "@context": "https://schema.org",
-            "@type": "Dataset",
-            "name": "Estatísticas de Loterias Brasileiras Sorte Analisada",
-            "description": "Conjunto de dados históricos e análises de frequência para Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania. Inclui dezenas mais sorteadas, menos sorteadas, frequência recente, números primos, e distribuição de pares/ímpares.",
-            "url": "https://sorteanalisada.com.br/#estatisticas",
-            "creator": {
-                "@type": "Organization",
-                "name": "Sorte Analisada",
-                "url": "https://sorteanalisada.com.br"
-            },
-            "keywords": [
-                "estatísticas loteria", "frequência mega sena", "números quentes", 
-                "números frios", "análise lotofácil", "dados quina", "probabilidades loterias"
-            ],
-            "dateModified": "{{ current_date }}",
-            "isAccessibleForFree": true,
-            "license": "https://creativecommons.org/licenses/by/4.0/"
-            }
-            </script>
-
-            <script type="application/ld+json" id="schema-collectionpage">
-            {
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "name": "Últimos Resultados de Loterias - Sorte Analisada",
-            "description": "Confira os 20 últimos resultados de Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania. Mantenha-se atualizado com os sorteios mais recentes.",
-            "url": "https://sorteanalisada.com.br/#ultimos-resultados",
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": "https://sorteanalisada.com.br/#ultimos-resultados"
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "Sorte Analisada",
-                "url": "https://sorteanalisada.com.br",
-                "logo": {
-                "@type": "ImageObject",
-                "url": "https://sorteanalisada.com.br/static/images/logotipo.webp"
-                }
-            },
-            "dateModified": "{{ current_date }}"
-            }
-            </script>
-                   
-        <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
-        <link rel="stylesheet" href="static/css/styles.min.css">
-        <link rel="stylesheet" href="static/css/home.min.css">
-        
-    </head>
-    <body>
-        <div class="container"> 
-           
-            <header id="gerador">
-                <h1 style="display:none;">Sorte Analisada - Gerador e Analisador de Loterias</h1> 
-                <picture>
-                    <a href="/" title="Voltar para a página inicial Sorte Analisada">
-                    <source srcset="/static/images/logotipo.webp">
-                    <img src="/static/images/logotipo.png" alt="Sorte Analisada - Logo do gerador de números para loterias brasileiras" class="imagem-ouro" width="128" height="131" loading="eager" fetchpriority="high">
-                    </a>
-                </picture>
-
-                <h1>Sorte Analisada:<br> Gerador de Números para Loterias Brasileiras</h1>
-                <br>  
-                <p class="subtitulo">Análise estatística gratuita para Mega-Sena, Quina, Lotofácil e mais</p>
-                <br> 
-            </header>
-        
-            <nav class="nav-interna">  
-                <div class="dropdown">
-                    <a href="/">Principal</a>
-                    <div class="dropdown-content">
-                        <a href="#estatisticas">Estatísticas</a>
-                        <a href="#ultimos-resultados">Últimos Resultados</a>
-                        <a href="#sobre">Sobre</a>
-                        <a href="#jogorresponsavel">Jogo Responsável</a>
-                        <a href="#contato">Contato</a>
-                        <a href="/privacy">Política de Privacidade</a>
-                        <a href="/terms">Termos de Uso</a> 
-                    </div>
-                </div>
-                    <a href="#loteria-select">Gerar Dezenas</a>
-                    <a href="#sobre-filtros">Estratégias</a>   
-                    <a href="/simulador">Analisador</a>
-                    <a href="/blog">Blog</a>         
-            </nav>
-            
-            <main>   
-                <section class="secao-controles">
+        <main>
+            <!-- ============== SEÇÃO GERADOR ============== -->
+            <section id="secao-gerador" class="secao">
+                <h2>🎲 Gerador de Dezenas</h2>
+                <p>Gere números aleatórios para suas apostas</p>
+                
+                <div class="secao-controles">
                     <div class="controle-item">
                         <label for="loteria-select">Loteria:</label>
-                        <select id="loteria-select" class="seletor-custom" onchange="mudarLoteria(this.value)">
+                        <select id="loteria-select" class="seletor-custom">
                             <option value="megasena">Mega-Sena</option>
                             <option value="quina">Quina</option>
                             <option value="lotofacil">Lotofácil</option>
                             <option value="diadesorte">Dia de Sorte</option>
                             <option value="duplasena">Dupla Sena</option>
                             <option value="lotomania">Lotomania</option>
-                        </select>
-                    </div>
-                    <div class="controle-item">
-                        <label for="dezenas-select">Dezenas:</label>
-                        <select id="dezenas-select" class="seletor-custom"></select>
-                    </div>
-                    <div class="controle-item">
-                        <label for="quantidade-select">Jogos:</label>
-                        <select id="quantidade-select" class="seletor-custom"></select>
-                    </div>
-                    <div class="controle-item">
-                        <label for="numeros-ancora">Nº da sorte</label>
-                    
-                        <input type="text" id="numeros-ancora" class="seletor-custom" placeholder="Ex: 7" 
-                            style="width: 80px;" maxlength="2" pattern="\d*">
-                    </div>
-                    <div class="controle-item">
-                        <label for="estrategia-select">Estratégia:</label>
-                        <select id="estrategia-select" class="seletor-custom" onchange="handleEstrategiaChange()">
-                            <option value="geral">Frequência Geral</option>
-                            <option value="mistas">Dezenas Mistas</option>
-                            <option value="quentes">Dezenas Quentes</option>
-                            <option value="frias">Dezenas Frias</option>
-                            <option value="juntoemisturado">Juntos e Misturados</option>
-                            <option value="aleatorio">Aleatório (Surpresinha)</option>
-                            <option value="montecarlo">Simulação Monte Carlo 🎯</option>
-                        </select>
-                    </div>
-                </section>
-
-                <div style="display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; margin: 1.5rem 0;">
-                    <span style="font-size: 1.2rem; color: #bbdefb; font-weight: 400;">Dezenas para:</span>
-                    <h5 id="loteria-selecionada" class="loteria-display" style="margin: 0; font-size: 1.4rem; color: var(--cor-loteria-display);"></h5>
-                </div>
-
-                <button id="botao-gerar-principal" class="botao-gerar" onclick="gerarPalpites()" style="padding: 1rem 2rem; font-size: 1.1rem;">
-                    Clique para gerar as Dezenas
-                </button>
-                 
-                <section id="area-resultados" aria-live="polite" aria-atomic="true" style="margin-top:1.5rem;"></section>
-
-                <p>===================</p>
-
-                <section id="estatisticas" class="footer-section">
-                <h2>Estatísticas dos Sorteios</h2>
-                <p>Clique e veja a frequência dos números sorteados da Loteria selecionada acima e descubra quais dezenas saem mais.</p>
-                <p style="text-align: center; margin: 1rem 0;"><strong id="ultimo-concurso-info">...</strong></p>
-                    <div class="grupo-botoes" style="margin-bottom: 2rem;">
-                        <button class="botao-gerar" onclick="exibirEstatisticas()">Estatísticas</button>
-                    </div>
-                    <div id="area-estatisticas" style="display: none;">
-                        <div><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Histórico Geral)</h3><canvas id="grafico-mais-sorteados"></canvas></div>
-                        <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Geral)</h3><canvas id="grafico-menos-sorteados"></canvas></div>
-                        <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Mais Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-mais-sorteados-recentes"></canvas></div>
-                        <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">As 10 Dezenas Menos Sorteadas (Últimos 100 Concursos)</h3><canvas id="grafico-menos-sorteados-recentes"></canvas></div>
-                        <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Frequência de Números Primos</h3><canvas id="grafico-primos"></canvas></div>
-                        <div style="margin-top: 2rem;"><h3 style="color: white; margin-bottom: 1rem;">Distribuição de Pares e Ímpares</h3><canvas id="grafico-pares-impares"></canvas></div>
-                    </div>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
-
-                <!-- Seção Promocional – Sorte Analisada Lite -->
-                <div style="margin: 2rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(25,118,210,0.15), rgba(255,215,0,0.1)); border-radius: 16px; text-align: center; border: 1px solid rgba(255,215,0,0.3); box-shadow: 0 0 25px rgba(255,215,0,0.05);">
-
-                    <h3 style="color: var(--cor-dourado); margin-bottom: 0.75rem; font-size: 1.6rem; font-weight: 700;">
-                        📱 Sorte Analisada Lite – Seu Gerador de Palpites Inteligentes
-                    </h3>
-
-                    <p style="font-size: 1.05rem; line-height: 1.7; color: var(--cor-texto); max-width: 800px; margin: 0 auto 1.5rem;">
-                        Leve o poder da análise estatística das loterias brasileiras direto no seu bolso!  
-                        Gere dezenas inteligentes para Mega-Sena, Quina, Lotofácil e muito mais — com apenas um toque.
-                    </p>
-
-                    <div style="display: inline-block; text-align: left; margin: 1.5rem auto; padding: 1.25rem 1.5rem; background: rgba(0, 0, 0, 0.25); border-radius: 10px; border: 1px solid rgba(255,215,0,0.15);">
-                        <p style="margin: 0 0 0.5rem 0; color: var(--cor-dourado); font-weight: 600;">✨ Recursos do App:</p>
-                        <ul style="margin: 0; padding-left: 1.2rem; color: #bbdefb; font-size: 0.95rem; line-height: 1.6;">
-                            <li>Geração de dezenas com 2 estratégias diferentes</li>
-                            <li>Simulação Monte Carlo integrada</li>
-                            <li>Interface moderna, leve e intuitiva</li>
-                            <li>Acesso rápido ao site completo do Sorte Analisada</li>
-                        </ul>
-                    </div>
-
-                    <p style="font-size: 1rem; color: #ffd700; font-weight: 600; margin-top: 1.5rem;">
-                        <i class="fa-solid fa-dice"></i> Disponível gratuitamente na Google Play Store!
-                    </p>
-
-                    <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Baixar Sorte Analisada Lite na Play Store"
-                    style="display: inline-flex; align-items: center; gap: 10px; margin-top: 1rem; padding: 1rem 2rem; background: linear-gradient(145deg, #1976d2, #0d47a1); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(25,118,210,0.35);">
-                        <i class="fa-brands fa-google-play" style="font-size: 1.3rem;"></i>
-                        Baixar na Play Store
-                    </a>
-
-                    <p style="font-size: 0.85rem; color: rgba(255,215,0,0.7); margin-top: 1rem;">
-                       <!-- Avaliação: ⭐ 4.8 | Milhares de usuários ativos | Atualizado regularmente -->
-                    </p>
-                </div>
-
-                <section id="ultimos-resultados" class="footer-section">
-                    <h2>Últimos Resultados</h2>
-
-                    <p>Confira o último resultado da +Milionária, Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena, Lotomania, Timemania e Super Sete.</p>
-
-                    <div id="ultimos-resultados-geral" style="margin-top: 1.5rem; margin-bottom: 2rem;">
-                        <h3 style="color: var(--cor-dourado); text-align: center; margin-bottom: 1rem;">Resultados das Loterias</h3>
-                        <div class="spinner" id="spinner-ultimos-geral"></div>
-                    </div>
-
-                    <div class="alerta-resultados" style="background-color: rgba(255, 215, 0, 0.1); text-align: left; border-left: 4px solid var(--cor-dourado); padding: 10px 15px; margin-top: 1.5rem; border-radius: 6px; font-size: 0.9rem; color: #ccc;">
-                        ⚠️ <strong>Atenção:</strong> Os resultados exibidos são obtidos de fontes públicas e podem levar algum tempo para serem atualizados. 
-                        Sempre confirme os números oficiais no site da <a href="https://loterias.caixa.gov.br/" target="_blank" rel="noopener noreferrer" style="color: var(--cor-dourado); text-decoration: underline;">Caixa Econômica Federal</a>.
-                    </div>
-                    <br>
-                    <h3 style="color: var(--cor-dourado); text-align: center; margin-bottom: 1rem;">Últimos 20 resultados</h3>
-                    <p>Selecione uma Loteria para ver os últimos 20 resultados. Ideal para conferir seus bilhetes e analisar tendências.</p>
-                    <br>
-                    <div class="controle-item">
-                        <label for="loteria-select-resultados">Loteria:</label>
-                        <select id="loteria-select-resultados" class="seletor-custom" onchange="mudarLoteriaResultados(this.value)">
-                            <option value="maismilionaria">+Milionária</option> <!-- Adicionado -->
-                            <option value="megasena">Mega-Sena</option>
-                            <option value="quina">Quina</option>
-                            <option value="lotofacil">Lotofácil</option>
-                            <option value="diadesorte">Dia de Sorte</option>
-                            <option value="duplasena">Dupla Sena</option>
-                            <option value="lotomania">Lotomania</option>
+                            <option value="maismilionaria">+Milionária</option>
                             <option value="timemania">Timemania</option>
                             <option value="supersete">Super Sete</option>
                         </select>
                     </div>
-                    <h3 id="nome-loteria-resultados" style="color: var(--cor-dourado); margin-top: 1rem; text-transform: uppercase;"></h3>
-                    <div id="lista-ultimos-resultados" style="margin-top: 1rem; max-height: 400px; overflow-y: auto; padding-right: 15px;">
-                        <div class="spinner"></div>
-                    </div>
-
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
-
-                <section id="sobre-filtros" class="footer-section">
-                    <h2>Entenda Nossos Métodos de Geração de Números e Estratégias de Análise</h2>
-                    <p>Conheça as estratégias utilizadas pelo Sorte Analisada para gerar suas sugestões. Cada método combina estatística, probabilidade e diferentes abordagens de sorteio.</p>
-                    <h3>Com a Estratégia: Frequência Geral</h3>
-                    <p>Nosso sistema analisa todo o histórico de resultados da loteria selecionada. Os números que foram sorteados mais vezes no passado recebem um "peso" maior, sendo priorizados na seleção para a sua sugestão. É a escolha ideal para quem acredita que alguns números têm uma tendência histórica a aparecer.</p>
-                    <h3>Com a Estratégia: Dezenas Mistas, Quentes e Frias</h3>
-                    <p>Esta estratégia foca apenas nos resultados mais recentes (últimos 100 concursos). Você pode escolher entre:<br>
-                    <strong>&bull; Dezenas "Mistas":</strong> O equilíbrio perfeito. O sistema seleciona metade das dezenas do grupo das "Quentes" e a outra metade do grupo das "Frias". Ideal para quem busca uma sugestão balanceada, combinando tendências com números "atrasados".<br>
-                    <strong>&bull; Dezenas "Quentes":</strong> O sistema prioriza os números que estão saindo com alta frequência recentemente. A ideia é "seguir a tendência recente" e ter uma sugestão do que está em alta.<br>
-                    <strong>&bull; Dezenas "Frias":</strong> O sistema dá preferência aos números que não são sorteados há muito tempo. A sugestão aqui é que eles estão "atrasados" e uma hora terão que sair.</p>
-                    <h3>Com a Estratégia: Junto e Misturado</h3>
-                    <p>Esta estratégia é para quem não quer deixar nada de fora! Ela combina o melhor da análise de longo prazo com a dinâmica dos sorteios mais recentes. Nosso sistema calcula a frequência de cada dezena considerando <strong>todo o histórico</strong> de resultados da loteria e também foca nos <strong>últimos 100 concursos</strong>. Ao "misturar" esses dois universos, a estratégia "Junto e Misturado" gera um palpite que reflete tanto a consistência histórica quanto as tendências mais quentes do momento, oferecendo uma sugestão equilibrada e completa.</p>
-                    <h3>Com a Estratégia: Aleatório (Surpresinha)</h3>
-                    <p>A geração é 100% aleatória. Cada número, dentro do universo da loteria escolhida, possui exatamente a mesma chance de ser incluído no seu jogo. Este método simula uma "surpresinha" pura, onde o histórico de sorteios é completamente ignorado. É perfeito para quem acredita que a sorte não tem memória.</p>
-                    <h3>Com o seu Número da Sorte (Jogo Âncora)</h3>
-                    <p>Todo mundo tem um número especial! Use-o para "ancorar" o seu jogo. Ao inseri-lo, nosso sistema o mantém fixo e gera as dezenas restantes de forma inteligente para completar seu palpite. É a maneira perfeita de combinar sua intuição com a análise do nosso sistema.</p>
-                    <h3>Com a Estratégia: Simulação Monte Carlo 🎯</h3>
-                    <p>Imagine realizar milhares de sorteios em segundos para ver quais números se destacam. É isso que a Simulação Monte Carlo faz. Usando processamento computacional, ela analisa probabilidades em larga escala para gerar um palpite único e sofisticado, ideal para quem busca uma sugestão diferenciada e com análise profunda.</p>
                     
-                    <p style="background-color: rgba(255, 215, 0, 0.1); text-align: left; border-left: 4px solid var(--cor-dourado); padding: 10px 15px; margin-top: 1.5rem; border-radius: 6px; font-size: 0.9rem; color: #ccc;">    
-                        ⚠️ Os algoritmos utilizados nas estratégias do Sorte Analisada aplicam métodos estatísticos e simulações baseadas em dados históricos, 
-                        com o objetivo de gerar combinações equilibradas e diversificadas. 
-                        É importante destacar que esses modelos <strong>não realizam previsões</strong> sobre os próximos sorteios, 
-                        mas oferecem uma <strong>abordagem analítica e educativa</strong> para compreender padrões e probabilidades das loterias.<br><br>
-                        As loterias são jogos de azar destinados apenas a maiores de 18 anos. 
-                        Esta ferramenta tem caráter educativo e de entretenimento, sem garantia de resultados. 
-                        Jogue com responsabilidade e dentro dos seus limites.
-                    </p>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
-
-                <section id="sobre" class="footer-section">
-                    <h2>Nossa Missão é Analisar a Sorte</h2>
-                    <p>
-                        O <strong>Sorte Analisada</strong> é uma plataforma gratuita e independente que oferece 
-                        <strong>análises estatísticas e simulações</strong> das principais loterias brasileiras: 
-                        Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania.
-                    </p>
-                    <p>
-                        Nosso objetivo é transformar dados históricos em <strong>informações educativas e de entretenimento</strong>, 
-                        ajudando os usuários a compreenderem melhor os padrões e a aleatoriedade dos sorteios oficiais.
-                    </p>
-                    <p>
-                        Nascido da paixão por números e probabilidades, o projeto vai além da simples geração aleatória de palpites, 
-                        oferecendo uma experiência enriquecedora para quem gosta de explorar estatísticas e curiosidades sobre loterias.
-                    </p>
-                    <p>
-                        O <strong>Blog Sorte Analisada</strong> é seu destino para curiosidades, dicas e análises sobre o mundo das loterias. 
-                        Nosso objetivo é entreter e informar, trazendo conteúdos relevantes para quem gosta de acompanhar 
-                        as loterias brasileiras. Nas matérias você encontra desde <strong>curiosidades históricas, dicas de estratégias e 
-                        informações sobre as loterias</strong>, sempre com a qualidade e seriedade que marcam o Sorte Analisada.
-                    </p>
-                    <p>
-                        Reforçamos que não possuímos vínculo com a Caixa Econômica Federal® ou outras entidades lotéricas, 
-                        e não oferecemos garantias de prêmios ou resultados. 
-                        Nosso compromisso é fornecer uma <strong>ferramenta educativa, transparente e responsável</strong>.
-                    </p>
-                    <br>
-                    <p><em>Boa sorte e jogue com responsabilidade!</em></p>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
+                    <div class="controle-item">
+                        <label for="dezenas-select">Dezenas:</label>
+                        <select id="dezenas-select" class="seletor-custom" aria-label="Selecionar quantidade de dezenas"></select>
+                    </div>
+                    
+                    <div class="controle-item">
+                        <label for="quantidade-select">Jogos:</label>
+                        <select id="quantidade-select" class="seletor-custom" aria-label="Selecionar quantidade de jogos"></select>
+                    </div>
+                    
+                    <div class="controle-item">
+                        <label for="numeros-ancora">Nº da sorte:</label>
+                        <input type="text" id="numeros-ancora" class="seletor-custom" 
+                               placeholder="Ex: 7" maxlength="2">
+                    </div>
+                </div>
                 
-                <section id="jogorresponsavel" class="footer-section">
-                    <h2>Nosso Compromisso com o Jogo Responsável</h2>
-                    <p>
-                        O jogo deve ser sempre uma forma de <strong>entretenimento</strong>, nunca uma obrigação ou solução para problemas financeiros. 
-                        Esta atividade é permitida apenas para <strong>maiores de 18 anos</strong>.
-                    </p>
-                    <p>
-                        Recomendamos que os usuários definam limites claros de tempo e dinheiro dedicados ao jogo e mantenham o foco na diversão. 
-                        Lembre-se: as chances de ganho são pequenas e baseadas inteiramente na sorte.
-                    </p>
-                    <p>
-                        Se em algum momento você sentir que o jogo deixou de ser saudável, 
-                        procure apoio especializado. No Brasil, você pode buscar informações e ajuda no site 
-                        <a href="https://jogoresponsavel.org.br/" target="_blank" rel="noopener noreferrer" style="color: var(--cor-dourado); text-decoration: underline;">jogoresponsavel.org.br</a> 
-                        ou em serviços de saúde especializados.
-                    </p>
-                    <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
-                </section>
+                <div style="text-align: center; margin: 20px 0;">
+                    <span style="font-size: 1.2rem; color: #bbdefb;">Dezenas para:</span>
+                    <h3 id="loteria-selecionada" class="loteria-display" style="font-family: 'Orbitron', sans-serif;"></h3>
+                </div>
+                
+                <button id="botao-gerar-principal" class="botao-gerar">
+                    Clique para gerar as Dezenas
+                </button>
+                
+                <div id="area-resultados" aria-live="polite"></div>
+                <br><br><br>
+            </section>
 
-                <section id="contato" class="footer-section" style="margin-top: 2rem; padding: 2rem; background: rgba(0,0,0,0.15); border-radius: 12px; border-top: 1px solid var(--cor-divisoria-ouro);">
-                    <h2>Contato</h2>
-                    <p style="text-align: center;">Ficou com alguma dúvida ou tem uma sugestão? Adoraríamos te ouvir! Envie-nos um e-mail:<a href="mailto:contato@sorteanalisada.com.br" style="color: var(--cor-dourado); text-decoration: underline;"> contato@sorteanalisada.com.br</a></p>
-                    <p style="font-size: 1.1rem; font-weight: bold; margin-top: 1rem; text-align: center;">
-                    <a href="mailto:contato@sorteanalisada.com.br" title="Contato" style="color: var(--cor-dourado); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
-                    <i class="fa-solid fa-envelope"> Sorte Analisada</i>
-                    </a>
-                    </p>
-                </section>
+            <!-- ============== SEÇÃO ORGANIZADOR ============== -->
+            <section id="organizador" class="secao">
+                <h2>🗂️ Organizador de Jogos</h2>
+                <p>Selecione seus números favoritos e organize-os em múltiplos jogos!</p>
 
-                <section id="opiniao" class="footer-section" style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px;">
-                    <h2>Sua opinião é muito importante</h2>
-                    
-                    <div id="feedback-area">
-                        <img src="/static/images/trevodourado.png" alt="Trevo Dourado" style="height: 40px; margin-bottom: 1rem;">
-                        <h4>✨Se você gostou do site, deixe sua opinião! Um simples clique em Sim ou uma mensagem faz toda a diferença para continuarmos melhorando e trazendo novidades para você! ✨ </h4>
-                        <h4>O site foi útil para você?</h4>
-                        <div style="margin-top: 1rem;">
-                            <button class="botao-feedback" onclick="submitFeedback('sim')">👍 Sim</button>
-                            <button class="botao-feedback" onclick="submitFeedback('nao')">👎 Não</button>
-                        </div>
-                        <p id="feedback-message"></p>
+                <div class="secao-controles">
+                    <div class="controle-item">
+                        <label for="loteria-fechamento">Loteria:</label>
+                        <select id="loteria-fechamento" class="seletor-custom">
+                            <option value="megasena">Mega-Sena</option>
+                            <option value="quina">Quina</option>
+                            <option value="lotofacil">Lotofácil</option>
+                            <option value="diadesorte">Dia de Sorte</option>
+                            <option value="duplasena">Dupla Sena</option>
+                        </select>
                     </div>
-                </section>
+                    
+                    <div class="controle-item">
+                        <label for="quantidade-jogos">Quantidade de Jogos:</label>
+                        <select id="quantidade-jogos" class="seletor-custom">
+                            <option value="10">10 Jogos</option>
+                            <option value="100">100 Jogos</option>
+                            <option value="500">500 Jogos</option>
+                            <option value="1000">1000 Jogos</option>
+                        </select>
+                    </div>
+                </div>
 
+                <div class="contador-dezenas" id="contador-fechamento">
+                    Selecione seus números favoritos: 0 escolhidos
+                </div>
 
-                 <!-- Compartilhamento geral -->
-                 <div class="share-container">
-                        Compartilhe o Sorte Analisada: 
-                        <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook">
-                            <i class="fa-brands fa-facebook"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter">
-                            <i class="fa-brands fa-x-twitter"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharThreads(window.location.href)" class="share-btn threads">
-                            <i class="fa-brands fa-threads"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharInstagram(window.location.href)" class="share-btn instagram">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="compartilharTikTok(window.location.href)" class="share-btn tiktok">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="copiarLink(window.location.href)" class="share-btn copy-link">
-                           <i class="fa-solid fa-link"></i>
-                        </a>
-                 </div>
-                 <a href="#" class="voltar-topo">Voltar ao Topo &uarr;</a>
+                <div id="grid-numeros-fechamento" class="numero-grid"></div>
 
-            </main>
+                <div style="margin: 2rem 0; text-align: center;">
+                    <button id="btn-gerar-fechamento" class="botao-gerar-fechamento" disabled>
+                        <i class="fas fa-layer-group"></i> Organizar Jogos
+                    </button>
+                    <button id="btn-limpar-fechamento" class="botao-gerar">
+                        <i class="fas fa-eraser"></i> Limpar Seleção
+                    </button>
+                </div>
 
-                <!-- footer esta na pasta statics/partials -->
-                <div id="footer"></div>
-        </div>  
-            
-            
-                <!-- Scripts com defer (carregam sem bloquear a renderização) -->
-                <script defer src="/static/js/scripts.min.js"></script>
-                <script defer src="/static/js/home.min.js"></script>
+                <div class="loading" id="loading-fechamento" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Gerando jogos...</p>
+                </div>
 
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <div id="resultado-fechamento" style="display: none;"></div>
+            </section>
 
-    </body>
+            <!-- ============== CARDS DE RECURSOS ============== -->
+            <section class="footer-section">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <article class="card-feature">
+                        <span style="font-size: 2.5rem;">🎲</span>
+                        <h3>Palpites Inteligentes</h3>
+                        <p>Gere jogos para Mega-Sena, Quina e Lotofácil com base em algoritmos de aleatoriedade pura.</p>
+                    </article>
+                    <article class="card-feature">
+                        <span style="font-size: 2.5rem;">🗂️</span>
+                        <h3>Organizador Estratégico</h3>
+                        <p>Distribua seus números da sorte em até 1000 jogos de forma equilibrada e organizada.</p>
+                    </article>
+                    <article class="card-feature">
+                        <span style="font-size: 2.5rem;">📱</span>
+                        <h3>Versão Mobile Lite</h3>
+                        <p>Acesse nosso gerador rápido direto pelo App na Play Store para Android.</p>
+                        <br>
+                    </article>
+                </div>
+            </section>
+
+            <!-- ============== CONTEÚDO SEO TEXTUAL ============== -->
+            <section id="sobre" class="footer-section">
+                <h2>Como Funciona o Sorte Analisada?</h2>
+                <p>O <strong>Sorte Analisada</strong> foi desenvolvido para ser o seu braço direito na hora de apostar. Nossa plataforma oferece ferramentas de <strong>geração de dezenas</strong> e <strong>organização de jogos (fechamentos)</strong> para as principais loterias da Caixa.</p>
+                <p>Seja para a <strong>Mega-Sena, Quina ou Lotofácil</strong>, nosso sistema permite que você escolha seus números favoritos e os distribua matematicamente, aumentando a organização das suas apostas.</p>
+                <p>Explore também nosso <a href="/blog">Blog de Loterias</a> para ler curiosidades, estatísticas e dicas sobre como jogar com mais consciência e estratégia.</p>
+                <br>
+                <p><em>Importante: Não realizamos apostas. Somos uma ferramenta de auxílio e entretenimento.</em></p>
+                <a href="#gerador" class="voltar-topo">Voltar ao Topo &uarr;</a>
+            </section>
+
+            <!-- Compartilhamento -->
+            <div class="share-container">
+                <p style="width:100%; margin-bottom:10px;">Compartilhe o Sorte Analisada:</p>
+                <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp" aria-label="Compartilhar no WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook" aria-label="Compartilhar no Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter" aria-label="Compartilhar no Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="javascript:void(0)" onclick="copiarLink(window.location.href, event)" class="share-btn copy-link" aria-label="Copiar Link"><i class="fa-solid fa-link"></i></a>
+            </div>
+        </main>
+        
+        <div id="footer"></div>
+    </div>
+    
+    <!-- Scripts -->
+    <script defer src="/static/js/scripts.js"></script>
+    <script defer src="/static/js/home.js"></script>
+</body>
 </html>
