@@ -15,13 +15,14 @@ const LOCAL_CONFIG = {
 
 let loteriaAtual = "megasena";
 let numerosSelecionadosFechamento = new Set();
+let jogosCacheGerador = []; // Armazena jogos para download
+let jogosCacheOrganizador = []; // Armazena jogos para download
 const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
 // ==============================
 //      INICIALIZAÇÃO
 // ==============================
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inicializa Gerador
     if (document.getElementById("loteria-select")) {
         const sel = document.getElementById("loteria-select");
         sel.addEventListener("change", (e) => mudarLoteria(e.target.value));
@@ -29,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mudarLoteria("megasena");
     }
 
-    // 2. Inicializa Organizador
     if (document.getElementById('loteria-fechamento')) {
         const selFechamento = document.getElementById('loteria-fechamento');
         selFechamento.addEventListener('change', () => {
@@ -90,6 +90,7 @@ async function gerarPalpites() {
     try {
         const resp = await fetch(`/get-games/${qtd}?loteria=${loteriaAtual}&dezenas=${dezenas}&ancora=${ancora}`);
         const jogos = await resp.json();
+        jogosCacheGerador = jogos; // Salva no cache
 
         area.innerHTML = "<h2>Boa sorte!</h2>";
         jogos.forEach(jogo => {
@@ -106,6 +107,14 @@ async function gerarPalpites() {
             `;
             area.appendChild(div);
         });
+
+        // Botão de download para o gerador
+        area.innerHTML += `
+            <button class="botao-gerar" onclick="baixarCSV('gerador', '${loteriaAtual}')" style="margin-top:20px;">
+                <i class="fas fa-file-csv"></i> Baixar estes Jogos (CSV)
+            </button>
+        `;
+
     } catch (e) {
         area.innerHTML = "<p>Erro ao gerar jogos.</p>";
     } finally {
@@ -158,13 +167,14 @@ async function gerarFechamento() {
     loading.style.display = 'flex';
     resultadoArea.style.display = 'none';
 
-    await new Promise(r => setTimeout(r, 600)); // Simula processamento
+    await new Promise(r => setTimeout(r, 600));
 
     try {
         const selecionados = Array.from(numerosSelecionadosFechamento);
         const dezenasPorJogo = LOCAL_CONFIG[lot].num_bolas_sorteadas;
         
         const jogos = realizarDistribuicao(selecionados, dezenasPorJogo, qtdJogos);
+        jogosCacheOrganizador = jogos; // Cache completo para download
         exibirResultadoOrganizador(jogos, selecionados, lot);
     } catch (e) {
         alert("Erro ao organizar jogos.");
@@ -189,14 +199,19 @@ function realizarDistribuicao(selecionados, dezenasPorJogo, totalJogos) {
 
 function exibirResultadoOrganizador(jogos, selecionados, lot) {
     const area = document.getElementById('resultado-fechamento');
+    const total = jogos.length;
+    const limiteExibicao = 10;
+    const jogosParaMostrar = jogos.slice(0, limiteExibicao);
+
     let html = `
         <div class="fechamento-resultado">
             <h3><i class="fas fa-check-circle"></i> Jogos Organizados</h3>
             <p>Seus números: ${selecionados.sort((a,b)=>a-b).join(', ')}</p>
+            ${total > limiteExibicao ? `<p style="color:var(--cor-aviso); font-weight:bold;">Mostrando os primeiros ${limiteExibicao} de ${total} jogos. Baixe o CSV para ver a lista completa.</p>` : ''}
             <div class="jogos-container">
     `;
 
-    jogos.forEach((jogo, i) => {
+    jogosParaMostrar.forEach((jogo, i) => {
         const jogoStr = jogo.map(n => String(n).padStart(2, '0')).join(' ');
         html += `
             <div class="jogo-fechamento">
@@ -209,21 +224,45 @@ function exibirResultadoOrganizador(jogos, selecionados, lot) {
         `;
     });
 
-    html += `</div><button class="botao-gerar" onclick="baixarCSVOrganizador('${lot}')"><i class="fas fa-file-csv"></i> Baixar CSV</button></div>`;
+    html += `</div>
+        <button class="botao-gerar" onclick="baixarCSV('organizador', '${lot}')">
+            <i class="fas fa-file-csv"></i> Baixar Lista Completa (${total} jogos)
+        </button>
+    </div>`;
+    
     area.innerHTML = html;
     area.style.display = 'block';
     area.scrollIntoView({ behavior: 'smooth' });
 }
 
-window.baixarCSVOrganizador = (lot) => {
+// ==============================
+//      FUNÇÃO DE DOWNLOAD CSV
+// ==============================
+window.baixarCSV = (origem, loteria) => {
+    const jogosParaBaixar = (origem === 'gerador') ? jogosCacheGerador : jogosCacheOrganizador;
+    
+    if (jogosParaBaixar.length === 0) {
+        alert("Nenhum jogo encontrado para baixar.");
+        return;
+    }
+
     let csv = "Jogo;Dezenas\n";
-    document.querySelectorAll('.jogo-fechamento').forEach((node, i) => {
-        const nums = Array.from(node.querySelectorAll('.numero-jogo')).map(s => s.textContent).join(' ');
-        csv += `${i+1};${nums}\n`;
+    
+    jogosParaBaixar.forEach((jogo, i) => {
+        // Se for do organizador (array de números)
+        if (Array.isArray(jogo)) {
+            const nums = jogo.map(n => String(n).padStart(2, '0')).join(' ');
+            csv += `${i + 1};${nums}\n`;
+        } 
+        // Se for do gerador (string pronta)
+        else {
+            csv += `${i + 1};${jogo}\n`;
+        }
     });
+
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `jogos_${lot}.csv`;
+    link.download = `sorteanalisada_${origem}_${loteria}.csv`;
     link.click();
 };
