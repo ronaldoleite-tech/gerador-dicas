@@ -125,11 +125,35 @@ h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--cor-do
     transition: 0.3s;
 }
 
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 .share-btn.whatsapp { background: var(--cor-whatsapp); }
 .share-btn.facebook { background: var(--cor-facebook); }
 .share-btn.twitter { background: var(--cor-twitter); }
+.share-btn.threads { background: var(--cor-threads); }
 .share-btn.instagram { background: var(--cor-instagram); }
+.share-btn.tiktok { background: var(--cor-tiktok); }
 .share-btn.copy-link { background: #6c757d; }
+
+/* ==============================
+           VOLTAR AO TOPO
+        ============================== */
+.voltar-topo {
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.voltar-topo:hover {
+    color: var(--cor-dourado-hover);
+}
 
 /* ==============================
            RESPONSIVIDADE (ORIGINAL)
