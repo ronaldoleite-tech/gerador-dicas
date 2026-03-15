@@ -7,6 +7,34 @@
     <!-- Google site verification -->
     <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
 
+    <!-- Google tag (gtag.js) -->
+     
+        <script>
+            // Carregar após FCP (First Contentful Paint)
+            window.addEventListener('load', () => {
+            setTimeout(() => {
+                const script = document.createElement('script');
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
+                script.async = true;
+                document.head.appendChild(script);
+                
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-PPB7LRV5SJ', {
+                'page_path': window.location.pathname,
+                'anonymize_ip': true // LGPD compliance
+                });
+            }, 1000); // 1 segundo é suficiente
+            });
+            </script>
+            
+            <script>
+            gtag('event', 'ads_conversion_PAGE_VIEW_1', {
+            // <event_parameters>
+            });
+        </script>
+
     <!-- SEO FUNDAMENTAL -->
     <title>Sorte Analisada - Gerador e Organizador de Loterias Inteligente</title>
     <meta name="description" content="Gerador gratuito de números para Mega-Sena, Quina, Lotofácil e mais. Use nosso organizador para distribuir dezenas em múltiplos jogos com estratégia e estatística.">
@@ -53,23 +81,6 @@
         "name": "Sorte Analisada"
       }
     }
-    </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script>
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                var script = document.createElement('script');
-                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
-                script.async = true;
-                document.head.appendChild(script);
-                
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-PPB7LRV5SJ');
-            }, 3000);
-        });
     </script>
 
     <!-- Fontes -->
@@ -289,5 +300,6 @@
     
     <script defer src="/static/js/scripts.js"></script>
     <script defer src="/static/js/home.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </body>
 </html>
