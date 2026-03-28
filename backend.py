@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, jsonify, request, render_template, send_from_directory
+from flask import Flask, jsonify, request, render_template, send_from_directory, redirect
 import random
 import os
-from flask import redirect
 
 # --- Inicialização e Configuração ---
 app = Flask(__name__)
