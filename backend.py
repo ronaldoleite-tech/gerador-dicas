@@ -180,10 +180,6 @@ def index():
 def blog():
     return render_template('blog.html')
 
-@app.route('/simulador')
-def simulador():
-    return render_template('simulador.html')
-
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
