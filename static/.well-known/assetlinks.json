@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "br.com.sorteanalisada.sorteanalisada",
+      "sha256_cert_fingerprints": [
+        "79:10:91:E6:FB:47:03:AF:C1:D2:70:0A:95:1B:14:E5:C9:86:B9:EF:F3:EB:93:A3:40:82:40:D0:5B:55:D8:C7"
+      ]
+    }
+  }
+]
