@@ -344,6 +344,10 @@ def get_todos_resultados():
     dados = gerar_dados_exemplo_estatisticas(loteria)
     return jsonify(dados['resultados'])
 
+@app.route('/.well-known/assetlinks.json')
+def assetlinks():
+    return app.send_static_file('.well-known/assetlinks.json')
+
 @app.route('/organizar-jogos', methods=['POST'])
 def organizar_jogos():
     """Endpoint para o organizador de jogos"""
