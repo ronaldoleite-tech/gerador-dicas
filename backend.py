@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, request, render_template, send_from_directory
 import random
 import os
+from flask import redirect
 
 # --- Inicialização e Configuração ---
 app = Flask(__name__)
@@ -347,6 +348,10 @@ def get_todos_resultados():
 @app.route('/.well-known/assetlinks.json')
 def assetlinks():
     return app.send_static_file('.well-known/assetlinks.json')
+
+@app.route('/simulador')
+def simulador():
+    return redirect('/', 301)  # 301 = redirecionamento permanente
 
 @app.route('/organizar-jogos', methods=['POST'])
 def organizar_jogos():
