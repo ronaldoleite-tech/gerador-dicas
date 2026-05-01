@@ -352,6 +352,14 @@ def simulador():
 def sitemap():
     return send_from_directory('static', 'sitemap.xml')
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static/images', 'favicon.ico')
+
+@app.route('/favicons/<path:filename>')
+def favicons(filename):
+    return send_from_directory('static/favicons', filename)
+
 @app.route('/organizar-jogos', methods=['POST'])
 def organizar_jogos():
     """Endpoint para o organizador de jogos"""
