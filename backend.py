@@ -354,7 +354,7 @@ def sitemap():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory('static/images', 'favicon.png')
+    return send_from_directory('static/images', 'favicon.png', mimetype='image/png')
 
 @app.route('/favicons/<path:filename>')
 def favicons(filename):
