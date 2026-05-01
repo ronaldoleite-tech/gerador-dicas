@@ -354,11 +354,11 @@ def sitemap():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory('static/images', 'favicon.png', mimetype='image/png')
+    return send_from_directory('favicon', 'favicon.ico', mimetype='image/x-icon')
 
-@app.route('/favicons/<path:filename>')
-def favicons(filename):
-    return send_from_directory('static/favicons', filename)
+@app.route('/favicon/<path:filename>')
+def favicon_files(filename):
+    return send_from_directory('favicon', filename)
 
 @app.route('/organizar-jogos', methods=['POST'])
 def organizar_jogos():
