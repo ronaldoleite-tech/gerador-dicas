@@ -348,6 +348,10 @@ def assetlinks():
 def simulador():
     return redirect('/', 301)  # 301 = redirecionamento permanente
 
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('static', 'sitemap.xml')
+
 @app.route('/organizar-jogos', methods=['POST'])
 def organizar_jogos():
     """Endpoint para o organizador de jogos"""
