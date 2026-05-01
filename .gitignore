@@ -36,3 +36,18 @@ venv/
 
 #Backend Local
 backend_LOCAL.py
+
+# Logs
+*.log
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configurações de editores
+.vscode/
+.idea/
+
+# Arquivos de deploy sensíveis
+*.pem
+*.key
