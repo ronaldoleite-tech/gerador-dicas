@@ -350,7 +350,7 @@ def simulador():
 
 @app.route('/ads.txt')
 def ads():
-    return send_from_directory('static', 'ads.txt')
+    return send_from_directory('static', 'ads.txt', mimetype='text/plain')
 
 @app.route('/robots.txt')
 def robots():
