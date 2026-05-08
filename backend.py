@@ -399,10 +399,6 @@ def organizar_jogos():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/ads.txt')
-def ads():
-    return send_from_directory('.', 'ads.txt')
-
 # --- Execução ---
 if __name__ == '__main__':
     # Configuração automática para Render ou Local
