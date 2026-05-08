@@ -349,7 +349,7 @@ def simulador():
     return redirect('/', 301)  # 301 = redirecionamento permanente
 
 @app.route('/ads.txt')
-def robots():
+def ads():
     return send_from_directory('static', 'ads.txt')
 
 @app.route('/robots.txt')
