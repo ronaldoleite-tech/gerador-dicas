@@ -350,7 +350,9 @@ def simulador():
 
 @app.route('/ads.txt')
 def ads():
-    return send_from_directory('static', 'ads.txt', mimetype='text/plain')
+    response = send_from_directory('static', 'ads.txt', mimetype='text/plain')
+    response.headers['Content-Disposition'] = 'inline'  # Remove o filename=
+    return response
 
 @app.route('/robots.txt')
 def robots():
